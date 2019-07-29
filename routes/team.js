@@ -40,6 +40,7 @@ router.get( '/', ( req, res ) => {
       Team.updated_at,
       Team.name
     FROM Team
+    ORDER BY name ASC
   ` )
   .all();
 
