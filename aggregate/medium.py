@@ -48,9 +48,19 @@ for medium in mediums:
 
   # Look at each entry
   for entry in feed['entries']:
-
     # ISO published date
     published = time.strftime( '%Y-%m-%dT%H:%M:%SZ', entry['published_parsed'] )
+
+    # Categories
+    categories = None
+
+    if 'tags' in entry:
+      categories = []
+
+      for tag in entry['tags']:
+        categories.append( tag.term )
+
+      categories = ','.join( categories )
 
     # Formalize entity
     record = {
@@ -61,7 +71,7 @@ for medium in mediums:
       'title': entry['title'],
       'summary': entry['summary'],
       'claps': 0,
-      'category': None,
+      'category': categories,
       'keywords': None,
       'concepts': None,
       'entities': None
