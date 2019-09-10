@@ -1,8 +1,10 @@
 class Team {
   constructor() {
     this._root = document.querySelector( '#advocates div.team' );
+
     this.$list = this._root.querySelector( 'cv-datatable' );  
-    this.$list.addEventListener( 'change', ( evt ) => this.doListChange( evt ) );
+    this.$list.addEventListener( 'itemEditEnd', ( evt ) => this.doListEdit( evt ) );
+
     this.load();
   }
 
@@ -14,7 +16,7 @@ class Team {
     } );      
   }
 
-  doListChange( evt ) {
-    console.log( evt.detail.selectedItem.id );
+  doListEdit( evt ) {
+    console.log( evt.detail );
   }
 }

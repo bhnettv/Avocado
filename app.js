@@ -43,7 +43,15 @@ app.use( ( req, res, next ) => {
 app.use( '/', express.static( 'public' ) );
 
 // Routes
-app.use( '/api/team', require( './routes/team' ) );
+app.use( '/api/label', require( './routes/label' ) );
+app.use( '/api/developer', require( './routes/developer' ) );
+app.use( '/api/blog', require( './routes/blog' ) );
+app.use( '/api/blog/post', require( './routes/blog.post' ) );
+app.use( '/api/dev', require( './routes/dev' ) );
+app.use( '/api/dev/post', require( './routes/dev.post' ) );
+app.use( '/api/medium', require( './routes/medium' ) );
+app.use( '/api/medium/post', require( './routes/medium.post' ) );
+app.use( '/api/watson', require( './routes/watson' ) );
 
 // Listen
 var server = app.listen( config.server.port, function() {

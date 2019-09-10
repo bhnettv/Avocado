@@ -39,10 +39,33 @@ class DataTable extends HTMLElement {
 
         div.row.selected {
           background: #dcdcdc;
+          border-bottom: solid 1px #f3f3f3;
         }
 
         div.row:hover {
           background: #e5e5e5;
+        }
+
+        div.row.selected:hover {
+          background: #cacaca;
+        }        
+
+        div.row div.column {
+          display: flex;
+          flex-direction: row;
+          flex-basis: 0;
+          flex-grow: 1;
+        }
+
+        div.row div.column .editor {
+          display: none;
+          flex-basis: 0;
+          flex-grow: 1;
+        }
+
+        div.row div.column .renderer {
+          flex-basis: 0;
+          flex-grow: 1;
         }
       </style>
       <header>
@@ -53,13 +76,19 @@ class DataTable extends HTMLElement {
     `;
     
     this._dataProvider = null;
+    this._editable = false;
     this._selectable = true;
     this._showHeaders = true;
+
+    this.doEditBegin = this.doEditBegin.bind( this );
+    this.doEditEnd = this.doEditEnd.bind( this );
+    this.doRowClick = this.doRowClick.bind( this );
 
     this._shadowRoot = this.attachShadow( {mode: 'open'} );
     this._shadowRoot.appendChild( template.content.cloneNode( true ) );   
 
     this.$all = this._shadowRoot.querySelector( 'cv-checkbox' );
+    this.$all.addEventListener( 'click', ( evt ) => this.doAllClick( evt ) ); 
     this.$columns = null;
     this.$header = this._shadowRoot.querySelector( 'header' );
     this.$list = this._shadowRoot.querySelector( '.list' );
@@ -69,6 +98,70 @@ class DataTable extends HTMLElement {
       'slotchange', 
       ( evt ) => this.doSlotChange( evt ) 
     );    
+  }
+
+  doAllClick( evt ) {
+    for( let c = 0; c < this.$list.children.length; c++ ) {
+      if( evt.target.selected === true ) {
+        this.$list.children[c].classList.add( 'selected' );
+        this.$list.children[c].children[0].selected = true;
+      } else {
+        this.$list.children[c].classList.remove( 'selected' );
+        this.$list.children[c].children[0].selected = false;        
+      }
+    }
+  }
+
+  doEditBegin( evt ) {
+    let renderer = evt.target.parentElement.children[0];
+    let editor = evt.target.parentElement.children[1];
+
+    renderer.style.display = 'none';
+
+    editor.addEventListener( 'blur', this.doEditEnd );                        
+    editor.style.display = 'flex';
+    editor.focus();
+
+    this.dispatchEvent( new CustomEvent( 'itemEditBegin', {
+      detail: {
+        before: renderer.label
+      }
+    } ) );
+  }
+
+  doEditEnd( evt ) {
+    let renderer = evt.target.parentElement.children[0];
+    let editor = evt.target.parentElement.children[1];
+
+    const before = renderer.label;
+    const after = editor.label;
+
+    editor.style.display = 'none';
+    editor.removeEventListener( 'blur', this.doEditEnd );
+    
+    renderer.label = after;
+    renderer.style.display = 'flex';
+
+    this.dispatchEvent( new CustomEvent( 'itemEditEnd', {
+      detail: {
+        before: before,
+        after: after
+      }
+    } ) );
+  }
+
+  doRowClick( evt ) {
+    let row = evt.target;
+
+    while( !row.classList.contains( 'row' ) ) {
+      row = row.parentElement;
+    }
+
+    if( evt.target.selected === true ) {
+      row.classList.add( 'selected' );
+    } else {
+      row.classList.remove( 'selected' );
+    }
   }
 
   doSlotChange( evt ) {
@@ -112,6 +205,11 @@ class DataTable extends HTMLElement {
     // TODO: Remove row events
     // TODO: Virtual scrolling
     while( this.$list.children.length > 0 ) {
+      for( let c = 0; c < this.$list.children[0].length; c++ ) {
+        this.$list.children[0].children[c].removeEventListener( 'dblclick', this.doEditBegin );
+      }
+
+      this.$list.children[0].removeEventListener( 'click', this.doRowClick );
       this.$list.children[0].remove();
     }
 
@@ -124,6 +222,7 @@ class DataTable extends HTMLElement {
       // Hidden in access method
       // Keep from rebuilding entire table
       const checkbox = document.createElement( 'cv-checkbox' );
+      checkbox.addEventListener( 'click', this.doRowClick );
       row.appendChild( checkbox );
 
       // Columns have been defined
@@ -133,7 +232,8 @@ class DataTable extends HTMLElement {
           // Populate with requested data
           for( let k = 0; k < keys.length; k++ ) {          
             if( keys[k] === this.$columns[c].dataField ) {
-              const column = document.createElement( this.$columns[c].itemRenderer );
+              const column = document.createElement( 'div' );
+              column.classList.add( 'column' );
 
               // Manage sizing
               // Stretch by default
@@ -142,17 +242,30 @@ class DataTable extends HTMLElement {
                 column.style.flexGrow = 'initial';
                 column.style.width = this.$columns[c].width + 'px';
               }
-  
+
+              const renderer = document.createElement( this.$columns[c].itemRenderer );
+              renderer.classList.add( 'renderer' );
+
+              let editor = document.createElement( this.$columns[c].itemEditor );   
+              editor.classList.add( 'editor' );           
+
               // Custom formatting of textual content
               if( this.$columns[c].labelFunction !== null ) {
-                column.label = window[this.$columns[c].labelFunction](
+                editor.label = renderer.label = window[this.$columns[c].labelFunction](
                   this._dataProvider[d],
                   this.$columns[c]
                 );
               } else {
                 // Or just what is there
-                column.label = this._dataProvider[d][keys[k]];
+                editor.label = renderer.label = this._dataProvider[d][keys[k]];
               }
+
+              if( this.$columns[c].editable === true ) {
+                column.addEventListener( 'dblclick', this.doEditBegin );
+              }
+
+              column.appendChild( renderer );
+              column.appendChild( editor );
 
               // Append column to row
               row.appendChild( column );      
@@ -171,13 +284,16 @@ class DataTable extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['dataprovider', 'selectable', 'showheaders'];
+    return ['dataprovider', 'editable', 'selectable', 'showheaders'];
   }  
   
   attributeChangedCallback( attrName, oldVal, newVal ) {
     switch( attrName ) {
       case 'dataprovider':
         this.dataProvider = newVal;
+        break;
+      case 'editable':
+        this.editable = newVal === 'true' ? true : false;
         break;
       case 'selectable':
         this.selectable = newVal === 'true' ? true : false;
@@ -195,6 +311,14 @@ class DataTable extends HTMLElement {
   set dataProvider( value ) {
     this._dataProvider = value.splice( 0 );
     this._render();
+  }
+
+  get editable() {
+    return this._editable;
+  }
+
+  set editable( value ) {
+    this._editable = value;
   }
 
   get selectable() {

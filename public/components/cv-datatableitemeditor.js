@@ -1,4 +1,4 @@
-class DataTableItemRenderer extends HTMLElement {
+class DataTableItemEditor extends HTMLElement {
   constructor() {
     super();
 
@@ -12,7 +12,10 @@ class DataTableItemRenderer extends HTMLElement {
         flex-grow: 1;
       }
 
-      p {
+      input {
+        background: none;
+        background-color: white;
+        border: none;
         color: #171717;
         flex-basis: 0;
         flex-grow: 1;
@@ -25,7 +28,7 @@ class DataTableItemRenderer extends HTMLElement {
         padding: 0 0 0 8px;
       }
       </style>
-      <p></p>
+      <input>
     `;
 
     this._label = null;
@@ -33,14 +36,30 @@ class DataTableItemRenderer extends HTMLElement {
     this._shadowRoot = this.attachShadow( {mode: 'open'} );
     this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 
-    this.$renderer = this._shadowRoot.querySelector( 'p' );
+    this.$editor = this._shadowRoot.querySelector( 'input' );
+    this.$editor.addEventListener( 'keypress', ( evt ) => this.doEditorChange( evt ) );
   }    
+
+  focus() {
+    this.$editor.focus();
+  }
+
+  doEditorChange( evt ) {
+    if( evt.keyCode === 13 ) {
+      evt.preventDefault();
+
+      this._label = this.$editor.value.trim();      
+      this.blur();
+    } else {
+      this._label = this.$editor.value;
+    }
+  }
 
   _render() {
     if( this._label === null ) {
-      this.$renderer.innerHTML = '';
+      this.$editor.value = '';
     } else {
-      this.$renderer.innerHTML = this._label;
+      this.$editor.value = this._label;
     }
   }
 
@@ -54,4 +73,4 @@ class DataTableItemRenderer extends HTMLElement {
   }
 }
 
-window.customElements.define( 'cv-datatableitemrenderer', DataTableItemRenderer );
+window.customElements.define( 'cv-datatableitemeditor', DataTableItemEditor );

@@ -46,7 +46,9 @@ class DataTableColumn extends HTMLElement {
     `;
 
     this._dataField = null;
+    this._editable = false;
     this._headerText = null;
+    this._itemEditor = 'cv-datatableitemeditor';
     this._itemRenderer = 'cv-datatableitemrenderer';
     this._labelFunction = null;
     this._width = null;
@@ -67,7 +69,7 @@ class DataTableColumn extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['datafield', 'headertext', 'itemrenderer', 'labelfunction', 'width'];
+    return ['datafield', 'editable', 'headertext', 'itemeditor', 'itemrenderer', 'labelfunction', 'width'];
   }  
 
   attributeChangedCallback( attribute, old, value ) {
@@ -75,8 +77,14 @@ class DataTableColumn extends HTMLElement {
       case 'datafield':
         this.dataField = value;
         break;
+      case 'editable': 
+        this.editable = value === 'true' ? true : false;
+        break;
       case 'headertext':
         this.headerText = value;
+        break;
+      case 'itemeditor':
+        this.itemEditor = value;
         break;
       case 'itemrenderer':
         this.itemRenderer = value;
@@ -106,6 +114,14 @@ class DataTableColumn extends HTMLElement {
     }
   }
 
+  get editable() {
+    return this._editable;
+  }
+
+  set editable( value ) {
+    this._editable = value;
+  }
+
   get headerText() {
     return this._headerText;
   }
@@ -122,6 +138,14 @@ class DataTableColumn extends HTMLElement {
     }
 
     this._render();
+  }
+
+  get itemEditor() {
+    return this._itemEditor;
+  }
+
+  set itemEditor( value ) {
+    this._itemEditor = value;
   }
 
   get itemRenderer() {
