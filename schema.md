@@ -28,6 +28,15 @@
     - developer_id (*)
     - label_id (*)
 
+    Media
+    ===
+    - id
+    - uuid
+    - created_at
+    - updated_at
+    - url
+    - keywords (comma-separated)
+
     Blog
     ===
     - id

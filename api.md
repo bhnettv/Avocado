@@ -40,6 +40,22 @@
     DELETE  /api/developer/:id/label/:id    Remove developer from label
     DELETE  /api/developer/id/:id           Delete developer by ID
 
+    Media
+    ===
+    GET     /api/media                      Read all media   
+    GET     /api/media/id/:id               Read media by ID   
+    POST    /api/media                      Create media
+            Body: {
+              "url": "something.com/path/to/image",
+              "keywords": "one,two"
+            }
+    PUT     /api/media/id/:id               Replace media by ID
+            Body: {
+              "url": "something.com/path/to/image",
+              "keywords": "one,two"
+            }
+    DELETE  /api/media/id/:id               Delete media by ID   
+
     Blog
     ===
     GET     /api/blog                       Read all blogs
@@ -210,3 +226,8 @@
             Body: {
               "url": "something.com/page/with/content"
             }
+    POST    /api/watson/recognition         Watson Visual Recognition
+            Body: {
+              "url": "something.com/complete/image/path"
+            }
+  

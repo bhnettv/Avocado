@@ -35,6 +35,41 @@ router.post( '/nlu', async ( req, res ) => {
   } );
 } );
 
+// Analyze an image file
+router.post( '/recognition', async ( req, res ) => {
+  let data = await rp( {
+    url: 'https://gateway.watsonplatform.net/visual-recognition/api/v3/classify',
+    method: 'GET',
+    auth: {
+      user: req.config.watson.recognition.key,
+      pass: req.config.watson.recognition.secret
+    },
+    qs: {
+      url: req.body.url,
+      version: '2018-03-19'
+    },
+    json: true
+  } );
+
+  let results = [];
+
+  for( let i = 0; i < data.images.length; i++ ) {
+    if( !data.images[i].classifiers ) {
+      continue;
+    }
+
+    for( let c = 0; c < data.images[i].classifiers.length; c++ ) {
+      for( let s = 0; s < data.images[i].classifiers[c].classes.length; s++ ) {
+        results.push( data.images[i].classifiers[c].classes[s].class );
+      }
+    }
+  }
+
+  res.json( {
+    keywords: results.join( ',' )
+  } );
+} );
+
 function reduce( values ) {
   const listing = fs.readFileSync( path.join( __dirname, '/../stopwords.txt' ) ).toString();
   const stopwords = listing.split( '\n' );

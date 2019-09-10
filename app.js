@@ -51,6 +51,7 @@ app.use( '/api/dev', require( './routes/dev' ) );
 app.use( '/api/dev/post', require( './routes/dev.post' ) );
 app.use( '/api/medium', require( './routes/medium' ) );
 app.use( '/api/medium/post', require( './routes/medium.post' ) );
+app.use( '/api/media', require( './routes/media' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
 
 // Listen
