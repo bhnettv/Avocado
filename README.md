@@ -1,6 +1,13 @@
-POST     /api/team         Create team (name - string)
-GET      /api/team/test    Test
-GET      /api/team/:id     Team by ID
-GET      /api/team         All teams
-PUT      /api/team/:id     Update team (name - string)
-DELETE   /api/team/:id     Delete team by ID
+
+    Label
+    ===
+    GET     /api/label                      Read all labels   
+    GET     /api/label/id/:id               Read label by ID   
+    GET     /api/label/developer/:id        Read labels for developer   
+    POST    /api/label                      Create label   
+            Body: {"name": "IBM"}
+    POST    /api/label/:id/developer/:id    Assign developer to label   
+    PUT     /api/label/id/:id               Replace label by ID
+            Body: {"name": "IBM"}
+    DELETE  /api/label/id/:id               Delete label by ID   
+
