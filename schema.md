@@ -51,8 +51,64 @@
     - title
     - summary
     - views
-    - category
-    - keywords
-    - concepts
-    - entities
+    - category (comma-separated)
+    - keywords (comma-separated)
+    - concepts (comma-separated)
+    - entities (comma-separated)
 
+    Dev
+    ===
+    - id
+    - uuid
+    - created_at
+    - updated_at
+    - developer_id (*)
+    - user_name
+
+    DevPost
+    ===
+    - id
+    - uuid
+    - created_at
+    - updated_at
+    - dev_id (*)
+    - published_at
+    - guid
+    - link
+    - title
+    - summary
+    - likes
+    - reading
+    - unicorn
+    - keywords (comma-separated)
+    - concepts (comma-separated)
+    - entities (comma-separated)
+
+    Medium
+    ===
+    - id
+    - uuuid
+    - created_at
+    - updated_at
+    - developer_id (*)
+    - user_name
+    - following
+    - followed_by
+
+    MediumPost
+    ===
+    - id
+    - uuid
+    - created_at
+    - updated_at
+    - medium_id (*)
+    - published_at
+    - guid
+    - link
+    - title
+    - summary
+    - claps
+    - category (comma-separated)
+    - keywords (comma-separated)
+    - concepts (comma-separated)
+    - entities (comma-separated)
