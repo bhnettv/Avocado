@@ -8,7 +8,7 @@ var parser = require( 'body-parser' );
 var config = jsonfile.readFileSync( 'config.json' );
 
 // Database
-var db = new Database( config.server.database, { 
+var db = new Database( config.server.database[config.server.mode], { 
 	verbose: console.log 
 } );
 

@@ -65,6 +65,15 @@
     - concepts (comma-separated)
     - entities (comma-separated)
 
+    BlogPostMedia
+    ===
+    - id
+    - guid
+    - created_at
+    - updated_at
+    - post_id (*)
+    - media_id (*)
+
     Dev
     ===
     - id

@@ -45,6 +45,67 @@ router.get( '/id/:id', ( req, res ) => {
   res.json( post );
 } );
 
+// Read media for specific post
+router.get( '/:id/media', ( req, res ) => {
+  let media = req.db.prepare( `
+    SELECT
+      Media.uuid AS "id",
+      Media.created_at,
+      Media.updated_at,
+      Media.url,
+      Media.keywords
+    FROM 
+      Media,
+      BlogPost,
+      BlogPostMedia
+    WHERE 
+      Media.id = BlogPostMedia.media_id AND
+      BlogPostMedia.post_id = BlogPost.id AND
+      BlogPost.uuid = ?
+  ` )
+  .get( 
+    req.params.id 
+  );
+
+  if( media === undefined ) {
+    media = null;
+  }
+
+  res.json( media );
+} );
+
+// Read media for specific post by GUID
+router.get( '/guid/:id/media', ( req, res ) => {
+  let buffer = new Buffer( req.params.id, 'base64' );
+  let guid = buffer.toString( 'ascii' );
+  
+  let media = req.db.prepare( `
+    SELECT
+      Media.uuid AS "id",
+      Media.created_at,
+      Media.updated_at,
+      Media.url,
+      Media.keywords
+    FROM 
+      Media,
+      BlogPost,
+      BlogPostMedia
+    WHERE 
+      Media.id = BlogPostMedia.media_id AND
+      BlogPostMedia.post_id = BlogPost.id AND
+      BlogPost.guid = ?
+  ` )
+  .get( 
+    guid 
+  );
+
+  if( media === undefined ) {
+    media = null;
+  }
+
+  res.json( media );
+} );
+
 // Read single post by ID
 router.get( '/guid', ( req, res ) => {
   let post = req.db.prepare( `
@@ -108,6 +169,57 @@ router.get( '/', ( req, res ) => {
   .all();
 
   res.json( posts );
+} );
+
+// Associate media with post
+router.post( '/:post/media/:media', ( req, res ) => {
+  let record = {
+    id: null,
+    uuid: uuidv4(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    post_uuid: req.params.post,
+    media_uuid: req.params.media
+  };
+
+  let ids = req.db.prepare( `
+    SELECT
+      Post.id AS "post_id",
+      Media.id AS "media_id"
+    FROM
+      Media,
+      Post
+    WHERE
+      Post.uuid = ? AND
+      Media.uuid = ?
+  ` )
+  .get( 
+    record.post_uuid,
+    record.media_uuid
+  );
+  record.post_id = ids.post_id;
+  record.media_id = ids.media_id;
+
+  let info = req.db.prepare( `
+    INSERT INTO BlogPostMedia
+    VALUES ( ?, ?, ?, ?, ?, ? )
+  ` )
+  .run(
+    record.id,
+    record.uuid,
+    record.created_at,
+    record.updated_at,
+    record.post_id,
+    record.media_id
+  );
+
+  res.json( {
+    id: record.uuid,
+    created_at: record.created_at,
+    updated_at: record.updated_at,
+    post_id: record.post_uuid,
+    media_id: record.media_uuid
+  } );  
 } );
 
 // Create
@@ -254,6 +366,41 @@ router.put( '/id/:id', ( req, res ) => {
     concepts: req.body.concepts,
     entities: req.body.entities    
   } );  
+} );
+
+// Remove media associated with post
+router.delete( '/:post/media/:media', ( req, res ) => {
+  let ids = req.db.prepare( `
+    SELECT
+      Post.id AS "post_id",
+      Media.id AS "media_id"
+    FROM
+      Media,
+      Post
+    WHERE
+      Post.uuid = ? AND
+      Media.uuid = ?    
+  ` )
+  .get( 
+    req.params.post,
+    req.params.media
+  );
+
+  let info = req.db.prepare( `
+    DELETE FROM BlogPostMedia
+    WHERE 
+      BlogPostMedia.post_id = ? AND
+      BlogPostMedia.media_id = ?
+  ` )
+  .run(
+    ids.post_id,
+    ids.media_id
+  );  
+
+  res.json( {
+    post_id: req.params.post,
+    media_id: req.params.media
+  } );
 } );
 
 // Delete
