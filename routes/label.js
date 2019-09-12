@@ -10,7 +10,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single label by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let label = req.db.prepare( `
     SELECT
       Label.uuid AS "id",
@@ -133,7 +133,7 @@ router.post( '/', ( req, res ) => {
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    name: req.body.name.toLowerCase()
+    name: req.body.name
   };
 
   let info = req.db.prepare( `
@@ -157,11 +157,11 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
-    name: req.body.name.toLowerCase()
+    name: req.body.name
   };
 
   let info = req.db.prepare( `
@@ -185,7 +185,7 @@ router.put( '/id/:id', ( req, res ) => {
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Label
     WHERE Label.uuid = ?
