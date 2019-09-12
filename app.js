@@ -53,6 +53,7 @@ app.use( '/api/medium', require( './routes/medium' ) );
 app.use( '/api/medium/post', require( './routes/medium.post' ) );
 app.use( '/api/media', require( './routes/media' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
+app.use( '/api/utility', require( './routes/utility' ) );
 
 // Listen
 var server = app.listen( config.server.port, function() {

@@ -106,8 +106,11 @@ router.get( '/guid/:id/media', ( req, res ) => {
   res.json( media );
 } );
 
-// Read single post by ID
-router.get( '/guid', ( req, res ) => {
+// Read single post by GUID
+router.get( '/guid/:id', ( req, res ) => {
+  let buffer = new Buffer.from( req.params.id, 'base64' );
+  let guid = buffer.toString( 'utf-8' );  
+
   let post = req.db.prepare( `
     SELECT
       BlogPost.uuid AS "id",
@@ -132,7 +135,7 @@ router.get( '/guid', ( req, res ) => {
       BlogPost.guid = ?
   ` )
   .get( 
-    req.query.guid 
+    guid 
   );
 
   if( post === undefined ) {
@@ -184,13 +187,13 @@ router.post( '/:post/media/:media', ( req, res ) => {
 
   let ids = req.db.prepare( `
     SELECT
-      Post.id AS "post_id",
+      BlogPost.id AS "post_id",
       Media.id AS "media_id"
     FROM
-      Media,
-      Post
+      BlogPost,   
+      Media
     WHERE
-      Post.uuid = ? AND
+      BlogPost.uuid = ? AND
       Media.uuid = ?
   ` )
   .get( 

@@ -60,7 +60,7 @@ router.post( '/recognition', async ( req, res ) => {
 
     for( let c = 0; c < data.images[i].classifiers.length; c++ ) {
       for( let s = 0; s < data.images[i].classifiers[c].classes.length; s++ ) {
-        results.push( data.images[i].classifiers[c].classes[s].class );
+        results.push( data.images[i].classifiers[c].classes[s].class.toLowerCase() );
       }
     }
   }

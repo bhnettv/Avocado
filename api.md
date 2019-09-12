@@ -235,3 +235,17 @@
               "url": "something.com/complete/image/path"
             }
   
+    Utility
+    ===
+    GET     /api/utility/images                 Extract images from URL
+            Query: url                          URL of HTML page (Base64 encoded)
+            Query: scan                         Check database for existing
+                   (true)                       Only images not in database
+                   false                        Do not check database
+            Query: check                        Validate image types
+                   NONE                         Do not validate, return all
+                   (EXTENSION)                  Check extension in accept list
+                   MIME                         Check MIME type in accept list
+            Query: accept                       List of accepted types
+                   (jpeg,jpg,tif,png,gif)       Images accepted by Watson
+                   
