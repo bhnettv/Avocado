@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 🏷 ️Label
+  description: Paths and components
+  contact:
+    email: parkerkrhoyt@gmail.com  
+  license:
+    name: MIT
+externalDocs:
+  description: Find out more about Avocado
+  url: http://kevinhoyt.com
+servers:
+- url: http://localhost:8000/api
+tags:
+- name: 🏷️ Label
+  description: Logical groupings of developers (tagging)    
+paths:
+  /label:
+    get:
+      tags:
+      - 🏷️ Label
+      summary: Read all available labels
+      operationId: getLabels
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'label.yaml#/components/schemas/Label'
+    post:
+      tags:
+      - 🏷️ Label
+      summary: Create a new label
+      operationId: createLabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: 'label.yaml#/components/schemas/Label'        
+  /label/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID field for desired label
+      required: true
+      schema:
+        type: string
+        format: uuid      
+    get:
+      tags:
+      - 🏷️ Label
+      summary: Read specific label by ID
+      operationId: getLabelByID
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: 'label.yaml#/components/schemas/Label'
+    put:
+      tags:
+      - 🏷️ Label
+      summary: Update specific label by ID
+      operationId: updateLabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: 'label.yaml#/components/schemas/Label'
+    delete:
+      tags:
+      - 🏷️ Label
+      summary: Delete specific label by ID
+      operationId: deleteLabelByID
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+components:
+  schemas:
+    Label:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: IBM  

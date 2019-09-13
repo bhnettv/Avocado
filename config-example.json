@@ -1,0 +1,20 @@
+{
+  "server": {
+    "mode": "development",
+    "database": {
+      "development": "avocado_dev.sqlite3",
+      "production": "avocado.sqlite3"
+    },
+    "port": 8000
+  },
+  "watson": {
+    "nlu": {
+      "key": "apikey",
+      "secret": "_WATSON_NLU_SECRET_"      
+    },
+    "recognition": {
+      "key": "apikey",
+      "secret": "_WATSON_RECOGNITION_SECRET_"
+    }
+  }
+}

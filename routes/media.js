@@ -10,7 +10,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single media by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let media = req.db.prepare( `
     SELECT
       Media.uuid AS "id",
@@ -45,7 +45,7 @@ router.get( '/', ( req, res ) => {
       Media.keywords
     FROM 
       Media
-    ORDER BY Media.updated_at DESC
+    ORDER BY datetime( Media.updated_at ) DESC
   ` )
   .all();
 
@@ -86,7 +86,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -109,8 +109,25 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
+  record = req.db.prepare( `
+    SELECT
+      Media.uuid AS "id",
+      Media.created_at, 
+      Media.updated_at,
+      Media.url,
+      Media.keywords
+    FROM 
+      Media
+    WHERE 
+      Media.uuid = ?  
+  ` )
+  .get(
+    record.uuid
+  );
+
   res.json( {
-    id: record.uuid,
+    id: record.id,
+    created_at: record.created_at,
     updated_at: record.updated_at,
     url: record.url,
     keywords: record.keywords
@@ -118,7 +135,7 @@ router.put( '/id/:id', ( req, res ) => {
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Media
     WHERE Media.uuid = ?

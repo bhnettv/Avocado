@@ -10,7 +10,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single blog by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let blog = req.db.prepare( `
     SELECT
       Blog.uuid AS "id",
@@ -51,7 +51,7 @@ router.get( '/', ( req, res ) => {
       Developer,
       Blog
     WHERE Blog.developer_id = Developer.id
-    ORDER BY Blog.updated_at DESC
+    ORDER BY datetime( Blog.updated_at ) DESC
   ` )
   .all();
 
@@ -105,7 +105,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -141,17 +141,30 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    url: record.url,
-    feed: record.feed
-  } );  
+  record = req.db.prepare( `
+    SELECT
+      Blog.uuid AS "id",
+      Blog.created_at, 
+      Blog.updated_at,
+      Developer.uuid AS "developer_id",
+      Blog.url,
+      Blog.feed
+    FROM 
+      Developer, 
+      Blog
+    WHERE 
+      Blog.developer_id = Developer.id AND
+      Blog.uuid = ?
+  ` )
+  .get( 
+    record.uuid
+  );
+
+  res.json( record );  
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Blog
     WHERE Blog.uuid = ?

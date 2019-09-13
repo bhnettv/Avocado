@@ -10,7 +10,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single developer by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let developer = req.db.prepare( `
     SELECT
       Developer.uuid AS "id",
@@ -184,7 +184,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -216,15 +216,26 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    first: record.first,
-    last: record.last,
-    nickname: record.nickname,
-    email: record.email,
-    notes: record.notes
-  } );  
+  record = req.db.prepare( `
+    SELECT
+      Developer.uuid AS "id",
+      Developer.created_at,
+      Developer.updated_at,
+      Developer.first,
+      Developer.last,
+      Developer.nickname,
+      Developer.email,
+      Developer.notes
+    FROM
+      Developer
+    WHERE
+      Developer.uuid = ?
+  ` )
+  .get( 
+    record.uuid
+  );    
+
+  res.json( record );  
 } );
 
 // Remove developer from label
@@ -263,7 +274,7 @@ router.delete( '/:developer/label/:label', ( req, res ) => {
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Developer
     WHERE Developer.uuid = ?

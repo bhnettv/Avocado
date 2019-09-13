@@ -1,0 +1,1192 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 🥑 Avocado
+  description: Developer Relations means relating to developers. There are millions of
+    developers. How do you relate to them all? What are your metrics? Where do
+    you even get started? Avocado is an out-of-the-box developer relations
+    system, with your success at heart. ❤️️
+  contact:
+    email: parkerkrhoyt@gmail.com
+  license:
+    name: MIT
+externalDocs:
+  description: Find out more about Avocado
+  url: http://kevinhoyt.com
+servers:
+  - url: http://localhost:8000/api
+tags:
+  - name: 🏷️ Label
+    description: Logical groupings of developers (tagging)
+  - name: 🖥️ Developer
+    description: Individual developers - and advocates
+  - name: 🖼️ Media
+    description: Media (image files) associated with content aggregation
+  - name: 📓 Blog
+    description: Blog feeds to aggregate
+  - name: 📓 📝 Blog Post
+    description: Post made to a personal blog
+paths:
+  /label:
+    get:
+      tags:
+        - 🏷️ Label
+      summary: Read all available labels
+      operationId: getLabels
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
+    post:
+      tags:
+        - 🏷️ Label
+      summary: Create a new label
+      operationId: createLabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
+                  schema/items"
+  "/label/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired label
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🏷️ Label
+      summary: Read specific label by ID
+      operationId: getLabelByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
+                  schema/items"
+    put:
+      tags:
+        - 🏷️ Label
+      summary: Update specific label by ID
+      operationId: updateLabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
+                  schema/items"
+    delete:
+      tags:
+        - 🏷️ Label
+      summary: Delete specific label by ID
+      operationId: deleteLabelByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /developer:
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Read all developers
+      operationId: getDevelopers
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - first
+                    - last
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    first:
+                      type: string
+                      example: Kevin
+                    last:
+                      type: string
+                      example: Hoyt
+                    nickname:
+                      type: string
+                      example: The Dude
+                    email:
+                      type: string
+                      example: krhoyt@us.ibm.com
+                    notes:
+                      type: string
+                      example: That creep can roll, man!
+    post:
+      tags:
+        - 🖥️ Developer
+      summary: Create a new developer
+      operationId: createDeveloper
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: Kevin
+                last:
+                  type: string
+                  example: Hoyt
+                nickname:
+                  type: string
+                  example: The Dude
+                email:
+                  type: string
+                  example: krhoyt@us.ibm.com
+                notes:
+                  type: string
+                  example: That creep can roll, man!
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1developer/get/responses/200/content/application~1j\
+                  son/schema/items"
+  "/developer/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired developer
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Read specific developer by ID
+      operationId: getDeveloperByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - first
+                  - last
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  first:
+                    type: string
+                    example: Kevin
+                  last:
+                    type: string
+                    example: Hoyt
+                  nickname:
+                    type: string
+                    example: The Dude
+                  email:
+                    type: string
+                    example: krhoyt@us.ibm.com
+                  notes:
+                    type: string
+                    example: That creep can roll, man!
+    put:
+      tags:
+        - 🖥️ Developer
+      summary: Update specific developer by ID
+      operationId: updateDeveloper
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: Kevin
+                last:
+                  type: string
+                  example: Hoyt
+                nickname:
+                  type: string
+                  example: The Dude
+                email:
+                  type: string
+                  example: krhoyt@us.ibm.com
+                notes:
+                  type: string
+                  example: That creep can roll, man!
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1developer~1%7Bid%7D/get/responses/200/content/appl\
+                  ication~1json/schema"
+    delete:
+      tags:
+        - 🖥️ Developer
+      summary: Delete specific developer by ID
+      operationId: deleteDeveloperByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /media:
+    get:
+      tags:
+        - 🖼️ Media
+      summary: Read all available media
+      operationId: getMedias
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - url
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    url:
+                      type: string
+                      example: http://something.com
+                    keywords:
+                      type: string
+                      example: eagle,landed,moon
+    post:
+      tags:
+        - 🖼️ Media
+      summary: Create a new media reference
+      operationId: createMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: http://something.com
+                keywords:
+                  type: string
+                  example: eagle,landed,moon
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1media/get/responses/200/content/application~1json/\
+                  schema/items"
+  "/media/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired media reference
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖼️ Media
+      summary: Read specific media reference by ID
+      operationId: getMediaByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - url
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  url:
+                    type: string
+                    example: http://something.com
+                  keywords:
+                    type: string
+                    example: eagle,landed,moon
+    put:
+      tags:
+        - 🖼️ Media
+      summary: Update specific media reference by ID
+      operationId: updateMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: http://something.com
+                keywords:
+                  type: string
+                  example: eagle,landed,moon
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1media~1%7Bid%7D/get/responses/200/content/applicat\
+                  ion~1json/schema"
+    delete:
+      tags:
+        - 🖼️ Media
+      summary: Delete specific media reference by ID
+      operationId: deleteMediaByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /blog:
+    get:
+      tags:
+        - 📓 Blog
+      summary: Read all available blog feeds
+      operationId: getBlogs
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - url
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    url:
+                      type: string
+                      example: http://something.com
+                    feed:
+                      type: string
+                      example: http://something.com
+    post:
+      tags:
+        - 📓 Blog
+      summary: Create a new blog feed source
+      operationId: createBlog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                url:
+                  type: string
+                  example: http://something.com
+                feed:
+                  type: string
+                  example: http://something.com
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1blog/get/responses/200/content/application~1json/s\
+                  chema/items"
+  "/blog/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired blog feed
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 📓 Blog
+      summary: Read specific blog feed by ID
+      operationId: getBlogByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - url
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  url:
+                    type: string
+                    example: http://something.com
+                  feed:
+                    type: string
+                    example: http://something.com
+    put:
+      tags:
+        - 📓 Blog
+      summary: Update specific blog feed by ID
+      operationId: updateBlog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                url:
+                  type: string
+                  example: http://something.com
+                feed:
+                  type: string
+                  example: http://something.com
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1blog~1%7Bid%7D/get/responses/200/content/applicati\
+                  on~1json/schema"
+    delete:
+      tags:
+        - 📓 Blog
+      summary: Delete specific blog feed by ID
+      operationId: deleteBlogByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /blog/post:
+    get:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Read all available blog posts
+      operationId: getBlogPosts
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - blog_id
+                    - published_at
+                    - guid
+                    - link
+                    - title
+                    - summary
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    blog_id:
+                      type: string
+                      format: uuid
+                    published_at:
+                      type: string
+                      format: date-time
+                    guid:
+                      type: string
+                      format: uuid
+                    link:
+                      type: string
+                      example: http://something.com
+                    title:
+                      type: string
+                      example: Friends
+                    summary:
+                      type: string
+                      example: How you doin'?!
+                    views:
+                      type: integer
+                      example: 0
+                    category:
+                      type: string
+                      example: sitcom,television
+                    keywords:
+                      type: string
+                      example: natural,language,understanding
+                    concepts:
+                      type: string
+                      example: natural,language,understanding
+                    entities:
+                      type: string
+                      example: natural,language,understanding
+    post:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Create a new blog post
+      operationId: createBlogPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blog_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Friends
+                summary:
+                  type: string
+                  example: How you doin'?!
+                views:
+                  type: integer
+                  example: 0
+                category:
+                  type: string
+                  example: sitcom,television
+                keywords:
+                  type: string
+                  example: natural,language,understanding
+                concepts:
+                  type: string
+                  example: natural,language,understanding
+                entities:
+                  type: string
+                  example: natural,language,understanding
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1blog~1post/get/responses/200/content/application~1\
+                  json/schema/items"
+  "/blog/post/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired blog feed
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Read specific blog post by ID
+      operationId: getBlogPostByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - blog_id
+                  - published_at
+                  - guid
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  blog_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Friends
+                  summary:
+                    type: string
+                    example: How you doin'?!
+                  views:
+                    type: integer
+                    example: 0
+                  category:
+                    type: string
+                    example: sitcom,television
+                  keywords:
+                    type: string
+                    example: natural,language,understanding
+                  concepts:
+                    type: string
+                    example: natural,language,understanding
+                  entities:
+                    type: string
+                    example: natural,language,understanding
+    put:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Update specific blog post by ID
+      operationId: updateBlogPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blog_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Friends
+                summary:
+                  type: string
+                  example: How you doin'?!
+                views:
+                  type: integer
+                  example: 0
+                category:
+                  type: string
+                  example: sitcom,television
+                keywords:
+                  type: string
+                  example: natural,language,understanding
+                concepts:
+                  type: string
+                  example: natural,language,understanding
+                entities:
+                  type: string
+                  example: natural,language,understanding
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1blog~1post~1%7Bid%7D/get/responses/200/content/app\
+                  lication~1json/schema"
+    delete:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Delete specific blog post by ID
+      operationId: deleteBlogPostByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/blog/post/guid/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: GUID field for specific blog post (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Read specific blog post by GUID
+      operationId: getBlogPostByGUID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - blog_id
+                  - published_at
+                  - guid
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  blog_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Friends
+                  summary:
+                    type: string
+                    example: How you doin'?!
+                  views:
+                    type: integer
+                    example: 0
+                  category:
+                    type: string
+                    example: sitcom,television
+                  keywords:
+                    type: string
+                    example: natural,language,understanding
+                  concepts:
+                    type: string
+                    example: natural,language,understanding
+                  entities:
+                    type: string
+                    example: natural,language,understanding
+  "/blog/post/{id}/media":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for specific blog post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Read all available media for given blog post
+      operationId: getBlogPostMedia
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - url
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    url:
+                      type: string
+                      example: http://something.com
+                    keywords:
+                      type: string
+                      example: eagle,landed,moon
+    post:
+      tags:
+        - 📓 📝 Blog Post
+      summary: Create a new reference between a blog post and media
+      operationId: createBlogPostMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                media_id:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  post_id:
+                    type: string
+                    format: uuid
+                  media_id:
+                    type: string
+                    format: uuid
+components:
+  schemas:
+    Label:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: IBM
+    Developer:
+      required:
+        - first
+        - last
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        first:
+          type: string
+          example: Kevin
+        last:
+          type: string
+          example: Hoyt
+        nickname:
+          type: string
+          example: The Dude
+        email:
+          type: string
+          example: krhoyt@us.ibm.com
+        notes:
+          type: string
+          example: That creep can roll, man!
+    Media:
+      required:
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+          example: http://something.com
+        keywords:
+          type: string
+          example: eagle,landed,moon
+    Blog:
+      required:
+        - developer_id
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          example: http://something.com
+        feed:
+          type: string
+          example: http://something.com
+    BlogPost:
+      required:
+        - blog_id
+        - published_at
+        - guid
+        - link
+        - title
+        - summary
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        blog_id:
+          type: string
+          format: uuid
+        published_at:
+          type: string
+          format: date-time
+        guid:
+          type: string
+          format: uuid
+        link:
+          type: string
+          example: http://something.com
+        title:
+          type: string
+          example: Friends
+        summary:
+          type: string
+          example: How you doin'?!
+        views:
+          type: integer
+          example: 0
+        category:
+          type: string
+          example: sitcom,television
+        keywords:
+          type: string
+          example: natural,language,understanding
+        concepts:
+          type: string
+          example: natural,language,understanding
+        entities:
+          type: string
+          example: natural,language,understanding
+    BlogPostMedia:
+      required:
+        - post_id
+        - media_id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        post_id:
+          type: string
+          format: uuid
+        media_id:
+          type: string
+          format: uuid

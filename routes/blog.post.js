@@ -10,13 +10,13 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single post by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let post = req.db.prepare( `
     SELECT
       BlogPost.uuid AS "id",
       BlogPost.created_at,
       BlogPost.updated_at,
-      BlogPost.blog_id,
+      Blog.uuid AS "blog_id",
       BlogPost.published_at,
       BlogPost.guid,
       BlogPost.link,
@@ -45,7 +45,7 @@ router.get( '/id/:id', ( req, res ) => {
   res.json( post );
 } );
 
-// Read media for specific post
+// Read all media for specific post
 router.get( '/:id/media', ( req, res ) => {
   let media = req.db.prepare( `
     SELECT
@@ -63,53 +63,19 @@ router.get( '/:id/media', ( req, res ) => {
       BlogPostMedia.post_id = BlogPost.id AND
       BlogPost.uuid = ?
   ` )
-  .get( 
+  .all( 
     req.params.id 
   );
-
-  if( media === undefined ) {
-    media = null;
-  }
-
-  res.json( media );
-} );
-
-// Read media for specific post by GUID
-router.get( '/guid/:id/media', ( req, res ) => {
-  let buffer = new Buffer( req.params.id, 'base64' );
-  let guid = buffer.toString( 'ascii' );
-  
-  let media = req.db.prepare( `
-    SELECT
-      Media.uuid AS "id",
-      Media.created_at,
-      Media.updated_at,
-      Media.url,
-      Media.keywords
-    FROM 
-      Media,
-      BlogPost,
-      BlogPostMedia
-    WHERE 
-      Media.id = BlogPostMedia.media_id AND
-      BlogPostMedia.post_id = BlogPost.id AND
-      BlogPost.guid = ?
-  ` )
-  .get( 
-    guid 
-  );
-
-  if( media === undefined ) {
-    media = null;
-  }
 
   res.json( media );
 } );
 
 // Read single post by GUID
+// GUIDs are often URLs
+// Base64 encoded
 router.get( '/guid/:id', ( req, res ) => {
   let buffer = new Buffer.from( req.params.id, 'base64' );
-  let guid = buffer.toString( 'utf-8' );  
+  let guid = buffer.toString( 'utf8' );  
 
   let post = req.db.prepare( `
     SELECT
@@ -152,7 +118,7 @@ router.get( '/', ( req, res ) => {
       BlogPost.uuid AS "id",
       BlogPost.created_at,
       BlogPost.updated_at,
-      BlogPost.blog_id,
+      Blog.uuid AS "blog_id",
       BlogPost.published_at,
       BlogPost.guid,
       BlogPost.link,
@@ -167,7 +133,7 @@ router.get( '/', ( req, res ) => {
       Blog,
       BlogPost
     WHERE BlogPost.blog_id = Blog.id
-    ORDER BY BlogPost.published_at DESC
+    ORDER BY datetime( BlogPost.published_at ) DESC
   ` )
   .all();
 
@@ -175,14 +141,14 @@ router.get( '/', ( req, res ) => {
 } );
 
 // Associate media with post
-router.post( '/:post/media/:media', ( req, res ) => {
+router.post( '/:id/media', ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    post_uuid: req.params.post,
-    media_uuid: req.params.media
+    post_uuid: req.params.id,
+    media_uuid: req.body.media_id
   };
 
   let ids = req.db.prepare( `
@@ -296,7 +262,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -354,21 +320,34 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    blog_uuid: req.body.blog_id,
-    published_at: req.body.published_at,
-    guid: req.body.guid,
-    link: req.body.link,
-    title: req.body.title,
-    summary: req.body.summary,
-    views: req.body.views,
-    category: req.body.category,
-    keywords: req.body.keywords,
-    concepts: req.body.concepts,
-    entities: req.body.entities    
-  } );  
+  record = req.db.prepare( `
+    SELECT
+      BlogPost.uuid AS "id",
+      BlogPost.created_at,
+      BlogPost.updated_at,
+      Blog.uuid AS "blog_id",
+      BlogPost.published_at,
+      BlogPost.guid,
+      BlogPost.link,
+      BlogPost.title,
+      BlogPost.summary,
+      BlogPost.views,
+      BlogPost.category,
+      BlogPost.keywords,
+      BlogPost.concepts,
+      BlogPost.entities
+    FROM 
+      Blog,
+      BlogPost
+    WHERE 
+      BlogPost.blog_id = Blog.id AND
+      BlogPost.uuid = ?
+  ` )
+  .get( 
+    record.uuid 
+  );
+
+  res.json( record );  
 } );
 
 // Remove media associated with post
@@ -407,7 +386,7 @@ router.delete( '/:post/media/:media', ( req, res ) => {
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM BlogPost
     WHERE BlogPost.uuid = ?

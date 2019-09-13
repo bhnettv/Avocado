@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 🥑 Avocado
+  description: 'Developer Relations means relating to developers. There are millions of developers. How do you relate to them all? What are your metrics? Where do you even get started? Avocado is an out-of-the-box developer relations system, with your success at heart. ❤️️'
+  contact:
+    email: parkerkrhoyt@gmail.com
+  license:
+    name: MIT    
+externalDocs:
+  description: Find out more about Avocado
+  url: http://kevinhoyt.com
+servers:
+- url: http://localhost:8000/api
+tags:
+- name: 🏷️ Label
+  description: Logical groupings of developers (tagging)
+- name: 🖥️ Developer
+  description: Individual developers - and advocates
+- name: 🖼️ Media
+  description: Media (image files) associated with content aggregation
+- name: 📓 Blog
+  description: Blog feeds to aggregate
+- name: 📓 📝 Blog Post
+  description: Post made to a personal blog
+paths:
+  /label:          
+    $ref: 'label.yaml#/paths/~1label'
+  /label/{id}:
+    $ref: 'label.yaml#/paths/~1label~1{id}'
+  /developer:          
+    $ref: 'developer.yaml#/paths/~1developer'
+  /developer/{id}:
+    $ref: 'developer.yaml#/paths/~1developer~1{id}'
+  /media:          
+    $ref: 'media.yaml#/paths/~1media'
+  /media/{id}:
+    $ref: 'media.yaml#/paths/~1media~1{id}'        
+  /blog:          
+    $ref: 'blog.yaml#/paths/~1blog'
+  /blog/{id}:
+    $ref: 'blog.yaml#/paths/~1blog~1{id}'    
+  /blog/post:          
+    $ref: 'blog-post.yaml#/paths/~1blog~1post'        
+  /blog/post/{id}:
+    $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}'
+  /blog/post/guid/{id}:
+    $ref: 'blog-post.yaml#/paths/~1blog~1post~1guid~1{id}'
+  /blog/post/{id}/media:
+    $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}~1media'            
+components:
+  schemas:
+    Label:
+      $ref: 'label.yaml#/components/schemas/Label'
+    Developer:
+      $ref: 'developer.yaml#/components/schemas/Developer'
+    Media:
+      $ref: 'media.yaml#/components/schemas/Media'      
+    Blog:
+      $ref: 'blog.yaml#/components/schemas/Blog'            
+    BlogPost:
+      $ref: 'blog-post.yaml#/components/schemas/BlogPost'                  
+    BlogPostMedia:
+      $ref: 'blog-post.yaml#/components/schemas/BlogPostMedia'                        

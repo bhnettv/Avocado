@@ -177,11 +177,20 @@ router.put( '/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    name: record.name
-  } );  
+  record = req.db.prepare( `
+    SELECT
+      Label.uuid AS "id",
+      Label.created_at, 
+      Label.updated_at,
+      Label.name
+    FROM Label
+    WHERE Label.uuid = ?
+  ` )
+  .get( 
+    record.uuid
+  );  
+
+  res.json( record );  
 } );
 
 // Delete

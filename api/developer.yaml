@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: ️🖥️ Developer
+  description: Paths and components
+  contact:
+    email: parkerkrhoyt@gmail.com  
+  license:
+    name: MIT
+externalDocs:
+  description: Find out more about Avocado
+  url: http://kevinhoyt.com
+servers:
+- url: http://localhost:8000/api
+tags:    
+- name: 🖥️ Developer
+  description: Individual developers - and advocates
+paths:
+  /developer:
+    get:
+      tags:
+      - 🖥️ Developer
+      summary: Read all developers
+      operationId: getDevelopers
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Developer'  
+    post:
+      tags:
+      - 🖥️ Developer
+      summary: Create a new developer
+      operationId: createDeveloper
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: Kevin
+                last:
+                  type: string
+                  example: Hoyt
+                nickname:
+                  type: string
+                  example: The Dude
+                email:
+                  type: string
+                  example: krhoyt@us.ibm.com
+                notes: 
+                  type: string
+                  example: That creep can roll, man!
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'  
+  /developer/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID field for desired developer
+      required: true
+      schema:
+        type: string
+        format: uuid      
+    get:
+      tags:
+      - 🖥️ Developer
+      summary: Read specific developer by ID
+      operationId: getDeveloperByID
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+    put:
+      tags:
+      - 🖥️ Developer
+      summary: Update specific developer by ID
+      operationId: updateDeveloper
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: Kevin
+                last:
+                  type: string
+                  example: Hoyt
+                nickname:
+                  type: string
+                  example: The Dude
+                email:
+                  type: string
+                  example: krhoyt@us.ibm.com
+                notes: 
+                  type: string
+                  example: That creep can roll, man!
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+    delete:
+      tags:
+      - 🖥️ Developer
+      summary: Delete specific developer by ID
+      operationId: deleteDeveloperByID
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid                                 
+components:
+  schemas:
+    Developer:
+      required:
+      - first
+      - last
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        first:
+          type: string
+          example: Kevin
+        last:
+          type: string
+          example: Hoyt
+        nickname:
+          type: string
+          example: The Dude
+        email:
+          type: string
+          example: krhoyt@us.ibm.com
+        notes:
+          type: string
+          example: That creep can roll, man!
