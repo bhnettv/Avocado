@@ -350,8 +350,13 @@ paths:
                       type: string
                       example: http://something.com
                     keywords:
-                      type: string
-                      example: eagle,landed,moon
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - eagle
+                        - landed
+                        - moon
     post:
       tags:
         - 🖼️ Media
@@ -368,8 +373,13 @@ paths:
                   type: string
                   example: http://something.com
                 keywords:
-                  type: string
-                  example: eagle,landed,moon
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - eagle
+                    - landed
+                    - moon
       responses:
         "200":
           description: successful operation
@@ -415,8 +425,13 @@ paths:
                     type: string
                     example: http://something.com
                   keywords:
-                    type: string
-                    example: eagle,landed,moon
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - eagle
+                      - landed
+                      - moon
     put:
       tags:
         - 🖼️ Media
@@ -433,8 +448,13 @@ paths:
                   type: string
                   example: http://something.com
                 keywords:
-                  type: string
-                  example: eagle,landed,moon
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - eagle
+                    - landed
+                    - moon
       responses:
         "200":
           description: successful operation
@@ -667,17 +687,36 @@ paths:
                       type: integer
                       example: 0
                     category:
-                      type: string
-                      example: sitcom,television
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - sitcom
+                        - television
                     keywords:
-                      type: string
-                      example: natural,language,understanding
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
                     concepts:
-                      type: string
-                      example: natural,language,understanding
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
                     entities:
-                      type: string
-                      example: natural,language,understanding
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
     post:
       tags:
         - 📓 📝 Blog Post
@@ -712,17 +751,36 @@ paths:
                   type: integer
                   example: 0
                 category:
-                  type: string
-                  example: sitcom,television
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - sitcom
+                    - television
                 keywords:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
                 concepts:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
                 entities:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
       responses:
         "200":
           description: successful operation
@@ -791,17 +849,36 @@ paths:
                     type: integer
                     example: 0
                   category:
-                    type: string
-                    example: sitcom,television
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - sitcom
+                      - television
                   keywords:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
                   concepts:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
                   entities:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
     put:
       tags:
         - 📓 📝 Blog Post
@@ -836,17 +913,36 @@ paths:
                   type: integer
                   example: 0
                 category:
-                  type: string
-                  example: sitcom,television
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - sitcom
+                    - television
                 keywords:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
                 concepts:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
                 entities:
-                  type: string
-                  example: natural,language,understanding
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
       responses:
         "200":
           description: successful operation
@@ -931,17 +1027,36 @@ paths:
                     type: integer
                     example: 0
                   category:
-                    type: string
-                    example: sitcom,television
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - sitcom
+                      - television
                   keywords:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
                   concepts:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
                   entities:
-                    type: string
-                    example: natural,language,understanding
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
   "/blog/post/{id}/media":
     parameters:
       - name: id
@@ -981,8 +1096,13 @@ paths:
                       type: string
                       example: http://something.com
                     keywords:
-                      type: string
-                      example: eagle,landed,moon
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - eagle
+                        - landed
+                        - moon
     post:
       tags:
         - 📓 📝 Blog Post
@@ -1088,8 +1208,13 @@ components:
           type: string
           example: http://something.com
         keywords:
-          type: string
-          example: eagle,landed,moon
+          type: array
+          items:
+            type: string
+          example:
+            - eagle
+            - landed
+            - moon
     Blog:
       required:
         - developer_id
@@ -1155,17 +1280,36 @@ components:
           type: integer
           example: 0
         category:
-          type: string
-          example: sitcom,television
+          type: array
+          items:
+            type: string
+          example:
+            - sitcom
+            - television
         keywords:
-          type: string
-          example: natural,language,understanding
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
         concepts:
-          type: string
-          example: natural,language,understanding
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
         entities:
-          type: string
-          example: natural,language,understanding
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
     BlogPostMedia:
       required:
         - post_id

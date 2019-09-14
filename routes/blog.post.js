@@ -40,6 +40,22 @@ router.get( '/:id', ( req, res ) => {
 
   if( post === undefined ) {
     post = null;
+  } else {
+    if( post.category !== null ) {
+      post.category = post.category.split( ',' );
+    }
+
+    if( post.keywords !== null ) {
+      post.keywords = post.keywords.split( ',' );
+    }
+    
+    if( post.concepts !== null ) {
+      post.concepts = post.concepts.split( ',' );
+    }
+    
+    if( post.entities !== null ) {
+      post.entities = post.entities.split( ',' );
+    }    
   }
 
   res.json( post );
@@ -47,7 +63,7 @@ router.get( '/:id', ( req, res ) => {
 
 // Read all media for specific post
 router.get( '/:id/media', ( req, res ) => {
-  let media = req.db.prepare( `
+  let medias = req.db.prepare( `
     SELECT
       Media.uuid AS "id",
       Media.created_at,
@@ -67,7 +83,13 @@ router.get( '/:id/media', ( req, res ) => {
     req.params.id 
   );
 
-  res.json( media );
+  for( let m = 0; m < medias.length; m++ ) {
+    if( medias[m].keywords !== null ) {
+      medias[m].keywords = medias[m].keywords.split( ',' );
+    }
+  }
+
+  res.json( medias );
 } );
 
 // Read single post by GUID
@@ -106,6 +128,22 @@ router.get( '/guid/:id', ( req, res ) => {
 
   if( post === undefined ) {
     post = null;
+  } else {
+    if( post.category !== null ) {
+      post.category = post.category.split( ',' );
+    }
+
+    if( post.keywords !== null ) {
+      post.keywords = post.keywords.split( ',' );
+    }
+    
+    if( post.concepts !== null ) {
+      post.concepts = post.concepts.split( ',' );
+    }
+    
+    if( post.entities !== null ) {
+      post.entities = post.entities.split( ',' );
+    } 
   }
 
   res.json( post );
@@ -136,6 +174,24 @@ router.get( '/', ( req, res ) => {
     ORDER BY datetime( BlogPost.published_at ) DESC
   ` )
   .all();
+
+  for( let p = 0; p < posts.length; p++ ) {
+    if( posts[p].category !== null ) {
+      posts[p].category = posts[p].category.split( ',' );
+    }
+
+    if( posts[p].keywords !== null ) {
+      posts[p].keywords = posts[p].keywords.split( ',' );
+    }
+    
+    if( posts[p].concepts !== null ) {
+      posts[p].concepts = posts[p].concepts.split( ',' );
+    }
+    
+    if( posts[p].entities !== null ) {
+      posts[p].entities = posts[p].entities.split( ',' );
+    }    
+  }
 
   res.json( posts );
 } );
@@ -211,6 +267,38 @@ router.post( '/', ( req, res ) => {
     entities: req.body.entities
   };
 
+  if( record.category !== null ) {
+    if( record.category.length > 0 ) {
+      record.category = record.category.join( ',' );
+    } else {
+      record.category = null;
+    }
+  }
+
+  if( record.keywords !== null ) {
+    if( record.keywords.length > 0 ) {
+      record.keywords = record.keywords.join( ',' );
+    } else {
+      record.keywords = null;
+    }
+  }  
+
+  if( record.concepts !== null ) {
+    if( record.concepts.length > 0 ) {
+      record.concepts = record.concepts.join( ',' );
+    } else {
+      record.concepts = null;
+    }
+  } 
+  
+  if( record.entities !== null ) {
+    if( record.entities.length > 0 ) {
+      record.entities = record.entities.join( ',' );
+    } else {
+      record.entities = null;
+    }
+  }  
+
   let blog = req.db.prepare( `
     SELECT Blog.id
     FROM Blog
@@ -242,6 +330,22 @@ router.post( '/', ( req, res ) => {
     record.concepts,
     record.entities
   );
+
+  if( record.category !== null ) {
+    record.category = record.category.split( ',' );
+  }
+
+  if( record.keywords !== null ) {
+    record.keywords = record.keywords.split( ',' );
+  }  
+
+  if( record.concepts !== null ) {
+    record.concepts = record.concepts.split( ',' );
+  }
+
+  if( record.entities !== null ) {
+    record.entities = record.entities.split( ',' );
+  }  
 
   res.json( {
     id: record.uuid,
@@ -278,6 +382,38 @@ router.put( '/:id', ( req, res ) => {
     concepts: req.body.concepts,
     entities: req.body.entities    
   };
+
+  if( record.category !== null ) {
+    if( record.category.length > 0 ) {
+      record.category = record.category.join( ',' );
+    } else {
+      record.category = null;
+    }
+  }
+
+  if( record.keywords !== null ) {
+    if( record.keywords.length > 0 ) {
+      record.keywords = record.keywords.join( ',' );
+    } else {
+      record.keywords = null;
+    }
+  }  
+
+  if( record.concepts !== null ) {
+    if( record.concepts.length > 0 ) {
+      record.concepts = record.concepts.join( ',' );
+    } else {
+      record.concepts = null;
+    }
+  } 
+  
+  if( record.entities !== null ) {
+    if( record.entities.length > 0 ) {
+      record.entities = record.entities.join( ',' );
+    } else {
+      record.entities = null;
+    }
+  }
 
   let blog = req.db.prepare( `
     SELECT Blog.id
@@ -346,6 +482,22 @@ router.put( '/:id', ( req, res ) => {
   .get( 
     record.uuid 
   );
+
+  if( record.category !== null ) {
+    record.category = record.category.split( ',' );
+  }
+
+  if( record.keywords !== null ) {
+    record.keywords = record.keywords.split( ',' );
+  }  
+
+  if( record.concepts !== null ) {
+    record.concepts = record.concepts.split( ',' );
+  }
+
+  if( record.entities !== null ) {
+    record.entities = record.entities.split( ',' );
+  }
 
   res.json( record );  
 } );
