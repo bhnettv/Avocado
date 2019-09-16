@@ -30,7 +30,9 @@ router.get( '/:id', ( req, res ) => {
   if( media === undefined ) {
     media = null;
   } else {
-    if( media.keywords !== null ) {
+    if( media.keywords === null ) {
+      media.keywords = [];
+    } else {
       media.keywords = media.keywords.split( ',' );
     }
   }
@@ -54,7 +56,9 @@ router.get( '/', ( req, res ) => {
   .all();
 
   for( let m = 0; m < medias.length; m++ ) {
-    if( medias[m].keywords !== null ) {
+    if( medias[m].keywords === null ) {
+      medias[m].keywords = [];
+    } else {
       medias[m].keywords = medias[m].keywords.split( ',' );
     }
   }
@@ -73,12 +77,10 @@ router.post( '/', ( req, res ) => {
     keywords: req.body.keywords
   };
 
-  if( record.keywords !== null ) {
-    if( record.keywords.length > 0 ) {
-      record.keywords = record.keywords.join( ',' );
-    } else {
-      record.keywords = null;
-    }
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
   }
 
   let info = req.db.prepare( `
@@ -94,7 +96,9 @@ router.post( '/', ( req, res ) => {
     record.keywords
   );
 
-  if( record.keywords !== null ) {
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {
     record.keywords = record.keywords.split( ',' );
   }
 
@@ -116,12 +120,10 @@ router.put( '/:id', ( req, res ) => {
     keywords: req.body.keywords
   };
 
-  if( record.keywords !== null ) {
-    if( record.keywords.length > 0 ) {
-      record.keywords = record.keywords.join( ',' );
-    } else {
-      record.keywords = null;
-    }
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
   }
 
   let info = req.db.prepare( `
@@ -155,7 +157,9 @@ router.put( '/:id', ( req, res ) => {
     record.uuid
   );
 
-  if( record.keywords !== null ) {
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {
     record.keywords = record.keywords.split( ',' );
   }
 
