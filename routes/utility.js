@@ -160,7 +160,9 @@ router.get( '/images/:url', async ( req, res ) => {
   }
 
   // Clean up
-  fs.unlinkSync( local );
+  if( fs.existsSync( path ) ) {
+    fs.unlinkSync( local );
+  }
 
   // Return array of URL strings
   res.json( results );

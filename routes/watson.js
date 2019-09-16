@@ -31,28 +31,10 @@ router.get( '/language/:url', async ( req, res ) => {
     json: true
   } );
 
-  let keywords = reduce( analysis.keywords );
-  
-  if( keywords.length === 0 ) {
-    keywords = null;
-  }
-
-  let concepts = reduce( analysis.concepts );
-  
-  if( concepts.length === 0 ) {
-    concepts = null;
-  }  
-
-  let entities = reduce( analysis.entities );
-  
-  if( entities.length === 0 ) {
-    entities = null;
-  }  
-
   res.json( {
-    keywords: keywords,
-    concepts: concepts,
-    entities: entities
+    keywords: reduce( analysis.keywords ),
+    concepts: reduce( analysis.concepts ),
+    entities: reduce( analysis.entities )
   } );
 } );
 
@@ -87,10 +69,6 @@ router.get( '/vision/:url', async ( req, res ) => {
         results.push( data.images[i].classifiers[c].classes[s].class.toLowerCase() );
       }
     }
-  }
-
-  if( results.length === 0 ) {
-    results = null;
   }
 
   res.json( results );

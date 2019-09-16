@@ -41,19 +41,27 @@ router.get( '/:id', ( req, res ) => {
   if( post === undefined ) {
     post = null;
   } else {
-    if( post.category !== null ) {
+    if( post.category === null ) {
+      post.category = [];
+    } else {
       post.category = post.category.split( ',' );
     }
 
-    if( post.keywords !== null ) {
+    if( post.keywords === null ) {
+      post.keywords = [];
+    } else {
       post.keywords = post.keywords.split( ',' );
     }
     
-    if( post.concepts !== null ) {
+    if( post.concepts === null ) {
+      post.concepts = [];
+    } else {
       post.concepts = post.concepts.split( ',' );
     }
     
-    if( post.entities !== null ) {
+    if( post.entities === null ) {
+      post.entities = [];
+    } else {
       post.entities = post.entities.split( ',' );
     }    
   }
@@ -84,7 +92,9 @@ router.get( '/:id/media', ( req, res ) => {
   );
 
   for( let m = 0; m < medias.length; m++ ) {
-    if( medias[m].keywords !== null ) {
+    if( medias[m].keywords === null ) {
+      medias[m].keywords = [];
+    } else {
       medias[m].keywords = medias[m].keywords.split( ',' );
     }
   }
@@ -129,19 +139,27 @@ router.get( '/guid/:id', ( req, res ) => {
   if( post === undefined ) {
     post = null;
   } else {
-    if( post.category !== null ) {
+    if( post.category === null ) {
+      post.category = [];
+    } else {
       post.category = post.category.split( ',' );
     }
 
-    if( post.keywords !== null ) {
+    if( post.keywords === null ) {
+      post.keywords = [];
+    } else {
       post.keywords = post.keywords.split( ',' );
     }
     
-    if( post.concepts !== null ) {
+    if( post.concepts === null ) {
+      post.concepts = [];
+    } else {
       post.concepts = post.concepts.split( ',' );
     }
     
-    if( post.entities !== null ) {
+    if( post.entities === null ) {
+      post.entities = [];
+    } else {
       post.entities = post.entities.split( ',' );
     } 
   }
@@ -176,19 +194,27 @@ router.get( '/', ( req, res ) => {
   .all();
 
   for( let p = 0; p < posts.length; p++ ) {
-    if( posts[p].category !== null ) {
+    if( posts[p].category === null ) {
+      posts[p].category = [];
+    } else {
       posts[p].category = posts[p].category.split( ',' );
     }
 
-    if( posts[p].keywords !== null ) {
+    if( posts[p].keywords === null ) {
+      posts[p].keywords = [];
+    } else {
       posts[p].keywords = posts[p].keywords.split( ',' );
     }
     
-    if( posts[p].concepts !== null ) {
+    if( posts[p].concepts === null ) {
+      posts[p].concepts = [];
+    } else {
       posts[p].concepts = posts[p].concepts.split( ',' );
     }
     
-    if( posts[p].entities !== null ) {
+    if( posts[p].entities === null ) {
+      posts[p].entities = [];
+    } else {
       posts[p].entities = posts[p].entities.split( ',' );
     }    
   }
@@ -267,37 +293,29 @@ router.post( '/', ( req, res ) => {
     entities: req.body.entities
   };
 
-  if( record.category !== null ) {
-    if( record.category.length > 0 ) {
-      record.category = record.category.join( ',' );
-    } else {
-      record.category = null;
-    }
+  if( record.category.length === 0 ) {
+    record.category = null;
+  } else {
+    record.category = record.category.join( ',' );
   }
 
-  if( record.keywords !== null ) {
-    if( record.keywords.length > 0 ) {
-      record.keywords = record.keywords.join( ',' );
-    } else {
-      record.keywords = null;
-    }
-  }  
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
+  }    
 
-  if( record.concepts !== null ) {
-    if( record.concepts.length > 0 ) {
-      record.concepts = record.concepts.join( ',' );
-    } else {
-      record.concepts = null;
-    }
-  } 
+  if( record.concepts.length === 0 ) {
+    record.concepts = null;
+  } else {
+    record.concepts = record.concepts.join( ',' );
+  }    
   
-  if( record.entities !== null ) {
-    if( record.entities.length > 0 ) {
-      record.entities = record.entities.join( ',' );
-    } else {
-      record.entities = null;
-    }
-  }  
+  if( record.entities.length === 0 ) {
+    record.entities = null;
+  } else {
+    record.entities = record.entities.join( ',' );
+  }    
 
   let blog = req.db.prepare( `
     SELECT Blog.id
@@ -331,19 +349,27 @@ router.post( '/', ( req, res ) => {
     record.entities
   );
 
-  if( record.category !== null ) {
+  if( record.category === null ) {
+    record.category = [];
+  } else {
     record.category = record.category.split( ',' );
   }
 
-  if( record.keywords !== null ) {
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {    
     record.keywords = record.keywords.split( ',' );
   }  
 
-  if( record.concepts !== null ) {
+  if( record.concepts === null ) {
+    record.concepts = [];
+  } else {    
     record.concepts = record.concepts.split( ',' );
   }
 
-  if( record.entities !== null ) {
+  if( record.entities === null ) {
+      record.entities = [];
+  } else {    
     record.entities = record.entities.split( ',' );
   }  
 
@@ -383,37 +409,29 @@ router.put( '/:id', ( req, res ) => {
     entities: req.body.entities    
   };
 
-  if( record.category !== null ) {
-    if( record.category.length > 0 ) {
-      record.category = record.category.join( ',' );
-    } else {
-      record.category = null;
-    }
+  if( record.category.length === 0 ) {
+    record.category = null;
+  } else {
+    record.category = record.category.join( ',' );
   }
 
-  if( record.keywords !== null ) {
-    if( record.keywords.length > 0 ) {
-      record.keywords = record.keywords.join( ',' );
-    } else {
-      record.keywords = null;
-    }
-  }  
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
+  }    
 
-  if( record.concepts !== null ) {
-    if( record.concepts.length > 0 ) {
-      record.concepts = record.concepts.join( ',' );
-    } else {
-      record.concepts = null;
-    }
-  } 
+  if( record.concepts.length === 0 ) {
+    record.concepts = null;
+  } else {
+    record.concepts = record.concepts.join( ',' );
+  }    
   
-  if( record.entities !== null ) {
-    if( record.entities.length > 0 ) {
-      record.entities = record.entities.join( ',' );
-    } else {
-      record.entities = null;
-    }
-  }
+  if( record.entities.length === 0 ) {
+    record.entities = null;
+  } else {
+    record.entities = record.entities.join( ',' );
+  }    
 
   let blog = req.db.prepare( `
     SELECT Blog.id
@@ -483,19 +501,27 @@ router.put( '/:id', ( req, res ) => {
     record.uuid 
   );
 
-  if( record.category !== null ) {
+  if( record.category === null ) {
+    record.category = [];
+  } else {
     record.category = record.category.split( ',' );
   }
 
-  if( record.keywords !== null ) {
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {    
     record.keywords = record.keywords.split( ',' );
   }  
 
-  if( record.concepts !== null ) {
+  if( record.concepts === null ) {
+    record.concepts = [];
+  } else {    
     record.concepts = record.concepts.split( ',' );
   }
 
-  if( record.entities !== null ) {
+  if( record.entities === null ) {
+      record.entities = [];
+  } else {    
     record.entities = record.entities.split( ',' );
   }
 
