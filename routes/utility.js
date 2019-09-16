@@ -160,7 +160,7 @@ router.get( '/images/:url', async ( req, res ) => {
   }
 
   // Clean up
-  if( fs.existsSync( path ) ) {
+  if( fs.existsSync( local ) ) {
     fs.unlinkSync( local );
   }
 
