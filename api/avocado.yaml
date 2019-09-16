@@ -1141,6 +1141,106 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  "/watson/language/{url}":
+    parameters:
+      - name: url
+        in: path
+        description: URL of the document to analyze (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 🧠 Watson
+      summary: Use natural language understanding on a document
+      operationId: getWatsonLanguage
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keywords:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ibm
+                      - cloud
+                      - devrel
+                  concepts:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ibm
+                      - cloud
+                      - devrel
+                  entities:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ibm
+                      - cloud
+                      - devrel
+  "/watson/vision/{url}":
+    parameters:
+      - name: url
+        in: path
+        description: URL of the image to analyze (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 🧠 Watson
+      summary: Use visual recognition on an image
+      operationId: getWatsonImage
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - ibm
+                  - cloud
+                  - devrel
+  "/utility/images/{url}":
+    parameters:
+      - name: url
+        in: path
+        description: URL of the document to scape (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 🧰 Utliity
+      summary: Extract unique images from a document (web page)
+      operationId: getUtilityImages
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - http://something.com/bee.jpg
+                  - http://something.com/whisk.png
+                  - http://something.com/cat.gif
 components:
   schemas:
     Label:

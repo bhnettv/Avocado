@@ -12,7 +12,10 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Analyze a document
-router.post( '/nlu', async ( req, res ) => {
+router.get( '/language/:url', async ( req, res ) => {
+  let buffer = new Buffer.from( req.params.url, 'base64' );
+  let url = buffer.toString( 'utf8' );    
+
   let analysis = await rp( {
     method: 'GET',
     url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze',
@@ -23,20 +26,41 @@ router.post( '/nlu', async ( req, res ) => {
     qs: {
       version: '2019-07-12',
       features: 'keywords,concepts,entities',
-      url: req.body.url
+      url: url
     },
     json: true
   } );
 
+  let keywords = reduce( analysis.keywords );
+  
+  if( keywords.length === 0 ) {
+    keywords = null;
+  }
+
+  let concepts = reduce( analysis.concepts );
+  
+  if( concepts.length === 0 ) {
+    concepts = null;
+  }  
+
+  let entities = reduce( analysis.entities );
+  
+  if( entities.length === 0 ) {
+    entities = null;
+  }  
+
   res.json( {
-    keywords: reduce( analysis.keywords ),
-    concepts: reduce( analysis.concepts ),
-    entities: reduce( analysis.entities )
+    keywords: keywords,
+    concepts: concepts,
+    entities: entities
   } );
 } );
 
 // Analyze an image file
-router.post( '/recognition', async ( req, res ) => {
+router.get( '/vision/:url', async ( req, res ) => {
+  let buffer = new Buffer.from( req.params.url, 'base64' );
+  let url = buffer.toString( 'utf8' );    
+
   let data = await rp( {
     url: 'https://gateway.watsonplatform.net/visual-recognition/api/v3/classify',
     method: 'GET',
@@ -45,7 +69,7 @@ router.post( '/recognition', async ( req, res ) => {
       pass: req.config.watson.recognition.secret
     },
     qs: {
-      url: req.body.url,
+      url: url,
       version: '2018-03-19'
     },
     json: true
@@ -65,9 +89,11 @@ router.post( '/recognition', async ( req, res ) => {
     }
   }
 
-  res.json( {
-    keywords: results.join( ',' )
-  } );
+  if( results.length === 0 ) {
+    results = null;
+  }
+
+  res.json( results );
 } );
 
 function reduce( values ) {
@@ -118,6 +144,9 @@ function reduce( values ) {
     }
   }
 
+  return unique;
+
+  /*
   let csv = unique.join( ',' );
 
   if( csv.length > 255 ) {
@@ -125,8 +154,9 @@ function reduce( values ) {
     let index = csv.lastIndexOf( ',' );
     csv = csv.substr( 0, index );
   }
+  */
 
-  return csv;
+  // return csv;
 }   
 
 // Export

@@ -16,7 +16,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Extract images from URL
-router.get( '/images', async ( req, res ) => {
+router.get( '/images/:url', async ( req, res ) => {
   let accept = null;
   let check = null;
   let scan = null;
@@ -45,7 +45,7 @@ router.get( '/images', async ( req, res ) => {
 
   // Get page URL from query string
   // Base64 for safe URL encoding
-  let buffer = new Buffer.from( req.query.url, 'base64' );
+  let buffer = new Buffer.from( req.params.url, 'base64' );
   let uri = buffer.toString( 'utf8' );  
 
   // Load page

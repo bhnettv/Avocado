@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 🧰 Utliity
+  description: Paths and components
+  contact:
+    email: parkerkrhoyt@gmail.com
+  license:
+    name: MIT
+externalDocs:
+  description: Find out more about Avocado
+  url: http://kevinhoyt.com
+servers:
+- url: http://localhost:8000/api
+tags:
+- name: 🧰 Utliity
+  description: Tools used that are unrelated to storage
+paths:
+ /utility/images/{url}:
+    parameters:
+    - name: url
+      in: path
+      description: URL of the document to scape (Base64, UTF-8)
+      required: true
+      schema:
+        type: string
+        format: byte 
+    get:    
+      tags:
+      - 🧰 Utliity
+      summary: Extract unique images from a document (web page)
+      operationId: getUtilityImages
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ['http://something.com/bee.jpg', 'http://something.com/whisk.png', 'http://something.com/cat.gif']

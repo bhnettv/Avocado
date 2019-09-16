@@ -48,6 +48,12 @@ paths:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1guid~1{id}'
   /blog/post/{id}/media:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}~1media'            
+  /watson/language/{url}:
+    $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
+  /watson/vision/{url}:
+    $ref: 'watson.yaml#/paths/~1watson~1vision~1{url}'
+  /utility/images/{url}:
+    $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'            
 components:
   schemas:
     Label:
