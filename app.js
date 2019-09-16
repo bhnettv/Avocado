@@ -8,9 +8,16 @@ var parser = require( 'body-parser' );
 var config = jsonfile.readFileSync( 'config.json' );
 
 // Database
-var db = new Database( config.server.database[config.server.mode], { 
-	verbose: console.log 
-} );
+var db = null;
+
+// Verbose for development
+if( config.server.mode === 'production' ) {
+	db = new Database( config.server.database[config.server.mode] );
+} else {
+	db = new Database( config.server.database[config.server.mode], { 
+		verbose: console.log 
+	} );
+}
 
 // Application
 var app = express();

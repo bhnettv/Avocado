@@ -319,6 +319,128 @@ paths:
                   id:
                     type: string
                     format: uuid
+  "/developer/{id}/label":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired developer
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get labels associated with a developer by their ID
+      operationId: getDeveloperLabelsByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
+    post:
+      tags:
+        - 🖥️ Developer
+      summary: Associate a specific developer with a label
+      operationId: createDeveloperLabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label_id:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  label_id:
+                    type: string
+                    format: uuid
+  "/developer/label/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired label
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get developers associated with a specific label
+      operationId: getDeveloperLabels
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    first:
+                      type: string
+                      example: Kevin
+                    last:
+                      type: string
+                      example: Hoyt
+                    nickname:
+                      type: string
+                      example: The Dude
+                    email:
+                      type: string
+                      example: krhoyt@us.ibm.com
+                    notes:
+                      type: string
+                      example: That creep can roll, man!
   /media:
     get:
       tags:

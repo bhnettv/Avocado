@@ -9,6 +9,56 @@ router.get( '/test', ( req, res ) => {
   res.json( {developer: 'Test'} );
 } );
 
+// Read all developers for given label
+router.get( '/label/:id', ( req, res ) => {
+  let developers = req.db.prepare( `
+    SELECT
+      Developer.uuid AS "id",
+      Developer.created_at, 
+      Developer.updated_at,
+      Developer.first,
+      Developer.last,
+      Developer.nickname,
+      Developer.email,
+      Developer.notes
+    FROM 
+      Developer,
+      DeveloperLabel,
+      Label
+    WHERE 
+      Developer.id = DeveloperLabel.developer_id AND
+      DeveloperLabel.label_id = Label.id AND
+      Label.uuid = ?
+  ` )
+  .all( 
+    req.params.id 
+  );
+
+  res.json( developers );
+} );
+
+// Read labels for given developer
+router.get( '/:id/label', ( req, res ) => {
+  let labels = req.db.prepare( `
+    SELECT 
+      Label.uuid AS "id",
+      Label.created_at, 
+      Label.updated_at, 
+      Label.name
+    FROM 
+      Developer, DeveloperLabel, Label
+    WHERE 
+      Label.id = DeveloperLabel.label_id AND
+      DeveloperLabel.developer_id = Developer.id AND
+      Developer.uuid = ?
+  ` )
+  .all( 
+    req.params.id 
+  );
+
+  res.json( labels );
+} );
+
 // Read single developer by ID
 router.get( '/:id', ( req, res ) => {
   let developer = req.db.prepare( `
@@ -37,38 +87,6 @@ router.get( '/:id', ( req, res ) => {
   res.json( developer );
 } );
 
-// Read developers by label
-router.get( '/label/:id', ( req, res ) => {
-  let developers = req.db.prepare( `
-    SELECT
-      Developer.uuid AS "id",
-      Developer.created_at, 
-      Developer.updated_at,
-      Developer.first,
-      Developer.last,
-      Developer.nickname,
-      Developer.email,
-      Developer.notes
-    FROM 
-      Developer,
-      DeveloperLabel,
-      Label
-    WHERE 
-      Developer.id = DeveloperLabel.developer_id AND
-      DeveloperLabel.label_id = Label.id AND
-      Label.uuid = ?
-  ` )
-  .all( 
-    req.params.id 
-  );
-
-  if( developers === undefined ) {
-    developers = null;
-  }
-
-  res.json( developers );
-} );
-
 // Read all developers
 router.get( '/', ( req, res ) => {
   let developers = req.db.prepare( `
@@ -91,14 +109,14 @@ router.get( '/', ( req, res ) => {
 } );
 
 // Associate developer with label
-router.post( '/:developer/label/:label', ( req, res ) => {
+router.post( '/:developer/label', ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.params.developer,
-    label_uuid: req.params.label
+    label_uuid: req.body.label_id
   };
 
   let ids = req.db.prepare( `

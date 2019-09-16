@@ -32,6 +32,10 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1{id}'
+  /developer/{id}/label:
+    $ref: 'developer.yaml#/paths/~1developer~1{id}~1label'
+  /developer/label/{id}:
+    $ref: 'developer.yaml#/paths/~1developer~1label~1{id}'        
   /media:          
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:
