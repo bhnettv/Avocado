@@ -10,7 +10,7 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single Dev account by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let dev = req.db.prepare( `
     SELECT
       Dev.uuid AS "id",
@@ -100,7 +100,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -133,16 +133,29 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    user_name: record.user_name
-  } );  
+  record = req.db.prepare( `
+    SELECT 
+      Dev.uuid AS "id",
+      Dev.created_at,
+      Dev.updated_at,
+      Developer.uuid AS "developer_id",
+      Dev.user_name
+    FROM 
+      Dev,
+      Developer
+    WHERE 
+      Developer.id = Dev.developer_id AND
+      Dev.uuid = ?
+  ` )
+  .get( 
+    record.uuid
+  );  
+
+  res.json( record );  
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Dev
     WHERE Dev.uuid = ?

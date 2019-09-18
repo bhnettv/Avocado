@@ -46,12 +46,12 @@ paths:
           default: true
         description: Check for valid file type against accepted types
       - in: query
-        name: scan
+        name: limit
         required: false
         schema:
-          type: boolean
-          default: true
-        description: Exclude image files already in data storage
+          type: integer
+          default: 10
+        description: Maximum size of image to classify (Mb)
       responses:
         200:
           description: successful operation

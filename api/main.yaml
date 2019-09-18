@@ -23,6 +23,14 @@ tags:
   description: Blog feeds to aggregate
 - name: 📓 📝 Blog Post
   description: Post made to a personal blog
+- name: 🔥 Dev
+  description:  DEV Community accounts to aggregate (Dev.to)
+- name: 🔥 📝 Dev Post
+  description: Post made to a DEV Community account
+- name: 🧠 Watson
+  description: Watson machine learning features
+- name: 🧰 Utliity
+  description: Tools used that are unrelated to storage
 paths:
   /label:          
     $ref: 'label.yaml#/paths/~1label'
@@ -39,7 +47,9 @@ paths:
   /media:          
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:
-    $ref: 'media.yaml#/paths/~1media~1{id}'        
+    $ref: 'media.yaml#/paths/~1media~1{id}'
+  /media/url/{url}:
+    $ref: 'media.yaml#/paths/~1media~1url~1{url}'            
   /blog:          
     $ref: 'blog.yaml#/paths/~1blog'
   /blog/{id}:
@@ -52,6 +62,18 @@ paths:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1guid~1{id}'
   /blog/post/{id}/media:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}~1media'            
+  /dev:          
+    $ref: 'dev.yaml#/paths/~1dev'
+  /dev/{id}:
+    $ref: 'dev.yaml#/paths/~1dev~1{id}'    
+  /dev/post:          
+    $ref: 'dev-post.yaml#/paths/~1dev~1post'        
+  /dev/post/{id}:
+    $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}'
+  /dev/post/guid/{id}:
+    $ref: 'dev-post.yaml#/paths/~1dev~1post~1guid~1{id}'
+  /dev/post/{id}/media:
+    $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}~1media'            
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
@@ -72,3 +94,9 @@ components:
       $ref: 'blog-post.yaml#/components/schemas/BlogPost'                  
     BlogPostMedia:
       $ref: 'blog-post.yaml#/components/schemas/BlogPostMedia'                        
+    Dev:
+      $ref: 'dev.yaml#/components/schemas/Dev'                
+    DevPost:
+      $ref: 'dev-post.yaml#/components/schemas/DevPost'                  
+    DevPostMedia:
+      $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'                        

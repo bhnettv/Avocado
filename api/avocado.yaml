@@ -26,6 +26,14 @@ tags:
     description: Blog feeds to aggregate
   - name: 📓 📝 Blog Post
     description: Post made to a personal blog
+  - name: 🔥 Dev
+    description: DEV Community accounts to aggregate (Dev.to)
+  - name: 🔥 📝 Dev Post
+    description: Post made to a DEV Community account
+  - name: 🧠 Watson
+    description: Watson machine learning features
+  - name: 🧰 Utliity
+    description: Tools used that are unrelated to storage
 paths:
   /label:
     get:
@@ -601,6 +609,50 @@ paths:
                   id:
                     type: string
                     format: uuid
+  "/media/url/{url}":
+    parameters:
+      - name: url
+        in: path
+        description: URL field for desired media reference
+        required: true
+        schema:
+          type: string
+          example: http://something.com
+    get:
+      tags:
+        - 🖼️ Media
+      summary: Read specific media reference by URL
+      operationId: getMediaByURL
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - url
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  url:
+                    type: string
+                    example: http://something.com
+                  keywords:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - eagle
+                      - landed
+                      - moon
   /blog:
     get:
       tags:
@@ -1263,6 +1315,647 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  /dev:
+    get:
+      tags:
+        - 🔥 Dev
+      summary: Read all available DEV Community accounts
+      operationId: getDevCommunity
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - user_name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    user_name:
+                      type: string
+                      example: boneskull
+    post:
+      tags:
+        - 🔥 Dev
+      summary: Create a new DEV Community account
+      operationId: createDevCommunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                user_name:
+                  type: string
+                  example: boneskull
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1dev/get/responses/200/content/application~1json/sc\
+                  hema/items"
+  "/dev/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired DEV Community account
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🔥 Dev
+      summary: Read specific DEV Community account by ID
+      operationId: getDevCommunityID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - user_name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  user_name:
+                    type: string
+                    example: boneskull
+    put:
+      tags:
+        - 🔥 Dev
+      summary: Update specific DEV Community account by ID
+      operationId: updateDevCommunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                user_name:
+                  type: string
+                  example: boneskull
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1dev~1%7Bid%7D/get/responses/200/content/applicatio\
+                  n~1json/schema"
+    delete:
+      tags:
+        - 🔥 Dev
+      summary: Delete specific DEV Community account by ID
+      operationId: deleteDevCommunityID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /dev/post:
+    get:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Read all available DEV Community posts
+      operationId: getDevCommunityPosts
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - dev_id
+                    - published_at
+                    - guid
+                    - article_id
+                    - link
+                    - title
+                    - summary
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    dev_id:
+                      type: string
+                      format: uuid
+                    published_at:
+                      type: string
+                      format: date-time
+                    guid:
+                      type: string
+                      format: uuid
+                    article_id:
+                      type: integer
+                      example: 172031
+                    link:
+                      type: string
+                      example: http://something.com
+                    title:
+                      type: string
+                      example: Friends
+                    summary:
+                      type: string
+                      example: How you doin'?!
+                    likes:
+                      type: integer
+                      example: 0
+                    reading:
+                      type: integer
+                      example: 0
+                    unicorn:
+                      type: integer
+                      example: 0
+                    keywords:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
+                    concepts:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
+                    entities:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - natural
+                        - language
+                        - understanding
+    post:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Create a new account post
+      operationId: createDevCommunityPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dev_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                article_id:
+                  type: integer
+                  example: 172031
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Friends
+                summary:
+                  type: string
+                  example: How you doin'?!
+                likes:
+                  type: integer
+                  example: 0
+                reading:
+                  type: integer
+                  example: 0
+                unicorn:
+                  type: integer
+                  example: 0
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+                concepts:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+                entities:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1dev~1post/get/responses/200/content/application~1j\
+                  son/schema/items"
+  "/dev/post/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired account posts
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Read specific account post by ID
+      operationId: getDevCommunityPostByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - dev_id
+                  - published_at
+                  - guid
+                  - article_id
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  dev_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  article_id:
+                    type: integer
+                    example: 172031
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Friends
+                  summary:
+                    type: string
+                    example: How you doin'?!
+                  likes:
+                    type: integer
+                    example: 0
+                  reading:
+                    type: integer
+                    example: 0
+                  unicorn:
+                    type: integer
+                    example: 0
+                  keywords:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+                  concepts:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+                  entities:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+    put:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Update specific account post by ID
+      operationId: updateDevCommunityPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dev_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                article_id:
+                  type: integer
+                  example: 172031
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Friends
+                summary:
+                  type: string
+                  example: How you doin'?!
+                likes:
+                  type: integer
+                  example: 0
+                reading:
+                  type: integer
+                  example: 0
+                unicorn:
+                  type: integer
+                  example: 0
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+                concepts:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+                entities:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - natural
+                    - language
+                    - understanding
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1dev~1post~1%7Bid%7D/get/responses/200/content/appl\
+                  ication~1json/schema"
+    delete:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Delete specific account post by ID
+      operationId: deleteDevCommunityPostByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/dev/post/guid/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: GUID field for specific account post (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Read specific account post by GUID
+      operationId: getDevCommunityPostByGUID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - dev_id
+                  - published_at
+                  - guid
+                  - article_id
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  dev_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  article_id:
+                    type: integer
+                    example: 172031
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Friends
+                  summary:
+                    type: string
+                    example: How you doin'?!
+                  likes:
+                    type: integer
+                    example: 0
+                  reading:
+                    type: integer
+                    example: 0
+                  unicorn:
+                    type: integer
+                    example: 0
+                  keywords:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+                  concepts:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+                  entities:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - natural
+                      - language
+                      - understanding
+  "/dev/post/{id}/media":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for specific account post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Read all available media for given account post
+      operationId: getDevCommunityPostMedia
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/paths/~1blog~1post~1%7Bid%7D~1media/get/responses/200/co\
+                    ntent/application~1json/schema/items"
+    post:
+      tags:
+        - 🔥 📝 Dev Post
+      summary: Create a new reference between an account post and media
+      operationId: createDevCommunityPostMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                media_id:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  post_id:
+                    type: string
+                    format: uuid
+                  media_id:
+                    type: string
+                    format: uuid
   "/watson/language/{url}":
     parameters:
       - name: url
@@ -1366,12 +2059,12 @@ paths:
             default: true
           description: Check for valid file type against accepted types
         - in: query
-          name: scan
+          name: limit
           required: false
           schema:
-            type: boolean
-            default: true
-          description: Exclude image files already in data storage
+            type: integer
+            default: 10
+          description: Maximum size of image to classify (Mb)
       responses:
         "200":
           description: successful operation
@@ -1555,6 +2248,125 @@ components:
             - language
             - understanding
     BlogPostMedia:
+      required:
+        - post_id
+        - media_id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        post_id:
+          type: string
+          format: uuid
+        media_id:
+          type: string
+          format: uuid
+    Dev:
+      required:
+        - developer_id
+        - user_name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        user_name:
+          type: string
+          example: boneskull
+    DevPost:
+      required:
+        - dev_id
+        - published_at
+        - guid
+        - article_id
+        - link
+        - title
+        - summary
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        dev_id:
+          type: string
+          format: uuid
+        published_at:
+          type: string
+          format: date-time
+        guid:
+          type: string
+          format: uuid
+        article_id:
+          type: integer
+          example: 172031
+        link:
+          type: string
+          example: http://something.com
+        title:
+          type: string
+          example: Friends
+        summary:
+          type: string
+          example: How you doin'?!
+        likes:
+          type: integer
+          example: 0
+        reading:
+          type: integer
+          example: 0
+        unicorn:
+          type: integer
+          example: 0
+        keywords:
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
+        concepts:
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
+        entities:
+          type: array
+          items:
+            type: string
+          example:
+            - natural
+            - language
+            - understanding
+    DevPostMedia:
       required:
         - post_id
         - media_id

@@ -9,6 +9,40 @@ router.get( '/test', ( req, res ) => {
   res.json( {media: 'Test'} );
 } );
 
+// Read single media by URL
+router.get( '/url/:url', ( req, res ) => {
+  let buffer = new Buffer.from( req.params.url, 'base64' );
+  let url = buffer.toString( 'utf8' );  
+
+  let media = req.db.prepare( `
+    SELECT
+      Media.uuid AS "id",
+      Media.created_at, 
+      Media.updated_at,
+      Media.url,
+      Media.keywords
+    FROM 
+      Media
+    WHERE 
+      Media.url = ?
+  ` )
+  .get( 
+    url 
+  );
+
+  if( media === undefined ) {
+    media = null;
+  } else {
+    if( media.keywords === null ) {
+      media.keywords = [];
+    } else {
+      media.keywords = media.keywords.split( ',' );
+    }
+  }
+
+  res.json( media );
+} );
+
 // Read single media by ID
 router.get( '/:id', ( req, res ) => {
   let media = req.db.prepare( `

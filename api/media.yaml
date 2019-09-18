@@ -121,7 +121,28 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: uuid                                                              
+                    format: uuid      
+  /media/url/{url}:        
+    parameters:
+    - name: url
+      in: path
+      description: URL field for desired media reference
+      required: true
+      schema:
+        type: string
+        example: http://something.com
+    get:
+      tags:
+      - 🖼️ Media
+      summary: Read specific media reference by URL
+      operationId: getMediaByURL
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Media'                                                                                  
 components:
   schemas:
     Media:

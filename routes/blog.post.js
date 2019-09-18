@@ -114,7 +114,7 @@ router.get( '/guid/:id', ( req, res ) => {
       BlogPost.uuid AS "id",
       BlogPost.created_at,
       BlogPost.updated_at,
-      BlogPost.blog_id,
+      Blog.uuid AS "blog_id",
       BlogPost.published_at,
       BlogPost.guid,
       BlogPost.link,
@@ -189,7 +189,7 @@ router.get( '/', ( req, res ) => {
       Blog,
       BlogPost
     WHERE BlogPost.blog_id = Blog.id
-    ORDER BY datetime( BlogPost.published_at ) DESC
+    ORDER BY BlogPost.published_at DESC
   ` )
   .all();
 

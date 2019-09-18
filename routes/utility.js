@@ -19,7 +19,7 @@ router.get( '/test', ( req, res ) => {
 router.get( '/images/:url', async ( req, res ) => {
   let accept = null;
   let check = null;
-  let scan = null;
+  let limit = null;
 
   // Check file type
   if( !req.query.check ) {
@@ -36,12 +36,13 @@ router.get( '/images/:url', async ( req, res ) => {
     accept = req.query.accept.split( ',' );
   }
 
-  // Check database for uniqueness
-  if( !req.query.scan ) {
-    scan = true;
+  // Maximum image file size
+  // Defaults to Watson size limit
+  if( !req.query.limit ) {
+    limit = 10;
   } else {
-    scan = new Boolean( req.query.scan );    
-  }
+    limit = parseInt( req.query.limit );
+  }  
 
   // Get page URL from query string
   // Base64 for safe URL encoding
@@ -91,6 +92,15 @@ router.get( '/images/:url', async ( req, res ) => {
       continue;
     }
 
+    // Restrict for Watson maximum file size
+    let stats = fs.statSync( local )
+    
+    // Maximum of file to allow
+    // Watson has file size limit
+    if( stats.size > ( 1000000 * limit ) ) {
+      continue;
+    }
+
     // Get file type
     let info = fileType( buffer );
 
@@ -99,6 +109,13 @@ router.get( '/images/:url', async ( req, res ) => {
     if( check ) {
       // See if there is a match in the accepted list
       for( let a = 0; a < accept.length; a++ ) {
+        // Undefined if cannot determine type
+        // No need to check
+        if( info === undefined ) 
+          continue;
+
+        // Type determined
+        // Look for match
         if( info.ext === accept[a] ) {
           extracted.push( remote );
           break;
@@ -129,34 +146,8 @@ router.get( '/images/:url', async ( req, res ) => {
       continue;
     }
 
-    // If request wants database check
-    // Defaults to true 
-    if( scan ) {
-      let media = req.db.prepare( `
-        SELECT
-          Media.uuid AS "id",
-          Media.created_at, 
-          Media.updated_at,
-          Media.url,
-          Media.keywords
-        FROM 
-          Media
-        WHERE 
-          Media.url = ?
-      ` )
-      .get( 
-        extracted[e]
-      );
-        
-      // Not in the database
-      if( media === undefined ) {
-        results.push( extracted[e] );
-      }
-    } else {
-      // No database check required
-      // Go ahead and return
-      results.push( extracted[e] );
-    }
+    // Add to return list
+    results.push( extracted[e] );
   }
 
   // Clean up
