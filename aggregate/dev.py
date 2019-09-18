@@ -7,6 +7,8 @@ import iso8601
 import requests
 import time
 
+import utility
+
 # Optional features
 config = configparser.ConfigParser()
 config.read( '../features.ini' )
@@ -105,39 +107,15 @@ for dev in devs:
       insert = req.json()
 
       # Extract unique images
-      # Once per presence in content
-      encoded = base64.urlsafe_b64encode( record['link'].encode( 'utf-8' ) ) 
-      req = requests.get( api + '/utility/images/' + str( encoded, 'utf-8' ) )
-      images = req.json()
-
-      for image in images:
-        record = {
-          'url': image,
-          'keywords': None
-        }
-
-        # Check if image exists in the database
-        encoded = base64.urlsafe_b64encode( record['url'].encode( 'utf-8' ) ) 
-        req = requests.get( api + '/media/url/' + str( encoded, 'utf-8' ) )
-        media = req.json()
-
-        if media == None:
-          # Analyze image
-          # Optional feature
-          if config['WATSON'].getboolean( 'Vision' ) == True:
-            encoded = base64.urlsafe_b64encode( record['url'].encode( 'utf-8' ) )           
-            req = requests.get( api + '/watson/vision/' + str( encoded, 'utf-8' ) )
-            record['keywords'] = req.json()
-
-          # Create media records
-          req = requests.post( api + '/media', json = record )
-          media = req.json()          
-
-        # Associate with post
-        req = requests.post( api + '/dev/post/' + insert['id'] + '/media', json = {
-          'media_id': media['id']
-        } )
-        associate = req.json()
+      # Analyze if needed
+      # Store new images 
+      # Make associations with post
+      utility.unique_images( 
+        insert['link'], 
+        'dev', 
+        insert['id'], 
+        config['WATSON'].getboolean( 'Vision' ) 
+      )
 
       print( 'Make: ' + insert['id'] )
     else:
