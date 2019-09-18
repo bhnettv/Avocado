@@ -1,5 +1,4 @@
 const express = require( 'express' );
-const rp = require( 'request-promise-native' );
 const uuidv4 = require( 'uuid' );
 
 // Router
@@ -11,14 +10,16 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single Medium account by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
   let medium = req.db.prepare( `
     SELECT
       Medium.uuid AS "id",
       Medium.created_at, 
       Medium.updated_at,
       Developer.uuid AS "developer_id",
-      Medium.user_name
+      Medium.user_name,
+      Medium.following,
+      Medium.followed_by
     FROM 
       Developer, 
       Medium
@@ -45,40 +46,18 @@ router.get( '/', ( req, res ) => {
       Medium.created_at, 
       Medium.updated_at,
       Developer.uuid AS "developer_id",
-      Medium.user_name
+      Medium.user_name,
+      Medium.following,
+      Medium.followed_by
     FROM 
       Developer,
       Medium
     WHERE Medium.developer_id = Developer.id
-    ORDER BY Medium.updated_at DESC
+    ORDER BY datetime( Medium.updated_at ) DESC
   ` )
   .all();
 
   res.json( mediums );
-} );
-
-// Get statistics for account
-router.post( '/statistics', async ( req, res ) => {
-  const FOLLOWING = 'followingCount":';
-  const FOLLOWED = 'followerCount":';
-
-  let body = await rp( {
-    url: `https://medium.com/@${req.body.user_name}`,
-    method: 'GET'
-  } );
-
-  let start = body.indexOf( FOLLOWING ) + FOLLOWING.length;
-  let end = body.indexOf( ',', start );
-  const following = parseInt( body.substring( start, end ) );
-
-  start = body.indexOf( FOLLOWED ) + FOLLOWED.length;
-  end = body.indexOf( ',', start );
-  const followed = parseInt( body.substring( start, end ) );
-
-  res.json( {
-    following: following,
-    followed_by: followed
-  } );
 } );
 
 // Create
@@ -131,7 +110,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -170,18 +149,31 @@ router.put( '/id/:id', ( req, res ) => {
     record.uuid
   );
 
-  res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    user_name: record.user_name,
-    following: record.following,
-    followed_by: record.followed_by
-  } );  
+  record = req.db.prepare( `
+    SELECT
+      Medium.uuid AS "id",
+      Medium.created_at, 
+      Medium.updated_at,
+      Developer.uuid AS "developer_id",
+      Medium.user_name,
+      Medium.following,
+      Medium.followed_by
+    FROM 
+      Developer, 
+      Medium
+    WHERE 
+      Medium.developer_id = Developer.id AND
+      Medium.uuid = ?
+  ` )
+  .get( 
+    record.uuid
+  );
+
+  res.json( record );  
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM Medium
     WHERE Medium.uuid = ?

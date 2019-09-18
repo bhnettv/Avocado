@@ -6,7 +6,7 @@ info:
   contact:
     email: parkerkrhoyt@gmail.com
   license:
-    name: MIT    
+    name: MIT
 externalDocs:
   description: Find out more about Avocado
   url: http://kevinhoyt.com
@@ -27,59 +27,75 @@ tags:
   description:  DEV Community accounts to aggregate (Dev.to)
 - name: 🔥 📝 Dev Post
   description: Post made to a DEV Community account
+- name: 🔮 Medium
+  description: Medium feeds to aggregate
+- name: 🔮 📝 Medium Post
+  description: Post made to a Medium account
 - name: 🧠 Watson
   description: Watson machine learning features
 - name: 🧰 Utliity
   description: Tools used that are unrelated to storage
 paths:
-  /label:          
+  /label:
     $ref: 'label.yaml#/paths/~1label'
   /label/{id}:
     $ref: 'label.yaml#/paths/~1label~1{id}'
-  /developer:          
+  /developer:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1{id}'
   /developer/{id}/label:
     $ref: 'developer.yaml#/paths/~1developer~1{id}~1label'
   /developer/label/{id}:
-    $ref: 'developer.yaml#/paths/~1developer~1label~1{id}'        
-  /media:          
+    $ref: 'developer.yaml#/paths/~1developer~1label~1{id}'
+  /media:
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:
     $ref: 'media.yaml#/paths/~1media~1{id}'
   /media/url/{url}:
-    $ref: 'media.yaml#/paths/~1media~1url~1{url}'            
-  /blog:          
+    $ref: 'media.yaml#/paths/~1media~1url~1{url}'
+  /blog:
     $ref: 'blog.yaml#/paths/~1blog'
   /blog/{id}:
-    $ref: 'blog.yaml#/paths/~1blog~1{id}'    
-  /blog/post:          
-    $ref: 'blog-post.yaml#/paths/~1blog~1post'        
+    $ref: 'blog.yaml#/paths/~1blog~1{id}'
+  /blog/post:
+    $ref: 'blog-post.yaml#/paths/~1blog~1post'
   /blog/post/{id}:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}'
   /blog/post/guid/{id}:
     $ref: 'blog-post.yaml#/paths/~1blog~1post~1guid~1{id}'
   /blog/post/{id}/media:
-    $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}~1media'            
-  /dev:          
+    $ref: 'blog-post.yaml#/paths/~1blog~1post~1{id}~1media'
+  /dev:
     $ref: 'dev.yaml#/paths/~1dev'
   /dev/{id}:
-    $ref: 'dev.yaml#/paths/~1dev~1{id}'    
-  /dev/post:          
-    $ref: 'dev-post.yaml#/paths/~1dev~1post'        
+    $ref: 'dev.yaml#/paths/~1dev~1{id}'
+  /dev/post:
+    $ref: 'dev-post.yaml#/paths/~1dev~1post'
   /dev/post/{id}:
     $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}'
   /dev/post/guid/{id}:
     $ref: 'dev-post.yaml#/paths/~1dev~1post~1guid~1{id}'
   /dev/post/{id}/media:
-    $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}~1media'            
+    $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}~1media'
+  /medium:
+    $ref: 'medium.yaml#/paths/~1medium'
+  /medium/{id}:
+    $ref: 'medium.yaml#/paths/~1medium~1{id}'
+  /medium/post:
+    $ref: 'medium-post.yaml#/paths/~1medium~1post'
+  /medium/post/{id}:
+    $ref: 'medium-post.yaml#/paths/~1medium~1post~1{id}'
+  /medium/post/guid/{id}:
+    $ref: 'medium-post.yaml#/paths/~1medium~1post~1guid~1{id}'
+  /medium/post/{id}/media:
+    $ref: 'medium-post.yaml#/paths/~1medium~1post~1{id}~1media'
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1vision~1{url}'
   /utility/images/{url}:
-    $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'            
+    $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'
 components:
   schemas:
     Label:
@@ -87,16 +103,22 @@ components:
     Developer:
       $ref: 'developer.yaml#/components/schemas/Developer'
     Media:
-      $ref: 'media.yaml#/components/schemas/Media'      
+      $ref: 'media.yaml#/components/schemas/Media'
     Blog:
-      $ref: 'blog.yaml#/components/schemas/Blog'            
+      $ref: 'blog.yaml#/components/schemas/Blog'
     BlogPost:
-      $ref: 'blog-post.yaml#/components/schemas/BlogPost'                  
+      $ref: 'blog-post.yaml#/components/schemas/BlogPost'
     BlogPostMedia:
-      $ref: 'blog-post.yaml#/components/schemas/BlogPostMedia'                        
+      $ref: 'blog-post.yaml#/components/schemas/BlogPostMedia'
     Dev:
-      $ref: 'dev.yaml#/components/schemas/Dev'                
+      $ref: 'dev.yaml#/components/schemas/Dev'
     DevPost:
-      $ref: 'dev-post.yaml#/components/schemas/DevPost'                  
+      $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:
-      $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'                        
+      $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'
+    Medium:
+      $ref: 'medium.yaml#/components/schemas/Medium'
+    MediumPost:
+      $ref: 'medium-post.yaml#/components/schemas/MediumPost'
+    MediumPostMedia:
+      $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'

@@ -1,6 +1,5 @@
 const express = require( 'express' );
 const uuidv4 = require( 'uuid' );
-const rp = require( 'request-promise-native' );
 
 // Router
 let router = express.Router();
@@ -11,7 +10,105 @@ router.get( '/test', ( req, res ) => {
 } );
 
 // Read single post by ID
-router.get( '/id/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
+  let post = req.db.prepare( `
+    SELECT
+      MediumPost.uuid AS "id",
+      MediumPost.created_at,
+      MediumPost.updated_at,
+      Medium.uuid AS "medium_id",
+      MediumPost.published_at,
+      MediumPost.guid,
+      MediumPost.link,
+      MediumPost.title,
+      MediumPost.summary,
+      MediumPost.claps,
+      MediumPost.category,
+      MediumPost.keywords,
+      MediumPost.concepts,
+      MediumPost.entities
+    FROM 
+      Medium,
+      MediumPost
+    WHERE 
+    MediumPost.medium_id = Medium.id AND
+    MediumPost.uuid = ?
+  ` )
+  .get( 
+    req.params.id 
+  );
+
+  if( post === undefined ) {
+    post = null;
+  } else {
+    if( post.category === null ) {
+      post.category = [];
+    } else {
+      post.category = post.category.split( ',' );
+    }
+
+    if( post.keywords === null ) {
+      post.keywords = [];
+    } else {
+      post.keywords = post.keywords.split( ',' );
+    }
+    
+    if( post.concepts === null ) {
+      post.concepts = [];
+    } else {
+      post.concepts = post.concepts.split( ',' );
+    }
+    
+    if( post.entities === null ) {
+      post.entities = [];
+    } else {
+      post.entities = post.entities.split( ',' );
+    }    
+  }
+
+  res.json( post );
+} );
+
+// Read all media for specific post
+router.get( '/:id/media', ( req, res ) => {
+  let medias = req.db.prepare( `
+    SELECT
+      Media.uuid AS "id",
+      Media.created_at,
+      Media.updated_at,
+      Media.url,
+      Media.keywords
+    FROM 
+      Media,
+      MediumPost,
+      MediumPostMedia
+    WHERE 
+      Media.id = MediumPostMedia.media_id AND
+      MediumPostMedia.post_id = MediumPost.id AND
+      MediumPost.uuid = ?
+  ` )
+  .all( 
+    req.params.id 
+  );
+
+  for( let m = 0; m < medias.length; m++ ) {
+    if( medias[m].keywords === null ) {
+      medias[m].keywords = [];
+    } else {
+      medias[m].keywords = medias[m].keywords.split( ',' );
+    }
+  }
+
+  res.json( medias );
+} );
+
+// Read single post by GUID
+// GUIDs are often URLs
+// Base64 encoded
+router.get( '/guid/:id', ( req, res ) => {
+  let buffer = new Buffer.from( req.params.id, 'base64' );
+  let guid = buffer.toString( 'utf8' );  
+
   let post = req.db.prepare( `
     SELECT
       MediumPost.uuid AS "id",
@@ -33,14 +130,38 @@ router.get( '/id/:id', ( req, res ) => {
       MediumPost
     WHERE 
       MediumPost.medium_id = Medium.id AND
-      MediumPost.uuid = ?
+      MediumPost.guid = ?
   ` )
   .get( 
-    req.params.id 
+    guid 
   );
 
   if( post === undefined ) {
     post = null;
+  } else {
+    if( post.category === null ) {
+      post.category = [];
+    } else {
+      post.category = post.category.split( ',' );
+    }
+
+    if( post.keywords === null ) {
+      post.keywords = [];
+    } else {
+      post.keywords = post.keywords.split( ',' );
+    }
+    
+    if( post.concepts === null ) {
+      post.concepts = [];
+    } else {
+      post.concepts = post.concepts.split( ',' );
+    }
+    
+    if( post.entities === null ) {
+      post.entities = [];
+    } else {
+      post.entities = post.entities.split( ',' );
+    } 
   }
 
   res.json( post );
@@ -72,63 +193,84 @@ router.get( '/', ( req, res ) => {
   ` )
   .all();
 
+  for( let p = 0; p < posts.length; p++ ) {
+    if( posts[p].category === null ) {
+      posts[p].category = [];
+    } else {
+      posts[p].category = posts[p].category.split( ',' );
+    }
+
+    if( posts[p].keywords === null ) {
+      posts[p].keywords = [];
+    } else {
+      posts[p].keywords = posts[p].keywords.split( ',' );
+    }
+    
+    if( posts[p].concepts === null ) {
+      posts[p].concepts = [];
+    } else {
+      posts[p].concepts = posts[p].concepts.split( ',' );
+    }
+    
+    if( posts[p].entities === null ) {
+      posts[p].entities = [];
+    } else {
+      posts[p].entities = posts[p].entities.split( ',' );
+    }    
+  }
+
   res.json( posts );
 } );
 
-// Read single post by ID
-// Medium GUIDs are URLs
-// Easier to transmit over POST
-router.post( '/guid', ( req, res ) => {
-  let post = req.db.prepare( `
+// Associate media with post
+router.post( '/:id/media', ( req, res ) => {
+  let record = {
+    id: null,
+    uuid: uuidv4(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    post_uuid: req.params.id,
+    media_uuid: req.body.media_id
+  };
+
+  let ids = req.db.prepare( `
     SELECT
-      MediumPost.uuid AS "id",
-      MediumPost.created_at,
-      MediumPost.updated_at,
-      Medium.uuid AS "medium_id",
-      MediumPost.published_at,
-      MediumPost.guid,
-      MediumPost.link,
-      MediumPost.title,
-      MediumPost.summary,
-      MediumPost.claps,
-      MediumPost.category,
-      MediumPost.keywords,
-      MediumPost.concepts,
-      MediumPost.entities
-    FROM 
-      Medium,
-      MediumPost
-    WHERE 
-      MediumPost.medium_id = Medium.id AND
-      MediumPost.guid = ?
+      MediumPost.id AS "post_id",
+      Media.id AS "media_id"
+    FROM
+      MediumPost,   
+      Media
+    WHERE
+      MediumPost.uuid = ? AND
+      Media.uuid = ?
   ` )
   .get( 
-    req.body.url 
+    record.post_uuid,
+    record.media_uuid
+  );
+  record.post_id = ids.post_id;
+  record.media_id = ids.media_id;
+
+  let info = req.db.prepare( `
+    INSERT INTO MediumPostMedia
+    VALUES ( ?, ?, ?, ?, ?, ? )
+  ` )
+  .run(
+    record.id,
+    record.uuid,
+    record.created_at,
+    record.updated_at,
+    record.post_id,
+    record.media_id
   );
 
-  if( post === undefined ) {
-    post = null;
-  }
-
-  res.json( post );
-} );
-
-// Get statistics for post
-router.post( '/claps', async ( req, res ) => {
-  const CLAPS = 'clapCount":';
-
-  let body = await rp( {
-    url: req.body.url,
-    method: 'GET'
-  } );
-
-  const start = body.indexOf( CLAPS ) + CLAPS.length;
-  const end = body.indexOf( ',', start );
-  const part = body.substring( start, end );
-
   res.json( {
-    claps: parseInt( part )
-  } );
+    id: record.uuid,
+    created_at: record.created_at,
+    updated_at: record.updated_at,
+    post_id: record.post_uuid,
+    media_id: record.media_uuid
+  } );  
 } );
 
 // Create
@@ -150,6 +292,30 @@ router.post( '/', ( req, res ) => {
     concepts: req.body.concepts,
     entities: req.body.entities
   };
+
+  if( record.category.length === 0 ) {
+    record.category = null;
+  } else {
+    record.category = record.category.join( ',' );
+  }
+
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
+  }    
+
+  if( record.concepts.length === 0 ) {
+    record.concepts = null;
+  } else {
+    record.concepts = record.concepts.join( ',' );
+  }    
+  
+  if( record.entities.length === 0 ) {
+    record.entities = null;
+  } else {
+    record.entities = record.entities.join( ',' );
+  }    
 
   let medium = req.db.prepare( `
     SELECT Medium.id
@@ -183,6 +349,30 @@ router.post( '/', ( req, res ) => {
     record.entities
   );
 
+  if( record.category === null ) {
+    record.category = [];
+  } else {
+    record.category = record.category.split( ',' );
+  }
+
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {    
+    record.keywords = record.keywords.split( ',' );
+  }  
+
+  if( record.concepts === null ) {
+    record.concepts = [];
+  } else {    
+    record.concepts = record.concepts.split( ',' );
+  }
+
+  if( record.entities === null ) {
+      record.entities = [];
+  } else {    
+    record.entities = record.entities.split( ',' );
+  }  
+
   res.json( {
     id: record.uuid,
     created_at: record.created_at,
@@ -202,7 +392,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/id/:id', ( req, res ) => {
+router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -218,6 +408,30 @@ router.put( '/id/:id', ( req, res ) => {
     concepts: req.body.concepts,
     entities: req.body.entities    
   };
+
+  if( record.category.length === 0 ) {
+    record.category = null;
+  } else {
+    record.category = record.category.join( ',' );
+  }
+
+  if( record.keywords.length === 0 ) {
+    record.keywords = null;
+  } else {
+    record.keywords = record.keywords.join( ',' );
+  }    
+
+  if( record.concepts.length === 0 ) {
+    record.concepts = null;
+  } else {
+    record.concepts = record.concepts.join( ',' );
+  }    
+  
+  if( record.entities.length === 0 ) {
+    record.entities = null;
+  } else {
+    record.entities = record.entities.join( ',' );
+  }    
 
   let medium = req.db.prepare( `
     SELECT Medium.id
@@ -242,8 +456,7 @@ router.put( '/id/:id', ( req, res ) => {
       claps = ?,
       category = ?,
       keywords = ?,
-      concepts = ?,
-      entities = ?
+      concepts = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -258,29 +471,100 @@ router.put( '/id/:id', ( req, res ) => {
     record.category,
     record.keywords,
     record.concepts,
-    record.entities,
     record.uuid
   );
 
+  record = req.db.prepare( `
+    SELECT
+      MediumPost.uuid AS "id",
+      MediumPost.created_at,
+      MediumPost.updated_at,
+      Medium.uuid AS "medium_id",
+      MediumPost.published_at,
+      MediumPost.guid,
+      MediumPost.link,
+      MediumPost.title,
+      MediumPost.summary,
+      MediumPost.claps,
+      MediumPost.category,
+      MediumPost.keywords,
+      MediumPost.concepts,
+      MediumPost.entities
+    FROM 
+      Medium,
+      MediumPost
+    WHERE 
+      MediumPost.medium_id = Medium.id AND
+      MediumPost.uuid = ?
+  ` )
+  .get( 
+    record.uuid 
+  );
+
+  if( record.category === null ) {
+    record.category = [];
+  } else {
+    record.category = record.category.split( ',' );
+  }
+
+  if( record.keywords === null ) {
+    record.keywords = [];
+  } else {    
+    record.keywords = record.keywords.split( ',' );
+  }  
+
+  if( record.concepts === null ) {
+    record.concepts = [];
+  } else {    
+    record.concepts = record.concepts.split( ',' );
+  }
+
+  if( record.entities === null ) {
+      record.entities = [];
+  } else {    
+    record.entities = record.entities.split( ',' );
+  }
+
+  res.json( record );  
+} );
+
+// Remove media associated with post
+router.delete( '/:post/media/:media', ( req, res ) => {
+  let ids = req.db.prepare( `
+    SELECT
+      Post.id AS "post_id",
+      Media.id AS "media_id"
+    FROM
+      Media,
+      Post
+    WHERE
+      Post.uuid = ? AND
+      Media.uuid = ?    
+  ` )
+  .get( 
+    req.params.post,
+    req.params.media
+  );
+
+  let info = req.db.prepare( `
+    DELETE FROM MediumPostMedia
+    WHERE 
+      MediumPostMedia.post_id = ? AND
+      MediumPostMedia.media_id = ?
+  ` )
+  .run(
+    ids.post_id,
+    ids.media_id
+  );  
+
   res.json( {
-    id: record.uuid,
-    updated_at: record.updated_at,
-    medium_uuid: req.body.medium_id,
-    published_at: req.body.published_at,
-    guid: req.body.guid,
-    link: req.body.link,
-    title: req.body.title,
-    summary: req.body.summary,
-    claps: req.body.claps,
-    category: req.body.category,
-    keywords: req.body.keywords,
-    concepts: req.body.concepts,
-    entities: req.body.entities    
-  } );  
+    post_id: req.params.post,
+    media_id: req.params.media
+  } );
 } );
 
 // Delete
-router.delete( '/id/:id', ( req, res ) => {
+router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
     DELETE FROM MediumPost
     WHERE MediumPost.uuid = ?
