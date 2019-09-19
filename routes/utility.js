@@ -68,6 +68,11 @@ router.get( '/images/:url', async ( req, res ) => {
 
   // For each of the images
   for( let i = 0; i < images.length; i++ ) {
+    // No "src" attribute
+    // No image to process
+    if( !images[i].attribs.src )
+      continue;
+
     // Resolve full path
     let remote = url.resolve( uri, images[i].attribs.src );
 
