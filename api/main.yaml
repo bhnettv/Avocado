@@ -31,6 +31,10 @@ tags:
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
   description: Post made to a Medium account
+- name: 📺 YouTube
+  description: YouTube accounts to aggregate  
+- name: 📺 📼 YouTube Video
+  description: Video posted to a YouTube account  
 - name: 🧠 Watson
   description: Watson machine learning features
 - name: 🧰 Utliity
@@ -90,6 +94,18 @@ paths:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1guid~1{id}'
   /medium/post/{id}/media:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1{id}~1media'
+  /youtube:
+    $ref: 'youtube.yaml#/paths/~1youtube'
+  /youtube/{id}:
+    $ref: 'youtube.yaml#/paths/~1youtube~1{id}'    
+  /youtube/video:
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video'
+  /youtube/video/{id}:
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1{id}'
+  /youtube/video/guid/{id}:
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1guid~1{id}'
+  /youtube/video/duration/{video_id}:
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video_id}'    
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
@@ -122,3 +138,7 @@ components:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    YouTube:
+      $ref: 'youtube.yaml#/components/schemas/YouTube'      
+    YouTubeVideo:
+      $ref: 'youtube-video.yaml#/components/schemas/YouTubeVideo'      

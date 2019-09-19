@@ -52,12 +52,14 @@ app.use( '/', express.static( 'public' ) );
 // Routes
 app.use( '/api/label', require( './routes/label' ) );
 app.use( '/api/developer', require( './routes/developer' ) );
-app.use( '/api/blog/post', require( './routes/blog.post' ) );
+app.use( '/api/blog/post', require( './routes/blog-post' ) );
 app.use( '/api/blog', require( './routes/blog' ) );
-app.use( '/api/dev/post', require( './routes/dev.post' ) );
+app.use( '/api/dev/post', require( './routes/dev-post' ) );
 app.use( '/api/dev', require( './routes/dev' ) );
-app.use( '/api/medium/post', require( './routes/medium.post' ) );
+app.use( '/api/medium/post', require( './routes/medium-post' ) );
 app.use( '/api/medium', require( './routes/medium' ) );
+app.use( '/api/youtube/video', require( './routes/youtube-video' ) );
+app.use( '/api/youtube', require( './routes/youtube' ) );
 app.use( '/api/media', require( './routes/media' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
 app.use( '/api/utility', require( './routes/utility' ) );

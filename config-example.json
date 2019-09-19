@@ -1,4 +1,7 @@
 {
+  "google": {
+    "youtube": "_YOUTUBE_API_KEY_"
+  },  
   "server": {
     "mode": "development",
     "database": {

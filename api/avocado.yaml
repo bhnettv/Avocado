@@ -34,6 +34,10 @@ tags:
     description: Medium feeds to aggregate
   - name: 🔮 📝 Medium Post
     description: Post made to a Medium account
+  - name: 📺 YouTube
+    description: YouTube accounts to aggregate
+  - name: 📺 📼 YouTube Video
+    description: Video posted to a YouTube account
   - name: 🧠 Watson
     description: Watson machine learning features
   - name: 🧰 Utliity
@@ -2612,6 +2616,508 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  /youtube:
+    get:
+      tags:
+        - 📺 YouTube
+      summary: Read all available YouTube accounts
+      operationId: getYouTube
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - channel_id
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    channel_id:
+                      type: string
+                      example: UCSFeFhtLBuzU2UMs7oOL54A
+    post:
+      tags:
+        - 📺 YouTube
+      summary: Create a new YouTube account
+      operationId: createYouTube
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                channel_id:
+                  type: string
+                  example: UCSFeFhtLBuzU2UMs7oOL54A
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1youtube/get/responses/200/content/application~1jso\
+                  n/schema/items"
+  "/youtube/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired YouTube account
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 📺 YouTube
+      summary: Read specific YouTube account by ID
+      operationId: getYouTubeID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - channel_id
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  channel_id:
+                    type: string
+                    example: UCSFeFhtLBuzU2UMs7oOL54A
+    put:
+      tags:
+        - 📺 YouTube
+      summary: Update specific YouTube account by ID
+      operationId: updateYouTube
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                channel_id:
+                  type: string
+                  example: UCSFeFhtLBuzU2UMs7oOL54A
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1youtube~1%7Bid%7D/get/responses/200/content/applic\
+                  ation~1json/schema"
+    delete:
+      tags:
+        - 📺 YouTube
+      summary: Delete specific YouTube account by ID
+      operationId: deleteYouTubeID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /youtube/video:
+    get:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Read all available YouTube videos
+      operationId: getYouTubeVideos
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - youtube_id
+                    - published_at
+                    - guid
+                    - video_id
+                    - link
+                    - title
+                    - summary
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    youtube_id:
+                      type: string
+                      format: uuid
+                    published_at:
+                      type: string
+                      format: date-time
+                    guid:
+                      type: string
+                      format: uuid
+                    video_id:
+                      type: string
+                      example: oNyXYPhnUIs
+                    link:
+                      type: string
+                      example: http://something.com
+                    title:
+                      type: string
+                      example: Knight Rider
+                    views:
+                      type: integer
+                      example: 0
+                    stars:
+                      type: integer
+                      example: 0
+                    duration:
+                      type: integer
+                      example: 0
+                    thumbnail:
+                      type: string
+                      example: http://something.com
+                    summary:
+                      type: string
+                      example: Original show introduction
+    post:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Create a new account video
+      operationId: createYouTubeVideo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                youtube_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                video_id:
+                  type: string
+                  example: oNyXYPhnUIs
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Knight Rider
+                views:
+                  type: integer
+                  example: 0
+                stars:
+                  type: integer
+                  example: 0
+                duration:
+                  type: integer
+                  example: 0
+                thumbnail:
+                  type: string
+                  example: http://something.com
+                summary:
+                  type: string
+                  example: Original show introduction
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1youtube~1video/get/responses/200/content/applicati\
+                  on~1json/schema/items"
+  "/youtube/video/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired account video
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Read specific account video by ID
+      operationId: getYouTubeVideoByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - youtube_id
+                  - published_at
+                  - guid
+                  - video_id
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  youtube_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  video_id:
+                    type: string
+                    example: oNyXYPhnUIs
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Knight Rider
+                  views:
+                    type: integer
+                    example: 0
+                  stars:
+                    type: integer
+                    example: 0
+                  duration:
+                    type: integer
+                    example: 0
+                  thumbnail:
+                    type: string
+                    example: http://something.com
+                  summary:
+                    type: string
+                    example: Original show introduction
+    put:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Update specific account video by ID
+      operationId: updateYouTubeVideo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                youtube_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                guid:
+                  type: string
+                  format: uuid
+                video_id:
+                  type: string
+                  example: oNyXYPhnUIs
+                link:
+                  type: string
+                  example: http://something.com
+                title:
+                  type: string
+                  example: Knight Rider
+                views:
+                  type: integer
+                  example: 0
+                stars:
+                  type: integer
+                  example: 0
+                duration:
+                  type: integer
+                  example: 0
+                thumbnail:
+                  type: string
+                  example: http://something.com
+                summary:
+                  type: string
+                  example: Original show introduction
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1youtube~1video~1%7Bid%7D/get/responses/200/content\
+                  /application~1json/schema"
+    delete:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Delete specific account video by ID
+      operationId: deleteYouTubeVideoByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/youtube/video/guid/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: GUID field for specific account video (Base64, UTF-8)
+        required: true
+        schema:
+          type: string
+          format: byte
+    get:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Read specific account video by GUID
+      operationId: getYouTubeVideoByGUID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - youtube_id
+                  - published_at
+                  - guid
+                  - video_id
+                  - link
+                  - title
+                  - summary
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  youtube_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  guid:
+                    type: string
+                    format: uuid
+                  video_id:
+                    type: string
+                    example: oNyXYPhnUIs
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: Knight Rider
+                  views:
+                    type: integer
+                    example: 0
+                  stars:
+                    type: integer
+                    example: 0
+                  duration:
+                    type: integer
+                    example: 0
+                  thumbnail:
+                    type: string
+                    example: http://something.com
+                  summary:
+                    type: string
+                    example: Original show introduction
+  "/youtube/video/duration/{video_id}":
+    parameters:
+      - name: video_id
+        in: path
+        description: Specific YouTube video ID
+        required: true
+        schema:
+          type: string
+          example: oNyXYPhnUIs
+    get:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Get information about video duration
+      operationId: getYouTubeVideoDuration
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duration:
+                    type: string
+                    example: PT9M59S
+                  seconds:
+                    type: integer
+                    example: 599
   "/watson/language/{url}":
     parameters:
       - name: url
@@ -3168,3 +3674,77 @@ components:
         media_id:
           type: string
           format: uuid
+    YouTube:
+      required:
+        - developer_id
+        - channel_id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          example: UCSFeFhtLBuzU2UMs7oOL54A
+    YouTubeVideo:
+      required:
+        - youtube_id
+        - published_at
+        - guid
+        - video_id
+        - link
+        - title
+        - summary
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        youtube_id:
+          type: string
+          format: uuid
+        published_at:
+          type: string
+          format: date-time
+        guid:
+          type: string
+          format: uuid
+        video_id:
+          type: string
+          example: oNyXYPhnUIs
+        link:
+          type: string
+          example: http://something.com
+        title:
+          type: string
+          example: Knight Rider
+        views:
+          type: integer
+          example: 0
+        stars:
+          type: integer
+          example: 0
+        duration:
+          type: integer
+          example: 0
+        thumbnail:
+          type: string
+          example: http://something.com
+        summary:
+          type: string
+          example: Original show introduction

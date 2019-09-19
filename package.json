@@ -1,13 +1,13 @@
 {
-  "name": "web",
+  "name": "avocado",
   "version": "1.0.0",
   "description": "Developer relations ... in a box!",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "krhoyt@us.ibm.com",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^5.4.1",
