@@ -3,9 +3,23 @@ var Database = require( 'better-sqlite3' );
 var express = require( 'express' );
 var jsonfile = require( 'jsonfile' );
 var parser = require( 'body-parser' );
+var request = require( 'sync-request' );
 
 // Configuration
 var config = jsonfile.readFileSync( 'config.json' );
+
+// Twitter credentials
+// Synchronous for simplicity in this case only
+// Once at startup has no further performance penalties
+var authentication = Buffer.from( config.twitter.key + ':' + config.twitter.secret );
+var response = request( 'POST', 'https://api.twitter.com/oauth2/token', {
+ 	headers: {
+		'Authorization': 'Basic ' + authentication.toString( 'base64' ),
+		'Content-Type': 'application/x-www-form-urlencoded'
+	},
+	body: 'grant_type=client_credentials'
+} );
+var twitter = JSON.parse( response.getBody( 'utf8' ) );
 
 // Database
 var db = null;
@@ -40,7 +54,8 @@ app.use( parser.urlencoded( {
 app.use( ( req, res, next ) => {	
 	// Configuration
 	req.config = config;
-  req.db = db;
+	req.db = db;
+	req.twitter = twitter;
   
 	// Just keep swimming
 	next();
@@ -61,6 +76,8 @@ app.use( '/api/medium', require( './routes/medium' ) );
 app.use( '/api/youtube/video', require( './routes/youtube-video' ) );
 app.use( '/api/youtube', require( './routes/youtube' ) );
 app.use( '/api/media', require( './routes/media' ) );
+app.use( '/api/twitter/status', require( './routes/twitter-status' ) );
+app.use( '/api/twitter', require( './routes/twitter' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
 app.use( '/api/utility', require( './routes/utility' ) );
 

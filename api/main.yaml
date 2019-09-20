@@ -31,6 +31,10 @@ tags:
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
   description: Post made to a Medium account
+- name: 🐦 Twitter
+  description: Twitter accounts to aggregate  
+- name: 🐦 ✒️ Twitter Status
+  description: Status update to a Twitter account    
 - name: 📺 YouTube
   description: YouTube accounts to aggregate  
 - name: 📺 📼 YouTube Video
@@ -94,6 +98,20 @@ paths:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1guid~1{id}'
   /medium/post/{id}/media:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1{id}~1media'
+  /twitter:
+    $ref: 'twitter.yaml#/paths/~1twitter'
+  /twitter/{id}:
+    $ref: 'twitter.yaml#/paths/~1twitter~1{id}'    
+  /twitter/timeline/{screen_name}:
+    $ref: 'twitter.yaml#/paths/~1twitter~1timeline~1{screen_name}'    
+  /twitter/status:
+    $ref: 'twitter-status.yaml#/paths/~1twitter~1status'
+  /twitter/status/{id}:
+    $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1{id}'
+  /twitter/status/id/{id}:
+    $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1id~1{id}'
+  /twitter/status/{id}/media:
+    $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1{id}~1media'    
   /youtube:
     $ref: 'youtube.yaml#/paths/~1youtube'
   /youtube/{id}:
@@ -105,7 +123,7 @@ paths:
   /youtube/video/guid/{id}:
     $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1guid~1{id}'
   /youtube/video/duration/{video_id}:
-    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video_id}'    
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video_id}'        
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
@@ -114,12 +132,6 @@ paths:
     $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'
 components:
   schemas:
-    Label:
-      $ref: 'label.yaml#/components/schemas/Label'
-    Developer:
-      $ref: 'developer.yaml#/components/schemas/Developer'
-    Media:
-      $ref: 'media.yaml#/components/schemas/Media'
     Blog:
       $ref: 'blog.yaml#/components/schemas/Blog'
     BlogPost:
@@ -128,16 +140,28 @@ components:
       $ref: 'blog-post.yaml#/components/schemas/BlogPostMedia'
     Dev:
       $ref: 'dev.yaml#/components/schemas/Dev'
+    Developer:
+      $ref: 'developer.yaml#/components/schemas/Developer'      
     DevPost:
       $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:
       $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'
+    Label:
+      $ref: 'label.yaml#/components/schemas/Label'    
+    Media:
+      $ref: 'media.yaml#/components/schemas/Media'        
     Medium:
       $ref: 'medium.yaml#/components/schemas/Medium'
     MediumPost:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    Twitter:
+      $ref: 'twitter.yaml#/components/schemas/Twitter'      
+    TwitterStatus:
+      $ref: 'twitter-status.yaml#/components/schemas/TwitterStatus'
+    TwitterStatusMedia:
+      $ref: 'twitter-status.yaml#/components/schemas/TwitterStatusMedia'      
     YouTube:
       $ref: 'youtube.yaml#/components/schemas/YouTube'      
     YouTubeVideo:

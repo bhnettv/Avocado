@@ -10,6 +10,10 @@
     },
     "port": 8000
   },
+  "twitter": {
+    "key": "_TWITTER_KEY_",
+    "secret": "_TWITTER_SECRET_"
+  },
   "watson": {
     "nlu": {
       "key": "apikey",

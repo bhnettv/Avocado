@@ -532,13 +532,13 @@ router.put( '/:id', ( req, res ) => {
 router.delete( '/:post/media/:media', ( req, res ) => {
   let ids = req.db.prepare( `
     SELECT
-      Post.id AS "post_id",
+      MediumPost.id AS "post_id",
       Media.id AS "media_id"
     FROM
       Media,
-      Post
+      MediumPost
     WHERE
-      Post.uuid = ? AND
+      MediumPost.uuid = ? AND
       Media.uuid = ?    
   ` )
   .get( 

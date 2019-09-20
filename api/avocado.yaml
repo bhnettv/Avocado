@@ -34,6 +34,10 @@ tags:
     description: Medium feeds to aggregate
   - name: 🔮 📝 Medium Post
     description: Post made to a Medium account
+  - name: 🐦 Twitter
+    description: Twitter accounts to aggregate
+  - name: 🐦 ✒️ Twitter Status
+    description: Status update to a Twitter account
   - name: 📺 YouTube
     description: YouTube accounts to aggregate
   - name: 📺 📼 YouTube Video
@@ -2616,6 +2620,677 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  /twitter:
+    get:
+      tags:
+        - 🐦 Twitter
+      summary: Read all available Twitter accounts
+      operationId: getTwitters
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - screen_name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    user_id:
+                      type: integer
+                      example: 0
+                    joined_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Winston Whitehall
+                    screen_name:
+                      type: string
+                      example: winst_whitehall
+                    image:
+                      type: string
+                      example: http://something.com
+                    followers:
+                      type: integer
+                      example: 0
+                    friends:
+                      type: integer
+                      example: 0
+                    listed:
+                      type: integer
+                      example: 0
+                    favorites:
+                      type: integer
+                      example: 0
+                    count:
+                      type: integer
+                      example: 0
+                    location:
+                      type: string
+                      example: London
+                    description:
+                      type: string
+                      example: Travels with My Father
+                    url:
+                      type: string
+                      example: https://netflix.com
+    post:
+      tags:
+        - 🐦 Twitter
+      summary: Create a new Twitter account
+      operationId: createTwitter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                screen_name:
+                  type: string
+                  example: winst_whitehall
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1twitter/get/responses/200/content/application~1jso\
+                  n/schema/items"
+  "/twitter/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired Twitter account
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🐦 Twitter
+      summary: Read specific Twitter acount by ID
+      operationId: getTwitterByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - screen_name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  user_id:
+                    type: integer
+                    example: 0
+                  joined_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: Winston Whitehall
+                  screen_name:
+                    type: string
+                    example: winst_whitehall
+                  image:
+                    type: string
+                    example: http://something.com
+                  followers:
+                    type: integer
+                    example: 0
+                  friends:
+                    type: integer
+                    example: 0
+                  listed:
+                    type: integer
+                    example: 0
+                  favorites:
+                    type: integer
+                    example: 0
+                  count:
+                    type: integer
+                    example: 0
+                  location:
+                    type: string
+                    example: London
+                  description:
+                    type: string
+                    example: Travels with My Father
+                  url:
+                    type: string
+                    example: https://netflix.com
+    put:
+      tags:
+        - 🐦 Twitter
+      summary: Update specific Twitter account by ID
+      operationId: updateTwitter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                user_id:
+                  type: integer
+                  example: 0
+                joined_at:
+                  type: string
+                  format: date-time
+                name:
+                  type: string
+                  example: Winston Whitehall
+                screen_name:
+                  type: string
+                  example: winst_whitehall
+                image:
+                  type: string
+                  example: http://something.com
+                followers:
+                  type: integer
+                  example: 0
+                friends:
+                  type: integer
+                  example: 0
+                listed:
+                  type: integer
+                  example: 0
+                favorites:
+                  type: integer
+                  example: 0
+                count:
+                  type: integer
+                  example: 0
+                location:
+                  type: string
+                  example: London
+                description:
+                  type: string
+                  example: Travels with My Father
+                url:
+                  type: string
+                  example: https://netflix.com
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1twitter~1%7Bid%7D/get/responses/200/content/applic\
+                  ation~1json/schema"
+    delete:
+      tags:
+        - 🐦 Twitter
+      summary: Delete specific Twitter account by ID
+      operationId: deleteTwitterByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/twitter/timeline/{screen_name}":
+    parameters:
+      - name: screen_name
+        in: path
+        description: Screen name of Twitter account
+        required: true
+        schema:
+          type: string
+          example: winst_whitehall
+    get:
+      tags:
+        - 🐦 Twitter
+      summary: Get timeline for specific Twitter user
+      operationId: getTwitterTimeline
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /twitter/status:
+    get:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Read all available account updates
+      operationId: getTwitterStatuses
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - twitter_id
+                    - published_at
+                    - status_id
+                    - link
+                    - full_text
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    twitter_id:
+                      type: string
+                      format: uuid
+                    published_at:
+                      type: string
+                      format: date-time
+                    status_id:
+                      type: integer
+                      example: 0
+                    link:
+                      type: string
+                      example: http://something.com
+                    full_text:
+                      type: string
+                      example: Tweet, tweet!
+                    favorite:
+                      type: integer
+                      example: 0
+                    retweet:
+                      type: integer
+                      example: 0
+                    hashtags:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - developers
+                        - rock
+                    mentions:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - somebody
+                        - that_person
+    post:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Create a new Twitter status update
+      operationId: createTwitterStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                twitter_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                status_id:
+                  type: integer
+                  example: 0
+                link:
+                  type: string
+                  example: http://something.com
+                full_text:
+                  type: string
+                  example: Tweet, tweet!
+                favorite:
+                  type: integer
+                  example: 0
+                retweet:
+                  type: integer
+                  example: 0
+                hashtags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - developers
+                    - rock
+                mentions:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - somebody
+                    - that_person
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1twitter~1status/get/responses/200/content/applicat\
+                  ion~1json/schema/items"
+  "/twitter/status/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired Twitter status
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Read specific Twitter status by ID
+      operationId: getTwitterStatusByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - twitter_id
+                  - published_at
+                  - status_id
+                  - link
+                  - full_text
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  twitter_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  status_id:
+                    type: integer
+                    example: 0
+                  link:
+                    type: string
+                    example: http://something.com
+                  full_text:
+                    type: string
+                    example: Tweet, tweet!
+                  favorite:
+                    type: integer
+                    example: 0
+                  retweet:
+                    type: integer
+                    example: 0
+                  hashtags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - developers
+                      - rock
+                  mentions:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - somebody
+                      - that_person
+    put:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Update specific Twitter status by ID
+      operationId: updateTwitterStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                twitter_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                status_id:
+                  type: integer
+                  example: 0
+                link:
+                  type: string
+                  example: http://something.com
+                full_text:
+                  type: string
+                  example: Tweet, tweet!
+                favorite:
+                  type: integer
+                  example: 0
+                retweet:
+                  type: integer
+                  example: 0
+                hashtags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - developers
+                    - rock
+                mentions:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - somebody
+                    - that_person
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1twitter~1status~1%7Bid%7D/get/responses/200/conten\
+                  t/application~1json/schema"
+    delete:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Delete specific Twitter status by ID
+      operationId: deleteTwitterStatusByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/twitter/status/id/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: Twitter-specific status ID
+        required: true
+        schema:
+          type: integer
+          example: 0
+    get:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Read specific Twitter status by Twitter-specific ID
+      operationId: getTwitterStatusFromID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - twitter_id
+                  - published_at
+                  - status_id
+                  - link
+                  - full_text
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  twitter_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  status_id:
+                    type: integer
+                    example: 0
+                  link:
+                    type: string
+                    example: http://something.com
+                  full_text:
+                    type: string
+                    example: Tweet, tweet!
+                  favorite:
+                    type: integer
+                    example: 0
+                  retweet:
+                    type: integer
+                    example: 0
+                  hashtags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - developers
+                      - rock
+                  mentions:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - somebody
+                      - that_person
+  "/twitter/status/{id}/media":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for specific Twitter status
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Read all available media for given Twitter status
+      operationId: getTwitterStatusMedia
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/paths/~1blog~1post~1%7Bid%7D~1media/get/responses/200/co\
+                    ntent/application~1json/schema/items"
+    post:
+      tags:
+        - 🐦 ✒️ Twitter Status
+      summary: Create a new reference between a Twitter status and media
+      operationId: createTwitterStatusMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                media_id:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  post_id:
+                    type: string
+                    format: uuid
+                  media_id:
+                    type: string
+                    format: uuid
   /youtube:
     get:
       tags:
@@ -3242,78 +3917,6 @@ paths:
                   - http://something.com/cat.gif
 components:
   schemas:
-    Label:
-      required:
-        - name
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-          example: IBM
-    Developer:
-      required:
-        - first
-        - last
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        first:
-          type: string
-          example: Kevin
-        last:
-          type: string
-          example: Hoyt
-        nickname:
-          type: string
-          example: The Dude
-        email:
-          type: string
-          example: krhoyt@us.ibm.com
-        notes:
-          type: string
-          example: That creep can roll, man!
-    Media:
-      required:
-        - url
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        url:
-          type: string
-          example: http://something.com
-        keywords:
-          type: array
-          items:
-            type: string
-          example:
-            - eagle
-            - landed
-            - moon
     Blog:
       required:
         - developer_id
@@ -3454,6 +4057,36 @@ components:
         user_name:
           type: string
           example: boneskull
+    Developer:
+      required:
+        - first
+        - last
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        first:
+          type: string
+          example: Kevin
+        last:
+          type: string
+          example: Hoyt
+        nickname:
+          type: string
+          example: The Dude
+        email:
+          type: string
+          example: krhoyt@us.ibm.com
+        notes:
+          type: string
+          example: That creep can roll, man!
     DevPost:
       required:
         - dev_id
@@ -3552,6 +4185,48 @@ components:
         media_id:
           type: string
           format: uuid
+    Label:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: IBM
+    Media:
+      required:
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+          example: http://something.com
+        keywords:
+          type: array
+          items:
+            type: string
+          example:
+            - eagle
+            - landed
+            - moon
     Medium:
       required:
         - developer_id
@@ -3669,6 +4344,140 @@ components:
           type: string
           format: date-time
         post_id:
+          type: string
+          format: uuid
+        media_id:
+          type: string
+          format: uuid
+    Twitter:
+      required:
+        - developer_id
+        - screen_name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        user_id:
+          type: integer
+          example: 0
+        joined_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: Winston Whitehall
+        screen_name:
+          type: string
+          example: winst_whitehall
+        image:
+          type: string
+          example: http://something.com
+        followers:
+          type: integer
+          example: 0
+        friends:
+          type: integer
+          example: 0
+        listed:
+          type: integer
+          example: 0
+        favorites:
+          type: integer
+          example: 0
+        count:
+          type: integer
+          example: 0
+        location:
+          type: string
+          example: London
+        description:
+          type: string
+          example: Travels with My Father
+        url:
+          type: string
+          example: https://netflix.com
+    TwitterStatus:
+      required:
+        - twitter_id
+        - published_at
+        - status_id
+        - link
+        - full_text
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        twitter_id:
+          type: string
+          format: uuid
+        published_at:
+          type: string
+          format: date-time
+        status_id:
+          type: integer
+          example: 0
+        link:
+          type: string
+          example: http://something.com
+        full_text:
+          type: string
+          example: Tweet, tweet!
+        favorite:
+          type: integer
+          example: 0
+        retweet:
+          type: integer
+          example: 0
+        hashtags:
+          type: array
+          items:
+            type: string
+          example:
+            - developers
+            - rock
+        mentions:
+          type: array
+          items:
+            type: string
+          example:
+            - somebody
+            - that_person
+    TwitterStatusMedia:
+      required:
+        - status_id
+        - media_id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        status_id:
           type: string
           format: uuid
         media_id:
