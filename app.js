@@ -76,6 +76,7 @@ app.use( '/api/medium', require( './routes/medium' ) );
 app.use( '/api/youtube/video', require( './routes/youtube-video' ) );
 app.use( '/api/youtube', require( './routes/youtube' ) );
 app.use( '/api/media', require( './routes/media' ) );
+app.use( '/api/so', require( './routes/so' ) );
 app.use( '/api/twitter/status', require( './routes/twitter-status' ) );
 app.use( '/api/twitter', require( './routes/twitter' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
