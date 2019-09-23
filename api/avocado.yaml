@@ -2910,7 +2910,7 @@ paths:
                   required:
                     - twitter_id
                     - published_at
-                    - status_id
+                    - status
                     - link
                     - full_text
                   type: object
@@ -2930,9 +2930,9 @@ paths:
                     published_at:
                       type: string
                       format: date-time
-                    status_id:
-                      type: integer
-                      example: 0
+                    status:
+                      type: string
+                      example: "1175855334558068736"
                     link:
                       type: string
                       example: http://something.com
@@ -2959,6 +2959,13 @@ paths:
                       example:
                         - somebody
                         - that_person
+                    urls:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - http://something.com
+                        - http://else.com
     post:
       tags:
         - 🐦 ✒️ Twitter Status
@@ -2977,9 +2984,9 @@ paths:
                 published_at:
                   type: string
                   format: date-time
-                status_id:
-                  type: integer
-                  example: 0
+                status:
+                  type: string
+                  example: "1175855334558068736"
                 link:
                   type: string
                   example: http://something.com
@@ -3006,6 +3013,13 @@ paths:
                   example:
                     - somebody
                     - that_person
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - http://something.com
+                    - http://else.com
       responses:
         "200":
           description: successful operation
@@ -3037,7 +3051,7 @@ paths:
                 required:
                   - twitter_id
                   - published_at
-                  - status_id
+                  - status
                   - link
                   - full_text
                 type: object
@@ -3057,9 +3071,9 @@ paths:
                   published_at:
                     type: string
                     format: date-time
-                  status_id:
-                    type: integer
-                    example: 0
+                  status:
+                    type: string
+                    example: "1175855334558068736"
                   link:
                     type: string
                     example: http://something.com
@@ -3086,6 +3100,13 @@ paths:
                     example:
                       - somebody
                       - that_person
+                  urls:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - http://something.com
+                      - http://else.com
     put:
       tags:
         - 🐦 ✒️ Twitter Status
@@ -3104,9 +3125,9 @@ paths:
                 published_at:
                   type: string
                   format: date-time
-                status_id:
-                  type: integer
-                  example: 0
+                status:
+                  type: string
+                  example: "1175855334558068736"
                 link:
                   type: string
                   example: http://something.com
@@ -3133,6 +3154,13 @@ paths:
                   example:
                     - somebody
                     - that_person
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - http://something.com
+                    - http://else.com
       responses:
         "200":
           description: successful operation
@@ -3164,8 +3192,8 @@ paths:
         description: Twitter-specific status ID
         required: true
         schema:
-          type: integer
-          example: 0
+          type: string
+          example: "1175855334558068736"
     get:
       tags:
         - 🐦 ✒️ Twitter Status
@@ -3180,7 +3208,7 @@ paths:
                 required:
                   - twitter_id
                   - published_at
-                  - status_id
+                  - status
                   - link
                   - full_text
                 type: object
@@ -3200,9 +3228,9 @@ paths:
                   published_at:
                     type: string
                     format: date-time
-                  status_id:
-                    type: integer
-                    example: 0
+                  status:
+                    type: string
+                    example: "1175855334558068736"
                   link:
                     type: string
                     example: http://something.com
@@ -3229,6 +3257,13 @@ paths:
                     example:
                       - somebody
                       - that_person
+                  urls:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - http://something.com
+                      - http://else.com
   "/twitter/status/{id}/media":
     parameters:
       - name: id
@@ -4410,7 +4445,7 @@ components:
       required:
         - twitter_id
         - published_at
-        - status_id
+        - status
         - link
         - full_text
       type: object
@@ -4430,9 +4465,9 @@ components:
         published_at:
           type: string
           format: date-time
-        status_id:
-          type: integer
-          example: 0
+        status:
+          type: string
+          example: "1175855334558068736"
         link:
           type: string
           example: http://something.com
@@ -4459,6 +4494,13 @@ components:
           example:
             - somebody
             - that_person
+        urls:
+          type: array
+          items:
+            type: string
+          example:
+            - http://something.com
+            - http://else.com
     TwitterStatusMedia:
       required:
         - status_id

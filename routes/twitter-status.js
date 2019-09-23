@@ -18,13 +18,14 @@ router.get( '/:id', ( req, res ) => {
       TwitterStatus.updated_at,
       Twitter.uuid AS "twitter_id",
       TwitterStatus.published_at,
-      TwitterStatus.status_id,
+      TwitterStatus.status,
       TwitterStatus.link,
       TwitterStatus.full_text,
       TwitterStatus.favorite,
       TwitterStatus.retweet,
       TwitterStatus.hashtags,
-      TwitterStatus.mentions
+      TwitterStatus.mentions,
+      TwitterStatus.urls
     FROM 
       Twitter,
       TwitterStatus
@@ -50,6 +51,12 @@ router.get( '/:id', ( req, res ) => {
     } else {
       status.mentions = status.mentions.split( ',' );
     }
+
+    if( status.urls === null ) {
+      status.urls = [];
+    } else {
+      status.urls = status.urls.split( ',' );
+    }    
   }
 
   res.json( status );
@@ -97,19 +104,20 @@ router.get( '/id/:id', ( req, res ) => {
       TwitterStatus.updated_at,
       Twitter.uuid AS "twitter_id",
       TwitterStatus.published_at,
-      TwitterStatus.status_id,
+      TwitterStatus.status,
       TwitterStatus.link,
       TwitterStatus.full_text,
       TwitterStatus.favorite,
       TwitterStatus.retweet,
       TwitterStatus.hashtags,
-      TwitterStatus.mentions
+      TwitterStatus.mentions,
+      TwitterStatus.urls
     FROM 
       Twitter,
       TwitterStatus
     WHERE 
       TwitterStatus.twitter_id = Twitter.id AND
-      TwitterStatus.status_id = ?
+      TwitterStatus.status = ?
   ` )
   .get( 
     req.params.id
@@ -129,6 +137,12 @@ router.get( '/id/:id', ( req, res ) => {
     } else {
       status.mentions = status.mentions.split( ',' );
     }
+
+    if( status.urls === null ) {
+      status.urls = [];
+    } else {
+      status.urls = status.urls.split( ',' );
+    }    
   }
 
   res.json( status );
@@ -143,7 +157,7 @@ router.get( '/', ( req, res ) => {
       TwitterStatus.updated_at,
       Twitter.uuid AS "twitter_id",
       TwitterStatus.published_at,
-      TwitterStatus.status_id,
+      TwitterStatus.status,
       TwitterStatus.link,
       TwitterStatus.full_text,
       TwitterStatus.favorite,
@@ -170,6 +184,12 @@ router.get( '/', ( req, res ) => {
     } else {
       updates[u].mentions = updates[u].mentions.split( ',' );
     }
+
+    if( updates[u].urls === null ) {
+      updates[u].urls = [];
+    } else {
+      updates[u].urls = updates[u].urls.split( ',' );
+    }    
   }
 
   res.json( updates );
@@ -235,13 +255,14 @@ router.post( '/', ( req, res ) => {
     updated_at: new Date().toISOString(),
     twitter_uuid: req.body.twitter_id,
     published_at: req.body.published_at,
-    status_id: req.body.status_id,
+    status: req.body.status,
     link: req.body.link,
     full_text: req.body.full_text,
     favorite: req.body.favorite,
     retweet: req.body.retweet,
     hashtags: req.body.hashtags,
-    mentions: req.body.mentions
+    mentions: req.body.mentions,
+    urls: req.body.urls
   };
 
   if( record.hashtags.length === 0 ) {
@@ -256,6 +277,12 @@ router.post( '/', ( req, res ) => {
     record.mentions = record.mentions.join( ',' );
   }    
 
+  if( record.urls.length === 0 ) {
+    record.urls = null;
+  } else {
+    record.urls = record.urls.join( ',' );
+  }      
+
   let twitter = req.db.prepare( `
     SELECT Twitter.id
     FROM Twitter
@@ -268,7 +295,7 @@ router.post( '/', ( req, res ) => {
 
   let info = req.db.prepare( `
     INSERT INTO TwitterStatus
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -277,13 +304,14 @@ router.post( '/', ( req, res ) => {
     record.updated_at,
     record.twitter_id,
     record.published_at,
-    record.status_id,
+    record.status,
     record.link,
     record.full_text,
     record.favorite,
     record.retweet,
     record.hashtags,
-    record.mentions
+    record.mentions,
+    record.urls
   );
 
   if( record.hashtags === null ) {
@@ -298,19 +326,26 @@ router.post( '/', ( req, res ) => {
     record.mentions = record.mentions.split( ',' );
   }  
 
+  if( record.urls === null ) {
+    record.urls = [];
+  } else {    
+    record.urls = record.urls.split( ',' );
+  }    
+
   res.json( {
     id: record.uuid,
     created_at: record.created_at,
     updated_at: record.updated_at,
     twitter_id: record.twitter_uuid,
     published_at: record.published_at,
-    status_id: record.status_id,
+    status: record.status,
     link: record.link,
     full_text: record.full_text,
     favorite: record.favorite,
     retweet: record.retweet,
     hashtags: record.hashtags,
-    mentions: record.mentions
+    mentions: record.mentions,
+    urls: record.urls
   } );
 } );
 
@@ -321,13 +356,14 @@ router.put( '/:id', ( req, res ) => {
     updated_at: new Date().toISOString(),
     twitter_uuid: req.body.twitter_id,
     published_at: req.body.published_at,
-    status_id: req.body.status_id,
+    status: req.body.status,
     link: req.body.link,
     full_text: req.body.full_text,
     favorite: req.body.favorite,
     retweet: req.body.retweet,
     hashtags: req.body.hashtags,
-    mentions: req.body.mentions    
+    mentions: req.body.mentions,
+    urls: req.body.urls
   };
 
   if( record.hashtags.length === 0 ) {
@@ -341,6 +377,12 @@ router.put( '/:id', ( req, res ) => {
   } else {
     record.mentions = record.mentions.join( ',' );
   }    
+
+  if( record.urls.length === 0 ) {
+    record.urls = null;
+  } else {
+    record.urls = record.urls.join( ',' );
+  }      
 
   let twitter = req.db.prepare( `
     SELECT Twitter.id
@@ -358,26 +400,28 @@ router.put( '/:id', ( req, res ) => {
       updated_at = ?,
       twitter_id = ?,
       published_at = ?,
-      status_id = ?,
+      status = ?,
       link = ?,
       full_text = ?,
       favorite = ?,
       retweet = ?,
       hashtags = ?,
-      mentions = ?
+      mentions = ?,
+      urls = ?
     WHERE uuid = ?
   ` )
   .run(
     record.updated_at,
     record.twitter_id,
     record.published_at,
-    record.status_id,
+    record.status,
     record.link,
     record.full_text,
     record.favorite,
     record.retweet,
     record.hashtags,
     record.mentions,
+    record.urls,
     record.uuid
   );
 
@@ -388,13 +432,14 @@ router.put( '/:id', ( req, res ) => {
       TwitterStatus.updated_at,
       Twitter.uuid AS "twitter_id",
       TwitterStatus.published_at,
-      TwitterStatus.status_id,
+      TwitterStatus.status,
       TwitterStatus.link,
       TwitterStatus.full_text,
       TwitterStatus.favorite,
       TwitterStatus.retweet,
       TwitterStatus.hashtags,
-      TwitterStatus.mentions
+      TwitterStatus.mentions,
+      TwitterStatus.urls
     FROM 
       Twitter,
       TwitterStatus
@@ -417,6 +462,12 @@ router.put( '/:id', ( req, res ) => {
   } else {    
     record.mentions = record.mentions.split( ',' );
   }  
+
+  if( record.urls === null ) {
+    record.urls = [];
+  } else {    
+    record.urls = record.urls.split( ',' );
+  }    
 
   res.json( record );  
 } );
