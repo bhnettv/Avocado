@@ -10,16 +10,19 @@
     },
     "port": 8000
   },
+  "stackoverflow": {
+    "key": "_STACK_APPS_KEY_"
+  },  
   "twitter": {
     "key": "_TWITTER_KEY_",
     "secret": "_TWITTER_SECRET_"
   },
   "watson": {
-    "nlu": {
+    "language": {
       "key": "apikey",
       "secret": "_WATSON_NLU_SECRET_"      
     },
-    "recognition": {
+    "vision": {
       "key": "apikey",
       "secret": "_WATSON_RECOGNITION_SECRET_"
     }

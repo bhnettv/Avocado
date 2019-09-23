@@ -20,8 +20,8 @@ router.get( '/language/:url', async ( req, res ) => {
     method: 'GET',
     url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze',
     auth: {
-      username: req.config.watson.nlu.key,
-      password: req.config.watson.nlu.secret
+      username: req.config.watson.language.key,
+      password: req.config.watson.language.secret
     },
     qs: {
       version: '2019-07-12',
@@ -47,8 +47,8 @@ router.get( '/vision/:url', async ( req, res ) => {
     url: 'https://gateway.watsonplatform.net/visual-recognition/api/v3/classify',
     method: 'GET',
     auth: {
-      user: req.config.watson.recognition.key,
-      pass: req.config.watson.recognition.secret
+      user: req.config.watson.vision.key,
+      pass: req.config.watson.vision.secret
     },
     qs: {
       url: url,
