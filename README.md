@@ -7,6 +7,13 @@ Install
     pip install -r requirements.txt
     npm install
 
+Configure
+
+- Google YouTube API key
+- Twitter key
+- Twitter secret
+- Stack Apps application key
+
 Start
 
     npm start
