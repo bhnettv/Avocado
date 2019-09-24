@@ -25,7 +25,7 @@ Aggregate
     python medium.py
     python youtube.py
     python twitter.py
-    # python so.py
+    python so.py
     # python github.py
     # python reddit.py
 
