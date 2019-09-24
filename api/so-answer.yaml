@@ -21,7 +21,7 @@ paths:
       tags:
       - 📚 ✋ Stack Overflow Answer
       summary: Read all available Stack Overflow answers
-      operationId: getStackAnswers
+      operationId: getStackAnswerAll
       responses:
         200:
           description: successful operation

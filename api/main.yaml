@@ -35,6 +35,8 @@ tags:
   description: Stack Overflow accounts to aggregate
 - name: 📚 ✋ Stack Overflow Answer
   description: Answer made by a Stack Overflow account    
+- name: 📚 ❓ Stack Overflow Question
+  description: Question proposed by a Stack Overflow account  
 - name: 🐦 Twitter
   description: Twitter accounts to aggregate  
 - name: 🐦 ✒️ Twitter Status
@@ -112,6 +114,10 @@ paths:
     $ref: 'so-answer.yaml#/paths/~1so~1answer~1{id}'
   /so/answer/id/{id}:
     $ref: 'so-answer.yaml#/paths/~1so~1answer~1id~1{id}'    
+  /so/answers/{user_id}:
+    $ref: 'so.yaml#/paths/~1so~1answers~1{user_id}'
+  /so/question/id/{id}:
+    $ref: 'so-question.yaml#/paths/~1so~1question~1id~1{id}'        
   /twitter:
     $ref: 'twitter.yaml#/paths/~1twitter'
   /twitter/{id}:
@@ -173,7 +179,9 @@ components:
     StackOverflow:
       $ref: 'so.yaml#/components/schemas/StackOverflow'
     StackOverflowAnswer:
-      $ref: 'so-answer.yaml#/components/schemas/StackOverflowAnswer'      
+      $ref: 'so-answer.yaml#/components/schemas/StackOverflowAnswer'
+    StackOverflowQuestion:
+      $ref: 'so-question.yaml#/components/schemas/StackOverflowQuestion'            
     Twitter:
       $ref: 'twitter.yaml#/components/schemas/Twitter'      
     TwitterStatus:

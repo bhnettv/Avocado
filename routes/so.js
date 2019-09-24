@@ -181,7 +181,86 @@ router.post( '/', async ( req, res ) => {
   } );
 } );
 
-// Update
+// Update using API
+router.patch( '/:id', async ( req, res ) => {
+  record = req.db.prepare( `
+    SELECT
+      StackOverflow.uuid AS "id",
+      StackOverflow.created_at, 
+      StackOverflow.updated_at,
+      Developer.uuid AS "developer_id",
+      StackOverflow.user,
+      StackOverflow.account,
+      StackOverflow.joined_at,
+      StackOverflow.reputation,
+      StackOverflow.accept_rate,
+      StackOverflow.name,
+      StackOverflow.location,
+      StackOverflow.website,
+      StackOverflow.link,
+      StackOverflow.image
+    FROM 
+      Developer, 
+      StackOverflow
+    WHERE 
+      StackOverflow.developer_id = Developer.id AND
+      StackOverflow.uuid = ?
+  ` )
+  .get( 
+    req.params.id
+  );
+
+  let profile = await rp( {
+    url: `https://api.stackexchange.com/2.2/users/${record.user}`,
+    method: 'GET',
+    qs: {
+      order: 'desc',
+      sort: 'reputation',
+      site: 'stackoverflow',
+      key: req.config.stackoverflow.key
+    },
+    gzip: true,
+    json: true
+  } );
+
+  record.updated_at = new Date().toISOString();
+  record.reputation = profile.items[0].reputation;
+  record.accept_rate = profile.items[0].accept_rate ? profile.items[0].accept_rate : 0;
+  record.name = profile.items[0].display_name;
+  record.location = profile.items[0].location;
+  record.website = profile.items[0].website_url;
+  record.link = profile.items[0].link;
+  record.image = profile.items[0].profile_image;
+
+  let info = req.db.prepare( `
+    UPDATE StackOverflow
+    SET 
+      updated_at = ?,
+      reputation = ?,
+      accept_rate = ?,
+      name = ?,
+      location = ?,
+      website = ?,
+      link = ?,
+      image = ?
+    WHERE user = ?
+  ` )
+  .run(
+    record.updated_at,
+    record.reputation,
+    record.accept_rate,
+    record.name,
+    record.location,
+    record.website,
+    record.link,
+    record.image,
+    record.user
+  );  
+
+  res.json( record );    
+} );
+
+// Update directly
 router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,

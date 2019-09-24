@@ -38,6 +38,8 @@ tags:
     description: Stack Overflow accounts to aggregate
   - name: 📚 ✋ Stack Overflow Answer
     description: Answer made by a Stack Overflow account
+  - name: 📚 ❓ Stack Overflow Question
+    description: Question proposed by a Stack Overflow account
   - name: 🐦 Twitter
     description: Twitter accounts to aggregate
   - name: 🐦 ✒️ Twitter Status
@@ -2778,6 +2780,19 @@ paths:
                   image:
                     type: string
                     example: http://something.com
+    patch:
+      tags:
+        - 📚 Stack Overflow
+      summary: Update Stack Overflow account based on API data
+      operationId: updateStackUser
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1so~1%7Bid%7D/get/responses/200/content/application\
+                  ~1json/schema"
     put:
       tags:
         - 📚 Stack Overflow
@@ -2852,7 +2867,7 @@ paths:
       tags:
         - 📚 ✋ Stack Overflow Answer
       summary: Read all available Stack Overflow answers
-      operationId: getStackAnswers
+      operationId: getStackAnswerAll
       responses:
         "200":
           description: successful operation
@@ -3300,6 +3315,87 @@ paths:
                       - natural
                       - language
                       - understanding
+  "/so/answers/{user_id}":
+    parameters:
+      - name: user_id
+        in: path
+        description: Stack Overflow user ID
+        required: true
+        schema:
+          type: string
+          example: "1146762"
+    get:
+      tags:
+        - 📚 Stack Overflow
+      summary: Get answers made by specific Stack Overflow account
+      operationId: getStackAnswers
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  "/so/question/id/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: Stack Overflow question ID
+        required: true
+        schema:
+          type: string
+          example: "38583348"
+    get:
+      tags:
+        - 📚 ❓ Stack Overflow Question
+      summary: Read specific question by ID
+      operationId: getStackQuestionByQuestionID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - python
+                      - ibm
+                      - serverless
+                  owner:
+                    type: object
+                  is_answered:
+                    type: boolean
+                  view_count:
+                    type: integer
+                    example: 0
+                  answer_count:
+                    type: integer
+                    example: 0
+                  score:
+                    type: integer
+                    example: 0
+                  last_activity_date:
+                    type: integer
+                    example: 0
+                  creation_date:
+                    type: integer
+                    example: 0
+                  question_id:
+                    type: integer
+                    example: 0
+                  link:
+                    type: string
+                    example: http://something.com
+                  title:
+                    type: string
+                    example: This is a question?
   /twitter:
     get:
       tags:
@@ -5190,6 +5286,45 @@ components:
             - natural
             - language
             - understanding
+    StackOverflowQuestion:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - python
+            - ibm
+            - serverless
+        owner:
+          type: object
+        is_answered:
+          type: boolean
+        view_count:
+          type: integer
+          example: 0
+        answer_count:
+          type: integer
+          example: 0
+        score:
+          type: integer
+          example: 0
+        last_activity_date:
+          type: integer
+          example: 0
+        creation_date:
+          type: integer
+          example: 0
+        question_id:
+          type: integer
+          example: 0
+        link:
+          type: string
+          example: http://something.com
+        title:
+          type: string
+          example: This is a question?
     Twitter:
       required:
         - developer_id

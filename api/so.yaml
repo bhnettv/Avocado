@@ -76,6 +76,18 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/StackOverflow'    
+    patch:
+      tags:
+      - 📚 Stack Overflow
+      summary: Update Stack Overflow account based on API data
+      operationId: updateStackUser
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/StackOverflow'      
     put:
       tags:
@@ -145,9 +157,9 @@ paths:
                   id:
                     type: string
                     format: uuid         
-  /so/answers/{user}:        
+  /so/answers/{user_id}:        
     parameters:
-    - name: user
+    - name: user_id
       in: path
       description: Stack Overflow user ID
       required: true
@@ -168,6 +180,27 @@ paths:
                 type: array
                 items:
                   type: object
+  /so/question/{id}:        
+    parameters:
+    - name: id
+      in: path
+      description: Stack Overflow question ID
+      required: true
+      schema:
+        type: string
+        example: '38583348'
+    get:
+      tags:
+      - 📚 Stack Overflow
+      summary: Get a specific question from Stack Overflow
+      operationId: getStackQuestion
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     StackOverflow:

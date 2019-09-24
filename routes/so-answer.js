@@ -70,7 +70,7 @@ router.get( '/:id', ( req, res ) => {
   res.json( answer );
 } );
 
-// Read single answer by Stack Overflow anser ID
+// Read single answer by Stack Overflow answer ID
 router.get( '/id/:id', ( req, res ) => {
   let answer = req.db.prepare( `
     SELECT
