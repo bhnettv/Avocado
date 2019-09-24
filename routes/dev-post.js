@@ -436,7 +436,8 @@ router.put( '/:id', ( req, res ) => {
       reading = ?,
       unicorn = ?,            
       keywords = ?,
-      concepts = ?
+      concepts = ?,
+      entities = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -453,6 +454,7 @@ router.put( '/:id', ( req, res ) => {
     record.unicorn,        
     record.keywords,
     record.concepts,
+    record.entities,
     record.uuid
   );
 

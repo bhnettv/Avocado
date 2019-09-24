@@ -456,7 +456,8 @@ router.put( '/:id', ( req, res ) => {
       views = ?,
       category = ?,
       keywords = ?,
-      concepts = ?
+      concepts = ?,
+      entities = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -471,6 +472,7 @@ router.put( '/:id', ( req, res ) => {
     record.category,
     record.keywords,
     record.concepts,
+    record.entities,
     record.uuid
   );
 
