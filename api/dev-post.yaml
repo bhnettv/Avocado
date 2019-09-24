@@ -52,7 +52,7 @@ paths:
                 guid:
                   type: string
                   format: uuid
-                article_id:
+                article:
                   type: integer
                   example: 172031
                 link:
@@ -137,7 +137,7 @@ paths:
                 guid:
                   type: string
                   format: uuid
-                article_id:
+                article:
                   type: integer
                   example: 172031
                 link:
@@ -285,7 +285,7 @@ components:
       - dev_id
       - published_at
       - guid
-      - article_id
+      - article
       - link
       - title
       - summary
@@ -309,7 +309,7 @@ components:
         guid:
           type: string
           format: uuid
-        article_id:
+        article:
           type: integer
           example: 172031          
         link:

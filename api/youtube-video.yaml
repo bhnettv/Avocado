@@ -52,7 +52,7 @@ paths:
                 guid:
                   type: string
                   format: uuid
-                video_id:
+                video:
                   type: string
                   example: oNyXYPhnUIs
                 link:
@@ -125,7 +125,7 @@ paths:
                 guid:
                   type: string
                   format: uuid
-                video_id:
+                video:
                   type: string
                   example: oNyXYPhnUIs
                 link:
@@ -193,9 +193,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/YouTubeVideo'
-  /youtube/video/duration/{video_id}:
+  /youtube/video/duration/{video}:
     parameters:
-    - name: video_id
+    - name: video
       in: path
       description: Specific YouTube video ID
       required: true
@@ -228,7 +228,7 @@ components:
       - youtube_id
       - published_at
       - guid
-      - video_id
+      - video
       - link
       - title
       - summary
@@ -252,7 +252,7 @@ components:
         guid:
           type: string
           format: uuid
-        video_id:
+        video:
           type: string
           example: oNyXYPhnUIs          
         link:

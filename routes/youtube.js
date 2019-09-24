@@ -17,7 +17,7 @@ router.get( '/:id', ( req, res ) => {
       YouTube.created_at, 
       YouTube.updated_at,
       Developer.uuid AS "developer_id",
-      YouTube.channel_id
+      YouTube.channel
     FROM 
       Developer, 
       YouTube
@@ -44,7 +44,7 @@ router.get( '/', ( req, res ) => {
       YouTube.created_at, 
       YouTube.updated_at,
       Developer.uuid AS "developer_id",
-      YouTube.channel_id
+      YouTube.channel
     FROM 
       Developer,
       YouTube
@@ -64,7 +64,7 @@ router.post( '/', ( req, res ) => {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
-    channel_id: req.body.channel_id
+    channel: req.body.channel
   };
 
   let developer = req.db.prepare( `
@@ -87,7 +87,7 @@ router.post( '/', ( req, res ) => {
     record.created_at,
     record.updated_at,
     record.developer_id,
-    record.channel_id
+    record.channel
   );
 
   res.json( {
@@ -95,7 +95,7 @@ router.post( '/', ( req, res ) => {
     created_at: record.created_at,
     updated_at: record.updated_at,
     developer_id: record.developer_uuid,
-    channel_id: record.channel_id
+    channel: record.channel
   } );
 } );
 
@@ -105,7 +105,7 @@ router.put( '/:id', ( req, res ) => {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
-    channel_id: req.body.channel_id
+    channel: req.body.channel
   };
 
   let developer = req.db.prepare( `
@@ -123,13 +123,13 @@ router.put( '/:id', ( req, res ) => {
     SET 
       updated_at = ?,
       developer_id = ?,
-      channel_id = ?
+      channel = ?
     WHERE uuid = ?
   ` )
   .run(
     record.updated_at,
     record.developer_id,
-    record.channel_id,
+    record.channel,
     record.uuid
   );
 
@@ -139,7 +139,7 @@ router.put( '/:id', ( req, res ) => {
       YouTube.created_at,
       YouTube.updated_at,
       Developer.uuid AS "developer_id",
-      YouTube.channel_id
+      YouTube.channel
     FROM 
       Developer,
       YouTube      

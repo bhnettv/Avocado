@@ -35,7 +35,7 @@ for dev in devs:
       'dev_id': dev['id'],
       'published_at': published,
       'guid': entry['id'],
-      'article_id': 0,
+      'article': 0,
       'link': entry['link'],
       'title': entry['title'],
       'summary': entry['summary'],
@@ -70,11 +70,11 @@ for dev in devs:
 
       # Add article to record
       # Useful to updates to post reactions
-      record['article_id'] = int( part )
+      record['article'] = int( part )
 
       # Get reaction counts
       req = requests.get( 'https://dev.to/reactions', params = {
-        'article_id': record['article_id']
+        'article_id': record['article']
       } )
       reactions = req.json()
 
@@ -130,7 +130,7 @@ for dev in devs:
       if days < 7:
         # Update reaction counts
         req = requests.get( 'https://dev.to/reactions', params = {
-          'article_id': matches['article_id']
+          'article': matches['article']
         } )
         reactions = req.json()
 

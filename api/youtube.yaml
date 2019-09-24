@@ -46,7 +46,7 @@ paths:
                 developer_id:
                   type: string
                   format: uuid
-                channel_id:
+                channel:
                   type: string
                   example: UCSFeFhtLBuzU2UMs7oOL54A
       responses:
@@ -92,7 +92,7 @@ paths:
                 developer_id:
                   type: string
                   format: uuid
-                channel_id:
+                channel:
                   type: string
                   example: UCSFeFhtLBuzU2UMs7oOL54A
       responses:
@@ -123,7 +123,7 @@ components:
     YouTube:
       required:
       - developer_id
-      - channel_id
+      - channel
       type: object
       properties:
         id:
@@ -138,6 +138,6 @@ components:
         developer_id:
           type: string
           format: uuid          
-        channel_id:
+        channel:
           type: string
           example: UCSFeFhtLBuzU2UMs7oOL54A

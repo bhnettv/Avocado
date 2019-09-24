@@ -486,7 +486,7 @@ router.delete( '/:status/media/:media', ( req, res ) => {
       Media.uuid = ?    
   ` )
   .get( 
-    req.params.status_id,
+    req.params.status,
     req.params.media
   );
 

@@ -92,7 +92,7 @@ paths:
                 developer_id:
                   type: string
                   format: uuid
-                user_id:
+                user:
                   type: integer
                   example: 0
                 joined_at:
@@ -197,7 +197,7 @@ components:
         developer_id:
           type: string
           format: uuid          
-        user_id:
+        user:
           type: integer
           example: 0
         joined_at:

@@ -112,11 +112,11 @@ for twitter in twitters:
 
             # Create media record
             req = requests.post( api + '/media', json = record )
-            row = req.json()
+            matches = req.json()
 
           # Associate with status
           req = requests.post( api + '/twitter/status/' + insert['id'] + '/media', json = {
-            'media_id': row['id']
+            'media_id': matches['id']
           } )
           associate = req.json()
 

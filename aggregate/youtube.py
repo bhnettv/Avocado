@@ -13,7 +13,7 @@ tubes = req.json()
 for tuber in tubes:
   # Parse feed (RSS/ATOM)
   print( 'Load: ' + tuber['id'] )
-  feed = feedparser.parse( 'https://www.youtube.com/feeds/videos.xml?channel_id=' + tuber['channel_id'] )
+  feed = feedparser.parse( 'https://www.youtube.com/feeds/videos.xml?channel_id=' + tuber['channel'] )
 
   # Look at each entry
   for entry in feed['entries']:
