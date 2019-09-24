@@ -4,7 +4,7 @@ import feedparser
 import requests
 import time
 
-api = 'http://localhost:8000/api'
+api = 'http://localhost:3000/api'
 
 # List of YouTube accounts
 req = requests.get( api + '/youtube' )

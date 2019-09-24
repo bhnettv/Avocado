@@ -1,7 +1,7 @@
 import base64
 import requests
 
-api = 'http://localhost:8000/api'
+api = 'http://localhost:3000/api'
 
 # Extract unique images
 # Once per presence in content

@@ -10,7 +10,7 @@ import utility
 config = configparser.ConfigParser()
 config.read( '../features.ini' )
 
-api = 'http://localhost:8000/api'
+api = 'http://localhost:3000/api'
 
 # List of blogs
 req = requests.get( api + '/blog' )

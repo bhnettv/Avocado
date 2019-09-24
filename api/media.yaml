@@ -11,7 +11,7 @@ externalDocs:
   description: Find out more about Avocado
   url: http://kevinhoyt.com
 servers:
-- url: http://localhost:8000/api
+- url: http://localhost:3000/api
 tags:
 - name: 🖼️ Media
   description: Media (image files) associated with content aggregation

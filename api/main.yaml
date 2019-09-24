@@ -11,7 +11,7 @@ externalDocs:
   description: Find out more about Avocado
   url: http://kevinhoyt.com
 servers:
-- url: http://localhost:8000/api
+- url: http://localhost:3000/api
 tags:
 - name: 🏷️ Label
   description: Logical groupings of developers (tagging)
@@ -31,6 +31,10 @@ tags:
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
   description: Post made to a Medium account
+- name: 📚 Stack Overflow
+  description: Stack Overflow accounts to aggregate
+- name: 📚 ✋ Stack Overflow Answer
+  description: Answer made by a Stack Overflow account    
 - name: 🐦 Twitter
   description: Twitter accounts to aggregate  
 - name: 🐦 ✒️ Twitter Status
@@ -98,6 +102,16 @@ paths:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1guid~1{id}'
   /medium/post/{id}/media:
     $ref: 'medium-post.yaml#/paths/~1medium~1post~1{id}~1media'
+  /so:
+    $ref: 'so.yaml#/paths/~1so'
+  /so/{id}:
+    $ref: 'so.yaml#/paths/~1so~1{id}'
+  /so/answer:
+    $ref: 'so-answer.yaml#/paths/~1so~1answer'
+  /so/answer/{id}:
+    $ref: 'so-answer.yaml#/paths/~1so~1answer~1{id}'
+  /so/answer/id/{id}:
+    $ref: 'so-answer.yaml#/paths/~1so~1answer~1id~1{id}'    
   /twitter:
     $ref: 'twitter.yaml#/paths/~1twitter'
   /twitter/{id}:
@@ -156,6 +170,10 @@ components:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    StackOverflow:
+      $ref: 'so.yaml#/components/schemas/StackOverflow'
+    StackOverflowAnswer:
+      $ref: 'so-answer.yaml#/components/schemas/StackOverflowAnswer'      
     Twitter:
       $ref: 'twitter.yaml#/components/schemas/Twitter'      
     TwitterStatus:
