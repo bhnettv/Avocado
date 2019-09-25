@@ -32,6 +32,8 @@ tags:
     description: Post made to a DEV Community account
   - name: 🐙 GitHub
     description: GitHub accounts to aggregate
+  - name: 🐙 🐱 GitHub Event
+    description: Public GitHub repository interactions
   - name: 🔮 Medium
     description: Medium feeds to aggregate
   - name: 🔮 📝 Medium Post
@@ -2148,6 +2150,19 @@ paths:
                   collaborators:
                     type: integer
                     example: 0
+    patch:
+      tags:
+        - 🐙 GitHub
+      summary: Update GitHub account based on API data
+      operationId: updateGitHubAccount
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1github~1%7Bid%7D/get/responses/200/content/applica\
+                  tion~1json/schema"
     put:
       tags:
         - 🐙 GitHub
@@ -2226,6 +2241,277 @@ paths:
                   id:
                     type: string
                     format: uuid
+  /github/event:
+    get:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Read all available GitHub events
+      operationId: getGitHubEvent
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - github_id
+                    - published_at
+                    - event
+                    - event_name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    github_id:
+                      type: string
+                      format: uuid
+                    published_at:
+                      type: string
+                      format: date-time
+                    event:
+                      type: integer
+                      example: 0
+                    event_name:
+                      type: string
+                      example: CommentEvent
+                    repository:
+                      type: integer
+                      example: 0
+                    repository_name:
+                      type: string
+                      example: phenomnomnominal/betterer
+    post:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Create a new GitHub event
+      operationId: createGitHubEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                github_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                event:
+                  type: integer
+                  example: 0
+                event_name:
+                  type: string
+                  example: CommentEvent
+                repository:
+                  type: integer
+                  example: 0
+                repository_name:
+                  type: string
+                  example: phenomnomnominal/betterer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1github~1event/get/responses/200/content/applicatio\
+                  n~1json/schema/items"
+  "/github/event/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired GitHub event
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Read specific GitHub event by ID
+      operationId: getGitHubEventByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - github_id
+                  - published_at
+                  - event
+                  - event_name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  github_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  event:
+                    type: integer
+                    example: 0
+                  event_name:
+                    type: string
+                    example: CommentEvent
+                  repository:
+                    type: integer
+                    example: 0
+                  repository_name:
+                    type: string
+                    example: phenomnomnominal/betterer
+    put:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Update specific GitHub event by ID
+      operationId: updateGitHubEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                github_id:
+                  type: string
+                  format: uuid
+                published_at:
+                  type: string
+                  format: date-time
+                event:
+                  type: integer
+                  example: 0
+                event_name:
+                  type: string
+                  example: CommentEvent
+                repository:
+                  type: integer
+                  example: 0
+                repository_name:
+                  type: string
+                  example: phenomnomnominal/betterer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1github~1event~1%7Bid%7D/get/responses/200/content/\
+                  application~1json/schema"
+    delete:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Delete specific GitHub event by ID
+      operationId: deleteGitHubEventByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/github/event/id/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: GitHub event ID
+        required: true
+        schema:
+          type: string
+          format: "10470753840"
+    get:
+      tags:
+        - 🐙 🐱 GitHub Event
+      summary: Read specific GitHub event by GitHub event ID
+      operationId: getGitHubEventByEventID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - github_id
+                  - published_at
+                  - event
+                  - event_name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  github_id:
+                    type: string
+                    format: uuid
+                  published_at:
+                    type: string
+                    format: date-time
+                  event:
+                    type: integer
+                    example: 0
+                  event_name:
+                    type: string
+                    example: CommentEvent
+                  repository:
+                    type: integer
+                    example: 0
+                  repository_name:
+                    type: string
+                    example: phenomnomnominal/betterer
+  "/github/activity/{login}":
+    parameters:
+      - name: login
+        in: path
+        description: Login of GitHub account
+        required: true
+        schema:
+          type: string
+          example: krhoyt
+    get:
+      tags:
+        - 🐙 GitHub
+      summary: Get events for specific GitHub login
+      operationId: getGitHubActivity
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
   /medium:
     get:
       tags:
@@ -5305,6 +5591,41 @@ components:
         collaborators:
           type: integer
           example: 0
+    GitHubEvent:
+      required:
+        - github_id
+        - published_at
+        - event
+        - event_name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        github_id:
+          type: string
+          format: uuid
+        published_at:
+          type: string
+          format: date-time
+        event:
+          type: integer
+          example: 0
+        event_name:
+          type: string
+          example: CommentEvent
+        repository:
+          type: integer
+          example: 0
+        repository_name:
+          type: string
+          example: phenomnomnominal/betterer
     Label:
       required:
         - name

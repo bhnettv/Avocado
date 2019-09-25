@@ -192,7 +192,103 @@ router.post( '/', async ( req, res ) => {
   } );
 } );
 
-// Update
+// Update using API
+router.patch( '/:id', async ( req, res ) => {
+  let record = req.db.prepare( `
+    SELECT
+      GitHub.uuid AS "id",
+      GitHub.created_at, 
+      GitHub.updated_at,
+      Developer.uuid AS "developer_id",
+      GitHub.login,
+      GitHub.name,
+      GitHub.company,
+      GitHub.blog,
+      GitHub.location,
+      GitHub.email,
+      GitHub.hireable,
+      GitHub.repositories,
+      GitHub.gists,
+      GitHub.followers,
+      GitHub.following,
+      GitHub.disk,
+      GitHub.collaborators
+    FROM 
+      Developer, 
+      GitHub
+    WHERE 
+      GitHub.developer_id = Developer.id AND
+      GitHub.uuid = ?
+  ` )
+  .get( 
+    req.params.id
+  );
+
+  let profile = await rp( {
+    url: `https://api.github.com/users/${record.login}`,
+    method: 'GET',
+    headers: {
+      'User-Agent': 'IBM Developer'
+    },
+    qs: {
+      access_token: req.config.github.access_token
+    },
+    json: true
+  } );
+
+  record.updated_at = new Date().toISOString();
+  record.name = profile.name;
+  record.company = profile.company;
+  record.blog = profile.blog;
+  record.location = profile.location;
+  record.email = profile.email;
+  record.hireable = profile.hireable === null ? 0 : 1;
+  record.repositories = profile.public_repos;
+  record.gists = profile.public_gists;
+  record.followers = profile.followers;
+  record.following = profile.following;
+  record.disk = !profile.disk_usage ? 0 : profile.disk_usage;
+  record.collaborators = !profile.collaborators ? 0 : profile.collaborators;
+
+  let info = req.db.prepare( `
+    UPDATE GitHub
+    SET 
+      updated_at = ?,
+      name = ?,
+      company = ?,
+      blog = ?,
+      location = ?,
+      email = ?,
+      hireable = ?,
+      repositories = ?,
+      gists = ?,
+      followers = ?,
+      following = ?,
+      disk = ?,
+      collaborators = ?
+    WHERE login = ?
+  ` )
+  .run(
+    record.updated_at,
+    record.name,
+    record.company,
+    record.blog,
+    record.location,
+    record.email,
+    record.hireable,
+    record.repositories,
+    record.gists,
+    record.followers,
+    record.following,
+    record.disk,
+    record.collaborators,
+    record.login
+  );  
+
+  res.json( record );    
+} );
+
+// Update directly
 router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,

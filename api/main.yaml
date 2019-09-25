@@ -29,6 +29,8 @@ tags:
   description: Post made to a DEV Community account
 - name: 🐙 GitHub
   description: GitHub accounts to aggregate  
+- name: 🐙 🐱 GitHub Event
+  description: Public GitHub repository interactions  
 - name: 🔮 Medium
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
@@ -98,6 +100,14 @@ paths:
     $ref: 'github.yaml#/paths/~1github'
   /github/{id}:
     $ref: 'github.yaml#/paths/~1github~1{id}'    
+  /github/event:
+    $ref: 'github-event.yaml#/paths/~1github~1event'
+  /github/event/{id}:
+    $ref: 'github-event.yaml#/paths/~1github~1event~1{id}'
+  /github/event/id/{id}:
+    $ref: 'github-event.yaml#/paths/~1github~1event~1id~1{id}'    
+  /github/activity/{login}:  
+    $ref: 'github.yaml#/paths/~1github~1activity~1{login}'                
   /medium:
     $ref: 'medium.yaml#/paths/~1medium'
   /medium/{id}:
@@ -173,7 +183,9 @@ components:
     DevPostMedia:
       $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'
     GitHub:
-      $ref: 'github.yaml#/components/schemas/GitHub'      
+      $ref: 'github.yaml#/components/schemas/GitHub'   
+    GitHubEvent:
+      $ref: 'github-event.yaml#/components/schemas/GitHubEvent'         
     Label:
       $ref: 'label.yaml#/components/schemas/Label'    
     Media:

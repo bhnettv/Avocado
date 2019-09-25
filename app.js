@@ -71,6 +71,7 @@ app.use( '/api/blog/post', require( './routes/blog-post' ) );
 app.use( '/api/blog', require( './routes/blog' ) );
 app.use( '/api/dev/post', require( './routes/dev-post' ) );
 app.use( '/api/dev', require( './routes/dev' ) );
+app.use( '/api/github/event', require( './routes/github-event' ) );
 app.use( '/api/github', require( './routes/github' ) );
 app.use( '/api/medium/post', require( './routes/medium-post' ) );
 app.use( '/api/medium', require( './routes/medium' ) );

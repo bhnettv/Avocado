@@ -27,8 +27,7 @@ Aggregate
     python youtube.py
     python twitter.py
     python so.py
-    # python github.py
-    # python reddit.py
+    python github.py
 
 Manage
 

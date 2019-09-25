@@ -183,7 +183,7 @@ router.post( '/', async ( req, res ) => {
 
 // Update using API
 router.patch( '/:id', async ( req, res ) => {
-  record = req.db.prepare( `
+  let record = req.db.prepare( `
     SELECT
       StackOverflow.uuid AS "id",
       StackOverflow.created_at, 

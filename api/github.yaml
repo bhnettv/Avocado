@@ -77,6 +77,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GitHub'      
+    patch:
+      tags:
+      - 🐙 GitHub
+      summary: Update GitHub account based on API data
+      operationId: updateGitHubAccount
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitHub'                
     put:
       tags:
       - 🐙 GitHub
