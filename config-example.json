@@ -1,4 +1,7 @@
 {
+  "github": {
+    "access_token": "_GITHUB_ACCESS_TOKEN_"
+  },  
   "google": {
     "youtube": "_YOUTUBE_API_KEY_"
   },  
@@ -8,7 +11,7 @@
       "development": "avocado_dev.sqlite3",
       "production": "avocado.sqlite3"
     },
-    "port": 8000
+    "port": 3000
   },
   "stackoverflow": {
     "key": "_STACK_APPS_KEY_"

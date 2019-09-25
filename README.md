@@ -13,6 +13,7 @@ Configure
 - Twitter key
 - Twitter secret
 - Stack Apps application key
+- GitHub access token
 
 Start
 
