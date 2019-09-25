@@ -27,6 +27,8 @@ tags:
   description:  DEV Community accounts to aggregate (Dev.to)
 - name: 🔥 📝 Dev Post
   description: Post made to a DEV Community account
+- name: 🐙 GitHub
+  description: GitHub accounts to aggregate  
 - name: 🔮 Medium
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
@@ -92,6 +94,10 @@ paths:
     $ref: 'dev-post.yaml#/paths/~1dev~1post~1guid~1{id}'
   /dev/post/{id}/media:
     $ref: 'dev-post.yaml#/paths/~1dev~1post~1{id}~1media'
+  /github:
+    $ref: 'github.yaml#/paths/~1github'
+  /github/{id}:
+    $ref: 'github.yaml#/paths/~1github~1{id}'    
   /medium:
     $ref: 'medium.yaml#/paths/~1medium'
   /medium/{id}:
@@ -142,8 +148,8 @@ paths:
     $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1{id}'
   /youtube/video/guid/{id}:
     $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1guid~1{id}'
-  /youtube/video/duration/{video_id}:
-    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video_id}'        
+  /youtube/video/duration/{video}:
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video}'        
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
@@ -166,6 +172,8 @@ components:
       $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:
       $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'
+    GitHub:
+      $ref: 'github.yaml#/components/schemas/GitHub'      
     Label:
       $ref: 'label.yaml#/components/schemas/Label'    
     Media:

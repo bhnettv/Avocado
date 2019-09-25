@@ -36,6 +36,7 @@ for stack in sos:
     print( 'Acct: ' + info['id'] )    
 
   # Get answers
+  print( 'Load: ' + stack['id'] )  
   req = requests.get( api + '/so/answers/' + stack['user'] )
   answers = req.json()
 

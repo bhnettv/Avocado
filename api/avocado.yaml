@@ -30,6 +30,8 @@ tags:
     description: DEV Community accounts to aggregate (Dev.to)
   - name: 🔥 📝 Dev Post
     description: Post made to a DEV Community account
+  - name: 🐙 GitHub
+    description: GitHub accounts to aggregate
   - name: 🔮 Medium
     description: Medium feeds to aggregate
   - name: 🔮 📝 Medium Post
@@ -1972,6 +1974,256 @@ paths:
                     type: string
                     format: uuid
                   media_id:
+                    type: string
+                    format: uuid
+  /github:
+    get:
+      tags:
+        - 🐙 GitHub
+      summary: Read all available GitHub accounts
+      operationId: getGitHubs
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - login
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    login:
+                      type: string
+                      example: krhoyt
+                    name:
+                      type: string
+                      example: Kevin Hoyt
+                    company:
+                      type: string
+                      example: IBM
+                    blog:
+                      type: string
+                      example: http://something.com
+                    location:
+                      type: string
+                      example: The Interwebs!
+                    email:
+                      type: string
+                      example: krhoyt@us.ibm.com
+                    hireable:
+                      type: boolean
+                      example: 0
+                    repositories:
+                      type: integer
+                      example: 0
+                    gists:
+                      type: integer
+                      example: 0
+                    followers:
+                      type: integer
+                      example: 0
+                    following:
+                      type: integer
+                      example: 0
+                    disk:
+                      type: integer
+                      example: 0
+                    collaborators:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 🐙 GitHub
+      summary: Create a new GitHub account
+      operationId: createGitHub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                login:
+                  type: string
+                  example: krhoyt
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1github/get/responses/200/content/application~1json\
+                  /schema/items"
+  "/github/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired GitHub account
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🐙 GitHub
+      summary: Read specific GitHub acount by ID
+      operationId: getGitHubByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - login
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  login:
+                    type: string
+                    example: krhoyt
+                  name:
+                    type: string
+                    example: Kevin Hoyt
+                  company:
+                    type: string
+                    example: IBM
+                  blog:
+                    type: string
+                    example: http://something.com
+                  location:
+                    type: string
+                    example: The Interwebs!
+                  email:
+                    type: string
+                    example: krhoyt@us.ibm.com
+                  hireable:
+                    type: boolean
+                    example: 0
+                  repositories:
+                    type: integer
+                    example: 0
+                  gists:
+                    type: integer
+                    example: 0
+                  followers:
+                    type: integer
+                    example: 0
+                  following:
+                    type: integer
+                    example: 0
+                  disk:
+                    type: integer
+                    example: 0
+                  collaborators:
+                    type: integer
+                    example: 0
+    put:
+      tags:
+        - 🐙 GitHub
+      summary: Update specific GitHub account by ID
+      operationId: updateGitHub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                login:
+                  type: string
+                  example: krhoyt
+                name:
+                  type: string
+                  example: Kevin Hoyt
+                company:
+                  type: string
+                  example: IBM
+                blog:
+                  type: string
+                  example: http://something.com
+                location:
+                  type: string
+                  example: The Interwebs!
+                email:
+                  type: string
+                  example: krhoyt@us.ibm.com
+                hireable:
+                  type: boolean
+                  example: 0
+                repositories:
+                  type: integer
+                  example: 0
+                gists:
+                  type: integer
+                  example: 0
+                followers:
+                  type: integer
+                  example: 0
+                following:
+                  type: integer
+                  example: 0
+                disk:
+                  type: integer
+                  example: 0
+                collaborators:
+                  type: integer
+                  example: 0
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1github~1%7Bid%7D/get/responses/200/content/applica\
+                  tion~1json/schema"
+    delete:
+      tags:
+        - 🐙 GitHub
+      summary: Delete specific GitHub account by ID
+      operationId: deleteGitHubByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
                     type: string
                     format: uuid
   /medium:
@@ -4576,7 +4828,34 @@ paths:
                   summary:
                     type: string
                     example: Original show introduction
-  "/youtube/video/duration/{video_id}": {}
+  "/youtube/video/duration/{video}":
+    parameters:
+      - name: video
+        in: path
+        description: Specific YouTube video ID
+        required: true
+        schema:
+          type: string
+          example: oNyXYPhnUIs
+    get:
+      tags:
+        - 📺 📼 YouTube Video
+      summary: Get information about video duration
+      operationId: getYouTubeVideoDuration
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duration:
+                    type: string
+                    example: PT9M59S
+                  seconds:
+                    type: integer
+                    example: 599
   "/watson/language/{url}":
     parameters:
       - name: url
@@ -4969,6 +5248,63 @@ components:
         media_id:
           type: string
           format: uuid
+    GitHub:
+      required:
+        - developer_id
+        - login
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        login:
+          type: string
+          example: krhoyt
+        name:
+          type: string
+          example: Kevin Hoyt
+        company:
+          type: string
+          example: IBM
+        blog:
+          type: string
+          example: http://something.com
+        location:
+          type: string
+          example: The Interwebs!
+        email:
+          type: string
+          example: krhoyt@us.ibm.com
+        hireable:
+          type: boolean
+          example: 0
+        repositories:
+          type: integer
+          example: 0
+        gists:
+          type: integer
+          example: 0
+        followers:
+          type: integer
+          example: 0
+        following:
+          type: integer
+          example: 0
+        disk:
+          type: integer
+          example: 0
+        collaborators:
+          type: integer
+          example: 0
     Label:
       required:
         - name
