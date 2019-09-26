@@ -29,25 +29,7 @@ for medium in mediums:
   # Update account statistics
   # If not updated in some time
   if days > 7:
-    # Get latest account statistics
-    # Start by getting account page
-    req = requests.get( 'https://medium.com/@' + medium['user_name'] )
-
-    FOLLOWING = 'followingCount":'
-    FOLLOWED = 'followerCount":'
-
-    # Parse following
-    start = req.text.find( FOLLOWING ) + len( FOLLOWING )
-    end = req.text.find( ',', start )
-    medium['following'] = int( req.text[start:end] )
-  
-    # Parse followed by
-    start = req.text.find( FOLLOWED ) + len( FOLLOWED )
-    end = req.text.find( ',', start )
-    medium['followed_by'] = int( req.text[start:end] )
-
-    # Update account in database
-    req = requests.put( api + '/medium/' + medium['id'], json = medium )
+    req = requests.patch( api + '/medium/' + medium['id'] )
     info = req.json()
 
     print( 'Acct: ' + info['id'] )    

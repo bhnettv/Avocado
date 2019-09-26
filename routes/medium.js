@@ -1,4 +1,5 @@
 const express = require( 'express' );
+const rp = require( 'request-promise-native' );
 const uuidv4 = require( 'uuid' );
 
 // Router
@@ -61,7 +62,7 @@ router.get( '/', ( req, res ) => {
 } );
 
 // Create
-router.post( '/', ( req, res ) => {
+router.post( '/', async ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
@@ -69,8 +70,8 @@ router.post( '/', ( req, res ) => {
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
     user_name: req.body.user_name,
-    following: req.body.following,
-    followed_by: req.body.followed_by
+    following: 0,
+    followed_by: 0
   };
 
   let developer = req.db.prepare( `
@@ -82,6 +83,22 @@ router.post( '/', ( req, res ) => {
     record.developer_uuid
   );
   record.developer_id = developer.id;
+
+  let statistics = await rp( {
+    url: `https://medium.com/@${record.user_name}`,
+    method: 'GET'
+  } );
+
+  const FOLLOWING = 'followingCount":';
+  const FOLLOWED = 'followerCount":';
+
+  let start = statistics.indexOf( FOLLOWING ) + FOLLOWING.length;
+  let end = statistics.indexOf( ',', start );
+  record.following = parseInt( statistics.substring( start, end ) );
+
+  start = statistics.indexOf( FOLLOWED ) + FOLLOWED.length;
+  end = statistics.indexOf( ',', start );
+  record.followed_by = parseInt( statistics.substring( start, end ) );
 
   let info = req.db.prepare( `
     INSERT INTO Medium
@@ -109,7 +126,65 @@ router.post( '/', ( req, res ) => {
   } );
 } );
 
-// Update
+// Update by scraping statistics
+router.patch( '/:id', async ( req, res ) => {
+  let record = req.db.prepare( `
+    SELECT
+      Medium.uuid AS "id",
+      Medium.created_at, 
+      Medium.updated_at,
+      Developer.uuid AS "developer_id",
+      Medium.user_name,
+      Medium.following,
+      Medium.followed_by
+    FROM 
+      Developer, 
+      Medium
+    WHERE 
+      Medium.developer_id = Developer.id AND
+      Medium.uuid = ?
+  ` )
+  .get( 
+    req.params.id
+  );
+
+  record.updated_at = new Date().toISOString();
+
+  let statistics = await rp( {
+    url: `https://medium.com/@${record.user_name}`,
+    method: 'GET'
+  } );
+
+  const FOLLOWING = 'followingCount":';
+  const FOLLOWED = 'followerCount":';
+
+  let start = statistics.indexOf( FOLLOWING ) + FOLLOWING.length;
+  let end = statistics.indexOf( ',', start );
+  record.following = parseInt( statistics.substring( start, end ) );
+
+  start = statistics.indexOf( FOLLOWED ) + FOLLOWED.length;
+  end = statistics.indexOf( ',', start );
+  record.followed_by = parseInt( statistics.substring( start, end ) );  
+
+  let info = req.db.prepare( `
+    UPDATE Medium
+    SET 
+      updated_at = ?,
+      following = ?,
+      followed_by = ?
+    WHERE user_name = ?
+  ` )
+  .run(
+    record.updated_at,
+    record.following,
+    record.followed_by,
+    record.user_name
+  );  
+
+  res.json( record );
+} );
+
+// Update directly
 router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,

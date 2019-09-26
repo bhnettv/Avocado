@@ -2843,12 +2843,6 @@ paths:
                 user_name:
                   type: string
                   example: boneskull
-                following:
-                  type: integer
-                  example: 0
-                followed_by:
-                  type: integer
-                  example: 0
       responses:
         "200":
           description: successful operation
@@ -2903,6 +2897,19 @@ paths:
                   followed_by:
                     type: integer
                     example: 0
+    patch:
+      tags:
+        - 🔮 Medium
+      summary: Update Medium account based on scraping
+      operationId: updateMediumUser
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1medium~1%7Bid%7D/get/responses/200/content/applica\
+                  tion~1json/schema"
     put:
       tags:
         - 🔮 Medium
