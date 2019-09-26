@@ -19,8 +19,7 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.first,
       Developer.last,
       Developer.nickname,
-      Developer.email,
-      Developer.notes
+      Developer.email
     FROM 
       Developer,
       DeveloperLabel,
@@ -69,8 +68,7 @@ router.get( '/:id', ( req, res ) => {
       Developer.first,
       Developer.last,
       Developer.nickname,
-      Developer.email,
-      Developer.notes
+      Developer.email
     FROM 
       Developer
     WHERE 
@@ -97,8 +95,7 @@ router.get( '/', ( req, res ) => {
       Developer.first,
       Developer.last,
       Developer.nickname,
-      Developer.email,
-      Developer.notes
+      Developer.email
     FROM 
       Developer
     ORDER BY last ASC
@@ -169,13 +166,12 @@ router.post( '/', ( req, res ) => {
     first: req.body.first,
     last: req.body.last,
     nickname: req.body.nickname,
-    email: req.body.email,
-    notes: req.body.notes
+    email: req.body.email
   };
 
   let info = req.db.prepare( `
     INSERT INTO Developer
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -185,8 +181,7 @@ router.post( '/', ( req, res ) => {
     record.first,
     record.last,
     record.nickname,
-    record.email,
-    record.notes
+    record.email
   );
 
   res.json( {
@@ -196,8 +191,7 @@ router.post( '/', ( req, res ) => {
     first: record.first,
     last: record.last,
     nickname: record.nickname,
-    email: record.email,
-    notes: record.notes
+    email: record.email
   } );
 } );
 
@@ -209,8 +203,7 @@ router.put( '/:id', ( req, res ) => {
     first: req.body.first,
     last: req.body.last,
     nickname: req.body.nickname,
-    email: req.body.email,
-    notes: req.body.notes
+    email: req.body.email
   };
 
   let info = req.db.prepare( `
@@ -220,8 +213,7 @@ router.put( '/:id', ( req, res ) => {
       first = ?,
       last = ?,
       nickname = ?,
-      email = ?,
-      notes = ?
+      email = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -230,7 +222,6 @@ router.put( '/:id', ( req, res ) => {
     record.last,
     record.nickname,
     record.email,
-    record.notes,
     record.uuid
   );
 
@@ -242,8 +233,7 @@ router.put( '/:id', ( req, res ) => {
       Developer.first,
       Developer.last,
       Developer.nickname,
-      Developer.email,
-      Developer.notes
+      Developer.email
     FROM
       Developer
     WHERE

@@ -55,9 +55,6 @@ paths:
                 email:
                   type: string
                   example: krhoyt@us.ibm.com
-                notes:
-                  type: string
-                  example: That creep can roll, man!
       responses:
         200:
           description: successful operation
@@ -110,9 +107,6 @@ paths:
                 email:
                   type: string
                   example: krhoyt@us.ibm.com
-                notes:
-                  type: string
-                  example: That creep can roll, man!
       responses:
         200:
           description: successful operation
@@ -255,10 +249,6 @@ paths:
                     email: 
                       type: string
                       example: krhoyt@us.ibm.com
-                    notes: 
-                      type: string
-                      example: That creep can roll, man!
-
 components:
   schemas:
     Developer:
@@ -288,6 +278,3 @@ components:
         email:
           type: string
           example: krhoyt@us.ibm.com
-        notes:
-          type: string
-          example: That creep can roll, man!

@@ -13,10 +13,14 @@ externalDocs:
 servers:
 - url: http://localhost:3000/api
 tags:
+- name: 🤝 Activity
+  description: Different types of developer activities
 - name: 🏷️ Label
   description: Logical groupings of developers (tagging)
 - name: 🖥️ Developer
   description: Individual developers - and advocates
+- name: ️🖥️ 📝 Developer Note
+  description: Notes associated with developer activities  
 - name: 🖼️ Media
   description: Media (image files) associated with content aggregation
 - name: 📓 Blog
@@ -54,6 +58,10 @@ tags:
 - name: 🧰 Utliity
   description: Tools used that are unrelated to storage
 paths:
+  /activity:
+    $ref: 'activity.yaml#/paths/~1activity'
+  /activity/{id}:
+    $ref: 'activity.yaml#/paths/~1activity~1{id}'
   /label:
     $ref: 'label.yaml#/paths/~1label'
   /label/{id}:
@@ -66,6 +74,10 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer~1{id}~1label'
   /developer/label/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1label~1{id}'
+  /developer/note:
+    $ref: 'developer-note.yaml#/paths/~1developer~1note'
+  /developer/note/{id}:
+    $ref: 'developer-note.yaml#/paths/~1developer~1note~1{id}'
   /media:
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:
@@ -168,6 +180,8 @@ paths:
     $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'
 components:
   schemas:
+    Activity:
+      $ref: 'activity.yaml#/components/schemas/Activity'  
     Blog:
       $ref: 'blog.yaml#/components/schemas/Blog'
     BlogPost:
@@ -178,6 +192,8 @@ components:
       $ref: 'dev.yaml#/components/schemas/Dev'
     Developer:
       $ref: 'developer.yaml#/components/schemas/Developer'      
+    DeveloperNote:
+      $ref: 'developer-note.yaml#/components/schemas/DeveloperNote'            
     DevPost:
       $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:

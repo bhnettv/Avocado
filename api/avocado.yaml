@@ -16,10 +16,14 @@ externalDocs:
 servers:
   - url: http://localhost:3000/api
 tags:
+  - name: 🤝 Activity
+    description: Different types of developer activities
   - name: 🏷️ Label
     description: Logical groupings of developers (tagging)
   - name: 🖥️ Developer
     description: Individual developers - and advocates
+  - name: ️🖥️ 📝 Developer Note
+    description: Notes associated with developer activities
   - name: 🖼️ Media
     description: Media (image files) associated with content aggregation
   - name: 📓 Blog
@@ -57,6 +61,134 @@ tags:
   - name: 🧰 Utliity
     description: Tools used that are unrelated to storage
 paths:
+  /activity:
+    get:
+      tags:
+        - 🤝 Activity
+      summary: Read all available activities
+      operationId: getActivities
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Sleeping
+    post:
+      tags:
+        - 🤝 Activity
+      summary: Create a new activity type
+      operationId: createActivity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Sleeping
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1activity/get/responses/200/content/application~1js\
+                  on/schema/items"
+  "/activity/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID of specific activity type
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🤝 Activity
+      summary: Read specific activity by ID
+      operationId: getActivityByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: Sleeping
+    put:
+      tags:
+        - 🤝 Activity
+      summary: Update specific activity by ID
+      operationId: updateActivity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Sleeping
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1activity~1%7Bid%7D/get/responses/200/content/appli\
+                  cation~1json/schema"
+    delete:
+      tags:
+        - 🤝 Activity
+      summary: Delete specific activity by ID
+      operationId: deleteActivityByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
   /label:
     get:
       tags:
@@ -211,9 +343,6 @@ paths:
                     email:
                       type: string
                       example: krhoyt@us.ibm.com
-                    notes:
-                      type: string
-                      example: That creep can roll, man!
     post:
       tags:
         - 🖥️ Developer
@@ -238,9 +367,6 @@ paths:
                 email:
                   type: string
                   example: krhoyt@us.ibm.com
-                notes:
-                  type: string
-                  example: That creep can roll, man!
       responses:
         "200":
           description: successful operation
@@ -295,9 +421,6 @@ paths:
                   email:
                     type: string
                     example: krhoyt@us.ibm.com
-                  notes:
-                    type: string
-                    example: That creep can roll, man!
     put:
       tags:
         - 🖥️ Developer
@@ -322,9 +445,6 @@ paths:
                 email:
                   type: string
                   example: krhoyt@us.ibm.com
-                notes:
-                  type: string
-                  example: That creep can roll, man!
       responses:
         "200":
           description: successful operation
@@ -468,9 +588,162 @@ paths:
                     email:
                       type: string
                       example: krhoyt@us.ibm.com
-                    notes:
+  /developer/note:
+    get:
+      tags:
+        - ️🖥️ 📝 Developer Note
+      summary: Read all available notes
+      operationId: getDeveloperNotes
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - activity_id
+                    - full_text
+                  type: object
+                  properties:
+                    id:
                       type: string
-                      example: That creep can roll, man!
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    activity_id:
+                      type: string
+                      format: uuid
+                    full_text:
+                      type: string
+                      example: Somewhere over the rainbow.
+    post:
+      tags:
+        - ️🖥️ 📝 Developer Note
+      summary: Create a new note for a developer
+      operationId: createDeveloperNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                activity_id:
+                  type: string
+                  format: uuid
+                full_text:
+                  type: string
+                  example: Somewhere over the rainbow.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1developer~1note/get/responses/200/content/applicat\
+                  ion~1json/schema/items"
+  "/developer/note/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID of a specific developer note
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - ️🖥️ 📝 Developer Note
+      summary: Read specific developer note by ID
+      operationId: getDeveloperNoteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - activity_id
+                  - full_text
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  activity_id:
+                    type: string
+                    format: uuid
+                  full_text:
+                    type: string
+                    example: Somewhere over the rainbow.
+    put:
+      tags:
+        - ️🖥️ 📝 Developer Note
+      summary: Update specific note by ID
+      operationId: updateDeveloperNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                activity_id:
+                  type: string
+                  format: uuid
+                full_text:
+                  type: string
+                  example: Somewhere over the rainbow.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1developer~1note~1%7Bid%7D/get/responses/200/conten\
+                  t/application~1json/schema"
+    delete:
+      tags:
+        - ️🖥️ 📝 Developer Note
+      summary: Delete specific note by ID
+      operationId: deleteDeveloperNoteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
   /media:
     get:
       tags:
@@ -5266,6 +5539,23 @@ paths:
                   - http://something.com/cat.gif
 components:
   schemas:
+    Activity:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: Sleeping
     Blog:
       required:
         - developer_id
@@ -5433,9 +5723,31 @@ components:
         email:
           type: string
           example: krhoyt@us.ibm.com
-        notes:
+    DeveloperNote:
+      required:
+        - developer_id
+        - activity_id
+        - full_text
+      type: object
+      properties:
+        id:
           type: string
-          example: That creep can roll, man!
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        activity_id:
+          type: string
+          format: uuid
+        full_text:
+          type: string
+          example: Somewhere over the rainbow.
     DevPost:
       required:
         - dev_id
