@@ -3683,6 +3683,7 @@ paths:
                     - active_at
                     - accepted
                     - score
+                    - views
                     - link
                     - title
                     - tags
@@ -3701,11 +3702,11 @@ paths:
                       type: string
                       format: uuid
                     answer:
-                      type: string
-                      example: "56961215"
+                      type: integer
+                      example: 56961215
                     question:
-                      type: string
-                      example: "56960996"
+                      type: integer
+                      example: 56960996
                     active_at:
                       type: string
                       format: date-time
@@ -3713,6 +3714,9 @@ paths:
                       type: integer
                       example: 0
                     score:
+                      type: integer
+                      example: 0
+                    views:
                       type: integer
                       example: 0
                     link:
@@ -3769,11 +3773,11 @@ paths:
                   type: string
                   format: uuid
                 answer:
-                  type: string
-                  example: "56961215"
+                  type: integer
+                  example: 56961215
                 question:
-                  type: string
-                  example: "56960996"
+                  type: integer
+                  example: 56960996
                 active_at:
                   type: string
                   format: date-time
@@ -3781,6 +3785,9 @@ paths:
                   type: integer
                   example: 0
                 score:
+                  type: integer
+                  example: 0
+                views:
                   type: integer
                   example: 0
                 link:
@@ -3856,6 +3863,7 @@ paths:
                   - active_at
                   - accepted
                   - score
+                  - views
                   - link
                   - title
                   - tags
@@ -3874,11 +3882,11 @@ paths:
                     type: string
                     format: uuid
                   answer:
-                    type: string
-                    example: "56961215"
+                    type: integer
+                    example: 56961215
                   question:
-                    type: string
-                    example: "56960996"
+                    type: integer
+                    example: 56960996
                   active_at:
                     type: string
                     format: date-time
@@ -3886,6 +3894,9 @@ paths:
                     type: integer
                     example: 0
                   score:
+                    type: integer
+                    example: 0
+                  views:
                     type: integer
                     example: 0
                   link:
@@ -3942,11 +3953,11 @@ paths:
                   type: string
                   format: uuid
                 answer:
-                  type: string
-                  example: "56961215"
+                  type: integer
+                  example: 56961215
                 question:
-                  type: string
-                  example: "56960996"
+                  type: integer
+                  example: 56960996
                 active_at:
                   type: string
                   format: date-time
@@ -3954,6 +3965,9 @@ paths:
                   type: integer
                   example: 0
                 score:
+                  type: integer
+                  example: 0
+                views:
                   type: integer
                   example: 0
                 link:
@@ -4045,6 +4059,7 @@ paths:
                   - active_at
                   - accepted
                   - score
+                  - views
                   - link
                   - title
                   - tags
@@ -4063,11 +4078,11 @@ paths:
                     type: string
                     format: uuid
                   answer:
-                    type: string
-                    example: "56961215"
+                    type: integer
+                    example: 56961215
                   question:
-                    type: string
-                    example: "56960996"
+                    type: integer
+                    example: 56960996
                   active_at:
                     type: string
                     format: date-time
@@ -4075,6 +4090,9 @@ paths:
                     type: integer
                     example: 0
                   score:
+                    type: integer
+                    example: 0
+                  views:
                     type: integer
                     example: 0
                   link:
@@ -6141,6 +6159,7 @@ components:
         - active_at
         - accepted
         - score
+        - views
         - link
         - title
         - tags
@@ -6159,11 +6178,11 @@ components:
           type: string
           format: uuid
         answer:
-          type: string
-          example: "56961215"
+          type: integer
+          example: 56961215
         question:
-          type: string
-          example: "56960996"
+          type: integer
+          example: 56960996
         active_at:
           type: string
           format: date-time
@@ -6171,6 +6190,9 @@ components:
           type: integer
           example: 0
         score:
+          type: integer
+          example: 0
+        views:
           type: integer
           example: 0
         link:

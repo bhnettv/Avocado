@@ -50,6 +50,7 @@ for stack in sos:
       'active_at': None,
       'accepted': 1 if answer['is_accepted'] == True else 0,
       'score': answer['score'],
+      'views': None,
       'link': None,
       'title': None,
       'tags': [],
@@ -76,6 +77,7 @@ for stack in sos:
       # Updated record details
       record['link'] = question['link']
       record['title'] = question['title']
+      record['views'] = question['view_count']
 
       # Including topic tags
       for tag in question['tags']:
@@ -99,17 +101,22 @@ for stack in sos:
       print( 'Make: ' + insert['id'] )
     else:
       # How long since published
-      published = iso8601.parse_date( matches['active_at'] ) 
+      published = iso8601.parse_date( matches['updated_at'] ) 
       now = datetime.now( timezone.utc )
       duration = now - published
       days = duration.days
 
-      # Only track for first 7-days
-      # TODO: Check up in 30-day increments after
-      if days < 7:
+      # Update once per week
+      # May need to revise at scale
+      if days > 7:
+        # Get view count from question record
+        req = requests.get( api + '/so/question/id/' + matches['question'] )
+        question = req.json()        
+
         # Update statistics from loaded answer
         matches['accepted'] = 1 if answer['is_accepted'] == True else 0
         matches['score'] = answer['score']
+        matches['views'] = question['view_count']
 
         # Update database
         req = requests.put( api + '/so/answer/' + matches['id'], json = matches )
