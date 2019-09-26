@@ -2315,12 +2315,6 @@ paths:
                     following:
                       type: integer
                       example: 0
-                    disk:
-                      type: integer
-                      example: 0
-                    collaborators:
-                      type: integer
-                      example: 0
     post:
       tags:
         - 🐙 GitHub
@@ -2417,12 +2411,6 @@ paths:
                   following:
                     type: integer
                     example: 0
-                  disk:
-                    type: integer
-                    example: 0
-                  collaborators:
-                    type: integer
-                    example: 0
     patch:
       tags:
         - 🐙 GitHub
@@ -2482,12 +2470,6 @@ paths:
                   type: integer
                   example: 0
                 following:
-                  type: integer
-                  example: 0
-                disk:
-                  type: integer
-                  example: 0
-                collaborators:
                   type: integer
                   example: 0
       responses:
@@ -5902,12 +5884,6 @@ components:
           type: integer
           example: 0
         following:
-          type: integer
-          example: 0
-        disk:
-          type: integer
-          example: 0
-        collaborators:
           type: integer
           example: 0
     GitHubEvent:

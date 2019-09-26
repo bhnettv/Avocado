@@ -137,12 +137,6 @@ paths:
                 following:
                   type: integer
                   example: 0
-                disk:
-                  type: integer
-                  example: 0
-                collaborators:
-                  type: integer
-                  example: 0                  
       responses:
         200:
           description: successful operation
@@ -242,10 +236,4 @@ components:
         following:
           type: integer
           example: 0
-        disk:
-          type: integer
-          example: 0
-        collaborators:
-          type: integer
-          example: 0          
       

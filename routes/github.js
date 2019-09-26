@@ -47,9 +47,7 @@ router.get( '/:id', ( req, res ) => {
       GitHub.repositories,
       GitHub.gists,
       GitHub.followers,
-      GitHub.following,
-      GitHub.disk,
-      GitHub.collaborators
+      GitHub.following
     FROM 
       Developer, 
       GitHub
@@ -87,9 +85,7 @@ router.get( '/', ( req, res ) => {
       GitHub.repositories,
       GitHub.gists,
       GitHub.followers,
-      GitHub.following,
-      GitHub.disk,
-      GitHub.collaborators
+      GitHub.following
     FROM 
       Developer,
       GitHub
@@ -131,9 +127,7 @@ router.post( '/', async ( req, res ) => {
     repositories: profile.public_repos,
     gists: profile.public_gists,
     followers: profile.followers,
-    following: profile.following,
-    disk: !profile.disk_usage ? 0 : profile.disk_usage,
-    collaborators: !profile.collaborators ? 0 : profile.collaborators
+    following: profile.following
   };
 
   let developer = req.db.prepare( `
@@ -148,7 +142,7 @@ router.post( '/', async ( req, res ) => {
 
   let info = req.db.prepare( `
     INSERT INTO GitHub
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -166,9 +160,7 @@ router.post( '/', async ( req, res ) => {
     record.repositories,
     record.gists,
     record.followers,
-    record.following,
-    record.disk,
-    record.collaborators
+    record.following
   );
 
   res.json( {
@@ -186,9 +178,7 @@ router.post( '/', async ( req, res ) => {
     repositories: record.repositories,
     gists: record.gists,
     followers: record.followers,
-    following: record.following,
-    disk: record.disk,
-    collaborators: record.collaborators
+    following: record.following
   } );
 } );
 
@@ -210,9 +200,7 @@ router.patch( '/:id', async ( req, res ) => {
       GitHub.repositories,
       GitHub.gists,
       GitHub.followers,
-      GitHub.following,
-      GitHub.disk,
-      GitHub.collaborators
+      GitHub.following
     FROM 
       Developer, 
       GitHub
@@ -247,8 +235,6 @@ router.patch( '/:id', async ( req, res ) => {
   record.gists = profile.public_gists;
   record.followers = profile.followers;
   record.following = profile.following;
-  record.disk = !profile.disk_usage ? 0 : profile.disk_usage;
-  record.collaborators = !profile.collaborators ? 0 : profile.collaborators;
 
   let info = req.db.prepare( `
     UPDATE GitHub
@@ -263,9 +249,7 @@ router.patch( '/:id', async ( req, res ) => {
       repositories = ?,
       gists = ?,
       followers = ?,
-      following = ?,
-      disk = ?,
-      collaborators = ?
+      following = ?
     WHERE login = ?
   ` )
   .run(
@@ -280,8 +264,6 @@ router.patch( '/:id', async ( req, res ) => {
     record.gists,
     record.followers,
     record.following,
-    record.disk,
-    record.collaborators,
     record.login
   );  
 
@@ -304,9 +286,7 @@ router.put( '/:id', ( req, res ) => {
     repositories: req.body.repositories,
     gists: req.body.gists,
     followers: req.body.followers,
-    following: req.body.following,
-    disk: req.body.disk,
-    collaborators: req.body.collaborators
+    following: req.body.following
   };
 
   let developer = req.db.prepare( `
@@ -334,9 +314,7 @@ router.put( '/:id', ( req, res ) => {
       repositories = ?,
       gists = ?,
       followers = ?,
-      following = ?,
-      disk = ?,
-      collaborators = ?
+      following = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -353,8 +331,6 @@ router.put( '/:id', ( req, res ) => {
     record.gists,
     record.followers,
     record.following,
-    record.disk,
-    record.collaborators,
     record.uuid
   );
 
@@ -375,9 +351,7 @@ router.put( '/:id', ( req, res ) => {
       GitHub.repositories,
       GitHub.gists,
       GitHub.followers,
-      GitHub.following,
-      GitHub.disk,
-      GitHub.collaborators
+      GitHub.following
     FROM 
       Developer, 
       GitHub
