@@ -37,7 +37,7 @@ for stack in sos:
 
   # Get answers
   print( 'Load: ' + stack['id'] )  
-  req = requests.get( api + '/so/answers/' + stack['user'] )
+  req = requests.get( api + '/so/answers/' + str( stack['user'] ) )
   answers = req.json()
 
   # Look at each answer
