@@ -110,7 +110,7 @@ for stack in sos:
       # May need to revise at scale
       if days > 7:
         # Get view count from question record
-        req = requests.get( api + '/so/question/id/' + matches['question'] )
+        req = requests.get( api + '/so/question/id/' + str( matches['question'] ) )
         question = req.json()        
 
         # Update statistics from loaded answer

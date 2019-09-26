@@ -47,8 +47,8 @@ paths:
                   type: string
                   format: uuid
                 user:
-                  type: string
-                  example: '11919256'
+                  type: integer
+                  example: 11919256
       responses:
         200:
           description: successful operation
@@ -105,11 +105,11 @@ paths:
                   type: string
                   format: uuid
                 user:
-                  type: string
-                  example: '11919256'
+                  type: integer
+                  example: 11919256
                 account:
-                  type: string
-                  example: '14905500'
+                  type: integer
+                  example: 14905500
                 joined_at:
                   type: string
                   format: date-time
@@ -222,11 +222,11 @@ components:
           type: string
           format: uuid          
         user:
-          type: string
-          example: '11919256'
+          type: integer
+          example: 11919256
         account:
-          type: string
-          example: '14905500'
+          type: integer
+          example: 14905500
         joined_at:
           type: string
           format: date-time
