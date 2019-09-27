@@ -1152,9 +1152,6 @@ paths:
                     summary:
                       type: string
                       example: How you doin'?!
-                    views:
-                      type: integer
-                      example: 0
                     category:
                       type: array
                       items:
@@ -1216,9 +1213,6 @@ paths:
                 summary:
                   type: string
                   example: How you doin'?!
-                views:
-                  type: integer
-                  example: 0
                 category:
                   type: array
                   items:
@@ -1314,9 +1308,6 @@ paths:
                   summary:
                     type: string
                     example: How you doin'?!
-                  views:
-                    type: integer
-                    example: 0
                   category:
                     type: array
                     items:
@@ -1378,9 +1369,6 @@ paths:
                 summary:
                   type: string
                   example: How you doin'?!
-                views:
-                  type: integer
-                  example: 0
                 category:
                   type: array
                   items:
@@ -1492,9 +1480,6 @@ paths:
                   summary:
                     type: string
                     example: How you doin'?!
-                  views:
-                    type: integer
-                    example: 0
                   category:
                     type: array
                     items:
@@ -3458,11 +3443,11 @@ paths:
                       type: string
                       format: uuid
                     user:
-                      type: string
-                      example: "11919256"
+                      type: integer
+                      example: 11919256
                     account:
-                      type: string
-                      example: "14905500"
+                      type: integer
+                      example: 14905500
                     joined_at:
                       type: string
                       format: date-time
@@ -3503,8 +3488,8 @@ paths:
                   type: string
                   format: uuid
                 user:
-                  type: string
-                  example: "11919256"
+                  type: integer
+                  example: 11919256
       responses:
         "200":
           description: successful operation
@@ -3551,11 +3536,11 @@ paths:
                     type: string
                     format: uuid
                   user:
-                    type: string
-                    example: "11919256"
+                    type: integer
+                    example: 11919256
                   account:
-                    type: string
-                    example: "14905500"
+                    type: integer
+                    example: 14905500
                   joined_at:
                     type: string
                     format: date-time
@@ -3609,11 +3594,11 @@ paths:
                   type: string
                   format: uuid
                 user:
-                  type: string
-                  example: "11919256"
+                  type: integer
+                  example: 11919256
                 account:
-                  type: string
-                  example: "14905500"
+                  type: integer
+                  example: 14905500
                 joined_at:
                   type: string
                   format: date-time
@@ -5624,9 +5609,6 @@ components:
         summary:
           type: string
           example: How you doin'?!
-        views:
-          type: integer
-          example: 0
         category:
           type: array
           items:
@@ -6122,11 +6104,11 @@ components:
           type: string
           format: uuid
         user:
-          type: string
-          example: "11919256"
+          type: integer
+          example: 11919256
         account:
-          type: string
-          example: "14905500"
+          type: integer
+          example: 14905500
         joined_at:
           type: string
           format: date-time

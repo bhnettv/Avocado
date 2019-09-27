@@ -36,7 +36,6 @@ for blog in blogs:
       'link': entry['link'],
       'title': entry['title'],
       'summary': entry['summary'],
-      'views': 0,
       'category': [],
       'keywords': [],
       'concepts': [],

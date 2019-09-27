@@ -22,7 +22,6 @@ router.get( '/:id', ( req, res ) => {
       BlogPost.link,
       BlogPost.title,
       BlogPost.summary,
-      BlogPost.views,
       BlogPost.category,
       BlogPost.keywords,
       BlogPost.concepts,
@@ -120,7 +119,6 @@ router.get( '/guid/:id', ( req, res ) => {
       BlogPost.link,
       BlogPost.title,
       BlogPost.summary,
-      BlogPost.views,
       BlogPost.category,
       BlogPost.keywords,
       BlogPost.concepts,
@@ -180,7 +178,6 @@ router.get( '/', ( req, res ) => {
       BlogPost.link,
       BlogPost.title,
       BlogPost.summary,
-      BlogPost.views,
       BlogPost.category,
       BlogPost.keywords,
       BlogPost.concepts,
@@ -286,7 +283,6 @@ router.post( '/', ( req, res ) => {
     link: req.body.link,
     title: req.body.title,
     summary: req.body.summary,
-    views: req.body.views,
     category: req.body.category,
     keywords: req.body.keywords,
     concepts: req.body.concepts,
@@ -329,7 +325,7 @@ router.post( '/', ( req, res ) => {
 
   let info = req.db.prepare( `
     INSERT INTO BlogPost
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -342,7 +338,6 @@ router.post( '/', ( req, res ) => {
     record.link,
     record.title,
     record.summary,
-    record.views,
     record.category,
     record.keywords,
     record.concepts,
@@ -383,7 +378,6 @@ router.post( '/', ( req, res ) => {
     link: record.link,
     title: record.title,
     summary: record.summary,
-    views: record.views,
     category: record.category,
     keywords: record.keywords,
     concepts: record.concepts,
@@ -402,7 +396,6 @@ router.put( '/:id', ( req, res ) => {
     link: req.body.link,
     title: req.body.title,
     summary: req.body.summary,
-    views: req.body.views,
     category: req.body.category,
     keywords: req.body.keywords,
     concepts: req.body.concepts,
@@ -453,7 +446,6 @@ router.put( '/:id', ( req, res ) => {
       link = ?,
       title = ?,
       summary = ?,
-      views = ?,
       category = ?,
       keywords = ?,
       concepts = ?,
@@ -468,7 +460,6 @@ router.put( '/:id', ( req, res ) => {
     record.link,
     record.title,
     record.summary,
-    record.views,
     record.category,
     record.keywords,
     record.concepts,
@@ -487,7 +478,6 @@ router.put( '/:id', ( req, res ) => {
       BlogPost.link,
       BlogPost.title,
       BlogPost.summary,
-      BlogPost.views,
       BlogPost.category,
       BlogPost.keywords,
       BlogPost.concepts,

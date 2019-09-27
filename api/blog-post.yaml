@@ -61,9 +61,6 @@ paths:
                 summary:
                   type: string
                   example: How you doin'?!
-                views:
-                  type: integer
-                  example: 0
                 category:
                   type: array
                   items:
@@ -142,9 +139,6 @@ paths:
                 summary:
                   type: string
                   example: How you doin'?!
-                views:
-                  type: integer
-                  example: 0
                 category:
                   type: array
                   items:
@@ -309,9 +303,6 @@ components:
         summary:
           type: string
           example: How you doin'?!
-        views:
-          type: integer
-          example: 0
         category:
           type: array
           items:
