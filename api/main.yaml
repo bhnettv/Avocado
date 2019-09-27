@@ -20,7 +20,7 @@ tags:
 - name: 🖥️ Developer
   description: Individual developers - and advocates
 - name: ️🖥️ 📝 Developer Note
-  description: Notes associated with developer activities  
+  description: Notes associated with developer activities
 - name: 🖼️ Media
   description: Media (image files) associated with content aggregation
 - name: 📓 Blog
@@ -32,9 +32,9 @@ tags:
 - name: 🔥 📝 Dev Post
   description: Post made to a DEV Community account
 - name: 🐙 GitHub
-  description: GitHub accounts to aggregate  
+  description: GitHub accounts to aggregate
 - name: 🐙 🐱 GitHub Event
-  description: Public GitHub repository interactions  
+  description: Public GitHub repository interactions
 - name: 🔮 Medium
   description: Medium feeds to aggregate
 - name: 🔮 📝 Medium Post
@@ -42,17 +42,19 @@ tags:
 - name: 📚 Stack Overflow
   description: Stack Overflow accounts to aggregate
 - name: 📚 ✋ Stack Overflow Answer
-  description: Answer made by a Stack Overflow account    
+  description: Answer made by a Stack Overflow account
 - name: 📚 ❓ Stack Overflow Question
-  description: Question proposed by a Stack Overflow account  
+  description: Question proposed by a Stack Overflow account
 - name: 🐦 Twitter
-  description: Twitter accounts to aggregate  
+  description: Twitter accounts to aggregate
 - name: 🐦 ✒️ Twitter Status
-  description: Status update to a Twitter account    
+  description: Status update to a Twitter account
 - name: 📺 YouTube
-  description: YouTube accounts to aggregate  
+  description: YouTube accounts to aggregate
 - name: 📺 📼 YouTube Video
-  description: Video posted to a YouTube account  
+  description: Video posted to a YouTube account
+- name: 🗄️ Repository
+  description: Specific GitHub repositories to monitor
 - name: 🧠 Watson
   description: Watson machine learning features
 - name: 🧰 Utliity
@@ -111,15 +113,15 @@ paths:
   /github:
     $ref: 'github.yaml#/paths/~1github'
   /github/{id}:
-    $ref: 'github.yaml#/paths/~1github~1{id}'    
+    $ref: 'github.yaml#/paths/~1github~1{id}'
   /github/event:
     $ref: 'github-event.yaml#/paths/~1github~1event'
   /github/event/{id}:
     $ref: 'github-event.yaml#/paths/~1github~1event~1{id}'
   /github/event/id/{id}:
-    $ref: 'github-event.yaml#/paths/~1github~1event~1id~1{id}'    
-  /github/activity/{login}:  
-    $ref: 'github.yaml#/paths/~1github~1activity~1{login}'                
+    $ref: 'github-event.yaml#/paths/~1github~1event~1id~1{id}'
+  /github/activity/{login}:
+    $ref: 'github.yaml#/paths/~1github~1activity~1{login}'
   /medium:
     $ref: 'medium.yaml#/paths/~1medium'
   /medium/{id}:
@@ -141,17 +143,17 @@ paths:
   /so/answer/{id}:
     $ref: 'so-answer.yaml#/paths/~1so~1answer~1{id}'
   /so/answer/id/{id}:
-    $ref: 'so-answer.yaml#/paths/~1so~1answer~1id~1{id}'    
+    $ref: 'so-answer.yaml#/paths/~1so~1answer~1id~1{id}'
   /so/answers/{user_id}:
     $ref: 'so.yaml#/paths/~1so~1answers~1{user_id}'
   /so/question/id/{id}:
-    $ref: 'so-question.yaml#/paths/~1so~1question~1id~1{id}'        
+    $ref: 'so-question.yaml#/paths/~1so~1question~1id~1{id}'
   /twitter:
     $ref: 'twitter.yaml#/paths/~1twitter'
   /twitter/{id}:
-    $ref: 'twitter.yaml#/paths/~1twitter~1{id}'    
+    $ref: 'twitter.yaml#/paths/~1twitter~1{id}'
   /twitter/timeline/{screen_name}:
-    $ref: 'twitter.yaml#/paths/~1twitter~1timeline~1{screen_name}'    
+    $ref: 'twitter.yaml#/paths/~1twitter~1timeline~1{screen_name}'
   /twitter/status:
     $ref: 'twitter-status.yaml#/paths/~1twitter~1status'
   /twitter/status/{id}:
@@ -159,11 +161,11 @@ paths:
   /twitter/status/id/{id}:
     $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1id~1{id}'
   /twitter/status/{id}/media:
-    $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1{id}~1media'    
+    $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1{id}~1media'
   /youtube:
     $ref: 'youtube.yaml#/paths/~1youtube'
   /youtube/{id}:
-    $ref: 'youtube.yaml#/paths/~1youtube~1{id}'    
+    $ref: 'youtube.yaml#/paths/~1youtube~1{id}'
   /youtube/video:
     $ref: 'youtube-video.yaml#/paths/~1youtube~1video'
   /youtube/video/{id}:
@@ -171,7 +173,11 @@ paths:
   /youtube/video/guid/{id}:
     $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1guid~1{id}'
   /youtube/video/duration/{video}:
-    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video}'        
+    $ref: 'youtube-video.yaml#/paths/~1youtube~1video~1duration~1{video}'
+  /repository:
+    $ref: 'repository.yaml#/paths/~1repository'
+  /repository/{id}:
+    $ref: 'repository.yaml#/paths/~1repository~1{id}'
   /watson/language/{url}:
     $ref: 'watson.yaml#/paths/~1watson~1language~1{url}'
   /watson/vision/{url}:
@@ -181,7 +187,7 @@ paths:
 components:
   schemas:
     Activity:
-      $ref: 'activity.yaml#/components/schemas/Activity'  
+      $ref: 'activity.yaml#/components/schemas/Activity'
     Blog:
       $ref: 'blog.yaml#/components/schemas/Blog'
     BlogPost:
@@ -191,40 +197,42 @@ components:
     Dev:
       $ref: 'dev.yaml#/components/schemas/Dev'
     Developer:
-      $ref: 'developer.yaml#/components/schemas/Developer'      
+      $ref: 'developer.yaml#/components/schemas/Developer'
     DeveloperNote:
-      $ref: 'developer-note.yaml#/components/schemas/DeveloperNote'            
+      $ref: 'developer-note.yaml#/components/schemas/DeveloperNote'
     DevPost:
       $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:
       $ref: 'dev-post.yaml#/components/schemas/DevPostMedia'
     GitHub:
-      $ref: 'github.yaml#/components/schemas/GitHub'   
+      $ref: 'github.yaml#/components/schemas/GitHub'
     GitHubEvent:
-      $ref: 'github-event.yaml#/components/schemas/GitHubEvent'         
+      $ref: 'github-event.yaml#/components/schemas/GitHubEvent'
     Label:
-      $ref: 'label.yaml#/components/schemas/Label'    
+      $ref: 'label.yaml#/components/schemas/Label'
     Media:
-      $ref: 'media.yaml#/components/schemas/Media'        
+      $ref: 'media.yaml#/components/schemas/Media'
     Medium:
       $ref: 'medium.yaml#/components/schemas/Medium'
     MediumPost:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    Repository:
+      $ref: 'repository.yaml#/components/schemas/Repository'
     StackOverflow:
       $ref: 'so.yaml#/components/schemas/StackOverflow'
     StackOverflowAnswer:
       $ref: 'so-answer.yaml#/components/schemas/StackOverflowAnswer'
     StackOverflowQuestion:
-      $ref: 'so-question.yaml#/components/schemas/StackOverflowQuestion'            
+      $ref: 'so-question.yaml#/components/schemas/StackOverflowQuestion'
     Twitter:
-      $ref: 'twitter.yaml#/components/schemas/Twitter'      
+      $ref: 'twitter.yaml#/components/schemas/Twitter'
     TwitterStatus:
       $ref: 'twitter-status.yaml#/components/schemas/TwitterStatus'
     TwitterStatusMedia:
-      $ref: 'twitter-status.yaml#/components/schemas/TwitterStatusMedia'      
+      $ref: 'twitter-status.yaml#/components/schemas/TwitterStatusMedia'
     YouTube:
-      $ref: 'youtube.yaml#/components/schemas/YouTube'      
+      $ref: 'youtube.yaml#/components/schemas/YouTube'
     YouTubeVideo:
-      $ref: 'youtube-video.yaml#/components/schemas/YouTubeVideo'      
+      $ref: 'youtube-video.yaml#/components/schemas/YouTubeVideo'

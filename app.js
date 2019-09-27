@@ -85,6 +85,7 @@ app.use( '/api/so/answer', require( './routes/so-answer' ) );
 app.use( '/api/so', require( './routes/so' ) );
 app.use( '/api/twitter/status', require( './routes/twitter-status' ) );
 app.use( '/api/twitter', require( './routes/twitter' ) );
+app.use( '/api/repository', require( './routes/repository' ) );
 app.use( '/api/watson', require( './routes/watson' ) );
 app.use( '/api/utility', require( './routes/utility' ) );
 

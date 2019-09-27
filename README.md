@@ -19,6 +19,25 @@ Start
 
     npm start
 
+Manage
+
+    http://localhost:3000
+
+Populate
+
+- Add some developers
+- Add endpoints for each developer
+  - Blog
+  - Dev.to
+  - Medium
+  - YouTube
+  - Twitter
+  - Stack Overflow
+  - GitHub
+- Add some repositories to monitor
+  - Code samples
+  - SDKs
+
 Aggregate
 
     python blog.py
@@ -28,7 +47,4 @@ Aggregate
     python twitter.py
     python so.py
     python github.py
-
-Manage
-
-    http://localhost:3000
+    python repository.py

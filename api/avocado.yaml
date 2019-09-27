@@ -56,6 +56,8 @@ tags:
     description: YouTube accounts to aggregate
   - name: 📺 📼 YouTube Video
     description: Video posted to a YouTube account
+  - name: 🗄️ Repository
+    description: Specific GitHub repositories to monitor
   - name: 🧠 Watson
     description: Watson machine learning features
   - name: 🧰 Utliity
@@ -5407,6 +5409,264 @@ paths:
                   seconds:
                     type: integer
                     example: 599
+  /repository:
+    get:
+      tags:
+        - 🗄️ Repository
+      summary: Read all available repositories
+      operationId: getRepos
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - full_name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    repository:
+                      type: integer
+                      example: 0
+                    name:
+                      type: string
+                      example: Avocado
+                    full_name:
+                      type: string
+                      example: krhoyt/Avocado
+                    description:
+                      type: string
+                      example: Developer relations in a box.
+                    is_fork:
+                      type: boolean
+                      example: true
+                    started_at:
+                      type: string
+                      format: date-time
+                    pushed_at:
+                      type: string
+                      format: date-time
+                    size:
+                      type: integer
+                      example: 0
+                    stargazers:
+                      type: integer
+                      example: 0
+                    watchers:
+                      type: integer
+                      example: 0
+                    forks:
+                      type: integer
+                      example: 0
+                    issues:
+                      type: integer
+                      example: 0
+                    network:
+                      type: integer
+                      example: 0
+                    subscribers:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 🗄️ Repository
+      summary: Create a new repository
+      operationId: createRepo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                  example: krhoyt/Avocado
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1repository/get/responses/200/content/application~1\
+                  json/schema/items"
+  "/repository/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired repository
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🗄️ Repository
+      summary: Read specific repository by ID
+      operationId: getRepoByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - full_name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  repository:
+                    type: integer
+                    example: 0
+                  name:
+                    type: string
+                    example: Avocado
+                  full_name:
+                    type: string
+                    example: krhoyt/Avocado
+                  description:
+                    type: string
+                    example: Developer relations in a box.
+                  is_fork:
+                    type: boolean
+                    example: true
+                  started_at:
+                    type: string
+                    format: date-time
+                  pushed_at:
+                    type: string
+                    format: date-time
+                  size:
+                    type: integer
+                    example: 0
+                  stargazers:
+                    type: integer
+                    example: 0
+                  watchers:
+                    type: integer
+                    example: 0
+                  forks:
+                    type: integer
+                    example: 0
+                  issues:
+                    type: integer
+                    example: 0
+                  network:
+                    type: integer
+                    example: 0
+                  subscribers:
+                    type: integer
+                    example: 0
+    patch:
+      tags:
+        - 🗄️ Repository
+      summary: Update repository based on API data
+      operationId: updateRepoData
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1repository~1%7Bid%7D/get/responses/200/content/app\
+                  lication~1json/schema"
+    put:
+      tags:
+        - 🗄️ Repository
+      summary: Update specific repository by ID
+      operationId: updateRepo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                repository:
+                  type: integer
+                  example: 0
+                name:
+                  type: string
+                  example: Avocado
+                full_name:
+                  type: string
+                  example: krhoyt/Avocado
+                description:
+                  type: string
+                  example: Developer relations in a box.
+                is_fork:
+                  type: boolean
+                  example: true
+                started_at:
+                  type: string
+                  format: date-time
+                pushed_at:
+                  type: string
+                  format: date-time
+                size:
+                  type: integer
+                  example: 0
+                stargazers:
+                  type: integer
+                  example: 0
+                watchers:
+                  type: integer
+                  example: 0
+                forks:
+                  type: integer
+                  example: 0
+                issues:
+                  type: integer
+                  example: 0
+                network:
+                  type: integer
+                  example: 0
+                subscribers:
+                  type: integer
+                  example: 0
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1repository~1%7Bid%7D/get/responses/200/content/app\
+                  lication~1json/schema"
+    delete:
+      tags:
+        - 🗄️ Repository
+      summary: Delete specific repository by ID
+      operationId: deleteRepoByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
   "/watson/language/{url}":
     parameters:
       - name: url
@@ -6085,6 +6345,62 @@ components:
         media_id:
           type: string
           format: uuid
+    Repository:
+      required:
+        - full_name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        repository:
+          type: integer
+          example: 0
+        name:
+          type: string
+          example: Avocado
+        full_name:
+          type: string
+          example: krhoyt/Avocado
+        description:
+          type: string
+          example: Developer relations in a box.
+        is_fork:
+          type: boolean
+          example: true
+        started_at:
+          type: string
+          format: date-time
+        pushed_at:
+          type: string
+          format: date-time
+        size:
+          type: integer
+          example: 0
+        stargazers:
+          type: integer
+          example: 0
+        watchers:
+          type: integer
+          example: 0
+        forks:
+          type: integer
+          example: 0
+        issues:
+          type: integer
+          example: 0
+        network:
+          type: integer
+          example: 0
+        subscribers:
+          type: integer
+          example: 0
     StackOverflow:
       required:
         - developer_id
