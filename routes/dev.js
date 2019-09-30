@@ -67,36 +67,59 @@ router.post( '/', ( req, res ) => {
     user_name: req.body.user_name
   };
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO Dev
-    VALUES ( ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
+  let existing = req.db.prepare( `
+    SELECT
+      Dev.uuid AS "id",
+      Dev.created_at,
+      Dev.updated_at,
+      Developer.uuid AS "developer_id",
+      Dev.user_name
+    FROM
+      Dev,
+      Developer
+    WHERE
+      Dev.developer_id = Developer.id AND
+      Dev.user_name = ?
+  ` ).get( 
     record.user_name
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    user_name: record.user_name
-  } );
+  if( existing === undefined ) {
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+
+    let info = req.db.prepare( `
+      INSERT INTO Dev
+      VALUES ( ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.user_name
+    );
+
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      user_name: record.user_name
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update

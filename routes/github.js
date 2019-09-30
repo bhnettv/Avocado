@@ -99,87 +99,131 @@ router.get( '/', ( req, res ) => {
 
 // Create
 router.post( '/', async ( req, res ) => {
-  let profile = await rp( {
-    url: `https://api.github.com/users/${req.body.login}`,
-    method: 'GET',
-    headers: {
-      'User-Agent': 'IBM Developer'
-    },
-    qs: {
-      access_token: req.config.github.access_token
-    },
-    json: true
-  } );
-
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
-    login: profile.login,
-    name: profile.name,
-    company: profile.company,
-    blog: profile.blog,
-    location: profile.location,
-    email: profile.email,
-    hireable: profile.hireable === null ? 0 : 1,
-    repositories: profile.public_repos,
-    gists: profile.public_gists,
-    followers: profile.followers,
-    following: profile.following
+    login: req.body.login,
+    name: null,
+    company: null,
+    blog: null,
+    location: null,
+    email: null,
+    hireable: 0,
+    repositories: 0,
+    gists: 0,
+    followers: 0,
+    following: 0
   };
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO GitHub
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
-    record.login,
-    record.name,
-    record.company,
-    record.blog,
-    record.location,
-    record.email,
-    record.hireable,
-    record.repositories,
-    record.gists,
-    record.followers,
-    record.following
+  let existing = req.db.prepare( `
+    SELECT
+      GitHub.uuid AS "id",
+      GitHub.created_at,
+      GitHub.updated_at,
+      Developer.uuid AS "developer_id",
+      GitHub.login,
+      GitHub.name,
+      GitHub.company,
+      GitHub.blog,
+      GitHub.location,
+      GitHub.email,
+      GitHub.hireable,
+      GitHub.repositories,
+      GitHub.gists,
+      GitHub.followers,
+      GitHub.following
+    FROM
+      Developer,
+      GitHub
+    WHERE
+      GitHub.developer_id = Developer.id AND
+      GitHub.login = ?
+  ` ).get( 
+    record.login
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    login: record.login,
-    name: record.name,
-    company: record.company,
-    blog: record.blog,
-    location: record.location,
-    email: record.email,
-    hireable: record.hireable,
-    repositories: record.repositories,
-    gists: record.gists,
-    followers: record.followers,
-    following: record.following
-  } );
+  if( existing === undefined ) {
+    let profile = await rp( {
+      url: `https://api.github.com/users/${record.login}`,
+      method: 'GET',
+      headers: {
+        'User-Agent': 'IBM Developer'
+      },
+      qs: {
+        access_token: req.config.github.access_token
+      },
+      json: true
+    } );
+  
+    record.name = profile.name;
+    record.company = profile.company;
+    record.blog = profile.blog;
+    record.location = profile.location;
+    record.email = profile.email;
+    record.hireable = profile.hireable === null ? 0 : 1;
+    record.repositories = profile.public_repos;
+    record.gists = profile.public_gists;
+    record.followers = profile.followers;
+    record.following = profile.following;
+  
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+  
+    let info = req.db.prepare( `
+      INSERT INTO GitHub
+      VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.login,
+      record.name,
+      record.company,
+      record.blog,
+      record.location,
+      record.email,
+      record.hireable,
+      record.repositories,
+      record.gists,
+      record.followers,
+      record.following
+    );
+  
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      login: record.login,
+      name: record.name,
+      company: record.company,
+      blog: record.blog,
+      location: record.location,
+      email: record.email,
+      hireable: record.hireable,
+      repositories: record.repositories,
+      gists: record.gists,
+      followers: record.followers,
+      following: record.following
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update using API

@@ -67,36 +67,59 @@ router.post( '/', ( req, res ) => {
     channel: req.body.channel
   };
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO YouTube
-    VALUES ( ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
+  let existing = req.db.prepare( `
+    SELECT
+      YouTube.uuid AS "id",
+      YouTube.created_at,
+      YouTube.updated_at,
+      Developer.uuid AS "developer_id",
+      YouTube.channel
+    FROM 
+      Developer,
+      YouTube
+    WHERE
+      YouTube.developer_id = Developer.id AND
+      YouTube.channel = ?
+  ` ).get( 
     record.channel
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    channel: record.channel
-  } );
+  if( existing === undefined ) {
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+
+    let info = req.db.prepare( `
+      INSERT INTO YouTube
+      VALUES ( ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.channel
+    );
+
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      channel: record.channel
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update

@@ -85,83 +85,127 @@ router.get( '/', ( req, res ) => {
 
 // Create
 router.post( '/', async ( req, res ) => {
-  let details = await rp( {
-    url: `https://api.github.com/repos/${req.body.full_name}`,
-    method: 'GET',
-    headers: {
-      'User-Agent': 'IBM Developer'
-    },    
-    qs: {
-      access_token: req.config.github.access_token
-    },
-    json: true
-  } );
-
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    repository: details.id,
-    name: details.name,
-    full_name: details.full_name,
-    description: details.description,
-    is_fork: details.fork ? 1 : 0,
-    started_at: new Date( details.created_at ).toISOString(),
-    pushed_at: new Date( details.pushed_at ).toISOString(),
-    size: details.size,
-    stargazers: details.stargazers_count,
-    watchers: details.watchers_count,
-    forks: details.forks_count,
-    issues: details.open_issues_count,
-    network: details.network_count,
-    subscribers: details.subscribers_count
+    repository: null,
+    name: null,
+    full_name: req.body.full_name,
+    description: null,
+    is_fork: 0,
+    started_at: null,
+    pushed_at: null,
+    size: 0,
+    stargazers: 0,
+    watchers: 0,
+    forks: 0,
+    issues: 0,
+    network: 0,
+    subscribers: 0
   };
 
-  let info = req.db.prepare( `
-    INSERT INTO Repository
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.repository,
-    record.name,
-    record.full_name,
-    record.description,
-    record.is_fork,
-    record.started_at,
-    record.pushed_at,
-    record.size,
-    record.stargazers,
-    record.watchers,
-    record.forks,
-    record.issues,
-    record.network,
-    record.subscribers
+  let existing = req.db.prepare( `
+    SELECT
+      Repository.uuid AS "id",
+      Repository.created_at,
+      Repository.updated_at,
+      Repository.name,
+      Repository.full_name,
+      Repository.description,
+      Repository.is_fork,
+      Repository.started_at,
+      Repository.pushed_at,
+      Repository.size,
+      Repository.stargazers,
+      Repository.watchers,
+      Repository.forks,
+      Repository.issues,
+      Repository.network,
+      Repository.subscribers
+    FROM Repository
+    WHERE Repository.full_name = ?
+  ` ).get(
+    record.full_name
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    repository: record.repository,
-    name: record.name,
-    full_name: record.full_name,
-    description: record.description,
-    is_fork: new Boolean( record.is_fork ),
-    started_at: record.started_at,
-    pushed_at: record.pushed_at,
-    size: record.size,
-    stargazers: record.stargazers,
-    watchers: record.watchers,
-    forks: record.forks,
-    issues: record.issues,
-    network: record.network,
-    subscribers: record.subscribers
-  } );
+  if( existing === undefined ) {
+    let details = await rp( {
+      url: `https://api.github.com/repos/${record.full_name}`,
+      method: 'GET',
+      headers: {
+        'User-Agent': 'IBM Developer'
+      },    
+      qs: {
+        access_token: req.config.github.access_token
+      },
+      json: true
+    } );
+  
+    record.repository = details.id;
+    record.name = details.name;
+    record.description = details.description;
+    record.is_fork = details.fork ? 1 : 0;
+    record.started_at = new Date( details.created_at ).toISOString();
+    record.pushed_at = new Date( details.pushed_at ).toISOString();
+    record.size = details.size;
+    record.stargazers = details.stargazers_count;
+    record.watchers = details.watchers_count;
+    record.forks = details.forks_count;
+    record.issues = details.open_issues_count;
+    record.network = details.network_count;
+    record.subscribers = details.subscribers_count;
+  
+    let info = req.db.prepare( `
+      INSERT INTO Repository
+      VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.repository,
+      record.name,
+      record.full_name,
+      record.description,
+      record.is_fork,
+      record.started_at,
+      record.pushed_at,
+      record.size,
+      record.stargazers,
+      record.watchers,
+      record.forks,
+      record.issues,
+      record.network,
+      record.subscribers
+    );
+  
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      repository: record.repository,
+      name: record.name,
+      full_name: record.full_name,
+      description: record.description,
+      is_fork: new Boolean( record.is_fork ),
+      started_at: record.started_at,
+      pushed_at: record.pushed_at,
+      size: record.size,
+      stargazers: record.stargazers,
+      watchers: record.watchers,
+      forks: record.forks,
+      issues: record.issues,
+      network: record.network,
+      subscribers: record.subscribers
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update using API

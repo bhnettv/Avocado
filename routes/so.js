@@ -100,85 +100,127 @@ router.get( '/', ( req, res ) => {
 
 // Create
 router.post( '/', async ( req, res ) => {
-  let profile = await rp( {
-    url: `https://api.stackexchange.com/2.2/users/${req.body.user}`,
-    method: 'GET',
-    qs: {
-      order: 'desc',
-      sort: 'reputation',
-      site: 'stackoverflow',
-      key: req.config.stackoverflow.key
-    },
-    gzip: true,
-    json: true
-  } );
-
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
-    user: profile.items[0].user_id,
-    account: profile.items[0].account_id,
-    joined_at: new Date( profile.items[0].creation_date * 1000 ).toISOString(),
-    reputation: profile.items[0].reputation,
-    accept_rate: profile.items[0].accept_rate ? profile.items[0].accept_rate : 0,
-    name: profile.items[0].display_name,
-    location: profile.items[0].location,
-    website: profile.items[0].website_url,
-    link: profile.items[0].link,
-    image: profile.items[0].profile_image
+    user: req.body.user,
+    account: 0,
+    joined_at: null,
+    reputation: 0,
+    accept_rate: 0,
+    name: null,
+    location: null,
+    website: null,
+    link: null,
+    image: null
   };
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO StackOverflow
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
-    record.user,
-    record.account,
-    record.joined_at,
-    record.reputation,
-    record.accept_rate,
-    record.name,
-    record.location,
-    record.website,
-    record.link,
-    record.image
+  let existing = req.db.prepare( `
+    SELECT
+      StackOverflow.uuid AS "id",
+      StackOverflow.created_at,
+      StackOverflow.updated_at,
+      Developer.uuid AS "developer_id",
+      StackOverflow.user,
+      StackOverflow.account,
+      StackOverflow.joined_at,
+      StackOverflow.reputation,
+      StackOverflow.accept_rate,
+      StackOverflow.name,
+      StackOverflow.location,
+      StackOverflow.website,
+      StackOverflow.link,
+      StackOverflow.image
+    FROM
+      Developer,
+      StackOverflow
+    WHERE
+      StackOverflow.developer_id = Developer.id AND
+      StackOverflow.user = ?
+  `). get( 
+    record.user
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    user: record.user,
-    account: record.account,
-    joined_at: record.joined_at,
-    reputation: record.reputation,
-    accept_rate: record.accept_rate,
-    name: record.name,
-    location: record.location,
-    website: record.website,
-    link: record.link,
-    image: record.image
-  } );
+  if( existing === undefined ) {
+    let profile = await rp( {
+      url: `https://api.stackexchange.com/2.2/users/${req.body.user}`,
+      method: 'GET',
+      qs: {
+        order: 'desc',
+        sort: 'reputation',
+        site: 'stackoverflow',
+        key: req.config.stackoverflow.key
+      },
+      gzip: true,
+      json: true
+    } );
+  
+    record.account = profile.items[0].account_id;
+    record.joined_at = new Date( profile.items[0].creation_date * 1000 ).toISOString();
+    record.reputation = profile.items[0].reputation;
+    record.accept_rate = profile.items[0].accept_rate ? profile.items[0].accept_rate : 0;
+    record.name = profile.items[0].display_name;
+    record.location = profile.items[0].location;
+    record.website = profile.items[0].website_url;
+    record.link = profile.items[0].link;
+    record.image = profile.items[0].profile_image;
+  
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+  
+    let info = req.db.prepare( `
+      INSERT INTO StackOverflow
+      VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.user,
+      record.account,
+      record.joined_at,
+      record.reputation,
+      record.accept_rate,
+      record.name,
+      record.location,
+      record.website,
+      record.link,
+      record.image
+    );
+  
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      user: record.user,
+      account: record.account,
+      joined_at: record.joined_at,
+      reputation: record.reputation,
+      accept_rate: record.accept_rate,
+      name: record.name,
+      location: record.location,
+      website: record.website,
+      link: record.link,
+      image: record.image
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update using API

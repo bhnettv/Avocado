@@ -101,90 +101,136 @@ router.get( '/', ( req, res ) => {
 
 // Create
 router.post( '/', async ( req, res ) => {
-  let profile = await rp( {
-    url: 'https://api.twitter.com/1.1/users/show.json',
-    method: 'GET',
-    headers: {
-      Authorization: `${req.twitter.token_type} ${req.twitter.access_token}`
-    },
-    qs: {
-      screen_name: req.body.screen_name
-    },
-    json: true
-  } );
-
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.body.developer_id,
-    user: profile.id,
-    joined_at: new Date( profile.created_at ).toISOString(),
-    name: profile.name,
+    user: 0,
+    joined_at: null,
+    name: null,
     screen_name: req.body.screen_name,
-    image: profile.profile_image_url_https,
-    followers: profile.followers_count,
-    friends: profile.friends_count,
-    favorites: profile.favourites_count,
-    count: profile.statuses_count,
-    location: profile.location,
-    description: profile.description,
-    url: profile.url
-  };
+    image: null,
+    followers: 0,
+    friends: 0,
+    favorites: 0,
+    count: 0,
+    location: null,
+    description: null,
+    url: null
+  };  
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO Twitter
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
-    record.user,
-    record.joined_at,
-    record.name,
-    record.screen_name,
-    record.image,
-    record.followers,
-    record.friends,
-    record.favorites,
-    record.count,
-    record.location,
-    record.description,
-    record.url
+  let existing = req.db.prepare( `
+    SELECT
+      Twitter.uuid AS "id",
+      Twitter.created_at,
+      Twitter.updated_at,
+      Developer.uuid AS "developer_id",
+      Twitter.user,
+      Twitter.joined_at,
+      Twitter.name,
+      Twitter.screen_name,
+      Twitter.image,
+      Twitter.followers,
+      Twitter.friends,
+      Twitter.favorites,
+      Twitter.count,
+      Twitter.location,
+      Twitter.description,
+      Twitter.url
+    FROM
+      Developer,
+      Twitter
+    WHERE
+      Twitter.developer_id = Developer.id AND
+      Twitter.screen_name = ?
+  ` ).get(
+    record.screen_name
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    user: record.user,
-    joined_at: record.joined_at,
-    name: record.name,
-    screen_name: record.screen_name,
-    image: record.image,
-    followers: record.followers,
-    friends: record.friends,
-    favorites: record.favorites,
-    count: record.count,
-    location: record.location,
-    description: record.description,
-    url: record.url
-  } );
+  if( existing === undefined ) {
+    let profile = await rp( {
+      url: 'https://api.twitter.com/1.1/users/show.json',
+      method: 'GET',
+      headers: {
+        Authorization: `${req.twitter.token_type} ${req.twitter.access_token}`
+      },
+      qs: {
+        screen_name: record.screen_name
+      },
+      json: true
+    } );
+  
+    record.user = profile.id;
+    record.joined_at = new Date( profile.created_at ).toISOString();
+    record.name = profile.name;
+    record.image = profile.profile_image_url_https;
+    record.followers = profile.followers_count;
+    record.friends = profile.friends_count;
+    record.favorites = profile.favourites_count;
+    record.count = profile.statuses_count;
+    record.location = profile.location;
+    record.description = profile.description;
+    record.url = profile.url;
+  
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+  
+    let info = req.db.prepare( `
+      INSERT INTO Twitter
+      VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.user,
+      record.joined_at,
+      record.name,
+      record.screen_name,
+      record.image,
+      record.followers,
+      record.friends,
+      record.favorites,
+      record.count,
+      record.location,
+      record.description,
+      record.url
+    );
+  
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      user: record.user,
+      joined_at: record.joined_at,
+      name: record.name,
+      screen_name: record.screen_name,
+      image: record.image,
+      followers: record.followers,
+      friends: record.friends,
+      favorites: record.favorites,
+      count: record.count,
+      location: record.location,
+      description: record.description,
+      url: record.url
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update

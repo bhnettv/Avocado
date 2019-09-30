@@ -70,38 +70,62 @@ router.post( '/', ( req, res ) => {
     feed: req.body.feed
   };
 
-  let developer = req.db.prepare( `
-    SELECT Developer.id
-    FROM Developer
-    WHERE Developer.uuid = ?
-  ` )
-  .get( 
-    record.developer_uuid
-  );
-  record.developer_id = developer.id;
-
-  let info = req.db.prepare( `
-    INSERT INTO Blog
-    VALUES ( ?, ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
-    record.url,
-    record.feed
+  let existing = req.db.prepare( `
+    SELECT
+      Blog.uuid AS "id",
+      Blog.created_at,
+      Blog.updated_at,
+      Developer.uuid AS "id",
+      Blog.url,
+      Blog.feed
+    FROM
+      Blog,
+      Developer
+    WHERE 
+      Blog.developer_id = Developer.id AND
+      Blog.url = ?
+  ` ).get( 
+    req.body.url
   );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    url: record.url,
-    feed: record.feed
-  } );
+  if( existing === undefined ) {
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid
+    );
+    record.developer_id = developer.id;
+
+    let info = req.db.prepare( `
+      INSERT INTO Blog
+      VALUES ( ?, ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.url,
+      record.feed
+    );
+
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      url: record.url,
+      feed: record.feed
+    };
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update
