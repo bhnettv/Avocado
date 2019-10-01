@@ -42,6 +42,8 @@ tags:
     description: Medium feeds to aggregate
   - name: 🔮 📝 Medium Post
     description: Post made to a Medium account
+  - name: 👽 Reddit
+    description: Reddit accounts to aggregate
   - name: 📚 Stack Overflow
     description: Stack Overflow accounts to aggregate
   - name: 📚 ✋ Stack Overflow Answer
@@ -3413,6 +3415,206 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  /reddit:
+    get:
+      tags:
+        - 👽 Reddit
+      summary: Read all available Reddit accounts
+      operationId: getReddits
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - name
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    user:
+                      type: string
+                      example: u19t6
+                    name:
+                      type: string
+                      example: Tokyono
+                    joined_at:
+                      type: string
+                      format: date-time
+                    image:
+                      type: string
+                      example: http://something.com
+                    link:
+                      type: integer
+                      example: 0
+                    comment:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 👽 Reddit
+      summary: Create a new Reddit account
+      operationId: createReddit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+                  example: krhoyt
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1reddit/get/responses/200/content/application~1json\
+                  /schema/items"
+  "/reddit/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired Reddit account
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 👽 Reddit
+      summary: Read specific Reddit account by ID
+      operationId: getRedditByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  user:
+                    type: string
+                    example: u19t6
+                  name:
+                    type: string
+                    example: Tokyono
+                  joined_at:
+                    type: string
+                    format: date-time
+                  image:
+                    type: string
+                    example: http://something.com
+                  link:
+                    type: integer
+                    example: 0
+                  comment:
+                    type: integer
+                    example: 0
+    patch:
+      tags:
+        - 👽 Reddit
+      summary: Update Reddit account based on API data
+      operationId: updateRedditAccount
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1reddit~1%7Bid%7D/get/responses/200/content/applica\
+                  tion~1json/schema"
+    put:
+      tags:
+        - 👽 Reddit
+      summary: Update specific Reddit account by ID
+      operationId: updateReddit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                user:
+                  type: string
+                  example: u19t6
+                name:
+                  type: string
+                  example: Tokyono
+                joined_at:
+                  type: string
+                  format: date-time
+                image:
+                  type: string
+                  example: http://something.com
+                link:
+                  type: integer
+                  example: 0
+                comment:
+                  type: integer
+                  example: 0
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1reddit~1%7Bid%7D/get/responses/200/content/applica\
+                  tion~1json/schema"
+    delete:
+      tags:
+        - 👽 Reddit
+      summary: Delete specific Reddit account by ID
+      operationId: deleteRedditByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
   /so:
     get:
       tags:
@@ -6345,6 +6547,42 @@ components:
         media_id:
           type: string
           format: uuid
+    Reddit:
+      required:
+        - developer_id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        user:
+          type: string
+          example: u19t6
+        name:
+          type: string
+          example: Tokyono
+        joined_at:
+          type: string
+          format: date-time
+        image:
+          type: string
+          example: http://something.com
+        link:
+          type: integer
+          example: 0
+        comment:
+          type: integer
+          example: 0
     Repository:
       required:
         - full_name
