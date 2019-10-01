@@ -34,9 +34,11 @@ Populate
   - Twitter
   - Stack Overflow
   - GitHub
+  - Reddit (beta)
 - Add some repositories to monitor
   - Code samples
   - SDKs
+  - Open source projects
 
 Aggregate
 
@@ -47,4 +49,5 @@ Aggregate
     python twitter.py
     python so.py
     python github.py
+    python reddit.py
     python repository.py
