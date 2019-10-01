@@ -80,6 +80,7 @@ app.use( '/api/medium', require( './routes/medium' ) );
 app.use( '/api/youtube/video', require( './routes/youtube-video' ) );
 app.use( '/api/youtube', require( './routes/youtube' ) );
 app.use( '/api/media', require( './routes/media' ) );
+app.use( '/api/reddit/post', require( './routes/reddit-post' ) );
 app.use( '/api/reddit', require( './routes/reddit' ) );
 app.use( '/api/so/question', require( './routes/so-question' ) );
 app.use( '/api/so/answer', require( './routes/so-answer' ) );

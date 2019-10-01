@@ -41,6 +41,8 @@ tags:
   description: Post made to a Medium account
 - name: 👽 Reddit
   description: Reddit accounts to aggregate  
+- name: 👽 📝 Reddit Post
+  description: Post made to a Reddit account  
 - name: 📚 Stack Overflow
   description: Stack Overflow accounts to aggregate
 - name: 📚 ✋ Stack Overflow Answer
@@ -140,6 +142,12 @@ paths:
     $ref: 'reddit.yaml#/paths/~1reddit'
   /reddit/{id}:
     $ref: 'reddit.yaml#/paths/~1reddit~1{id}'    
+  /reddit/post:
+    $ref: 'reddit-post.yaml#/paths/~1reddit~1post'
+  /reddit/post/{id}:
+    $ref: 'reddit-post.yaml#/paths/~1reddit~1post~1{id}'
+  /reddit/post/guid/{id}:
+    $ref: 'reddit-post.yaml#/paths/~1reddit~1post~1guid~1{id}'    
   /so:
     $ref: 'so.yaml#/paths/~1so'
   /so/{id}:
@@ -226,6 +234,8 @@ components:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
     Reddit:
       $ref: 'reddit.yaml#/components/schemas/Reddit'      
+    RedditPost:
+      $ref: 'reddit-post.yaml#/components/schemas/RedditPost'            
     Repository:
       $ref: 'repository.yaml#/components/schemas/Repository'
     StackOverflow:
