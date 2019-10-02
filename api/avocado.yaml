@@ -324,8 +324,7 @@ paths:
                 type: array
                 items:
                   required:
-                    - first
-                    - last
+                    - name
                   type: object
                   properties:
                     id:
@@ -337,18 +336,21 @@ paths:
                     updated_at:
                       type: string
                       format: date-time
-                    first:
+                    name:
                       type: string
-                      example: Kevin
-                    last:
+                      example: Monty Burns
+                    title:
                       type: string
-                      example: Hoyt
-                    nickname:
-                      type: string
-                      example: The Dude
+                      example: CEO
                     email:
                       type: string
-                      example: krhoyt@us.ibm.com
+                      example: smithers@burns.com
+                    description:
+                      type: string
+                      example: Excellent!
+                    image:
+                      type: string
+                      example: http://something.com
     post:
       tags:
         - 🖥️ Developer
@@ -361,18 +363,21 @@ paths:
             schema:
               type: object
               properties:
-                first:
+                name:
                   type: string
-                  example: Kevin
-                last:
+                  example: Monty Burns
+                title:
                   type: string
-                  example: Hoyt
-                nickname:
-                  type: string
-                  example: The Dude
+                  example: CEO
                 email:
                   type: string
-                  example: krhoyt@us.ibm.com
+                  example: smithers@burns.com
+                description:
+                  type: string
+                  example: Excellent!
+                image:
+                  type: string
+                  example: http://something.com
       responses:
         "200":
           description: successful operation
@@ -402,8 +407,7 @@ paths:
             application/json:
               schema:
                 required:
-                  - first
-                  - last
+                  - name
                 type: object
                 properties:
                   id:
@@ -415,18 +419,21 @@ paths:
                   updated_at:
                     type: string
                     format: date-time
-                  first:
+                  name:
                     type: string
-                    example: Kevin
-                  last:
+                    example: Monty Burns
+                  title:
                     type: string
-                    example: Hoyt
-                  nickname:
-                    type: string
-                    example: The Dude
+                    example: CEO
                   email:
                     type: string
-                    example: krhoyt@us.ibm.com
+                    example: smithers@burns.com
+                  description:
+                    type: string
+                    example: Excellent!
+                  image:
+                    type: string
+                    example: http://something.com
     put:
       tags:
         - 🖥️ Developer
@@ -439,18 +446,21 @@ paths:
             schema:
               type: object
               properties:
-                first:
+                name:
                   type: string
-                  example: Kevin
-                last:
+                  example: Monty Burns
+                title:
                   type: string
-                  example: Hoyt
-                nickname:
-                  type: string
-                  example: The Dude
+                  example: CEO
                 email:
                   type: string
-                  example: krhoyt@us.ibm.com
+                  example: smithers@burns.com
+                description:
+                  type: string
+                  example: Excellent!
+                image:
+                  type: string
+                  example: http://something.com
       responses:
         "200":
           description: successful operation
@@ -6522,8 +6532,7 @@ components:
           example: boneskull
     Developer:
       required:
-        - first
-        - last
+        - name
       type: object
       properties:
         id:
@@ -6535,18 +6544,21 @@ components:
         updated_at:
           type: string
           format: date-time
-        first:
+        name:
           type: string
-          example: Kevin
-        last:
+          example: Monty Burns
+        title:
           type: string
-          example: Hoyt
-        nickname:
-          type: string
-          example: The Dude
+          example: CEO
         email:
           type: string
-          example: krhoyt@us.ibm.com
+          example: smithers@burns.com
+        description:
+          type: string
+          example: Excellent!
+        image:
+          type: string
+          example: http://something.com
     DeveloperNote:
       required:
         - developer_id

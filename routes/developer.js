@@ -16,10 +16,11 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.uuid AS "id",
       Developer.created_at, 
       Developer.updated_at,
-      Developer.first,
-      Developer.last,
-      Developer.nickname,
-      Developer.email
+      Developer.name,
+      Developer.title,
+      Developer.email,
+      Developer.description,
+      Developer.image
     FROM 
       Developer,
       DeveloperLabel,
@@ -65,10 +66,11 @@ router.get( '/:id', ( req, res ) => {
       Developer.uuid AS "id",
       Developer.created_at, 
       Developer.updated_at,
-      Developer.first,
-      Developer.last,
-      Developer.nickname,
-      Developer.email
+      Developer.name,
+      Developer.title,
+      Developer.email,
+      Developer.description,
+      Developer.title
     FROM 
       Developer
     WHERE 
@@ -92,13 +94,14 @@ router.get( '/', ( req, res ) => {
       Developer.uuid AS "id",
       Developer.created_at, 
       Developer.updated_at,
-      Developer.first,
-      Developer.last,
-      Developer.nickname,
-      Developer.email
+      Developer.name,
+      Developer.title,
+      Developer.email,
+      Developer.description,
+      Developer.image
     FROM 
       Developer
-    ORDER BY last ASC
+    ORDER BY name ASC
   ` )
   .all();
 
@@ -163,35 +166,38 @@ router.post( '/', ( req, res ) => {
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    first: req.body.first,
-    last: req.body.last,
-    nickname: req.body.nickname,
-    email: req.body.email
+    name: req.body.name,
+    title: req.body.title,
+    email: req.body.email,
+    description: req.body.description,
+    image: req.body.image
   };
 
   let info = req.db.prepare( `
     INSERT INTO Developer
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
     record.uuid,
     record.created_at,
     record.updated_at,
-    record.first,
-    record.last,
-    record.nickname,
-    record.email
+    record.name,
+    record.title,
+    record.email,
+    record.description,
+    record.image
   );
 
   res.json( {
     id: record.uuid,
     created_at: record.created_at,
     updated_at: record.updated_at,
-    first: record.first,
-    last: record.last,
-    nickname: record.nickname,
-    email: record.email
+    name: record.name,
+    title: record.title,
+    email: record.email,
+    description: record.description,
+    image: record.image
   } );
 } );
 
@@ -200,28 +206,31 @@ router.put( '/:id', ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
-    first: req.body.first,
-    last: req.body.last,
-    nickname: req.body.nickname,
-    email: req.body.email
+    name: req.body.name,
+    title: req.body.title,
+    email: req.body.email,
+    description: req.body.description,
+    image: req.body.image
   };
 
   let info = req.db.prepare( `
     UPDATE Developer
     SET 
       updated_at = ?,
-      first = ?,
-      last = ?,
-      nickname = ?,
-      email = ?
+      name = ?,
+      title = ?,
+      email = ?,
+      description = ?,
+      image = ?
     WHERE uuid = ?
   ` )
   .run(
     record.updated_at,
-    record.first,
-    record.last,
-    record.nickname,
+    record.name,
+    record.title,
     record.email,
+    record.description,
+    record.image,
     record.uuid
   );
 
@@ -230,10 +239,11 @@ router.put( '/:id', ( req, res ) => {
       Developer.uuid AS "id",
       Developer.created_at,
       Developer.updated_at,
-      Developer.first,
-      Developer.last,
-      Developer.nickname,
-      Developer.email
+      Developer.name,
+      Developer.title,
+      Developer.email,
+      Developer.description,
+      Developer.image
     FROM
       Developer
     WHERE
