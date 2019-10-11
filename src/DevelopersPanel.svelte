@@ -1,9 +1,13 @@
 <script>
 import Button from './Button.svelte';
+import Controls from './Controls.svelte';
 import Details from './Details.svelte';
+import DeveloperForm from './DeveloperForm.svelte';
 import DeveloperList from './DeveloperList.svelte';
 import LabelList from './LabelList.svelte';
 import Search from './Search.svelte';
+import Tabs from './Tabs.svelte';
+import Timeline from './Timeline.svelte';
 </script>
 
 <style>
@@ -20,6 +24,8 @@ div.search {
 
 article {
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
@@ -42,6 +48,11 @@ aside {
       <LabelList/>
     </Details>
   </aside>
-  <article></article>
+  <article>
+    <Tabs/>
+    <DeveloperForm visible="true"/>
+    <Timeline/>
+    <Controls/>
+  </article>
   <aside></aside>
 </div>

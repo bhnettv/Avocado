@@ -40,6 +40,7 @@ div.summary {
 }
 
 p {
+  color: #393939;
   flex-grow: 1;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;

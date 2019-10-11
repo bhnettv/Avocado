@@ -16,12 +16,16 @@ li {
   background-position: center left 15px;
   background-repeat: no-repeat;
   background-size: 18px;
-  border-bottom: solid 1px transparent;
+  border-bottom: solid 1px #e0e0e0;
   border-top: solid 1px transparent;
   display: flex;
   flex-direction: row;
   margin: 0;
   padding: 0 0 0 40px;
+}
+
+li:hover {
+  background-color: #e5e5e5;
 }
 
 p {
