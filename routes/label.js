@@ -62,13 +62,16 @@ router.get( '/developer/:id', ( req, res ) => {
 // Read all labels
 router.get( '/', ( req, res ) => {
   let labels = req.db.prepare( `
-    SELECT
-      Label.uuid AS "id",
-      Label.created_at, 
+    SELECT 
+      Label.uuid AS "id", 
+      Label.created_at,
       Label.updated_at,
-      Label.name
+      Label.name,
+      COUNT( DeveloperLabel.id ) AS "count"
     FROM Label
-    ORDER BY name ASC
+    LEFT JOIN DeveloperLabel ON Label.id = DeveloperLabel.label_id
+    GROUP BY Label.id
+    ORDER BY Label.name ASC
   ` )
   .all();
 
@@ -136,24 +139,41 @@ router.post( '/', ( req, res ) => {
     name: req.body.name
   };
 
-  let info = req.db.prepare( `
-    INSERT INTO Label
-    VALUES ( ?, ?, ?, ?, ? )
+  let existing = req.db.prepare( `
+    SELECT 
+      Label.uuid AS "id",
+      Label.created_at,
+      Label.updated_at,
+      Label.name
+    FROM Label
+    WHERE Label.name = ?
   ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.name
-  );
+  .get( record.name );
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    name: record.name
-  } );
+  if( existing === undefined ) {
+    let info = req.db.prepare( `
+      INSERT INTO Label
+      VALUES ( ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.name
+    );
+
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      name: record.name
+    };    
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Update

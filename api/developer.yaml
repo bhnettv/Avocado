@@ -46,13 +46,10 @@ paths:
                 name:
                   type: string
                   example: Monty Burns
-                title:
-                  type: string
-                  example: CEO
                 email:
                   type: string
                   example: smithers@burns.com
-                description:
+                bio:
                   type: string
                   example: Excellent!
                 image:
@@ -101,13 +98,10 @@ paths:
                 name:
                   type: string
                   example: Monty Burns
-                title:
-                  type: string
-                  example: CEO
                 email:
                   type: string
                   example: smithers@burns.com
-                description:
+                bio:
                   type: string
                   example: Excellent!
                 image:
@@ -274,13 +268,10 @@ components:
         name:
           type: string
           example: Monty Burns
-        title:
-          type: string
-          example: CEO
         email:
           type: string
           example: smithers@burns.com
-        description:
+        bio:
           type: string
           example: Excellent!
         image:

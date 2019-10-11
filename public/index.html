@@ -1,65 +1,22 @@
+<!doctype html>
 <html>
 <head>
-
+	
 <title>Avocado</title>
 
 <!-- Google Fonts -->
-<!-- IBM Plex -->
-<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600&display=swap" rel="stylesheet">
+<!-- IBM Plex Sans -->
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600&display=swap" rel="stylesheet">
 
-<!-- Application styles -->
-<link href="style/avocado.css" rel="stylesheet">
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="bundle.css">
 
-<!-- Components -->
-<script src="components/cv-checkbox.js"></script>
-<script src="components/cv-datatableitemrenderer.js"></script>
-<script src="components/cv-datatableitemeditor.js"></script>
-<script src="components/cv-datatablecolumn.js"></script>
-<script src="components/cv-datatable.js"></script>
+<script defer src="bundle.js"></script>
 
 </head>
 <body>
 
-<!-- Header -->
-<header>
-  <button></button>
-  <p>Avocado <span>Advocates</span></p>
-</header>
-
-<!-- Portal -->
-<div id="portal">
-
-  <!-- Advocates -->
-  <div id="advocates">
-
-    <!-- Team -->
-    <div class="team">
-      <div class="toolbar">
-        <button class="primary add">Add Team</button>
-      </div>      
-      <cv-datatable>
-        <cv-datatablecolumn 
-          dataField="name"
-          editable="true"
-          headerText="Name">
-      </cv-datatablecolumn>
-      </cv-datatable>
-    </div>
-
-    <!-- Advocate -->
-    <div class="advocates"></div>
-
-    <!-- Details -->
-    <div class="details"></div>
-
-  </div>
-
-</div>
-
 <!-- Application -->
-<script src="script/team.js"></script>
-<script src="script/advocates.js"></script>
-<script src="script/avocado.js"></script>
 
 </body>
 </html>

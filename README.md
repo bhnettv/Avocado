@@ -17,7 +17,7 @@ Configure
 
 Start
 
-    npm start
+    npm run dev
 
 Manage
 

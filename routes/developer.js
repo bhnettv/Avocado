@@ -17,9 +17,8 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.created_at, 
       Developer.updated_at,
       Developer.name,
-      Developer.title,
       Developer.email,
-      Developer.description,
+      Developer.bio,
       Developer.image
     FROM 
       Developer,
@@ -67,10 +66,9 @@ router.get( '/:id', ( req, res ) => {
       Developer.created_at, 
       Developer.updated_at,
       Developer.name,
-      Developer.title,
       Developer.email,
-      Developer.description,
-      Developer.title
+      Developer.bio,
+      Developer.image
     FROM 
       Developer
     WHERE 
@@ -95,9 +93,8 @@ router.get( '/', ( req, res ) => {
       Developer.created_at, 
       Developer.updated_at,
       Developer.name,
-      Developer.title,
       Developer.email,
-      Developer.description,
+      Developer.bio,
       Developer.image
     FROM 
       Developer
@@ -167,15 +164,14 @@ router.post( '/', ( req, res ) => {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     name: req.body.name,
-    title: req.body.title,
     email: req.body.email,
-    description: req.body.description,
+    bio: req.body.bio,
     image: req.body.image
   };
 
   let info = req.db.prepare( `
     INSERT INTO Developer
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -183,9 +179,8 @@ router.post( '/', ( req, res ) => {
     record.created_at,
     record.updated_at,
     record.name,
-    record.title,
     record.email,
-    record.description,
+    record.bio,
     record.image
   );
 
@@ -194,9 +189,8 @@ router.post( '/', ( req, res ) => {
     created_at: record.created_at,
     updated_at: record.updated_at,
     name: record.name,
-    title: record.title,
     email: record.email,
-    description: record.description,
+    bio: record.bio,
     image: record.image
   } );
 } );
@@ -207,9 +201,8 @@ router.put( '/:id', ( req, res ) => {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
     name: req.body.name,
-    title: req.body.title,
     email: req.body.email,
-    description: req.body.description,
+    bio: req.body.bio,
     image: req.body.image
   };
 
@@ -218,18 +211,16 @@ router.put( '/:id', ( req, res ) => {
     SET 
       updated_at = ?,
       name = ?,
-      title = ?,
       email = ?,
-      description = ?,
+      bio = ?,
       image = ?
     WHERE uuid = ?
   ` )
   .run(
     record.updated_at,
     record.name,
-    record.title,
     record.email,
-    record.description,
+    record.bio,
     record.image,
     record.uuid
   );
@@ -240,9 +231,8 @@ router.put( '/:id', ( req, res ) => {
       Developer.created_at,
       Developer.updated_at,
       Developer.name,
-      Developer.title,
       Developer.email,
-      Developer.description,
+      Developer.bio,
       Developer.image
     FROM
       Developer
