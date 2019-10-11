@@ -10,11 +10,11 @@ input {
   background-repeat: no-repeat;
   background-size: 20px;
   border: none;
-  color: #8c8c8c;
+  color: #171717;
   flex-grow: 1;  
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 48px;  
   margin: 0;
   padding: 0 16px 0 40px;    

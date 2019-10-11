@@ -8,6 +8,7 @@ html,   body {
 }
 
 ::placeholder {
+  color: #a8a8a8;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;

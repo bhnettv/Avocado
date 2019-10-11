@@ -10,29 +10,6 @@ onMount( async () => {
 </script>
 
 <style>
-div.photo {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 16px;
-  height: 32px;
-  margin: 8px 0 0 16px;
-  padding: 0;
-  width: 32px;
-}
-
-h4 {
-  background-color: #dcdcdc;
-  color: #171717;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  height: 48px;
-  line-height: 48px;
-  margin: 0;
-  padding: 0 16px 0 16px;  
-}
-
 li {  
   background: none;
   background-image: url( /img/label.svg );
@@ -48,7 +25,7 @@ li {
 }
 
 p {
-  color: #565656;
+  color: #393939;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;

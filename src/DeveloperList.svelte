@@ -43,7 +43,7 @@ li {
 }
 
 p {
-  color: #565656;
+  color: #393939;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;

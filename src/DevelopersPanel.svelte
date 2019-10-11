@@ -35,10 +35,10 @@ aside {
   <aside>
     <div class="search">
       <Search/>
-      <Button label="Add"/>
+      <Button label="Add" icon="/img/add.svg"/>
     </div>
     <DeveloperList/>
-    <Details>
+    <Details summary="Labels">
       <LabelList/>
     </Details>
   </aside>
