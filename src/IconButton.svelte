@@ -1,11 +1,15 @@
 <script>
 export let label;
+export let icon;
 </script>
 
 <style>
 button {
   background: none;
   background-color: #0062ff;
+  background-position: center right 16px;
+  background-repeat: no-repeat;
+  background-size: 20px;  
   border: none;
   color: #ffffff;
   font-family: 'IBM Plex Sans', sans-serif;
@@ -16,4 +20,4 @@ button {
 }
 </style>
 
-<button>{label}</button>
+<button style="background-image: url( {icon} )">{label}</button>

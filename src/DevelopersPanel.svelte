@@ -1,13 +1,16 @@
 <script>
-import Button from './Button.svelte';
 import Controls from './Controls.svelte';
 import Details from './Details.svelte';
 import DeveloperForm from './DeveloperForm.svelte';
 import DeveloperList from './DeveloperList.svelte';
+import IconButton from './IconButton.svelte';
 import LabelList from './LabelList.svelte';
+import Notes from './Notes.svelte';
 import Search from './Search.svelte';
 import Tabs from './Tabs.svelte';
 import Timeline from './Timeline.svelte';
+
+let selectedPanel = 0;
 </script>
 
 <style>
@@ -41,7 +44,7 @@ aside {
   <aside>
     <div class="search">
       <Search/>
-      <Button label="Add" icon="/img/add.svg"/>
+      <IconButton label="Add" icon="/img/add.svg"/>
     </div>
     <DeveloperList/>
     <Details summary="Labels">
@@ -49,10 +52,11 @@ aside {
     </Details>
   </aside>
   <article>
-    <Tabs/>
-    <DeveloperForm visible="true"/>
-    <Timeline/>
-    <Controls/>
+    <Tabs on:tab="{( evt ) => selectedPanel = evt.detail}"/>
+    <DeveloperForm visible="{selectedPanel === 0 ? true : false}"/>
+    <Timeline visible="{selectedPanel === 1 ? true : false}"/>
+    <Notes visible="{selectedPanel === 2 ? true : false}"/>
+    <Controls visible="{selectedPanel < 2 ? true : false}"/>
   </article>
   <aside></aside>
 </div>

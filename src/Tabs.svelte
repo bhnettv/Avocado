@@ -1,5 +1,14 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 export let selectedIndex = 0;
+
+const dispatch = createEventDispatcher();
+
+function doTabClick( evt ) {
+  selectedIndex = parseInt( evt.target.getAttribute( 'data-index' ) );
+  dispatch( 'tab', selectedIndex );
+}
 </script>
 
 <style>
@@ -30,12 +39,15 @@ button.selected {
 
 <div>
   <button 
+    data-index="0"
     class:selected="{selectedIndex === 0}"
-    on:click="{() => selectedIndex = 0}">Overview</button>
+    on:click="{doTabClick}">Overview</button>
   <button 
+    data-index="1"  
     class:selected="{selectedIndex === 1}"
-    on:click="{() => selectedIndex = 1}">Social</button>
+    on:click="{doTabClick}">Social</button>
   <button 
+    data-index="2"  
     class:selected="{selectedIndex === 2}"
-    on:click="{() => selectedIndex = 2}">Notes</button>
+    on:click="{doTabClick}">Notes</button>
 </div>

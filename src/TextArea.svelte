@@ -14,6 +14,7 @@ textarea {
   font-size: 14px;
   font-weight: 400;
   margin: 0;
+  min-height: 74px; 
   padding: 11px 16px 11px 16px;
 }
 </style>

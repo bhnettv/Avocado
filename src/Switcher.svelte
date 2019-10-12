@@ -36,7 +36,4 @@ button.selected {
   <button 
     class:selected="{selectedIndex === 1}"
     on:click="{() => selectedIndex = 1}">Repositories</button>
-  <button 
-    class:selected="{selectedIndex === 2}"
-    on:click="{() => selectedIndex = 2}">Tracking</button>
 </div>
