@@ -1,5 +1,5 @@
 <script>
-import IconButton from './IconButton.svelte';
+import Button from './Button.svelte';
 
 export let visible = true;
 </script>
@@ -14,5 +14,5 @@ div {
 </style>
 
 <div style="display: {visible ? 'flex' : 'none'}">
-  <IconButton label="Edit" icon="/img/edit.svg"/>
+  <Button label="Edit" icon="/img/edit.svg"/>
 </div>

@@ -9,17 +9,31 @@ export let developer = null;
 export let visible = false;
 
 let activity = [];
+let activity_id = null;
+let text = '';
 
 onMount( async () => {
   activity = await fetch( '/api/activity' )
   .then( ( response ) => response.json() );
+  activity_id = activity[0].id;
 } );
 
 function doSave( evt ) {
-  evt.preventDefault();
-  evt.stopImmediatePropagation();
-
-  console.log( 'Save' );
+  fetch( '/api/developer/note', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( {
+      developer_id: developer.id,
+      activity_id: activity_id,
+      full_text: text
+    } )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    text = '';
+  } );
 }
 </script>
 
@@ -65,14 +79,17 @@ p {
 </style>
 
 <div class="panel" style="display: {visible ? 'flex': 'none'}">
-  <form on:submit="{doSave}">
+  <form>
     <div class="activity">
-      <p>Activity:</p>
-      <Select options="{activity}" value="id" label="name"/>      
+      <p>Where:</p>
+      <Select options="{activity}" bind:selected="{activity_id}" value="id" label="name"/>      
     </div>
-    <TextArea placeholder="What's happening?"/>
+    <TextArea placeholder="What happened?" bind:value="{text}"/>
     <div class="controls">
-      <Button label="Save"/>    
+      <Button 
+        label="Save" 
+        disabled="{text.trim().length > 0 ? false : true}"        
+        on:click="{doSave}"/>    
     </div>
   </form>
   <p>Notes</p>

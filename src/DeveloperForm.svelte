@@ -1,8 +1,10 @@
 <script>
 import Avatar from './Avatar.svelte';
-import Input from './Input.svelte';
+import Tag from './Tag.svelte';
 import TextArea from './TextArea.svelte';
+import TextInput from './TextInput.svelte';
 
+export let disabled = true;
 export let visible = false;
 </script>
 
@@ -61,27 +63,36 @@ form {
   <div class="line">
     <Avatar/>
     <div class="gap"></div>
-    <Input placeholder="Name" value="Kevin Hoyt"/>  
+    <TextInput 
+      placeholder="Name" 
+      value="Kevin Hoyt" 
+      disabled="{disabled}"/>  
     <div class="gap"></div>
-    <Input placeholder="Email" value="krhoyt@us.ibm.com"/>
+    <TextInput 
+      placeholder="Email" 
+      value="krhoyt@us.ibm.com" 
+      disabled="{disabled}"/>
   </div>
 
   <div class="line">
     <div class="icon labels"></div>
     <div class="gap"></div>
-    <Input placeholder="Labels"/>  
+    <Tag placeholder="Labels" value="{['IBM', 'Advocate']}"/>
   </div>  
 
   <div class="line">
     <div class="icon skills"></div>
     <div class="gap"></div>
-    <Input placeholder="Skills"/>  
+    <Tag placeholder="Skills" value="{['HTML', 'CSS', 'JavaScript', 'SQL', 'Python', 'IoT']}"/>
   </div>  
 
   <div class="line">
     <div class="icon bio"></div>
     <div class="gap"></div>
-    <TextArea placeholder="Biography"/>  
+    <TextArea 
+      placeholder="Description"
+      disabled="{disabled}"
+      value="This guy works at IBM."/>  
   </div>    
 
 </form>

@@ -1,12 +1,5 @@
 <script>
-import { onMount } from 'svelte';
-
 export let labels = [];
-
-onMount( async () => {
-  labels = await fetch( '/api/label' )
-  .then( ( response ) => response.json() );
-} );
 </script>
 
 <style>

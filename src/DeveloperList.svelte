@@ -1,12 +1,25 @@
 <script>
-import { onMount } from 'svelte';
+import { createEventDispatcher } from 'svelte';
 
 export let developers = [];
+export let selected = null;
 
-onMount( async () => {
-  developers = await fetch( '/api/developer' )
-  .then( ( response ) => response.json() );
-} );
+const dispatch = createEventDispatcher();
+
+function doSelect( evt ) {
+  let id = evt.target.getAttribute( 'data-id' );
+
+  for( let d = 0; d < developers.length; d++ ) {
+    if( developers[d].id === id ) {
+      selected = developers[d];
+      break;
+    }
+  }
+
+  dispatch( 'change', {
+    selectedItem: selected
+  } );
+}
 </script>
 
 <style>
@@ -39,7 +52,7 @@ h4 {
 }
 
 li {
-  border-bottom: solid 1px #e0e0e0;
+  border-bottom: solid 1px #dcdcdc;
   border-top: solid 1px transparent;
   display: flex;
   flex-direction: row;
@@ -49,6 +62,10 @@ li {
 
 li:hover {
   background-color: #e5e5e5;  
+}
+
+li.selected {
+  background-color: red;
 }
 
 p {
@@ -74,13 +91,16 @@ ul {
   <button></button>
   <h4>Developers</h4>
 </div>
+
 <ul>
 
 {#each developers as developer}
-  <li>
+
+  <li data-id="{developer.id}" on:click="{doSelect}">
     <button></button>
     <p>{developer.name}</p>
   </li>
+
 {/each}
 
 </ul>

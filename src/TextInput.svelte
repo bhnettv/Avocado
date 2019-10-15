@@ -5,7 +5,7 @@ export let value = '';
 </script>
 
 <style>
-textarea {
+input {
   background: none;
   background-color: #f4f4f4;
   border: none;  
@@ -15,26 +15,23 @@ textarea {
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 20px;
+  height: 39px;
+  line-height: 39px;
   margin: 0;
-  min-height: 79px; 
   outline: solid 2px transparent;
   outline-offset: -2px;
-  padding: 11px 16px 11px 16px;
+  padding: 0 16px 0 16px;
 }
 
-textarea:disabled {
+input:disabled {
   border-bottom: solid 1px #f4f4f4;  
   cursor: not-allowed;
   outline: none;
 }
 
-textarea:focus {
+input:focus {
   outline: solid 2px #0062ff;
 }
 </style>
 
-<textarea 
-  {disabled} 
-  placeholder="{placeholder}" 
-  bind:value="{value}"></textarea>
+<input placeholder="{placeholder}" bind:value="{value}" {disabled}>
