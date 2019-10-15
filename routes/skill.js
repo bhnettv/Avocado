@@ -6,133 +6,135 @@ let router = express.Router();
 
 // Test
 router.get( '/test', ( req, res ) => {    
-  res.json( {label: 'Test'} );
+  res.json( {skill: 'Test'} );
 } );
 
-// Read single label by ID
+// Read single skill by ID
 router.get( '/:id', ( req, res ) => {
-  let label = req.db.prepare( `
+  let skill = req.db.prepare( `
     SELECT
-      Label.uuid AS "id",
-      Label.created_at, 
-      Label.updated_at,
-      Label.name
-    FROM Label
-    WHERE Label.uuid = ?
+      Skill.uuid AS "id",
+      Skill.created_at, 
+      Skill.updated_at,
+      Skill.name
+    FROM Skill
+    WHERE Skill.uuid = ?
   ` )
   .get( 
     req.params.id 
   );
 
-  if( label === undefined ) {
-    label = null;
+  if( skill === undefined ) {
+    skill = null;
   }
 
-  res.json( label );
+  res.json( skill );
 } );
 
-// Search for labels with a given start
+// Search for skills with a given start
 router.get( '/name/:prefix', ( req, res ) => {
-  let labels = req.db.prepare( `
+  let skills = req.db.prepare( `
     SELECT
-      Label.uuid AS "id",
-      Label.created_at, 
-      Label.updated_at,
-      Label.name
+      Skill.uuid AS "id",
+      Skill.created_at, 
+      Skill.updated_at,
+      Skill.name
     FROM 
-      Label
+      Skill
     WHERE
-      Label.name LIKE ?
+      Skill.name LIKE ?
+    ORDER BY
+      Skill.name ASC
   ` )
   .all( 
     req.params.prefix + '%'
   );
 
-  if( labels === undefined ) {
-    labels = null;
+  if( skills === undefined ) {
+    skills = null;
   }
 
-  res.json( labels );
+  res.json( skills );
 } );
 
-// Labels a given developer belongs to
+// Skills a given developer belongs to
 router.get( '/developer/:id', ( req, res ) => {
-  let labels = req.db.prepare( `
+  let skills = req.db.prepare( `
     SELECT
-      Label.uuid AS "id",
-      Label.created_at, 
-      Label.updated_at,
-      Label.name
+      Skill.uuid AS "id",
+      Skill.created_at, 
+      Skill.updated_at,
+      Skill.name
     FROM 
       Developer,
-      DeveloperLabel,
-      Label
+      DeveloperSkill,
+      Skill
     WHERE
       Developer.uuid = ? AND
-      Developer.id = DeveloperLabel.developer_id AND
-      DeveloperLabel.label_id = Label.id
+      Developer.id = DeveloperSkill.developer_id AND
+      DeveloperSkill.skill_id = Skill.id
   ` )
   .all( 
     req.params.id 
   );
 
-  if( labels === undefined ) {
-    labels = null;
+  if( skills === undefined ) {
+    skills = null;
   }
 
-  res.json( labels );
+  res.json( skills );
 } );
 
-// Read all labels
+// Read all skills
 router.get( '/', ( req, res ) => {
-  let labels = req.db.prepare( `
+  let skills = req.db.prepare( `
     SELECT 
-      Label.uuid AS "id", 
-      Label.created_at,
-      Label.updated_at,
-      Label.name,
-      COUNT( DeveloperLabel.id ) AS "count"
-    FROM Label
-    LEFT JOIN DeveloperLabel ON Label.id = DeveloperLabel.label_id
-    GROUP BY Label.id
-    ORDER BY Label.name ASC
+      Skill.uuid AS "id", 
+      Skill.created_at,
+      Skill.updated_at,
+      Skill.name,
+      COUNT( DeveloperSkill.id ) AS "count"
+    FROM Skill
+    LEFT JOIN DeveloperSkill ON Skill.id = DeveloperSkill.skill_id
+    GROUP BY Skill.id
+    ORDER BY Skill.name ASC
   ` )
   .all();
 
-  res.json( labels );
+  res.json( skills );
 } );
 
-// Associate label with developer
-router.post( '/:label/developer/:developer', ( req, res ) => {
+// Associate skill with developer
+router.post( '/:skill/developer/:developer', ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.params.developer,
-    label_uuid: req.params.label
+    skill_uuid: req.params.skill
   };
 
   let ids = req.db.prepare( `
     SELECT
       Developer.id AS "developer_id",
-      Label.id AS "label_id"
+      Skill.id AS "skill_id"
     FROM
       Developer,
-      Label
+      Skill
     WHERE
       Developer.uuid = ? AND
-      Label.uuid = ?
+      Skill.uuid = ?
   ` )
   .get( 
     record.developer_uuid,
-    record.label_uuid
+    record.skill_uuid
   );
   record.developer_id = ids.developer_id;
-  record.label_id = ids.label_id;
+  record.skill_id = ids.skill_id;
 
   let info = req.db.prepare( `
-    INSERT INTO DeveloperLabel
+    INSERT INTO DeveloperSkill
     VALUES ( ?, ?, ?, ?, ?, ? )
   ` )
   .run(
@@ -141,7 +143,7 @@ router.post( '/:label/developer/:developer', ( req, res ) => {
     record.created_at,
     record.updated_at,
     record.developer_id,
-    record.label_id
+    record.skill_id
   );
 
   res.json( {
@@ -149,7 +151,7 @@ router.post( '/:label/developer/:developer', ( req, res ) => {
     created_at: record.created_at,
     updated_at: record.updated_at,
     developer_id: record.developer_uuid,
-    label_id: record.label_uuid
+    skill_id: record.skill_uuid
   } );
 } );
 
@@ -165,18 +167,18 @@ router.post( '/', ( req, res ) => {
 
   let existing = req.db.prepare( `
     SELECT 
-      Label.uuid AS "id",
-      Label.created_at,
-      Label.updated_at,
-      Label.name
-    FROM Label
-    WHERE Label.name = ?
+      Skill.uuid AS "id",
+      Skill.created_at,
+      Skill.updated_at,
+      Skill.name
+    FROM Skill
+    WHERE Skill.name = ?
   ` )
   .get( record.name );
 
   if( existing === undefined ) {
     let info = req.db.prepare( `
-      INSERT INTO Label
+      INSERT INTO Skill
       VALUES ( ?, ?, ?, ?, ? )
     ` )
     .run(
@@ -209,7 +211,7 @@ router.put( '/:id', ( req, res ) => {
   };
 
   let info = req.db.prepare( `
-    UPDATE Label
+    UPDATE Skill
     SET 
       updated_at = ?,
       name = ?
@@ -223,12 +225,12 @@ router.put( '/:id', ( req, res ) => {
 
   record = req.db.prepare( `
     SELECT
-      Label.uuid AS "id",
-      Label.created_at, 
-      Label.updated_at,
-      Label.name
-    FROM Label
-    WHERE Label.uuid = ?
+      Skill.uuid AS "id",
+      Skill.created_at, 
+      Skill.updated_at,
+      Skill.name
+    FROM Skill
+    WHERE Skill.uuid = ?
   ` )
   .get( 
     record.uuid
@@ -240,8 +242,8 @@ router.put( '/:id', ( req, res ) => {
 // Delete
 router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
-    DELETE FROM Label
-    WHERE Label.uuid = ?
+    DELETE FROM Skill
+    WHERE Skill.uuid = ?
   ` )
   .run(
     req.params.id

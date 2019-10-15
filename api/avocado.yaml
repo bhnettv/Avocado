@@ -20,6 +20,8 @@ tags:
     description: Different types of developer activities
   - name: 🏷️ Label
     description: Logical groupings of developers (tagging)
+  - name: 🔧 Skill
+    description: Skills available to developers (tagging)
   - name: 🖥️ Developer
     description: Individual developers - and advocates
   - name: ️🖥️ 📝 Developer Note
@@ -209,8 +211,6 @@ paths:
               schema:
                 type: array
                 items:
-                  required:
-                    - name
                   type: object
                   properties:
                     id:
@@ -225,6 +225,9 @@ paths:
                     name:
                       type: string
                       example: IBM
+                    count:
+                      type: integer
+                      example: 0
     post:
       tags:
         - 🏷️ Label
@@ -246,8 +249,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
-                  schema/items"
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: IBM
   "/label/{id}":
     parameters:
       - name: id
@@ -268,8 +285,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
-                  schema/items"
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: IBM
     put:
       tags:
         - 🏷️ Label
@@ -291,8 +322,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/paths/~1label/get/responses/200/content/application~1json/\
-                  schema/items"
+                $ref: "#/paths/~1label~1%7Bid%7D/get/responses/200/content/applicat\
+                  ion~1json/schema"
     delete:
       tags:
         - 🏷️ Label
@@ -309,6 +340,221 @@ paths:
                   id:
                     type: string
                     format: uuid
+  "/label/name/{prefix}":
+    parameters:
+      - name: prefix
+        in: path
+        description: Prefix for a given label
+        required: true
+        schema:
+          type: string
+          example: IB
+    get:
+      tags:
+        - 🏷️ Label
+      summary: Search for label with given value
+      operationId: searchLabelByName
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
+  /skill:
+    get:
+      tags:
+        - 🔧 Skill
+      summary: Read all available skills
+      operationId: getSkills
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: JavaScript
+                    count:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 🔧 Skill
+      summary: Create a new skill
+      operationId: createSkill
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: JavaScript
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: JavaScript
+  "/skill/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired skill
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🔧 Skill
+      summary: Read specific skill by ID
+      operationId: getSkillByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: JavaScript
+    put:
+      tags:
+        - 🔧 Skill
+      summary: Update specific skill by ID
+      operationId: updateSkill
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: JavaScript
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1skill~1%7Bid%7D/get/responses/200/content/applicat\
+                  ion~1json/schema"
+    delete:
+      tags:
+        - 🔧 Skill
+      summary: Delete specific skill by ID
+      operationId: deleteSkillByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/skill/name/{prefix}":
+    parameters:
+      - name: prefix
+        in: path
+        description: Prefix for a given skill
+        required: true
+        schema:
+          type: string
+          example: Java
+    get:
+      tags:
+        - 🔧 Skill
+      summary: Search for skill with given value
+      operationId: searchSkillByName
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: JavaScript
   /developer:
     get:
       tags:
@@ -342,7 +588,7 @@ paths:
                     email:
                       type: string
                       example: smithers@burns.com
-                    bio:
+                    description:
                       type: string
                       example: Excellent!
                     image:
@@ -366,7 +612,7 @@ paths:
                 email:
                   type: string
                   example: smithers@burns.com
-                bio:
+                description:
                   type: string
                   example: Excellent!
                 image:
@@ -419,7 +665,7 @@ paths:
                   email:
                     type: string
                     example: smithers@burns.com
-                  bio:
+                  description:
                     type: string
                     example: Excellent!
                   image:
@@ -443,7 +689,7 @@ paths:
                 email:
                   type: string
                   example: smithers@burns.com
-                bio:
+                description:
                   type: string
                   example: Excellent!
                 image:
@@ -580,18 +826,18 @@ paths:
                     updated_at:
                       type: string
                       format: date-time
-                    first:
+                    name:
                       type: string
-                      example: Kevin
-                    last:
-                      type: string
-                      example: Hoyt
-                    nickname:
-                      type: string
-                      example: The Dude
+                      example: Kevin Hoyt
                     email:
                       type: string
                       example: krhoyt@us.ibm.com
+                    description:
+                      type: string
+                      example: Some dude at IBM.
+                    image:
+                      type: string
+                      example: http://something.com
   /developer/note:
     get:
       tags:
@@ -6538,7 +6784,7 @@ components:
         email:
           type: string
           example: smithers@burns.com
-        bio:
+        description:
           type: string
           example: Excellent!
         image:
@@ -7069,6 +7315,23 @@ components:
         subscribers:
           type: integer
           example: 0
+    Skill:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: JavaScript
     StackOverflow:
       required:
         - developer_id

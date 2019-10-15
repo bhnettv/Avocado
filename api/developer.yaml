@@ -49,7 +49,7 @@ paths:
                 email:
                   type: string
                   example: smithers@burns.com
-                bio:
+                description:
                   type: string
                   example: Excellent!
                 image:
@@ -101,7 +101,7 @@ paths:
                 email:
                   type: string
                   example: smithers@burns.com
-                bio:
+                description:
                   type: string
                   example: Excellent!
                 image:
@@ -237,18 +237,18 @@ paths:
                     updated_at:
                       type: string
                       format: date-time
-                    first:
+                    name:
                       type: string
-                      example: 'Kevin'
-                    last:
-                      type: string
-                      example: 'Hoyt'
-                    nickname:
-                      type: string
-                      example: The Dude
+                      example: Kevin Hoyt
                     email: 
                       type: string
                       example: krhoyt@us.ibm.com
+                    description:
+                      type: string
+                      example: Some dude at IBM.
+                    image:
+                      type: string
+                      example: http://something.com
 components:
   schemas:
     Developer:
@@ -271,7 +271,7 @@ components:
         email:
           type: string
           example: smithers@burns.com
-        bio:
+        description:
           type: string
           example: Excellent!
         image:

@@ -17,6 +17,8 @@ tags:
   description: Different types of developer activities
 - name: 🏷️ Label
   description: Logical groupings of developers (tagging)
+- name: 🔧 Skill
+  description: Skills available to developers (tagging)
 - name: 🖥️ Developer
   description: Individual developers - and advocates
 - name: ️🖥️ 📝 Developer Note
@@ -72,6 +74,14 @@ paths:
     $ref: 'label.yaml#/paths/~1label'
   /label/{id}:
     $ref: 'label.yaml#/paths/~1label~1{id}'
+  /label/name/{prefix}:
+    $ref: 'label.yaml#/paths/~1label~1name~1{prefix}'    
+  /skill:
+    $ref: 'skill.yaml#/paths/~1skill'
+  /skill/{id}:
+    $ref: 'skill.yaml#/paths/~1skill~1{id}'
+  /skill/name/{prefix}:
+    $ref: 'skill.yaml#/paths/~1skill~1name~1{prefix}'        
   /developer:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
@@ -238,6 +248,8 @@ components:
       $ref: 'reddit-post.yaml#/components/schemas/RedditPost'            
     Repository:
       $ref: 'repository.yaml#/components/schemas/Repository'
+    Skill:
+      $ref: 'skill.yaml#/components/schemas/Skill'      
     StackOverflow:
       $ref: 'so.yaml#/components/schemas/StackOverflow'
     StackOverflowAnswer:

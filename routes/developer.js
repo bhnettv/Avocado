@@ -18,7 +18,7 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.updated_at,
       Developer.name,
       Developer.email,
-      Developer.bio,
+      Developer.description,
       Developer.image
     FROM 
       Developer,
@@ -67,7 +67,7 @@ router.get( '/:id', ( req, res ) => {
       Developer.updated_at,
       Developer.name,
       Developer.email,
-      Developer.bio,
+      Developer.description,
       Developer.image
     FROM 
       Developer
@@ -94,7 +94,7 @@ router.get( '/', ( req, res ) => {
       Developer.updated_at,
       Developer.name,
       Developer.email,
-      Developer.bio,
+      Developer.description,
       Developer.image
     FROM 
       Developer
@@ -165,7 +165,7 @@ router.post( '/', ( req, res ) => {
     updated_at: new Date().toISOString(),
     name: req.body.name,
     email: req.body.email,
-    bio: req.body.bio,
+    description: req.body.description,
     image: req.body.image
   };
 
@@ -180,7 +180,7 @@ router.post( '/', ( req, res ) => {
     record.updated_at,
     record.name,
     record.email,
-    record.bio,
+    record.description,
     record.image
   );
 
@@ -190,7 +190,7 @@ router.post( '/', ( req, res ) => {
     updated_at: record.updated_at,
     name: record.name,
     email: record.email,
-    bio: record.bio,
+    description: record.description,
     image: record.image
   } );
 } );
@@ -202,7 +202,7 @@ router.put( '/:id', ( req, res ) => {
     updated_at: new Date().toISOString(),
     name: req.body.name,
     email: req.body.email,
-    bio: req.body.bio,
+    description: req.body.description,
     image: req.body.image
   };
 
@@ -212,7 +212,7 @@ router.put( '/:id', ( req, res ) => {
       updated_at = ?,
       name = ?,
       email = ?,
-      bio = ?,
+      description = ?,
       image = ?
     WHERE uuid = ?
   ` )
@@ -220,7 +220,7 @@ router.put( '/:id', ( req, res ) => {
     record.updated_at,
     record.name,
     record.email,
-    record.bio,
+    record.description,
     record.image,
     record.uuid
   );
@@ -232,7 +232,7 @@ router.put( '/:id', ( req, res ) => {
       Developer.updated_at,
       Developer.name,
       Developer.email,
-      Developer.bio,
+      Developer.description,
       Developer.image
     FROM
       Developer

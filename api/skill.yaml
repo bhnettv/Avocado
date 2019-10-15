@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: 🏷 ️Label
+  title: 🔧 Skill
   description: Paths and components
   contact:
     email: parkerkrhoyt@gmail.com
@@ -13,15 +13,15 @@ externalDocs:
 servers:
 - url: http://localhost:3000/api
 tags:
-- name: 🏷️ Label
-  description: Logical groupings of developers (tagging)
+- name: 🔧 Skill
+  description: Skills available to developers (tagging)
 paths:
-  /label:
+  /skill:
     get:
       tags:
-      - 🏷️ Label
-      summary: Read all available labels
-      operationId: getLabels
+      - 🔧 Skill
+      summary: Read all available skills
+      operationId: getSkills
       responses:
         200:
           description: successful operation
@@ -43,15 +43,15 @@ paths:
                       format: date-time
                     name:
                       type: string
-                      example: IBM
+                      example: JavaScript
                     count:
                       type: integer
                       example: 0
     post:
       tags:
-      - 🏷️ Label
-      summary: Create a new label
-      operationId: createLabel
+      - 🔧 Skill
+      summary: Create a new skill
+      operationId: createSkill
       requestBody:
         required: true
         content:
@@ -61,40 +61,40 @@ paths:
               properties:
                 name:
                   type: string
-                  example: IBM
+                  example: JavaScript
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
-  /label/{id}:
+                $ref: '#/components/schemas/Skill'
+  /skill/{id}:
     parameters:
     - name: id
       in: path
-      description: ID field for desired label
+      description: ID field for desired skill
       required: true
       schema:
         type: string
         format: uuid
     get:
       tags:
-      - 🏷️ Label
-      summary: Read specific label by ID
-      operationId: getLabelByID
+      - 🔧 Skill
+      summary: Read specific skill by ID
+      operationId: getSkillByID
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
+                $ref: '#/components/schemas/Skill'
     put:
       tags:
-      - 🏷️ Label
-      summary: Update specific label by ID
-      operationId: updateLabel
+      - 🔧 Skill
+      summary: Update specific skill by ID
+      operationId: updateSkill
       requestBody:
         required: true
         content:
@@ -104,19 +104,19 @@ paths:
               properties:
                 name:
                   type: string
-                  example: IBM
+                  example: JavaScript
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
+                $ref: '#/components/schemas/Skill'
     delete:
       tags:
-      - 🏷️ Label
-      summary: Delete specific label by ID
-      operationId: deleteLabelByID
+      - 🔧 Skill
+      summary: Delete specific skill by ID
+      operationId: deleteSkillByID
       responses:
         200:
           description: successful operation
@@ -128,20 +128,20 @@ paths:
                   id:
                     type: string
                     format: uuid
-  /label/name/{prefix}:
+  /skill/name/{prefix}:
     parameters:
     - name: prefix
       in: path
-      description: Prefix for a given label
+      description: Prefix for a given skill
       required: true
       schema:
         type: string
-        example: IB
+        example: Java
     get:
       tags:
-      - 🏷️ Label
-      summary: Search for label with given value
-      operationId: searchLabelByName
+      - 🔧 Skill
+      summary: Search for skill with given value
+      operationId: searchSkillByName
       responses:
         200:
           description: successful operation
@@ -163,10 +163,10 @@ paths:
                       format: date-time
                     name:
                       type: string
-                      example: IBM
+                      example: JavaScript
 components:
   schemas:
-    Label:
+    Skill:
       required:
       - name
       type: object
@@ -182,4 +182,4 @@ components:
           format: date-time
         name:
           type: string
-          example: IBM
+          example: JavaScript
