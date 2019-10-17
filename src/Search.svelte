@@ -17,6 +17,7 @@ input {
   font-weight: 400;
   line-height: 48px;  
   margin: 0;
+  min-width: 40px;
   padding: 0 16px 0 40px;    
 }
 </style>

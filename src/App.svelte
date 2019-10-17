@@ -1,5 +1,5 @@
 <script>
-import DevelopersPanel from './DevelopersPanel.svelte';
+import Developers from './Developers.svelte';
 import Header from './Header.svelte';
 import Switcher from './Switcher.svelte';
 </script>
@@ -7,4 +7,4 @@ import Switcher from './Switcher.svelte';
 <Header/>
 <Switcher/>
 
-<DevelopersPanel/>
+<Developers/>

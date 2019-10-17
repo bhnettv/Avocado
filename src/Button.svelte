@@ -3,9 +3,11 @@ import { createEventDispatcher } from 'svelte';
 
 export let disabled = false;
 export let icon = null;
+export let disabledIcon = null;
 export let label = '';
 export let kind = 'primary';
 export let title = '';
+export let visible = true;
 
 const dispatch = createEventDispatcher();
 
@@ -65,6 +67,36 @@ button:disabled {
 .primary:hover {
   background-color: #0353e9;
 }
+
+.secondary {
+  background-color: #3d3d3d;
+  color: #ffffff;
+}
+
+.secondary:active {
+  background-color: #6f6f6f;
+  border-color: #0062ff;
+}
+
+.secondary:disabled {
+  background-color: #bebebe;
+  color: #8c8c8c;
+}
+
+.secondary:focus {
+  background-color: #3d3d3d;
+  border-color: #0062ff;
+  outline-color: #ffffff;
+}
+
+.secondary:disabled:hover {
+  background-color: #bebebe;
+  color: #8c8c8c;
+}
+
+.secondary:hover {
+  background-color: #4c4c4c;
+}
 </style>
 
 {#if icon === null}
@@ -74,6 +106,7 @@ button:disabled {
   {disabled}
   title="{title}"
   class="{kind}"
+  style="display: {visible ? 'block' : 'none'}"  
   on:click="{doClick}">{label}</button>
 
 {:else}
@@ -83,7 +116,7 @@ button:disabled {
   {disabled}
   title="{title}"
   class="{kind}"
-  style="background-image: url( {icon} )"
+  style="background-image: url( {disabled ? disabledIcon : icon} ); display: {visible ? 'block' : 'none'}"
   on:click="{doClick}">{label}</button>
 
 {/if}

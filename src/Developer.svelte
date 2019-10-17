@@ -1,8 +1,15 @@
 <script>
 import Avatar from './Avatar.svelte';
-import Tag from './Tag.svelte';
+import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
+
+export let image = null;
+export let name = '';
+export let email = '';
+export let labels = [];
+export let skills = [];
+export let description = '';
 
 export let disabled = true;
 export let visible = false;
@@ -14,11 +21,11 @@ div.icon {
   background-repeat: no-repeat;
   background-size: 20px;
   height: 40px;
-  width: 56px;
+  min-width: 56px;
 }
 
 div.gap {
-  width: 16px;
+  min-width: 16px;
 }
 
 div.line {
@@ -41,7 +48,7 @@ form {
   padding: 16px;
 }
 
-.bio {
+.description {
   background-image: url( /img/description.svg );  
 }
 
@@ -65,34 +72,34 @@ form {
     <div class="gap"></div>
     <TextInput 
       placeholder="Name" 
-      value="Kevin Hoyt" 
-      disabled="{disabled}"/>  
+      disabled="{disabled}"
+      value="{name}"/>  
     <div class="gap"></div>
     <TextInput 
       placeholder="Email" 
-      value="krhoyt@us.ibm.com" 
-      disabled="{disabled}"/>
+      disabled="{disabled}"
+      value="{email}"/>
   </div>
 
   <div class="line">
     <div class="icon labels"></div>
     <div class="gap"></div>
-    <Tag placeholder="Labels" value="{['IBM', 'Advocate']}"/>
+    <TagInput placeholder="Labels" disabled="{disabled}"/>
   </div>  
 
   <div class="line">
     <div class="icon skills"></div>
     <div class="gap"></div>
-    <Tag placeholder="Skills" value="{['HTML', 'CSS', 'JavaScript', 'SQL', 'Python', 'IoT']}"/>
+    <TagInput placeholder="Skills" disabled="{disabled}"/>
   </div>  
 
   <div class="line">
-    <div class="icon bio"></div>
+    <div class="icon description"></div>
     <div class="gap"></div>
     <TextArea 
       placeholder="Description"
       disabled="{disabled}"
-      value="This guy works at IBM."/>  
+      value="{description}"/>  
   </div>    
 
 </form>
