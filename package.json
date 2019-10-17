@@ -6,7 +6,9 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "dev": "npm-run-all --parallel start watch",    
+    "api": "nodemon app.js",
+    "client": "npm-run-all --parallel start watch",
+    "both": "npm-run-all --parallel api watch",
     "start": "node app.js"
   },
   "author": "krhoyt@us.ibm.com",
