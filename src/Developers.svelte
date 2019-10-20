@@ -2,7 +2,6 @@
 import { onMount } from 'svelte';
 
 import Button from './Button.svelte';
-import Controls from './Controls.svelte';
 import Details from './Details.svelte';
 import Endpoints from './Endpoints.svelte';
 import Developer from './Developer.svelte';
@@ -45,16 +44,9 @@ function doAdd( evt ) {
   social_tab = true;
   notes_tab = false;
 
-  developer = {
-    name: '',
-    email: '',
-    labels: [],
-    skills: [],
-    description: '',
-    image: ''
-  };
-  editable = true;
+  developer = null;
 
+  editable = true;
   controls = 2;
 }
 
@@ -68,8 +60,8 @@ function doCancel( evt ) {
   notes_tab = false;
 
   developer = null;
-  editable = false;
 
+  editable = false;
   controls = 0;  
 }
 
@@ -80,7 +72,7 @@ function doDeveloperChange( evt ) {
 // Save new developer
 // ?? Save changes
 function doSave( evt ) {
-  console.log( 'Hooray!' );
+  console.log( evt );
 }
 </script>
 
@@ -217,7 +209,9 @@ span {
       name="{developer === null ? '' : developer.name}"
       email="{developer === null ? '' : developer.email}"
       description="{developer === null ? '' : developer.description}"
-      visible="{tab === 0 ? true : false}"/>
+      visible="{tab === 0 ? true : false}"
+      on:save="{doSave}"
+      on:cancel="{doCancel}"/>
 
     <!-- Social media timeline -->
     <Timeline visible="{(tab === 1 && !editable) ? true : false}"/>
@@ -229,14 +223,6 @@ span {
     <Notes 
       developer="{developers[developer_index]}" 
       visible="{tab === 2 ? true : false}"/>
-
-    <!-- Control bar -->
-    <!-- Save, cancel, etc-->
-    <Controls 
-      mode="{controls}"
-      on:cancel="{doCancel}"
-      on:save="{doSave}" 
-      visible="{tab < 2 ? true : false}"/>
 
   </article>
 
