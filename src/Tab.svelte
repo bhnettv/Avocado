@@ -1,59 +1,19 @@
 <script>
-import { createEventDispatcher } from 'svelte';
+import { getContext } from 'svelte';
 
-export let disabled = true;
-export let label = '';
-export let selected = false;
+export let disabled = false;
+export let label = 'Tab';
 
-const dispatch = createEventDispatcher();
+const { register, selected } = getContext( 'tabs' );
 
-function doClick( evt ) {
-  dispatch( 'click' );
-}
+register( {
+  label: label,
+  disabled: disabled
+} );
 </script>
 
-<style>
-li {
-  margin: 0;
-  padding: 0;
-}
+{#if $selected === label}
 
-button {
-  background: none;
-  border: none;
-  border-bottom: solid 2px transparent;  
-  color: #393939;
-  cursor: pointer;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 44px;
-  margin: 0;
-  min-width: 95px;
-  outline: none;
-  padding: 2px 16px 0 16px;
-  transition: all 0.60s;
-}
+  <slot></slot>
 
-button:disabled {
-  color: #c6c6c6;
-  cursor: not-allowed;
-}
-
-button.selected {
-  border-bottom: solid 2px #0062ff;
-  color: #171717;
-  font-weight: 600;
-}
-
-button:not( :disabled ):not( .selected ):hover {
-  border-bottom: solid 2px #8d8d8d;   
-}
-</style>
-
-<li>
-  <button 
-    class:selected="{selected}" 
-    on:click="{doClick}" 
-    {disabled}>{label}</button>
-</li>
+{/if}

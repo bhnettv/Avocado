@@ -4,12 +4,19 @@ import { createEventDispatcher } from 'svelte';
 import Button from './Button.svelte';
 
 export let mode = 0;
-export let visible = true;
 
 const dispatch = createEventDispatcher();
 
 function doCancel( evt ) {
   dispatch( 'cancel' );
+}
+
+function doDelete( evt ) {
+  dispatch( 'delete' );
+}
+
+function doEdit( evt ) {
+  dispatch( 'edit' );
 }
 
 function doSave( evt ) {
@@ -19,7 +26,7 @@ function doSave( evt ) {
 
 <style>
 div {
-  border-top: solid 1px #f3f3f3;
+  /* border-top: solid 1px #f3f3f3; */
   display: flex;
   flex-direction: row;
   min-height: 48px;
@@ -27,19 +34,50 @@ div {
 }
 </style>
 
-<div style="display: {visible ? 'flex' : 'none'}">
+<div>
+
+<!-- Default: Nothing -->
+
+<!-- Creating: Cancel, Save -->
+{#if mode === 1}
+
   <Button 
     label="Cancel" 
     kind="secondary" 
-    on:click="{doCancel}"
-    visible="{mode === 2 ? true : false}"/>
+    on:click="{doCancel}"/>
   <Button 
     label="Save" 
     icon="/img/save-white.svg" 
-    on:click="{doSave}"
-    visible="{mode === 2 ? true : false}"/>  
+    on:click="{doSave}"/>
+
+{/if}
+
+<!-- Viewing: Edit -->
+{#if mode === 2}
+
   <Button 
     label="Edit" 
-    icon="/img/edit.svg" 
-    visible="{mode === 1 ? true : false}"/>
+    icon="/img/edit.svg"
+    on:click="{doEdit}"/>
+
+{/if}
+
+<!-- Editing: Delete, Cancel, Save -->
+{#if mode === 3}
+
+  <Button 
+    label="Delete" 
+    kind="secondary" 
+    on:click="{doDelete}"/>
+  <Button 
+    label="Cancel" 
+    kind="secondary" 
+    on:click="{doCancel}"/>
+  <Button 
+    label="Save" 
+    icon="/img/save-white.svg" 
+    on:click="{doSave}"/>
+
+{/if}
+
 </div>

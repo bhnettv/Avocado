@@ -1,42 +1,17 @@
 <script>
-import { createEventDispatcher } from 'svelte';
-
 import Avatar from './Avatar.svelte';
-import Controls from './Controls.svelte';
 import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
-export let image = null;
-export let name = '';
-export let email = '';
-export let labels = [];
-export let skills = [];
-export let description = '';
-
 export let disabled = true;
-export let visible = false;
 
-const dispatch = createEventDispatcher();
-
-function doCancel( evt ) {
-  name = '';
-  email = '';
-  description = '';
-
-  dispatch( 'cancel' );
-}
-
-function doSave( evt ) {
-  dispatch( 'save', {
-    image: image,
-    name: name,
-    email: email,
-    labels: labels,
-    skills: skills,
-    description: description
-  } );
-}
+let description = '';
+let email = '';
+let image = '';
+let labels = [];
+let name = '';
+let skills = [];
 </script>
 
 <style>
@@ -59,8 +34,6 @@ div.line {
   padding: 0;
 }
 
-
-
 div.line:first-of-type {
   margin-top: 16px;
 }
@@ -70,7 +43,7 @@ div.line.last {
 }
 
 form {
-  display: none;
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
   margin: 0;
@@ -79,10 +52,6 @@ form {
 
 .description {
   background-image: url( /img/description.svg );  
-}
-
-.display {
-  display: flex;
 }
 
 .labels {
@@ -94,7 +63,7 @@ form {
 }
 </style>
 
-<form class:display="{visible}">
+<form>
 
   <div class="line">
     <Avatar/>
@@ -113,13 +82,19 @@ form {
   <div class="line">
     <div class="icon labels"></div>
     <div class="gap"></div>
-    <TagInput placeholder="Labels" disabled="{disabled}"/>
+    <TagInput 
+      placeholder="Labels" 
+      disabled="{disabled}" 
+      bind:value="{labels}"/>
   </div>  
 
   <div class="line">
     <div class="icon skills"></div>
     <div class="gap"></div>
-    <TagInput placeholder="Skills" disabled="{disabled}"/>
+    <TagInput 
+      placeholder="Skills" 
+      disabled="{disabled}"
+      bind:value="{skills}"/>
   </div>  
 
   <div class="line last">
@@ -131,10 +106,5 @@ form {
       value="{description}"
       bind:value="{description}"/>  
   </div>    
-
-  <Controls 
-    on:cancel="{doCancel}"
-    on:save="{doSave}"
-    mode="{disabled === true ? 0 : 2}"/>
 
 </form>

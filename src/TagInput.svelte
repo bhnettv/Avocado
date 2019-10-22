@@ -8,9 +8,28 @@ let focus = false;
 function doKeyboard( evt ) {
   if( evt.keyCode === 13 ) {
     evt.preventDefault();
-    value = [...value, evt.target.value];
-    evt.target.value = '';
+
+    let found = false;
+
+    for( let v = 0; v < value.length; v++ ) {
+      if( value[v] === evt.target.value ) {
+        found = true;
+        break;
+      }
+    }
+
+    if( !found ) {
+      value = [...value, evt.target.value];
+      evt.target.value = '';
+    }
   }
+}
+
+function doRemove( evt ) {
+  let index = evt.target.getAttribute( 'data-id' );
+
+  value.splice( index, 1 );
+  value = [...value];
 }
 </script>
 
@@ -34,25 +53,22 @@ input {
   background: none;
   border: none;
   color: #171717;
-  display: inline-block;
-  flex-basis: 100px;
-  flex-grow: 1;  
-  flex-shrink: 0;
+  display: block;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 40px;
   margin: 0;
-  width: 100px;
   outline: none;
   padding: 0;
+  width: 100%;
 }
 
 input:disabled {
   cursor: not-allowed;
 }
 
-li {
+li.tag {
   background-color: #393939;
   border-radius: 12px;
   box-sizing: border-box;
@@ -74,13 +90,13 @@ ul {
   flex-direction: row;
   flex-grow: 1;
   flex-wrap: wrap;
+  height: 40px;  
   list-style: none;
   min-height: 40px;
   margin: 0;
   outline: solid 2px transparent;
   outline-offset: -2px;  
   padding: 0 16px 0 16px;
-  width: 100%;
 }
 
 p {
@@ -104,22 +120,24 @@ p {
 }
 </style>
 
-<ul class:disabled="{disabled}" class:focus="{focus}">
+<ul class:focus="{focus}" class:disabled="{disabled}">
 
-{#each value as tag}
+{#each value as tag, t}
 
-  <li>
+  <li class="tag">
     <p>{tag}</p>
-    <button type="button"></button>
+    <button data-id="{t}" type="button" on:click="{doRemove}"></button>
   </li>
 
 {/each}
 
-  <input 
-    placeholder="{placeholder}" 
-    on:keydown="{doKeyboard}" 
-    on:focus="{() => focus = true}"
-    on:blur="{() => focus = false}"
-    {disabled}>
+  <li>
+    <input 
+      placeholder="{placeholder}" 
+      on:keydown="{doKeyboard}" 
+      on:focus="{() => focus = true}"
+      on:blur="{() => focus = false}"
+      {disabled}>  
+  </li>
 
 </ul>

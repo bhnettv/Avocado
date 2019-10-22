@@ -1,10 +1,18 @@
 <script>
 export let disabled = false;
+export let message = '';
 export let placeholder = '';
 export let value = '';
 </script>
 
 <style>
+div {
+  display: flex;
+  flex-basis: 0;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 input {
   background: none;
   background-color: #f4f4f4;
@@ -32,6 +40,26 @@ input:disabled {
 input:focus {
   outline: solid 2px #0062ff;
 }
+
+p {
+  color: #6f6f6f;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: 4px 0 4px 0;
+}
 </style>
 
-<input placeholder="{placeholder}" bind:value="{value}" {disabled}>
+{#if message.trim().length === 0}
+
+  <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
+
+{:else}
+
+  <div>
+    <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
+    <p>{message}</p>
+  </div>
+
+{/if}
