@@ -4,25 +4,17 @@ import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
-export let disabled = true;
-
-let description = '';
-let email = '';
-let image = '';
-let labels = [];
-let name = '';
-let skills = [];
+import { tab_index } from './stores.js';
+import { overview_disabled } from './stores.js';
+import { developer_name } from './stores.js';
+import { developer_email } from './stores.js';
+import { developer_image } from './stores.js';
+import { developer_labels } from './stores.js';
+import { developer_skills } from './stores.js';
+import { developer_description } from './stores.js';
 </script>
 
 <style>
-div.icon {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 20px;
-  height: 40px;
-  min-width: 56px;
-}
-
 div.gap {
   min-width: 16px;
 }
@@ -30,12 +22,12 @@ div.gap {
 div.line {
   display: flex;
   flex-direction: row;
-  margin: 0 16px 16px 16px;
+  margin: 0 16px 24px 16px;
   padding: 0;
 }
 
 div.line:first-of-type {
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
 div.line.last {
@@ -49,62 +41,55 @@ form {
   margin: 0;
   padding: 0;
 }
-
-.description {
-  background-image: url( /img/description.svg );  
-}
-
-.labels {
-  background-image: url( /img/label-filled.svg );
-}
-
-.skills {
-  background-image: url( /img/build.svg );
-}
 </style>
 
-<form>
+<form style="display: {$tab_index === 0 ? 'flex' : 'none'};">
 
   <div class="line">
-    <Avatar/>
+    <TextInput 
+      label="Full name"
+      placeholder="Full name" 
+      disabled="{$overview_disabled}"
+      bind:value="{$developer_name}"/>  
     <div class="gap"></div>
     <TextInput 
-      placeholder="Name" 
-      disabled="{disabled}"
-      bind:value="{name}"/>  
-    <div class="gap"></div>
-    <TextInput 
-      placeholder="Email" 
-      disabled="{disabled}"
-      bind:value="{email}"/>
+      label="Email address"
+      placeholder="Email address" 
+      disabled="{$overview_disabled}"
+      bind:value="{$developer_email}"/>
   </div>
 
   <div class="line">
-    <div class="icon labels"></div>
-    <div class="gap"></div>
-    <TagInput 
-      placeholder="Labels" 
-      disabled="{disabled}" 
-      bind:value="{labels}"/>
+    <TextInput 
+      label="Profile image"
+      placeholder="Profile image"
+      helper="Full path to profile image, including HTTP/S" 
+      disabled="{$overview_disabled}"
+      bind:value="{$developer_image}"/>
   </div>  
 
   <div class="line">
-    <div class="icon skills"></div>
-    <div class="gap"></div>
     <TagInput 
+      label="Labels"
+      placeholder="Labels" 
+      disabled="{$overview_disabled}" 
+      bind:value="{$developer_labels}"/>
+  </div>  
+
+  <div class="line">
+    <TagInput 
+      label="Skills"
       placeholder="Skills" 
-      disabled="{disabled}"
-      bind:value="{skills}"/>
+      disabled="{$overview_disabled}"
+      bind:value="{$developer_skills}"/>
   </div>  
 
   <div class="line last">
-    <div class="icon description"></div>
-    <div class="gap"></div>
     <TextArea 
+      label="Description/Bio"
       placeholder="Description"
-      disabled="{disabled}"
-      value="{description}"
-      bind:value="{description}"/>  
+      disabled="{$overview_disabled}"
+      bind:value="{$developer_description}"/>  
   </div>    
 
 </form>

@@ -1,7 +1,8 @@
 <script>
 export let disabled = false;
-export let message = '';
-export let placeholder = '';
+export let label = undefined;
+export let helper = undefined;
+export let placeholder = 'Text input';
 export let value = '';
 </script>
 
@@ -41,7 +42,16 @@ input:focus {
   outline: solid 2px #0062ff;
 }
 
-p {
+label {
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
+p.after {
   color: #6f6f6f;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 12px;
@@ -49,17 +59,34 @@ p {
   padding: 0;
   margin: 4px 0 4px 0;
 }
+
+p.before {
+  color: #6f6f6f;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: -8px 0 2px 0;
+}
 </style>
 
-{#if message.trim().length === 0}
+<div>
 
-  <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
+  {#if label !== undefined}
 
-{:else}
+    <label>{label}</label>
 
-  <div>
+  {/if}
+
+  {#if helper === undefined}
+
     <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
-    <p>{message}</p>
-  </div>
 
-{/if}
+  {:else}
+
+    <p class="before">{helper}</p>
+    <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
+
+  {/if}
+
+</div>

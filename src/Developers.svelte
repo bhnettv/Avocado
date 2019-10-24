@@ -4,59 +4,97 @@ import { onMount } from 'svelte';
 import Button from './Button.svelte';
 import Controls from './Controls.svelte';
 import Details from './Details.svelte';
+import Endpoints from './Endpoints.svelte';
 import List from './List.svelte';
 import Overview from './Overview.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
-import Social from './Social.svelte';
-import Tabs from './Tabs.svelte';
 import Tab from './Tab.svelte';
+import TabBar from './TabBar.svelte';
+import Timeline from './Timeline.svelte';
 
-// State
-let search = '';
-let can_add = true;
-let developers = [];
-let developer_index = 0;
-let labels = [];
-let label_index = 0;
-let social = 0;
-let tab = 0;
-let controls = 0;
+import { search } from './stores.js';
+import { developer_list } from './stores.js';
+import { developer_index } from './stores.js';
+import { label_list } from './stores.js';
+import { label_index } from './stores.js';
+import { add_disabled } from './stores.js';
+import { tab_index } from './stores.js';
+import { social_disabled } from './stores.js';
+import { social_index } from './stores.js';
+import { notes_disabled } from './stores.js';
+import { overview_disabled } from './stores.js';
+import { developer_name } from './stores.js';
+import { developer_email } from './stores.js';
+import { developer_image } from './stores.js';
+import { developer_description } from './stores.js';
+import { controls_mode } from './stores.js';
 
 // Load external data
 onMount( async () => {
-  developers = await fetch( '/api/developer' )
+  $developer_list = await fetch( '/api/developer' )
   .then( ( response ) => response.json() );
 
-  labels = await fetch( '/api/label' )
+  $label_list = await fetch( '/api/label' )
   .then( ( response ) => response.json() );
 } );
 
 // Add new developer
 function doAdd( evt ) {
-  can_add = false;
-  tab = 0;
-  social = 1;
-  controls = 1;
+  $add_disabled = true;
+  $tab_index = 0;
+  $social_disabled = false;
+  $notes_disabled = true;
+  $overview_disabled = false;
+  $social_index = 0;  
+  $controls_mode = 1;
 }
 
 // Cancel adding a developer
 // ?? Cancel edit also
 function doCancel( evt ) {
-  can_add = true;
-  tab = 0;
-  social = 0;
-  controls = 0;
-}
-
-function doDeveloperChange( evt ) {
-  // selectedDeveloper = evt.detail.selectedItem;
+  $add_disabled = false;
+  $tab_index = 0;
+  $social_disabled = true;
+  $overview_disabled = true;
+  $social_index = 1;
+  $controls_mode = 0;  
 }
 
 // Save new developer
-// ?? Save changes
 function doSave( evt ) {
-  console.log( evt );
+  $add_disabled = false;
+  $tab_index = 0;
+  $social_disabled = true;
+  $overview_disabled = true;
+  $social_index = 1;
+  $controls_mode = 0;  
+
+  let developer = {
+    name: $developer_name,
+    email:  $developer_email.trim().length === 0 ? null : $developer_email,
+    description: $developer_description.trim().length === 0 ? null : $developer_description,
+    image: $developer_image.trim().length === 0 ? null : $developer_image
+  };
+
+  fetch( '/api/developer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( developer )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_list.push( data );
+    $developer_list.sort( ( a, b ) => {
+      if( a.name > b.name ) return 1;
+      if( a.name < b.name ) return -1;
+
+      return 0;
+    } );
+    $developer_list = $developer_list.slice( 0 );
+  } );
 }
 </script>
 
@@ -126,7 +164,7 @@ p.label {
   height: 46px;
   line-height: 46px;
   margin: 0;
-  padding: 0 16px 0 40px;
+  padding: 0 21px 0 40px;
 }
 
 span {
@@ -143,24 +181,23 @@ span {
     <div class="search">
       <Search/>
       <Button
-        label="Add"
-        icon="/img/add-white.svg"
-        disabledIcon="/img/add.svg"
+        icon="/img/add.svg"
+        disabledIcon="/img/add-disabled.svg"
         on:click="{doAdd}"
-        disabled="{!can_add}"/>
+        disabled="{$add_disabled}">Add</Button>
     </div>
 
     <!-- Developer list -->
     <h4>Developers</h4>
-    <List data="{developers}" let:item="{developer}">
-      <p class="developer">{developer.name}</p>
+    <List data="{$developer_list}" let:item="{developer}">
+      <p data-id="{developer.id}" class="developer">{developer.name}</p>
     </List>
 
     <!-- Label list -->
     <!-- Collapsable -->
     <Details summary="Labels">
-      <List data="{labels}" let:item="{label}">
-        <p class="label">{label.name}<span>{label.count}</span></p>
+      <List data="{$label_list}" let:item="{label}">
+        <p data-id="{label.id}" class="label">{label.name}<span>{label.count}</span></p>
       </List>
     </Details>
 
@@ -169,22 +206,31 @@ span {
   <!-- Center panel -->
   <article>
 
-    <!-- Tabs/views -->
-    <Tabs index="{tab}">
-      <Tab label="Overview">
-        <Overview disabled="{can_add}"/>
-      </Tab>
-      <Tab label="Social">
-        <Social mode="{social}"/>
-      </Tab>
-      <Tab label="Notes" disabled>
-        <Notes/>
-      </Tab>
-    </Tabs>
+    <!-- Tabs -->
+    <TabBar>
+      <Tab 
+        on:click="{() => $tab_index = 0}"
+        selected="{$tab_index === 0 ? true : false}">Overview</Tab>
+      <Tab 
+        on:click="{() => $tab_index = 1}"
+        selected="{$tab_index === 1 ? true : false}" 
+        disabled="{$social_disabled}">Social</Tab>
+      <Tab 
+        on:click="{() => $tab_index = 2}"
+        selected="{$tab_index === 2 ? true : false}" 
+        disabled="{$notes_disabled}">Notes</Tab>
+    </TabBar>
+
+    <!-- Views -->
+    <!-- Work directly with store -->
+    <Overview/>
+    <Endpoints/>    
+    <Timeline/>
+    <Notes/>
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
-    <Controls mode="{controls}" on:cancel="{doCancel}"/>
+    <Controls on:cancel="{doCancel}" on:save="{doSave}"/>
 
   </article>
 

@@ -107,7 +107,9 @@ button:disabled {
   title="{title}"
   class="{kind}"
   style="display: {visible ? 'block' : 'none'}"  
-  on:click="{doClick}">{label}</button>
+  on:click="{doClick}">
+  <slot></slot>
+</button>
 
 {:else}
 
@@ -117,6 +119,8 @@ button:disabled {
   title="{title}"
   class="{kind}"
   style="background-image: url( {disabled ? disabledIcon : icon} ); display: {visible ? 'block' : 'none'}"
-  on:click="{doClick}">{label}</button>
+  on:click="{doClick}">
+  <slot></slot>  
+</button>
 
 {/if}

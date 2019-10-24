@@ -1,10 +1,26 @@
 <script>
 export let disabled = false;
+export let label = undefined;
 export let placeholder = '';
 export let value = '';
 </script>
 
 <style>
+div {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+label {
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
 textarea {
   background: none;
   background-color: #f4f4f4;
@@ -34,7 +50,17 @@ textarea:focus {
 }
 </style>
 
-<textarea 
-  {disabled} 
-  placeholder="{placeholder}" 
-  bind:value="{value}"></textarea>
+<div>
+
+  {#if label !== undefined}
+
+    <label>{label}</label>
+
+  {/if}
+
+  <textarea 
+    {disabled} 
+    placeholder="{placeholder}" 
+    bind:value="{value}"></textarea>
+
+</div>

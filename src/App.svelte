@@ -6,5 +6,4 @@ import Switcher from './Switcher.svelte';
 
 <Header/>
 <Switcher/>
-
 <Developers/>

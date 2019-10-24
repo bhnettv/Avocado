@@ -8,7 +8,7 @@ button {
   border: none;
   background: none;
   background-image: url( /img/arrow-down.svg );
-  background-position: center left 15px;
+  background-position: center right 16px;
   background-repeat: no-repeat;
   background-size: 18px;
   margin: 0;
@@ -18,7 +18,7 @@ button {
 }
 
 button.closed {
-  background-position: center right 15px;
+  background-position: center left 16px;
   transform: rotate( 180deg );
 }
 
@@ -47,17 +47,17 @@ p {
   font-weight: 600;
   line-height: 48px;
   margin: 0;
-  padding: 0 16px 0 0;
+  padding: 0 0 0 16px;
 }
 </style>
 
 <div class="pane" class:closed="{!opened}">
   <div class="summary">
+    <p>{summary}</p>
     <button 
       class:closed="{!opened}"
       on:click="{( evt ) => opened = !opened}">
-    </button>
-    <p>{summary}</p>
+    </button>    
   </div>
   <slot></slot>
 </div>

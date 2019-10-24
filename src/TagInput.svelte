@@ -1,5 +1,6 @@
 <script>
 export let disabled = false;
+export let label = undefined;
 export let placeholder = '';
 export let value = [];
 
@@ -49,6 +50,12 @@ button {
   width: 20px;
 }
 
+div {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 input {
   background: none;
   border: none;
@@ -66,6 +73,19 @@ input {
 
 input:disabled {
   cursor: not-allowed;
+}
+
+label {
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
+li.input {
+  width: 100%;
 }
 
 li.tag {
@@ -120,24 +140,34 @@ p {
 }
 </style>
 
-<ul class:focus="{focus}" class:disabled="{disabled}">
+<div>
 
-{#each value as tag, t}
+  {#if label !== undefined}
 
-  <li class="tag">
-    <p>{tag}</p>
-    <button data-id="{t}" type="button" on:click="{doRemove}"></button>
-  </li>
+    <label>{label}</label>
 
-{/each}
+  {/if}
 
-  <li>
-    <input 
-      placeholder="{placeholder}" 
-      on:keydown="{doKeyboard}" 
-      on:focus="{() => focus = true}"
-      on:blur="{() => focus = false}"
-      {disabled}>  
-  </li>
+  <ul class:focus="{focus}" class:disabled="{disabled}">
 
-</ul>
+  {#each value as tag, t}
+
+    <li class="tag">
+      <p>{tag}</p>
+      <button data-id="{t}" type="button" on:click="{doRemove}"></button>
+    </li>
+
+  {/each}
+
+    <li class="input">
+      <input 
+        placeholder="{value.length === 0 ? placeholder : ''}" 
+        on:keydown="{doKeyboard}" 
+        on:focus="{() => focus = true}"
+        on:blur="{() => focus = false}"
+        {disabled}>  
+    </li>
+
+  </ul>
+
+</div>
