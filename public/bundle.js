@@ -3874,7 +3874,7 @@ var app = (function () {
     		c: function create() {
     			label_1 = element("label");
     			t = text(ctx.label);
-    			attr_dev(label_1, "class", "svelte-4m95jd");
+    			attr_dev(label_1, "class", "svelte-4vwenu");
     			add_location(label_1, file$a, 74, 4, 1374);
     		},
 
@@ -3907,7 +3907,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			t = text(ctx.helper);
-    			attr_dev(p, "class", "svelte-4m95jd");
+    			attr_dev(p, "class", "svelte-4vwenu");
     			add_location(p, file$a, 77, 4, 1438);
     		},
 
@@ -4000,9 +4000,9 @@ var app = (function () {
     				each_blocks[i].c();
     			}
     			if (ctx.selected === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
-    			attr_dev(select, "class", "svelte-4m95jd");
+    			attr_dev(select, "class", "svelte-4vwenu");
     			add_location(select, file$a, 79, 2, 1466);
-    			attr_dev(div, "class", "svelte-4m95jd");
+    			attr_dev(div, "class", "svelte-4vwenu");
     			add_location(div, file$a, 71, 0, 1335);
     			dispose = listen_dev(select, "change", ctx.select_change_handler);
     		},
@@ -5179,7 +5179,7 @@ var app = (function () {
 
     const file$g = "src/Developers.svelte";
 
-    // (319:6) <Button         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         on:click="{doAdd}"         disabled="{$add_disabled}">
+    // (321:6) <Button         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         on:click="{doAdd}"         disabled="{$add_disabled}">
     function create_default_slot_7(ctx) {
     	var t;
 
@@ -5198,11 +5198,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(319:6) <Button         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         on:click=\"{doAdd}\"         disabled=\"{$add_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(321:6) <Button         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         on:click=\"{doAdd}\"         disabled=\"{$add_disabled}\">", ctx });
     	return block;
     }
 
-    // (328:4) <List data="{$developer_list}" let:item="{developer}">
+    // (330:4) <List data="{$developer_list}" let:item="{developer}">
     function create_default_slot_6(ctx) {
     	var p, t_value = ctx.developer.name + "", t, p_data_id_value, dispose;
 
@@ -5211,8 +5211,8 @@ var app = (function () {
     			p = element("p");
     			t = text(t_value);
     			attr_dev(p, "data-id", p_data_id_value = ctx.developer.id);
-    			attr_dev(p, "class", "developer svelte-yqdwr7");
-    			add_location(p, file$g, 328, 6, 8645);
+    			attr_dev(p, "class", "developer svelte-1pk1dxs");
+    			add_location(p, file$g, 330, 6, 8655);
     			dispose = listen_dev(p, "click", ctx.doDeveloper);
     		},
 
@@ -5239,11 +5239,11 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(328:4) <List data=\"{$developer_list}\" let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(330:4) <List data=\"{$developer_list}\" let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (338:6) <List data="{$label_list}" let:item="{label}">
+    // (340:6) <List data="{$label_list}" let:item="{label}">
     function create_default_slot_5$1(ctx) {
     	var p, t0_value = ctx.label.name + "", t0, span, t1_value = ctx.label.count + "", t1, p_data_id_value;
 
@@ -5253,11 +5253,11 @@ var app = (function () {
     			t0 = text(t0_value);
     			span = element("span");
     			t1 = text(t1_value);
-    			attr_dev(span, "class", "svelte-yqdwr7");
-    			add_location(span, file$g, 338, 58, 8968);
+    			attr_dev(span, "class", "svelte-1pk1dxs");
+    			add_location(span, file$g, 340, 58, 8978);
     			attr_dev(p, "data-id", p_data_id_value = ctx.label.id);
-    			attr_dev(p, "class", "label svelte-yqdwr7");
-    			add_location(p, file$g, 338, 8, 8918);
+    			attr_dev(p, "class", "label svelte-1pk1dxs");
+    			add_location(p, file$g, 340, 8, 8928);
     		},
 
     		m: function mount(target, anchor) {
@@ -5287,11 +5287,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(338:6) <List data=\"{$label_list}\" let:item=\"{label}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(340:6) <List data=\"{$label_list}\" let:item=\"{label}\">", ctx });
     	return block;
     }
 
-    // (337:4) <Details summary="Labels">
+    // (339:4) <Details summary="Labels">
     function create_default_slot_4$1(ctx) {
     	var current;
 
@@ -5339,11 +5339,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(337:4) <Details summary=\"Labels\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(339:4) <Details summary=\"Labels\">", ctx });
     	return block;
     }
 
-    // (350:6) <Tab          on:click="{() => $tab_index = 0}"         selected="{$tab_index === 0 ? true : false}">
+    // (352:6) <Tab          on:click="{() => $tab_index = 0}"         selected="{$tab_index === 0 ? true : false}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -5362,11 +5362,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(350:6) <Tab          on:click=\"{() => $tab_index = 0}\"         selected=\"{$tab_index === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(352:6) <Tab          on:click=\"{() => $tab_index = 0}\"         selected=\"{$tab_index === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (353:6) <Tab          on:click="{() => $tab_index = 1}"         selected="{$tab_index === 1 ? true : false}"          disabled="{$social_disabled}">
+    // (355:6) <Tab          on:click="{() => $tab_index = 1}"         selected="{$tab_index === 1 ? true : false}"          disabled="{$social_disabled}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -5385,11 +5385,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(353:6) <Tab          on:click=\"{() => $tab_index = 1}\"         selected=\"{$tab_index === 1 ? true : false}\"          disabled=\"{$social_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(355:6) <Tab          on:click=\"{() => $tab_index = 1}\"         selected=\"{$tab_index === 1 ? true : false}\"          disabled=\"{$social_disabled}\">", ctx });
     	return block;
     }
 
-    // (357:6) <Tab          on:click="{() => $tab_index = 2}"         selected="{$tab_index === 2 ? true : false}"          disabled="{$notes_disabled}">
+    // (359:6) <Tab          on:click="{() => $tab_index = 2}"         selected="{$tab_index === 2 ? true : false}"          disabled="{$notes_disabled}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -5408,11 +5408,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(357:6) <Tab          on:click=\"{() => $tab_index = 2}\"         selected=\"{$tab_index === 2 ? true : false}\"          disabled=\"{$notes_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(359:6) <Tab          on:click=\"{() => $tab_index = 2}\"         selected=\"{$tab_index === 2 ? true : false}\"          disabled=\"{$notes_disabled}\">", ctx });
     	return block;
     }
 
-    // (349:4) <TabBar>
+    // (351:4) <TabBar>
     function create_default_slot$2(ctx) {
     	var t0, t1, current;
 
@@ -5519,7 +5519,7 @@ var app = (function () {
     			destroy_component(tab2, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(349:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(351:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -5614,18 +5614,18 @@ var app = (function () {
     			controls.$$.fragment.c();
     			t11 = space();
     			aside1 = element("aside");
-    			attr_dev(div0, "class", "search svelte-yqdwr7");
-    			add_location(div0, file$g, 316, 4, 8320);
-    			attr_dev(h4, "class", "svelte-yqdwr7");
-    			add_location(h4, file$g, 326, 4, 8560);
-    			attr_dev(aside0, "class", "svelte-yqdwr7");
-    			add_location(aside0, file$g, 313, 2, 8287);
-    			attr_dev(article, "class", "svelte-yqdwr7");
-    			add_location(article, file$g, 345, 2, 9067);
-    			attr_dev(aside1, "class", "svelte-yqdwr7");
-    			add_location(aside1, file$g, 383, 2, 10034);
-    			attr_dev(div1, "class", "panel svelte-yqdwr7");
-    			add_location(div1, file$g, 310, 0, 8242);
+    			attr_dev(div0, "class", "search svelte-1pk1dxs");
+    			add_location(div0, file$g, 318, 4, 8330);
+    			attr_dev(h4, "class", "svelte-1pk1dxs");
+    			add_location(h4, file$g, 328, 4, 8570);
+    			attr_dev(aside0, "class", "svelte-1pk1dxs");
+    			add_location(aside0, file$g, 315, 2, 8297);
+    			attr_dev(article, "class", "svelte-1pk1dxs");
+    			add_location(article, file$g, 347, 2, 9077);
+    			attr_dev(aside1, "class", "svelte-1pk1dxs");
+    			add_location(aside1, file$g, 385, 2, 10044);
+    			attr_dev(div1, "class", "panel svelte-1pk1dxs");
+    			add_location(div1, file$g, 312, 0, 8252);
     		},
 
     		l: function claim(nodes) {

@@ -287,10 +287,12 @@ p.developer {
 }
 
 p.label {
+  /*
   background-image: url( /img/label.svg );
   background-position: center left 15px;
   background-repeat: no-repeat;
   background-size: 18px;
+  */
   border-bottom: solid 1px #dcdcdc;
   border-top: solid 1px transparent;
   color: #393939;
@@ -300,7 +302,7 @@ p.label {
   height: 46px;
   line-height: 46px;
   margin: 0;
-  padding: 0 21px 0 40px;
+  padding: 0 21px 0 16px;
 }
 
 span {

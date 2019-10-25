@@ -15,7 +15,7 @@ div {
 }
 
 label {
-  color: #171717;
+  color: #393939;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -37,7 +37,7 @@ select {
   border-bottom: solid 1px #8d8d8d;
   border-radius: 0;
   box-shadow: none;
-  color: #171717;
+  color: #161616;
   cursor: pointer;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
