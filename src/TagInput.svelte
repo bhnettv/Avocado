@@ -59,7 +59,7 @@ div {
 input {
   background: none;
   border: none;
-  color: #171717;
+  color: #161616;
   display: block;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
@@ -76,7 +76,7 @@ input:disabled {
 }
 
 label {
-  color: #171717;
+  color: #393939;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -144,7 +144,7 @@ p {
 
   {#if label !== undefined}
 
-    <label>{label}</label>
+    <label style="color: {disabled ? '#c6c6c6' : '#393939'}">{label}</label>
 
   {/if}
 

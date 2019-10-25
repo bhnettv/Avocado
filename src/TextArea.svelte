@@ -29,7 +29,7 @@ div {
 }
 
 label {
-  color: #171717;
+  color: #393939;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -42,7 +42,7 @@ textarea {
   background-color: #f4f4f4;
   border: none;  
   border-bottom: solid 1px #8d8d8d;
-  color: #171717;
+  color: #161616;
   flex-grow: 1;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
@@ -86,13 +86,13 @@ p {
 
   {#if label !== undefined}
 
-    <label>{label}</label>
+    <label style="color: {disabled ? '#c6c6c6' : '#393939'}">{label}</label>
 
   {/if}
 
   {#if helper !== undefined}
 
-    <p>{helper}</p>
+    <p style="color: {disabled ? '#c6c6c6' : '#6f6f6f'}">{helper}</p>
 
   {/if}  
 
