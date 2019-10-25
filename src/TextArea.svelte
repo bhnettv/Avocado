@@ -1,5 +1,6 @@
 <script>
 export let disabled = false;
+export let helper = undefined;
 export let label = undefined;
 export let placeholder = '';
 export let value = '';
@@ -48,6 +49,15 @@ textarea:disabled {
 textarea:focus {
   outline: solid 2px #0062ff;
 }
+
+p {
+  color: #6f6f6f;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: -6px 0 8px 0;
+}
 </style>
 
 <div>
@@ -57,6 +67,12 @@ textarea:focus {
     <label>{label}</label>
 
   {/if}
+
+  {#if helper !== undefined}
+
+    <p>{helper}</p>
+
+  {/if}  
 
   <textarea 
     {disabled} 

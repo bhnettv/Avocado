@@ -5,6 +5,9 @@ import Button from './Button.svelte';
 import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
+import { tab_index } from './stores.js';
+import { developer_id } from './stores.js';
+
 export let developer = null;
 export let visible = false;
 
@@ -19,13 +22,19 @@ onMount( async () => {
 } );
 
 function doSave( evt ) {
+  console.log( {
+    developer_id: $developer_id,
+    activity_id: activity_id,
+    full_text: text
+  } );
+
   fetch( '/api/developer/note', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( {
-      developer_id: developer.id,
+      developer_id: $developer_id,
       activity_id: activity_id,
       full_text: text
     } )
@@ -50,7 +59,7 @@ div.controls {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 16px 0 0 0;
+  margin: 24px 0 0 0;
 }
 
 div.panel {
@@ -64,7 +73,7 @@ form {
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 16px;
+  padding: 24px 16px 16px 16px;
 }
 
 p {
@@ -78,18 +87,27 @@ p {
 }
 </style>
 
-<div class="panel" style="display: {visible ? 'flex': 'none'}">
+<div class="panel" style="display: {$tab_index === 2 ? 'flex': 'none'}">
   <form>
     <div class="activity">
       <p>Where:</p>
-      <Select options="{activity}" bind:selected="{activity_id}" value="id" label="name"/>      
+      <Select 
+        options="{activity}" 
+        bind:selected="{activity_id}" 
+        value="id" 
+        label="name"/>      
     </div>
-    <TextArea placeholder="What happened?" bind:value="{text}"/>
+    <TextArea 
+      label="Note" 
+      helper="Description of the interaction"
+      placeholder="What happened?" 
+      bind:value="{text}"/>
     <div class="controls">
       <Button 
-        label="Save" 
+        icon="/img/save-white.svg"
+        disabledIcon="/img/save.svg"
         disabled="{text.trim().length > 0 ? false : true}"        
-        on:click="{doSave}"/>    
+        on:click="{doSave}">Save</Button>    
     </div>
   </form>
   <p>Notes</p>

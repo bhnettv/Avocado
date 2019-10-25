@@ -24,6 +24,7 @@ import { social_disabled } from './stores.js';
 import { social_index } from './stores.js';
 import { notes_disabled } from './stores.js';
 import { overview_disabled } from './stores.js';
+import { developer_id } from './stores.js';
 import { developer_name } from './stores.js';
 import { developer_email } from './stores.js';
 import { developer_image } from './stores.js';
@@ -46,13 +47,25 @@ function doAdd( evt ) {
   $social_disabled = false;
   $notes_disabled = true;
   $overview_disabled = false;
+  $developer_id = '';
+  $developer_name = '';
+  $developer_email = '';
+  $developer_description = '';
+  $developer_image = ''; 
   $social_index = 0;  
   $controls_mode = 1;
 }
 
+// Edit existing developer
+function doEdit( evt ) {
+  $overview_disabled = false;
+  $social_index = 0;
+  $controls_mode = 3;
+}
+
 // Cancel adding a developer
 // ?? Cancel edit also
-function doCancel( evt ) {
+function doCancelNew( evt ) {
   $add_disabled = false;
   $tab_index = 0;
   $social_disabled = true;
@@ -61,13 +74,75 @@ function doCancel( evt ) {
   $controls_mode = 0;  
 }
 
+// Delete existing developer
+function doDelete( evt ) {
+  // TODO: At server ...
+  // TODO: Delete associated labels
+  // TODO: Delete associated skills
+  // TODO: Delete associated notes
+  // TODO: Delete associated labels
+  // TODO: Delete associated social
+  fetch( `/api/developer/${$developer_id}`, {
+    method: 'DELETE'
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    for( let d = 0; d < $developer_list.length; d++ ) {
+      if( $developer_list[d].id === data.id ) {
+        $developer_list.splice( d, 1 );
+        $developer_list = $developer_list.slice( 0 );
+        break;
+      }
+    }
+
+    $social_disabled = true;
+    $notes_disabled = true;
+    $overview_disabled = true;
+    $developer_id = '';
+    $developer_name = '';
+    $developer_email = '';
+    $developer_description = '';
+    $developer_image = ''; 
+    $social_index = 0;    
+    $controls_mode = 0;
+  } )
+}
+
+// Show existing developer
+function doDeveloper( evt ) {
+  let id = evt.target.getAttribute( 'data-id' );
+
+  for( let d = 0; d < $developer_list.length; d++ ) {
+    if( id === $developer_list[d].id ) {
+      $developer_index = d;
+      break;
+    }
+  }
+
+  $add_disabled = false;
+
+  $overview_disabled = true;
+  $social_disabled = false;
+  $social_index = 1;
+  $notes_disabled = false;
+
+  $developer_id = id;
+  $developer_name = $developer_list[$developer_index].name;
+  $developer_email = $developer_list[$developer_index].email;
+  $developer_description = $developer_list[$developer_index].description;
+  $developer_image = $developer_list[$developer_index].image;
+  
+  $controls_mode = 2;
+}
+
 // Save new developer
-function doSave( evt ) {
+function doSaveNew( evt ) {
   $add_disabled = false;
   $tab_index = 0;
-  $social_disabled = true;
+  $social_disabled = false;
   $overview_disabled = true;
   $social_index = 1;
+  $notes_disabled = false;
   $controls_mode = 0;  
 
   let developer = {
@@ -94,6 +169,8 @@ function doSave( evt ) {
       return 0;
     } );
     $developer_list = $developer_list.slice( 0 );
+    $developer_id = data.id;
+    $controls_mode = 2;
   } );
 }
 </script>
@@ -181,8 +258,8 @@ span {
     <div class="search">
       <Search/>
       <Button
-        icon="/img/add.svg"
-        disabledIcon="/img/add-disabled.svg"
+        icon="/img/add-white.svg"
+        disabledIcon="/img/add.svg"
         on:click="{doAdd}"
         disabled="{$add_disabled}">Add</Button>
     </div>
@@ -190,7 +267,10 @@ span {
     <!-- Developer list -->
     <h4>Developers</h4>
     <List data="{$developer_list}" let:item="{developer}">
-      <p data-id="{developer.id}" class="developer">{developer.name}</p>
+      <p 
+        data-id="{developer.id}" 
+        on:click="{doDeveloper}" 
+        class="developer">{developer.name}</p>
     </List>
 
     <!-- Label list -->
@@ -230,7 +310,11 @@ span {
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
-    <Controls on:cancel="{doCancel}" on:save="{doSave}"/>
+    <Controls 
+      on:cancelnew="{doCancelNew}" 
+      on:savenew="{doSaveNew}"
+      on:edit="{doEdit}"
+      on:delete="{doDelete}"/>
 
   </article>
 

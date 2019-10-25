@@ -39,6 +39,36 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.danger {
+  background-color: #da1e28;
+  color: #ffffff;
+}
+
+.danger:active {
+  background-color: #750e13;
+  border-color: #da1e28;
+}
+
+.danger:disabled {
+  background-color: #bebebe;
+  color: #8c8c8c;
+}
+
+.danger:focus {
+  background-color: #da1e28;
+  border-color: #0f62fe;
+  outline-color: #ffffff;
+}
+
+.danger:disabled:hover {
+  background-color: #bebebe;
+  color: #8c8c8c;
+}
+
+.danger:hover {
+  background-color: #ba1b23;
+}
+
 .primary {
   background-color: #0062ff;
   color: #ffffff;

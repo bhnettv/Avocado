@@ -51,22 +51,13 @@ label {
   margin: 0 0 8px 0;
 }
 
-p.after {
+p {
   color: #6f6f6f;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
   padding: 0;
-  margin: 4px 0 4px 0;
-}
-
-p.before {
-  color: #6f6f6f;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 0;
-  margin: -8px 0 2px 0;
+  margin: -6px 0 8px 0;
 }
 </style>
 
@@ -84,7 +75,7 @@ p.before {
 
   {:else}
 
-    <p class="before">{helper}</p>
+    <p>{helper}</p>
     <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
 
   {/if}

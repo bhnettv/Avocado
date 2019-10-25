@@ -3,18 +3,25 @@ import TextInput from './TextInput.svelte';
 
 import { social_index } from './stores.js';
 import { tab_index } from './stores.js';
-
-let web;
-let rss;
-let dev;
-let medium;
-let youtube;
-let twitter;
-let so;
-let github;
+import { endpoint_website } from './stores.js';
+import { endpoint_rss } from './stores.js';
+import { endpoint_devto } from './stores.js';
+import { endpoint_medium } from './stores.js';
+import { endpoint_youtube } from './stores.js';
+import { endpoint_twitter } from './stores.js';
+import { endpoint_so } from './stores.js';
+import { endpoint_github } from './stores.js';
+import { endpoint_reddit } from './stores.js';
 </script>
 
 <style>
+div.block {
+  flex-basis: 0;  
+  flex-grow: 1; 
+  margin: 0; 
+  padding: 0; 
+}
+
 div.endpoints {
   display: flex;
   flex-direction: column;
@@ -42,13 +49,13 @@ div.line {
   <div class="line">
     <TextInput 
       label="Website"
-      bind:value="{web}"
+      bind:value="{$endpoint_website}"
       placeholder="Website" 
       helper="Including HTTP/S"/>
     <div class="gap"></div>       
     <TextInput 
       label="Feed"
-      bind:value="{rss}"
+      bind:value="{$endpoint_rss}"
       placeholder="Feed"
       helper="RSS or ATOM, including HTTP/S"/>      
   </div>  
@@ -56,13 +63,13 @@ div.line {
   <div class="line">
     <TextInput 
       label="Dev.to"
-      bind:value="{dev}"
+      bind:value="{$endpoint_devto}"
       placeholder="Dev.to"
       helper="User name, after trailing slash of profile"/>
     <div class="gap"></div>  
     <TextInput 
       label="Medium"
-      bind:value="{medium}"
+      bind:value="{$endpoint_medium}"
       placeholder="Medium"
       helper="User name, after the &quot;@&quot; symbol"/>      
   </div>
@@ -70,13 +77,13 @@ div.line {
   <div class="line">
     <TextInput 
       label="YouTube"
-      bind:value="{youtube}"
+      bind:value="{$endpoint_youtube}"
       placeholder="YouTube"
       helper="Channel ID, not user name"/>    
     <div class="gap"></div> 
     <TextInput 
       label="Twitter"
-      bind:value="{twitter}"
+      bind:value="{$endpoint_twitter}"
       placeholder="Twitter"
       helper="User name, no &quot;@&quot; symbol"/>      
   </div>     
@@ -84,13 +91,13 @@ div.line {
   <div class="line">
     <TextInput 
       label="Stack Overflow"
-      bind:value="{so}"
+      bind:value="{$endpoint_so}"
       placeholder="Stack Overflow"
       helper="User ID, not user name"/>
     <div class="gap"></div> 
     <TextInput 
       label="GitHub"
-      bind:value="{github}"
+      bind:value="{$endpoint_github}"
       placeholder="GitHub"
       helper="User name, after trailing slash"/>      
   </div>       
@@ -98,11 +105,11 @@ div.line {
    <div class="line">
     <TextInput 
       label="Reddit"
-      bind:value="{so}"
+      bind:value="{$endpoint_reddit}"
       placeholder="Reddit"
       helper="User name, as shown in posts"/>
     <div class="gap"></div>
-    <div style="flex-grow: 1; margin: 0; padding: 0; flex-basis: 0;"></div> 
+    <div class="block"></div> 
   </div>        
 
 </div>

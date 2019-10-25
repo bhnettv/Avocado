@@ -4,6 +4,7 @@ import { createEventDispatcher } from 'svelte';
 import Button from './Button.svelte';
 
 import { controls_mode } from './stores.js';
+import { tab_index } from './stores.js';
 
 const dispatch = createEventDispatcher();
 </script>
@@ -16,17 +17,23 @@ div {
   justify-content: flex-end;
   min-height: 48px;
 }
+
+div.block {
+  flex-grow: 1;
+}
 </style>
 
-<div>
+<div style="display: {$tab_index < 2 ? 'flex' : 'none'}">
 
 <!-- Default: Nothing -->
 
 <!-- Creating: Cancel, Save -->
 {#if $controls_mode === 1}
 
-  <Button kind="secondary" on:click="{() => dispatch( 'cancel' )}">Cancel</Button>
-  <Button icon="/img/save.svg" on:click="{() => dispatch( 'save' )}">Save</Button>
+  <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">Cancel</Button>
+  <Button 
+    icon="/img/save-white.svg" 
+    on:click="{() => dispatch( 'savenew' )}">Save</Button>
 
 {/if}
 
@@ -40,9 +47,16 @@ div {
 <!-- Editing: Delete, Cancel, Save -->
 {#if $controls_mode === 3}
 
-  <Button kind="secondary" on:click="{() => dispatch( 'delete' )}">Delete</Button>
-  <Button kind="secondary" on:click="{() => dispatch( 'cancel' )}">Cancel</Button>
-  <Button icon="/img/save-white.svg" on:click="{() => dispatch( 'save' )}">Save</Button>
+  <Button 
+    kind="danger" 
+    on:click="{() => dispatch( 'delete' )}">Delete</Button>
+  <div class="block"></div>
+  <Button 
+    kind="secondary" 
+    on:click="{() => dispatch( 'cancelexisting' )}">Cancel</Button>
+  <Button 
+    icon="/img/save-white.svg" 
+    on:click="{() => dispatch( 'saveexisting' )}">Save</Button>
 
 {/if}
 
