@@ -1,9 +1,24 @@
 <script>
+export let collapse = false;
 export let disabled = false;
 export let helper = undefined;
 export let label = undefined;
 export let placeholder = '';
 export let value = '';
+
+function doBlur( evt ) {
+  if( collapse ) {
+    if( value.trim().length === 0 ) {
+      evt.target.classList.add( 'collapse' );
+    }
+  }
+}
+
+function doFocus( evt ) {
+  if( collapse ) {
+    evt.target.classList.remove( 'collapse' );
+  }
+}
 </script>
 
 <style>
@@ -38,6 +53,13 @@ textarea {
   outline: solid 2px transparent;
   outline-offset: -2px;
   padding: 11px 16px 11px 16px;
+}
+
+textarea.collapse {
+  height: 39px;
+  line-height: 40px;
+  min-height: 39px;
+  padding: 0 16px 0 16px;
 }
 
 textarea:disabled {
@@ -76,6 +98,9 @@ p {
 
   <textarea 
     {disabled} 
+    on:blur="{doBlur}"
+    on:focus="{doFocus}"
+    class:collapse="{collapse}"
     placeholder="{placeholder}" 
     bind:value="{value}"></textarea>
 

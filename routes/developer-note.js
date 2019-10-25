@@ -78,6 +78,7 @@ router.post( '/', ( req, res ) => {
   let ids = req.db.prepare( `
     SELECT
       Activity.id AS "activity_id",
+      Activity.name AS "activity_name",
       Developer.id AS "developer_id"
     FROM
       Activity,
@@ -91,6 +92,7 @@ router.post( '/', ( req, res ) => {
     record.developer_uuid
   );
   record.activity_id = ids.activity_id;
+  record.activity_name = ids.activity_name;
   record.developer_id = ids.developer_id;
 
   let info = req.db.prepare( `
@@ -113,6 +115,7 @@ router.post( '/', ( req, res ) => {
     updated_at: record.updated_at,
     developer_id: record.developer_uuid,
     activity_id: record.activity_uuid,
+    activity_name: record.activity_name,
     full_text: record.full_text
   } );
 } );

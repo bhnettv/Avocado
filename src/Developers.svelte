@@ -23,6 +23,7 @@ import { tab_index } from './stores.js';
 import { social_disabled } from './stores.js';
 import { social_index } from './stores.js';
 import { notes_disabled } from './stores.js';
+import { notes_list } from './stores.js';
 import { overview_disabled } from './stores.js';
 import { developer_id } from './stores.js';
 import { developer_name } from './stores.js';
@@ -63,8 +64,19 @@ function doEdit( evt ) {
   $controls_mode = 3;
 }
 
+// Cancel editing a developer
+function doCancelExisting( evt ) {
+  $overview_disabled = true;
+  $social_index = 1;
+  $controls_mode = 2;  
+
+  $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
+  $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
+  $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
+  $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
+}
+
 // Cancel adding a developer
-// ?? Cancel edit also
 function doCancelNew( evt ) {
   $add_disabled = false;
   $tab_index = 0;
@@ -127,12 +139,60 @@ function doDeveloper( evt ) {
   $notes_disabled = false;
 
   $developer_id = id;
-  $developer_name = $developer_list[$developer_index].name;
-  $developer_email = $developer_list[$developer_index].email;
-  $developer_description = $developer_list[$developer_index].description;
-  $developer_image = $developer_list[$developer_index].image;
+  $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
+  $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
+  $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
+  $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
   
   $controls_mode = 2;
+
+  fetch( `api/developer/${$developer_id}/note` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $notes_list = data.slice( 0 );
+  } );
+}
+
+// Save exissting developer
+function doSaveExisting( evt ) {
+  $add_disabled = false;
+  $social_disabled = false;
+  $overview_disabled = true;
+  $social_index = 1;
+  $notes_disabled = false;
+  $controls_mode = 2;  
+
+  let developer = {
+    name: $developer_name,
+    email:  $developer_email.trim().length === 0 ? null : $developer_email,
+    description: $developer_description.trim().length === 0 ? null : $developer_description,
+    image: $developer_image.trim().length === 0 ? null : $developer_image
+  };
+
+  fetch( `/api/developer/${$developer_id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( developer )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    for( let d = 0; d < $developer_list.length; d++ ) {
+      if( $developer_list[d].id === data.id ) {
+        $developer_list[d] = data;
+        break;
+      }
+    }
+
+    $developer_list.sort( ( a, b ) => {
+      if( a.name > b.name ) return 1;
+      if( a.name < b.name ) return -1;
+
+      return 0;
+    } );
+    $developer_list = $developer_list.slice( 0 );
+  } );
 }
 
 // Save new developer
@@ -143,7 +203,7 @@ function doSaveNew( evt ) {
   $overview_disabled = true;
   $social_index = 1;
   $notes_disabled = false;
-  $controls_mode = 0;  
+  $controls_mode = 2;  
 
   let developer = {
     name: $developer_name,
@@ -170,7 +230,6 @@ function doSaveNew( evt ) {
     } );
     $developer_list = $developer_list.slice( 0 );
     $developer_id = data.id;
-    $controls_mode = 2;
   } );
 }
 </script>
@@ -314,7 +373,9 @@ span {
       on:cancelnew="{doCancelNew}" 
       on:savenew="{doSaveNew}"
       on:edit="{doEdit}"
-      on:delete="{doDelete}"/>
+      on:delete="{doDelete}"
+      on:saveexisting="{doSaveExisting}"
+      on:cancelexisting="{doCancelExisting}"/>
 
   </article>
 

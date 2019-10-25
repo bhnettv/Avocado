@@ -26,7 +26,7 @@ div.endpoints {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 24px 16px 0 16px;
+  margin: 21px 16px 0 16px;
   padding: 0;
 }
 
@@ -37,7 +37,7 @@ div.gap {
 div.line {
   display: flex;
   flex-direction: row;
-  margin: 0 0 24px 0;
+  margin: 0 0 16px 0;
   padding: 0;
 }
 </style>

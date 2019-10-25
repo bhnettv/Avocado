@@ -22,16 +22,17 @@ div.gap {
 div.line {
   display: flex;
   flex-direction: row;
-  margin: 0 16px 24px 16px;
+  margin: 0 16px 16px 16px;
   padding: 0;
 }
 
 div.line:first-of-type {
-  margin-top: 24px;
+  margin-top: 21px;
 }
 
 div.line.last {
   flex-grow: 1;
+  padding-bottom: 8px;
 }
 
 form {

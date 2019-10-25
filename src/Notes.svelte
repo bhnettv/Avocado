@@ -2,17 +2,21 @@
 import { onMount } from 'svelte';
 
 import Button from './Button.svelte';
+import Pagination from './Pagination.svelte';
 import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
 import { tab_index } from './stores.js';
 import { developer_id } from './stores.js';
+import { developer_name } from './stores.js';
+import { notes_list } from './stores.js';
 
 export let developer = null;
 export let visible = false;
 
 let activity = [];
 let activity_id = null;
+let index = 0;
 let text = '';
 
 onMount( async () => {
@@ -20,6 +24,48 @@ onMount( async () => {
   .then( ( response ) => response.json() );
   activity_id = activity[0].id;
 } );
+
+function format( updated ) {
+  let hours = [
+    12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+    12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+  ];
+  let months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 
+    'May', 'Jun', 'Jul', 'Aug', 
+    'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  let now = new Date();
+  let result = null;
+
+  if( now.getFullYear() !== updated.getFullYear()  ) {
+    result = `${months[updated.getMonth()]} ${updated.getDate()}, ${updated.getFullYear()}`;
+  } else {
+    if( updated.getMonth() === now.getMonth() && updated.getDate() === now.getDate() ) {
+      result = `${months[updated.getMonth()]} ${updated.getDate()} @ ${hours[updated.getHours()]}:${updated.getMinutes().toString().padStart( 2, '0' )}`;
+    } else {
+      result = `${months[updated.getMonth()]} ${updated.getDate()}`;
+    }
+  }
+
+  return result;
+}
+
+function doNext( evt ) {
+  if( index === ( $notes_list.length - 1 ) ) {
+    index = 0;
+  } else {
+    index = index + 1;
+  }
+}
+
+function doPrevious( evt ) {
+  if( index === 0 ) {
+    index = $notes_list.length - 1;
+  } else {
+    index = index - 1;
+  }
+}
 
 function doSave( evt ) {
   console.log( {
@@ -41,6 +87,18 @@ function doSave( evt ) {
   } )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
+    $notes_list.push( data );
+    $notes_list.sort( ( a, b ) => {
+      a = new Date( a.updated_at ).getTime();
+      b = new Date( b.updated_at ).getTime();
+
+      if( a < b ) return 1;
+      if( a > b ) return -1;
+      return 0;
+    } );
+    $notes_list = $notes_list.slice( 0 );
+
+    index = 0;
     text = '';
   } );
 }
@@ -62,6 +120,14 @@ div.controls {
   margin: 24px 0 0 0;
 }
 
+div.none {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 div.panel {
   display: none;
   flex-direction: column;
@@ -69,33 +135,46 @@ div.panel {
 }
 
 form {
-  border-bottom: solid 1px #f3f3f3;
+  /* border-bottom: solid 1px #f3f3f3; */
+  border-bottom: solid 1px #e0e0e0;  
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 24px 16px 16px 16px;
+  padding: 21px 16px 16px 16px;
 }
 
 p {
-  color: #565656;
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px; 
+  margin: 0 0 8px 0;
+  padding: 0;   
+}
+
+p.pagination {
+  border-right: solid 1px #e0e0e0;
+  color: #393939;
+  flex-basis: 0;
+  flex-grow: 1;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 40px;
+  line-height: 47px;
   margin: 0;
-  padding: 0 16px 0 0;
+  padding: 0 0 0 16px;
 }
 </style>
 
 <div class="panel" style="display: {$tab_index === 2 ? 'flex': 'none'}">
   <form>
     <div class="activity">
-      <p>Where:</p>
       <Select 
+        label="Activity"
+        helper="Where did this take place?"
         options="{activity}" 
         bind:selected="{activity_id}" 
-        value="id" 
-        label="name"/>      
+        labelField="name"
+        dataField="id"/>      
     </div>
     <TextArea 
       label="Note" 
@@ -110,5 +189,28 @@ p {
         on:click="{doSave}">Save</Button>    
     </div>
   </form>
-  <p>Notes</p>
+
+  {#if $notes_list.length > 0}
+
+    <div style="flex-grow: 1; padding: 16px;">
+      <p>{$notes_list[index].full_text}</p>
+    </div>
+    <Pagination 
+      index="{index + 1}" 
+      length="{$notes_list.length}" 
+      noun="notes"
+      on:previous="{doPrevious}"
+      on:next="{doNext}">
+      <p class="pagination">{format( new Date( $notes_list[index].updated_at ) )}</p>
+      <p class="pagination">{$notes_list[index].activity_name}</p>
+    </Pagination>
+
+  {:else}
+
+    <div class="none">
+      <p>No notes available for {$developer_name}.</p>
+    </div>
+
+  {/if}
+
 </div>

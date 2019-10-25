@@ -130,6 +130,51 @@ paths:
                   id:
                     type: string
                     format: uuid
+  /developer/{id}/note:
+    parameters:
+    - name: id
+      in: path
+      description: ID field for desired developer
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - 🖥️ Developer
+      summary: Get notes associated with a developer by their ID
+      operationId: getDeveloperNotesByID
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    activity_id:
+                      type: string
+                      format: uuid
+                    activity_name:
+                      type: string
+                      example: Conference
+                    full_text:
+                      type: string
+                      example: 'IBM was here.'
   /developer/{id}/label:
     parameters:
     - name: id
@@ -212,7 +257,7 @@ paths:
       required: true
       schema:
         type: string
-        format: uuid  
+        format: uuid
     get:
       tags:
       - 🖥️ Developer
@@ -240,7 +285,7 @@ paths:
                     name:
                       type: string
                       example: Kevin Hoyt
-                    email: 
+                    email:
                       type: string
                       example: krhoyt@us.ibm.com
                     description:

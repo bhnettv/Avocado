@@ -58,6 +58,32 @@ router.get( '/:id/label', ( req, res ) => {
   res.json( labels );
 } );
 
+// Read notes for given developer
+router.get( '/:id/note', ( req, res ) => {
+  let notes = req.db.prepare( `
+    SELECT 
+      DeveloperNote.uuid AS "id",
+      DeveloperNote.created_at, 
+      DeveloperNote.updated_at, 
+      Developer.uuid AS "developer_id",
+      Activity.uuid AS "activity_id",
+      Activity.name AS "activity_name",
+      DeveloperNote.full_text
+    FROM 
+      Activity, Developer, DeveloperNote
+    WHERE 
+      Developer.id = DeveloperNote.developer_id AND
+      DeveloperNote.activity_id = Activity.id AND
+      Developer.uuid = ?
+    ORDER BY datetime( DeveloperNote.updated_at ) DESC
+  ` )
+  .all( 
+    req.params.id 
+  );
+
+  res.json( notes );
+} );
+
 // Read single developer by ID
 router.get( '/:id', ( req, res ) => {
   let developer = req.db.prepare( `

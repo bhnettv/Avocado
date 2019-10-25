@@ -1,11 +1,28 @@
 <script>
-export let value = 'id';
-export let label = 'name';
+export let dataField = 'data';
+export let helper = undefined;
+export let label = undefined;
+export let labelField = 'label';
 export let options = [];
 export let selected = null;
+export let value = 'id';
 </script>
 
 <style>
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
 select {
   appearance: none;
   -moz-appearance: none;
@@ -25,7 +42,7 @@ select {
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  height: 39px;
+  height: 40px;
   line-height: 40px;
   margin: 0;
   min-width: 100px;
@@ -41,12 +58,29 @@ select:focus {
 select:hover {
   background-color: #e5e5e5;
 }
+
+p {
+  color: #6f6f6f;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0;
+  margin: -6px 0 8px 0;  
+}
 </style>
 
-<select bind:value="{selected}">
+<div>
 
-{#each options as option}
-  <option value="{option[value]}">{option[label]}</option>
-{/each}  
+  {#if label !== undefined}
+    <label>{label}</label>
+  {/if}
+  {#if helper !== undefined}
+    <p>{helper}</p>
+  {/if}  
+  <select bind:value="{selected}">
+    {#each options as option}
+      <option value="{option[dataField]}">{option[labelField]}</option>
+    {/each}  
+  </select>  
 
-</select>
+</div>

@@ -58,7 +58,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeveloperNote'   
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  activity_id:
+                    type: string
+                    format: uuid
+                  activity_name:
+                    type: string
+                    example: Conference
+                  full_text:
+                    type: string
+                    example: Somewhere over the rainbow.
   /developer/note/{id}:        
     parameters:
     - name: id

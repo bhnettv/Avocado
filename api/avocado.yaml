@@ -903,8 +903,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/paths/~1developer~1note/get/responses/200/content/applicat\
-                  ion~1json/schema/items"
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  activity_id:
+                    type: string
+                    format: uuid
+                  activity_name:
+                    type: string
+                    example: Conference
+                  full_text:
+                    type: string
+                    example: Somewhere over the rainbow.
   "/developer/note/{id}":
     parameters:
       - name: id
