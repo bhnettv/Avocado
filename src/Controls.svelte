@@ -3,8 +3,8 @@ import { createEventDispatcher } from 'svelte';
 
 import Button from './Button.svelte';
 
-import { controls_mode } from './stores.js';
-import { tab_index } from './stores.js';
+import { controls_mode } from './developers.js';
+import { tab_index } from './developers.js';
 
 const dispatch = createEventDispatcher();
 </script>

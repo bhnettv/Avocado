@@ -1,5 +1,5 @@
 <script>
-export let selectedIndex = 0;
+export let index = 0;
 </script>
 
 <style>
@@ -42,9 +42,9 @@ button.selected {
 
 <div>
   <button 
-    class:selected="{selectedIndex === 0}"
-    on:click="{() => selectedIndex = 0}">Developers</button>
+    class:selected="{index === 0}"
+    on:click="{() => index = 0}">Developers</button>
   <button 
-    class:selected="{selectedIndex === 1}"
-    on:click="{() => selectedIndex = 1}">Repositories</button>
+    class:selected="{index === 1}"
+    on:click="{() => index = 1}">Repositories</button>
 </div>

@@ -1,17 +1,17 @@
 <script>
 import TextInput from './TextInput.svelte';
 
-import { social_index } from './stores.js';
-import { tab_index } from './stores.js';
-import { endpoint_website } from './stores.js';
-import { endpoint_rss } from './stores.js';
-import { endpoint_devto } from './stores.js';
-import { endpoint_medium } from './stores.js';
-import { endpoint_youtube } from './stores.js';
-import { endpoint_twitter } from './stores.js';
-import { endpoint_so } from './stores.js';
-import { endpoint_github } from './stores.js';
-import { endpoint_reddit } from './stores.js';
+import { social_index } from './developers.js';
+import { tab_index } from './developers.js';
+import { endpoint_website } from './developers.js';
+import { endpoint_rss } from './developers.js';
+import { endpoint_devto } from './developers.js';
+import { endpoint_medium } from './developers.js';
+import { endpoint_youtube } from './developers.js';
+import { endpoint_twitter } from './developers.js';
+import { endpoint_so } from './developers.js';
+import { endpoint_github } from './developers.js';
+import { endpoint_reddit } from './developers.js';
 </script>
 
 <style>

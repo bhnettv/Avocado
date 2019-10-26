@@ -1,6 +1,6 @@
 <script>
-import { social_index } from './stores.js';
-import { tab_index } from './stores.js';
+import { social_index } from './developers.js';
+import { tab_index } from './developers.js';
 </script>
 
 <style>

@@ -6,10 +6,10 @@ import Pagination from './Pagination.svelte';
 import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
-import { tab_index } from './stores.js';
-import { developer_id } from './stores.js';
-import { developer_name } from './stores.js';
-import { notes_list } from './stores.js';
+import { tab_index } from './developers.js';
+import { developer_id } from './developers.js';
+import { developer_name } from './developers.js';
+import { notes_list } from './developers.js';
 
 export let developer = null;
 export let visible = false;

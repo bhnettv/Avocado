@@ -1,17 +1,16 @@
 <script>
-import Avatar from './Avatar.svelte';
 import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
-import { tab_index } from './stores.js';
-import { overview_disabled } from './stores.js';
-import { developer_name } from './stores.js';
-import { developer_email } from './stores.js';
-import { developer_image } from './stores.js';
-import { developer_labels } from './stores.js';
-import { developer_skills } from './stores.js';
-import { developer_description } from './stores.js';
+import { tab_index } from './developers.js';
+import { overview_disabled } from './developers.js';
+import { developer_name } from './developers.js';
+import { developer_email } from './developers.js';
+import { developer_image } from './developers.js';
+import { developer_labels } from './developers.js';
+import { developer_skills } from './developers.js';
+import { developer_description } from './developers.js';
 </script>
 
 <style>

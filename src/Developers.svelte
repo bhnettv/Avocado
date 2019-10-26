@@ -13,24 +13,24 @@ import Tab from './Tab.svelte';
 import TabBar from './TabBar.svelte';
 import Timeline from './Timeline.svelte';
 
-import { search } from './stores.js';
-import { developer_list } from './stores.js';
-import { developer_index } from './stores.js';
-import { label_list } from './stores.js';
-import { label_index } from './stores.js';
-import { add_disabled } from './stores.js';
-import { tab_index } from './stores.js';
-import { social_disabled } from './stores.js';
-import { social_index } from './stores.js';
-import { notes_disabled } from './stores.js';
-import { notes_list } from './stores.js';
-import { overview_disabled } from './stores.js';
-import { developer_id } from './stores.js';
-import { developer_name } from './stores.js';
-import { developer_email } from './stores.js';
-import { developer_image } from './stores.js';
-import { developer_description } from './stores.js';
-import { controls_mode } from './stores.js';
+import { search } from './developers.js';
+import { developer_list } from './developers.js';
+import { developer_index } from './developers.js';
+import { label_list } from './developers.js';
+import { label_index } from './developers.js';
+import { add_disabled } from './developers.js';
+import { tab_index } from './developers.js';
+import { social_disabled } from './developers.js';
+import { social_index } from './developers.js';
+import { notes_disabled } from './developers.js';
+import { notes_list } from './developers.js';
+import { overview_disabled } from './developers.js';
+import { developer_id } from './developers.js';
+import { developer_name } from './developers.js';
+import { developer_email } from './developers.js';
+import { developer_image } from './developers.js';
+import { developer_description } from './developers.js';
+import { controls_mode } from './developers.js';
 
 // Load external data
 onMount( async () => {
