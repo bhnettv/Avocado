@@ -309,13 +309,154 @@ router.delete( '/:developer/label/:label', ( req, res ) => {
 
 // Delete
 router.delete( '/:id', ( req, res ) => {
+  let deep = true;
+
+  if( req.query.deep ) {
+    if( req.query.deep === 'false' ) {
+      deep = false;
+    }
+  }
+
+  // Get developer ID (not UUID)
+  let developer = req.db.prepare( `
+    SELECT id
+    FROM Developer
+    WHERE uuid = ?
+  ` )
+  .get(
+    req.params.id
+  );
+
+  // Labels
   let info = req.db.prepare( `
-    DELETE FROM Developer
-    WHERE Developer.uuid = ?
+    DELETE FROM DeveloperLabel
+    WHERE DeveloperLabel.developer_id = ?
   ` )
   .run(
-    req.params.id
+    developer.id
   );  
+
+  // Notes
+  info = req.db.prepare( `
+    DELETE FROM DeveloperNote
+    WHERE DeveloperNote.developer_id = ?
+  ` )
+  .run(
+    developer.id
+  );    
+  
+  // Skills
+  info = req.db.prepare( `
+    DELETE FROM DeveloperSkill
+    WHERE DeveloperSkill.developer_id = ?
+  ` )
+  .run(
+    developer.id
+  );  
+
+  // Account
+  info = req.db.prepare( `
+    DELETE FROM Developer
+    WHERE Developer.id = ?
+  ` )
+  .run(
+    developer.id
+  );  
+
+  // Deep deletion
+  // Defaults to true
+  if( deep ) {
+    // Other sources
+    let source = [{
+      social: 'Blog',
+      post: 'BlogPost',
+      media: 'BlogPostMedia'
+    }, {    
+      social: 'Dev',
+      post: 'DevPost',
+      media: 'DevPostMedia'
+    }, {    
+      social: 'Medium',
+      post: 'MediumPost',
+      media: 'MediumPostMedia'
+    }, {
+      social: 'GitHub',
+      post: 'GitHubEvent'
+    }, {
+      social: 'Reddit',
+      post: 'RedditPost'
+    }, {
+      social: 'StackOverflow',
+      short: 'so',
+      post: 'StackOverflowAnswer'
+    }, {
+      social: 'Twitter',
+      post: 'TwitterStatus',
+      media: 'TwitterStatusMedia'
+    }, {
+      social: 'YouTube',
+      post: 'YouTubeVideo'
+    }];
+
+    // Iterate sources
+    for( let s = 0; s < source.length; s++ ) {
+      // StackOverflow shortened to "so"
+      // Otherwise lowercase post entity
+      let key = source[s].short !== undefined ? source[s].short : source[s].social.toLowerCase();
+
+      // Get details
+      let content = req.db.prepare( `
+        SELECT 
+          ${source[s].social}.id AS "record_id", 
+          ${source[s].post}.id AS "post_id"
+        FROM
+          ${source[s].social},
+          ${source[s].post}
+        WHERE 
+          ${source[s].post}.${key}_id = ${source[s].social}.id AND
+          ${source[s].social}.developer_id = ?
+      ` )
+      .get(
+        developer.id
+      );
+
+      // Content exists
+      if( content ) {
+        // If there is media storage
+        if( source[s].media !== undefined ) {
+          // Remove media
+          // TODO: DELETE Media
+          // TODO: Then DELETE PostMedia
+          // TODO: May require a SELECT
+          info = req.db.prepare( `
+            DELETE FROM ${source[s].media}
+            WHERE ${source[s].media}.post_id = ?
+          ` )
+          .run(
+            content.post_id
+          );    
+        }
+
+        // Remove posts
+        info = req.db.prepare( `
+          DELETE FROM ${source[s].post}
+          WHERE ${source[s].post}.${key}_id = ?
+        ` )
+        .run(
+          content.record_id
+        );    
+
+        // Remove social
+        info = req.db.prepare( `
+          DELETE FROM ${source[s].social}
+          WHERE ${source[s].social}.id = ?
+        ` )
+        .run(
+          content.record_id
+        );
+      }      
+    }
+  }
 
   res.json( {
     id: req.params.id

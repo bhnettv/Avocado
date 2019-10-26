@@ -88,12 +88,6 @@ function doCancelNew( evt ) {
 
 // Delete existing developer
 function doDelete( evt ) {
-  // TODO: At server ...
-  // TODO: Delete associated labels
-  // TODO: Delete associated skills
-  // TODO: Delete associated notes
-  // TODO: Delete associated labels
-  // TODO: Delete associated social
   fetch( `/api/developer/${$developer_id}`, {
     method: 'DELETE'
   } )
