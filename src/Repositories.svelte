@@ -1,6 +1,9 @@
 <script>
 import { onMount } from 'svelte';
 
+import Button from './Button.svelte';
+import Search from './Search.svelte';
+
 let average_watchers = 0;
 let average_stars = 0;
 let average_forks = 0;
@@ -10,6 +13,7 @@ let median_stars = 0;
 let median_forks = 0;
 let median_issues = 0;
 let repositories = [];
+let search = '';
 let updated_at = undefined;
 
 function format( stamp ) {
@@ -53,6 +57,10 @@ function numeric( a, b ) {
   if( a > b ) return 1;
   if( a < b ) return -1;
   return 0;
+}
+
+function doSearch( evt ) {
+  console.log( search );
 }
 
 onMount( async () => {
@@ -124,7 +132,7 @@ div.list {
 }
 
 div.panel {
-  display: flex;
+  display: none;
   flex-direction: column;
   flex-grow: 1;
 }
@@ -148,6 +156,11 @@ div.row p {
 div.row p:first-of-type {
   flex-basis: 0;
   flex-grow: 1;
+}
+
+div.search {
+  display: flex;
+  flex-direction: row;
 }
 
 footer {
@@ -227,6 +240,11 @@ p.small {
 </style>
 
 <div class="panel">
+
+  <div class="search">
+    <Search bind:value="{search}"/>
+    <Button icon="/img/add-white.svg">Add</Button>
+  </div>
 
   <header>
     <p>Name</p>

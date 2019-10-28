@@ -2656,7 +2656,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (145:2) {#if label !== undefined}
+    // (155:2) {#if label !== undefined}
     function create_if_block$3(ctx) {
     	var label_1, t;
 
@@ -2665,8 +2665,8 @@ var app = (function () {
     			label_1 = element("label");
     			t = text(ctx.label);
     			set_style(label_1, "color", (ctx.disabled ? '#c6c6c6' : '#393939'));
-    			attr_dev(label_1, "class", "svelte-1fppwmp");
-    			add_location(label_1, file$6, 146, 4, 2406);
+    			attr_dev(label_1, "class", "svelte-vi8sac");
+    			add_location(label_1, file$6, 156, 4, 2724);
     		},
 
     		m: function mount(target, anchor) {
@@ -2690,60 +2690,67 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$3.name, type: "if", source: "(145:2) {#if label !== undefined}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$3.name, type: "if", source: "(155:2) {#if label !== undefined}", ctx });
     	return block;
     }
 
-    // (153:2) {#each value as tag, t}
+    // (163:4) {#each value as tag, t}
     function create_each_block$1(ctx) {
-    	var li, p, t0_value = ctx.tag + "", t0, t1, button, dispose;
+    	var div, p, t0_value = ctx.tag + "", t0, t1, button, dispose;
 
     	const block = {
     		c: function create() {
-    			li = element("li");
+    			div = element("div");
     			p = element("p");
     			t0 = text(t0_value);
     			t1 = space();
     			button = element("button");
-    			attr_dev(p, "class", "svelte-1fppwmp");
-    			add_location(p, file$6, 155, 6, 2601);
+    			attr_dev(p, "class", "svelte-vi8sac");
+    			add_location(p, file$6, 164, 8, 2970);
     			attr_dev(button, "data-id", ctx.t);
     			attr_dev(button, "type", "button");
-    			attr_dev(button, "class", "svelte-1fppwmp");
-    			add_location(button, file$6, 156, 6, 2620);
-    			attr_dev(li, "class", "tag svelte-1fppwmp");
-    			add_location(li, file$6, 154, 4, 2578);
+    			set_style(button, "display", (ctx.disabled ? 'none' : 'initial'));
+    			attr_dev(button, "class", "svelte-vi8sac");
+    			add_location(button, file$6, 165, 8, 2991);
+    			attr_dev(div, "class", "tag svelte-vi8sac");
+    			toggle_class(div, "disabled", ctx.disabled);
+    			add_location(div, file$6, 163, 6, 2916);
     			dispose = listen_dev(button, "click", ctx.doRemove);
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, li, anchor);
-    			append_dev(li, p);
+    			insert_dev(target, div, anchor);
+    			append_dev(div, p);
     			append_dev(p, t0);
-    			append_dev(li, t1);
-    			append_dev(li, button);
+    			append_dev(div, t1);
+    			append_dev(div, button);
     		},
 
     		p: function update(changed, ctx) {
     			if ((changed.value) && t0_value !== (t0_value = ctx.tag + "")) {
     				set_data_dev(t0, t0_value);
     			}
+
+    			if (changed.disabled) {
+    				set_style(button, "display", (ctx.disabled ? 'none' : 'initial'));
+    				toggle_class(div, "disabled", ctx.disabled);
+    			}
     		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(li);
+    				detach_dev(div);
     			}
 
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$1.name, type: "each", source: "(153:2) {#each value as tag, t}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$1.name, type: "each", source: "(163:4) {#each value as tag, t}", ctx });
     	return block;
     }
 
     function create_fragment$6(ctx) {
-    	var div, t0, ul, t1, li, input, input_placeholder_value, dispose;
+    	var div1, t0, div0, t1, input, dispose;
 
     	var if_block = (ctx.label !== ctx.undefined) && create_if_block$3(ctx);
 
@@ -2757,30 +2764,27 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div = element("div");
+    			div1 = element("div");
     			if (if_block) if_block.c();
     			t0 = space();
-    			ul = element("ul");
+    			div0 = element("div");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			t1 = space();
-    			li = element("li");
     			input = element("input");
-    			attr_dev(input, "placeholder", input_placeholder_value = ctx.value.length === 0 ? ctx.placeholder : '');
+    			attr_dev(input, "placeholder", ctx.placeholder);
     			input.disabled = ctx.disabled;
-    			attr_dev(input, "class", "svelte-1fppwmp");
-    			add_location(input, file$6, 162, 6, 2739);
-    			attr_dev(li, "class", "input svelte-1fppwmp");
-    			add_location(li, file$6, 161, 4, 2714);
-    			attr_dev(ul, "class", "svelte-1fppwmp");
-    			toggle_class(ul, "focus", ctx.focus);
-    			toggle_class(ul, "disabled", ctx.disabled);
-    			add_location(ul, file$6, 150, 2, 2491);
-    			attr_dev(div, "class", "svelte-1fppwmp");
-    			add_location(div, file$6, 142, 0, 2366);
+    			attr_dev(input, "class", "svelte-vi8sac");
+    			add_location(input, file$6, 174, 4, 3190);
+    			attr_dev(div0, "class", "content svelte-vi8sac");
+    			toggle_class(div0, "focus", ctx.focus);
+    			toggle_class(div0, "disabled", ctx.disabled);
+    			add_location(div0, file$6, 160, 2, 2809);
+    			attr_dev(div1, "class", "control svelte-vi8sac");
+    			add_location(div1, file$6, 152, 0, 2668);
 
     			dispose = [
     				listen_dev(input, "keydown", ctx.doKeyboard),
@@ -2794,18 +2798,17 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			if (if_block) if_block.m(div, null);
-    			append_dev(div, t0);
-    			append_dev(div, ul);
+    			insert_dev(target, div1, anchor);
+    			if (if_block) if_block.m(div1, null);
+    			append_dev(div1, t0);
+    			append_dev(div1, div0);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(ul, null);
+    				each_blocks[i].m(div0, null);
     			}
 
-    			append_dev(ul, t1);
-    			append_dev(ul, li);
-    			append_dev(li, input);
+    			append_dev(div0, t1);
+    			append_dev(div0, input);
     		},
 
     		p: function update(changed, ctx) {
@@ -2815,14 +2818,14 @@ var app = (function () {
     				} else {
     					if_block = create_if_block$3(ctx);
     					if_block.c();
-    					if_block.m(div, t0);
+    					if_block.m(div1, t0);
     				}
     			} else if (if_block) {
     				if_block.d(1);
     				if_block = null;
     			}
 
-    			if (changed.value) {
+    			if (changed.disabled || changed.value) {
     				each_value = ctx.value;
 
     				let i;
@@ -2834,7 +2837,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block$1(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(ul, t1);
+    						each_blocks[i].m(div0, t1);
     					}
     				}
 
@@ -2844,8 +2847,8 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if ((changed.value || changed.placeholder) && input_placeholder_value !== (input_placeholder_value = ctx.value.length === 0 ? ctx.placeholder : '')) {
-    				attr_dev(input, "placeholder", input_placeholder_value);
+    			if (changed.placeholder) {
+    				attr_dev(input, "placeholder", ctx.placeholder);
     			}
 
     			if (changed.disabled) {
@@ -2853,11 +2856,11 @@ var app = (function () {
     			}
 
     			if (changed.focus) {
-    				toggle_class(ul, "focus", ctx.focus);
+    				toggle_class(div0, "focus", ctx.focus);
     			}
 
     			if (changed.disabled) {
-    				toggle_class(ul, "disabled", ctx.disabled);
+    				toggle_class(div0, "disabled", ctx.disabled);
     			}
     		},
 
@@ -2866,7 +2869,7 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(div);
+    				detach_dev(div1);
     			}
 
     			if (if_block) if_block.d();
@@ -2890,18 +2893,34 @@ var app = (function () {
         evt.preventDefault();
 
         let found = false;
+        let tags = [];
 
-        for( let v = 0; v < value.length; v++ ) {
-          if( value[v] === evt.target.value ) {
-            found = true;
-            break;
+        if( evt.target.value.indexOf( ',' ) > 0 ) {
+          tags = evt.target.value.split( ',' );
+        } else {
+          tags = [evt.target.value];
+        }
+
+        for( let t = 0; t < tags.length; t++ ) {
+          for( let v = 0; v < value.length; v++ ) {
+            if( value[v] === tags[t].trim() ) {
+              found = true;
+              break;
+            }
+          }
+
+          if( !found ) {
+            value.push( tags[t] );
           }
         }
 
-        if( !found ) {
-          $$invalidate('value', value = [...value, evt.target.value]);
-          evt.target.value = '';
-        }
+        $$invalidate('value', value = value.splice( 0 ));
+        evt.target.value = '';
+      }
+
+      if( evt.keyCode === 8 && evt.target.value.trim().length === 0 ) {
+        value.pop();
+        $$invalidate('value', value = value.slice( 0 ));
       }
     }
 
@@ -4793,14 +4812,19 @@ var app = (function () {
     const file$c = "src/Search.svelte";
 
     function create_fragment$c(ctx) {
-    	var input;
+    	var input, dispose;
 
     	const block = {
     		c: function create() {
     			input = element("input");
     			attr_dev(input, "placeholder", ctx.placeholder);
     			attr_dev(input, "class", "svelte-bn9xay");
-    			add_location(input, file$c, 24, 0, 465);
+    			add_location(input, file$c, 25, 0, 488);
+
+    			dispose = [
+    				listen_dev(input, "input", ctx.input_input_handler),
+    				listen_dev(input, "keydown", ctx.keydown_handler)
+    			];
     		},
 
     		l: function claim(nodes) {
@@ -4809,9 +4833,13 @@ var app = (function () {
 
     		m: function mount(target, anchor) {
     			insert_dev(target, input, anchor);
+
+    			set_input_value(input, ctx.value);
     		},
 
     		p: function update(changed, ctx) {
+    			if (changed.value && (input.value !== ctx.value)) set_input_value(input, ctx.value);
+
     			if (changed.placeholder) {
     				attr_dev(input, "placeholder", ctx.placeholder);
     			}
@@ -4824,6 +4852,8 @@ var app = (function () {
     			if (detaching) {
     				detach_dev(input);
     			}
+
+    			run_all(dispose);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$c.name, type: "component", source: "", ctx });
@@ -4831,32 +4861,48 @@ var app = (function () {
     }
 
     function instance$c($$self, $$props, $$invalidate) {
-    	let { placeholder = 'Search' } = $$props;
+    	let { placeholder = 'Search', value = '' } = $$props;
 
-    	const writable_props = ['placeholder'];
+    	const writable_props = ['placeholder', 'value'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Search> was created with unknown prop '${key}'`);
     	});
 
+    	function keydown_handler(event) {
+    		bubble($$self, event);
+    	}
+
+    	function input_input_handler() {
+    		value = this.value;
+    		$$invalidate('value', value);
+    	}
+
     	$$self.$set = $$props => {
     		if ('placeholder' in $$props) $$invalidate('placeholder', placeholder = $$props.placeholder);
+    		if ('value' in $$props) $$invalidate('value', value = $$props.value);
     	};
 
     	$$self.$capture_state = () => {
-    		return { placeholder };
+    		return { placeholder, value };
     	};
 
     	$$self.$inject_state = $$props => {
     		if ('placeholder' in $$props) $$invalidate('placeholder', placeholder = $$props.placeholder);
+    		if ('value' in $$props) $$invalidate('value', value = $$props.value);
     	};
 
-    	return { placeholder };
+    	return {
+    		placeholder,
+    		value,
+    		keydown_handler,
+    		input_input_handler
+    	};
     }
 
     class Search extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$c, create_fragment$c, safe_not_equal, ["placeholder"]);
+    		init(this, options, instance$c, create_fragment$c, safe_not_equal, ["placeholder", "value"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Search", options, id: create_fragment$c.name });
     	}
 
@@ -4865,6 +4911,14 @@ var app = (function () {
     	}
 
     	set placeholder(value) {
+    		throw new Error("<Search>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get value() {
+    		throw new Error("<Search>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set value(value) {
     		throw new Error("<Search>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -5179,7 +5233,7 @@ var app = (function () {
 
     const file$g = "src/Developers.svelte";
 
-    // (315:6) <Button         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         on:click="{doAdd}"         disabled="{$add_disabled}">
+    // (375:6) <Button         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         on:click="{doAdd}"         disabled="{$add_disabled}">
     function create_default_slot_7(ctx) {
     	var t;
 
@@ -5198,11 +5252,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(315:6) <Button         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         on:click=\"{doAdd}\"         disabled=\"{$add_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(375:6) <Button         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         on:click=\"{doAdd}\"         disabled=\"{$add_disabled}\">", ctx });
     	return block;
     }
 
-    // (324:4) <List data="{$developer_list}" let:item="{developer}">
+    // (384:4) <List data="{$developer_list}" let:item="{developer}">
     function create_default_slot_6(ctx) {
     	var p, t_value = ctx.developer.name + "", t, p_data_id_value, dispose;
 
@@ -5212,7 +5266,7 @@ var app = (function () {
     			t = text(t_value);
     			attr_dev(p, "data-id", p_data_id_value = ctx.developer.id);
     			attr_dev(p, "class", "developer svelte-1pk1dxs");
-    			add_location(p, file$g, 324, 6, 8523);
+    			add_location(p, file$g, 384, 6, 10017);
     			dispose = listen_dev(p, "click", ctx.doDeveloper);
     		},
 
@@ -5239,11 +5293,11 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(324:4) <List data=\"{$developer_list}\" let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(384:4) <List data=\"{$developer_list}\" let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (334:6) <List data="{$label_list}" let:item="{label}">
+    // (394:6) <List data="{$label_list}" let:item="{label}">
     function create_default_slot_5$1(ctx) {
     	var p, t0_value = ctx.label.name + "", t0, span, t1_value = ctx.label.count + "", t1, p_data_id_value;
 
@@ -5254,10 +5308,10 @@ var app = (function () {
     			span = element("span");
     			t1 = text(t1_value);
     			attr_dev(span, "class", "svelte-1pk1dxs");
-    			add_location(span, file$g, 334, 58, 8846);
+    			add_location(span, file$g, 394, 58, 10340);
     			attr_dev(p, "data-id", p_data_id_value = ctx.label.id);
     			attr_dev(p, "class", "label svelte-1pk1dxs");
-    			add_location(p, file$g, 334, 8, 8796);
+    			add_location(p, file$g, 394, 8, 10290);
     		},
 
     		m: function mount(target, anchor) {
@@ -5287,11 +5341,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(334:6) <List data=\"{$label_list}\" let:item=\"{label}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(394:6) <List data=\"{$label_list}\" let:item=\"{label}\">", ctx });
     	return block;
     }
 
-    // (333:4) <Details summary="Labels">
+    // (393:4) <Details summary="Labels">
     function create_default_slot_4$1(ctx) {
     	var current;
 
@@ -5339,11 +5393,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(333:4) <Details summary=\"Labels\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(393:4) <Details summary=\"Labels\">", ctx });
     	return block;
     }
 
-    // (346:6) <Tab          on:click="{() => $tab_index = 0}"         selected="{$tab_index === 0 ? true : false}">
+    // (406:6) <Tab          on:click="{() => $tab_index = 0}"         selected="{$tab_index === 0 ? true : false}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -5362,11 +5416,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(346:6) <Tab          on:click=\"{() => $tab_index = 0}\"         selected=\"{$tab_index === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(406:6) <Tab          on:click=\"{() => $tab_index = 0}\"         selected=\"{$tab_index === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (349:6) <Tab          on:click="{() => $tab_index = 1}"         selected="{$tab_index === 1 ? true : false}"          disabled="{$social_disabled}">
+    // (409:6) <Tab          on:click="{() => $tab_index = 1}"         selected="{$tab_index === 1 ? true : false}"          disabled="{$social_disabled}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -5385,11 +5439,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(349:6) <Tab          on:click=\"{() => $tab_index = 1}\"         selected=\"{$tab_index === 1 ? true : false}\"          disabled=\"{$social_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(409:6) <Tab          on:click=\"{() => $tab_index = 1}\"         selected=\"{$tab_index === 1 ? true : false}\"          disabled=\"{$social_disabled}\">", ctx });
     	return block;
     }
 
-    // (353:6) <Tab          on:click="{() => $tab_index = 2}"         selected="{$tab_index === 2 ? true : false}"          disabled="{$notes_disabled}">
+    // (413:6) <Tab          on:click="{() => $tab_index = 2}"         selected="{$tab_index === 2 ? true : false}"          disabled="{$notes_disabled}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -5408,11 +5462,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(353:6) <Tab          on:click=\"{() => $tab_index = 2}\"         selected=\"{$tab_index === 2 ? true : false}\"          disabled=\"{$notes_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(413:6) <Tab          on:click=\"{() => $tab_index = 2}\"         selected=\"{$tab_index === 2 ? true : false}\"          disabled=\"{$notes_disabled}\">", ctx });
     	return block;
     }
 
-    // (345:4) <TabBar>
+    // (405:4) <TabBar>
     function create_default_slot$2(ctx) {
     	var t0, t1, current;
 
@@ -5519,7 +5573,7 @@ var app = (function () {
     			destroy_component(tab2, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(345:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(405:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -5615,17 +5669,17 @@ var app = (function () {
     			t11 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-1pk1dxs");
-    			add_location(div0, file$g, 312, 4, 8198);
+    			add_location(div0, file$g, 372, 4, 9692);
     			attr_dev(h4, "class", "svelte-1pk1dxs");
-    			add_location(h4, file$g, 322, 4, 8438);
+    			add_location(h4, file$g, 382, 4, 9932);
     			attr_dev(aside0, "class", "svelte-1pk1dxs");
-    			add_location(aside0, file$g, 309, 2, 8165);
+    			add_location(aside0, file$g, 369, 2, 9659);
     			attr_dev(article, "class", "svelte-1pk1dxs");
-    			add_location(article, file$g, 341, 2, 8945);
+    			add_location(article, file$g, 401, 2, 10439);
     			attr_dev(aside1, "class", "svelte-1pk1dxs");
-    			add_location(aside1, file$g, 379, 2, 9912);
+    			add_location(aside1, file$g, 439, 2, 11406);
     			attr_dev(div1, "class", "panel svelte-1pk1dxs");
-    			add_location(div1, file$g, 306, 0, 8120);
+    			add_location(div1, file$g, 366, 0, 9614);
     		},
 
     		l: function claim(nodes) {
@@ -5753,7 +5807,7 @@ var app = (function () {
     }
 
     function instance$g($$self, $$props, $$invalidate) {
-    	let $developer_list, $label_list, $add_disabled, $tab_index, $social_disabled, $notes_disabled, $overview_disabled, $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $social_index, $controls_mode, $developer_index, $notes_list;
+    	let $developer_list, $label_list, $add_disabled, $tab_index, $social_disabled, $notes_disabled, $overview_disabled, $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $social_index, $controls_mode, $developer_index, $developer_labels, $notes_list;
 
     	validate_store(developer_list, 'developer_list');
     	component_subscribe($$self, developer_list, $$value => { $developer_list = $$value; $$invalidate('$developer_list', $developer_list); });
@@ -5785,6 +5839,8 @@ var app = (function () {
     	component_subscribe($$self, controls_mode, $$value => { $controls_mode = $$value; $$invalidate('$controls_mode', $controls_mode); });
     	validate_store(developer_index, 'developer_index');
     	component_subscribe($$self, developer_index, $$value => { $developer_index = $$value; $$invalidate('$developer_index', $developer_index); });
+    	validate_store(developer_labels, 'developer_labels');
+    	component_subscribe($$self, developer_labels, $$value => { $developer_labels = $$value; $$invalidate('$developer_labels', $developer_labels); });
     	validate_store(notes_list, 'notes_list');
     	component_subscribe($$self, notes_list, $$value => { $notes_list = $$value; $$invalidate('$notes_list', $notes_list); });
 
@@ -5898,7 +5954,19 @@ var app = (function () {
       
       set_store_value(controls_mode, $controls_mode = 2);
 
-      fetch( `api/developer/${$developer_id}/note` )
+      fetch( `/api/developer/${$developer_id}/label` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        let labels = [];
+
+        for( let a = 0; a < data.length; a++ ) {
+          labels.push( data[a].name );
+        }
+
+        set_store_value(developer_labels, $developer_labels = labels.slice( 0 ));
+      } );
+
+      fetch( `/api/developer/${$developer_id}/note` )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(notes_list, $notes_list = data.slice( 0 ));
@@ -5972,7 +6040,7 @@ var app = (function () {
         body: JSON.stringify( developer )
       } )
       .then( ( response ) => response.json() )
-      .then( ( data ) => {
+      .then( async ( data ) => {
         $developer_list.push( data );
         $developer_list.sort( ( a, b ) => {
           if( a.name > b.name ) return 1;
@@ -5982,6 +6050,53 @@ var app = (function () {
         } );
         set_store_value(developer_list, $developer_list = $developer_list.slice( 0 ));
         set_store_value(developer_id, $developer_id = data.id);
+
+        let later = [];
+
+        for( let a = 0; a < $developer_labels.length; a++ ) {
+          let found = false;
+          let label_id = null;
+
+          for( let b = 0; b < $label_list.length; b++ ) {
+            if( $developer_labels[a] === $label_list[b].name ) {
+              found = true;
+              label_id = $label_list[b].id;
+              break;
+            }
+          }
+
+          if( !found ) {
+            let label = await fetch( '/api/label', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify( {
+                name: $developer_labels[a]
+              } )
+            } )
+            .then( ( response ) => response.json() );
+
+            later.push( label );
+            label_id = label.id;
+          }
+
+          await fetch( `/api/developer/${$developer_id}/label`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( {
+              label_id: label_id
+            } )
+          } );      
+        }
+
+        for( let a = 0; a < later.length; a++ ) {
+          $label_list.push( later[a] );
+          $label_list.sort();
+          set_store_value(label_list, $label_list = $label_list.slice( 0 ));
+        }
       } );
     }
 
@@ -6011,6 +6126,7 @@ var app = (function () {
     		if ('$social_index' in $$props) social_index.set($social_index);
     		if ('$controls_mode' in $$props) controls_mode.set($controls_mode);
     		if ('$developer_index' in $$props) developer_index.set($developer_index);
+    		if ('$developer_labels' in $$props) developer_labels.set($developer_labels);
     		if ('$notes_list' in $$props) notes_list.set($notes_list);
     	};
 
@@ -6142,11 +6258,689 @@ var app = (function () {
     	}
     }
 
-    /* src/Switcher.svelte generated by Svelte v3.12.1 */
+    /* src/Repositories.svelte generated by Svelte v3.12.1 */
 
-    const file$i = "src/Switcher.svelte";
+    const file$i = "src/Repositories.svelte";
+
+    function get_each_context$3(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.repo = list[i];
+    	return child_ctx;
+    }
+
+    // (246:4) <Button icon="/img/add-white.svg">
+    function create_default_slot$3(ctx) {
+    	var t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("Add");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(t);
+    			}
+    		}
+    	};
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(246:4) <Button icon=\"/img/add-white.svg\">", ctx });
+    	return block;
+    }
+
+    // (261:4) {#each repositories as repo}
+    function create_each_block$3(ctx) {
+    	var div, p0, t0_value = ctx.repo.name + "", t0, t1, p1, t2_value = format$1( ctx.repo.started_at ) + "", t2, t3, p2, t4_value = format$1( ctx.repo.pushed_at ) + "", t4, t5, p3, t6_value = ctx.repo.subscribers + "", t6, t7, p4, t8_value = ctx.repo.stargazers + "", t8, t9, p5, t10_value = ctx.repo.forks + "", t10, t11, p6, t12_value = ctx.repo.issues + "", t12, t13;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			p0 = element("p");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			p1 = element("p");
+    			t2 = text(t2_value);
+    			t3 = space();
+    			p2 = element("p");
+    			t4 = text(t4_value);
+    			t5 = space();
+    			p3 = element("p");
+    			t6 = text(t6_value);
+    			t7 = space();
+    			p4 = element("p");
+    			t8 = text(t8_value);
+    			t9 = space();
+    			p5 = element("p");
+    			t10 = text(t10_value);
+    			t11 = space();
+    			p6 = element("p");
+    			t12 = text(t12_value);
+    			t13 = space();
+    			attr_dev(p0, "class", "svelte-6djnri");
+    			add_location(p0, file$i, 263, 8, 5417);
+    			attr_dev(p1, "class", "medium svelte-6djnri");
+    			add_location(p1, file$i, 264, 8, 5444);
+    			attr_dev(p2, "class", "medium svelte-6djnri");
+    			add_location(p2, file$i, 265, 8, 5508);
+    			attr_dev(p3, "class", "small svelte-6djnri");
+    			toggle_class(p3, "average", ctx.repo.subscribers < ctx.average_watchers ? true : false);
+    			toggle_class(p3, "median", ctx.repo.subscribers < ctx.median_watchers ? true : false);
+    			add_location(p3, file$i, 266, 8, 5577);
+    			attr_dev(p4, "class", "small svelte-6djnri");
+    			toggle_class(p4, "average", ctx.repo.stargazers < ctx.average_stars ? true : false);
+    			toggle_class(p4, "median", ctx.repo.stargazers < ctx.median_stars ? true : false);
+    			add_location(p4, file$i, 270, 8, 5793);
+    			attr_dev(p5, "class", "small svelte-6djnri");
+    			toggle_class(p5, "average", ctx.repo.forks < ctx.average_forks ? true : false);
+    			toggle_class(p5, "median", ctx.repo.forks < ctx.median_forks ? true : false);
+    			add_location(p5, file$i, 274, 8, 6000);
+    			attr_dev(p6, "class", "small svelte-6djnri");
+    			add_location(p6, file$i, 278, 8, 6192);
+    			attr_dev(div, "class", "row svelte-6djnri");
+    			add_location(div, file$i, 262, 6, 5391);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, p0);
+    			append_dev(p0, t0);
+    			append_dev(div, t1);
+    			append_dev(div, p1);
+    			append_dev(p1, t2);
+    			append_dev(div, t3);
+    			append_dev(div, p2);
+    			append_dev(p2, t4);
+    			append_dev(div, t5);
+    			append_dev(div, p3);
+    			append_dev(p3, t6);
+    			append_dev(div, t7);
+    			append_dev(div, p4);
+    			append_dev(p4, t8);
+    			append_dev(div, t9);
+    			append_dev(div, p5);
+    			append_dev(p5, t10);
+    			append_dev(div, t11);
+    			append_dev(div, p6);
+    			append_dev(p6, t12);
+    			append_dev(div, t13);
+    		},
+
+    		p: function update(changed, ctx) {
+    			if ((changed.repositories) && t0_value !== (t0_value = ctx.repo.name + "")) {
+    				set_data_dev(t0, t0_value);
+    			}
+
+    			if ((changed.repositories) && t2_value !== (t2_value = format$1( ctx.repo.started_at ) + "")) {
+    				set_data_dev(t2, t2_value);
+    			}
+
+    			if ((changed.repositories) && t4_value !== (t4_value = format$1( ctx.repo.pushed_at ) + "")) {
+    				set_data_dev(t4, t4_value);
+    			}
+
+    			if ((changed.repositories) && t6_value !== (t6_value = ctx.repo.subscribers + "")) {
+    				set_data_dev(t6, t6_value);
+    			}
+
+    			if ((changed.repositories || changed.average_watchers)) {
+    				toggle_class(p3, "average", ctx.repo.subscribers < ctx.average_watchers ? true : false);
+    			}
+
+    			if ((changed.repositories || changed.median_watchers)) {
+    				toggle_class(p3, "median", ctx.repo.subscribers < ctx.median_watchers ? true : false);
+    			}
+
+    			if ((changed.repositories) && t8_value !== (t8_value = ctx.repo.stargazers + "")) {
+    				set_data_dev(t8, t8_value);
+    			}
+
+    			if ((changed.repositories || changed.average_stars)) {
+    				toggle_class(p4, "average", ctx.repo.stargazers < ctx.average_stars ? true : false);
+    			}
+
+    			if ((changed.repositories || changed.median_stars)) {
+    				toggle_class(p4, "median", ctx.repo.stargazers < ctx.median_stars ? true : false);
+    			}
+
+    			if ((changed.repositories) && t10_value !== (t10_value = ctx.repo.forks + "")) {
+    				set_data_dev(t10, t10_value);
+    			}
+
+    			if ((changed.repositories || changed.average_forks)) {
+    				toggle_class(p5, "average", ctx.repo.forks < ctx.average_forks ? true : false);
+    			}
+
+    			if ((changed.repositories || changed.median_forks)) {
+    				toggle_class(p5, "median", ctx.repo.forks < ctx.median_forks ? true : false);
+    			}
+
+    			if ((changed.repositories) && t12_value !== (t12_value = ctx.repo.issues + "")) {
+    				set_data_dev(t12, t12_value);
+    			}
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(div);
+    			}
+    		}
+    	};
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$3.name, type: "each", source: "(261:4) {#each repositories as repo}", ctx });
+    	return block;
+    }
 
     function create_fragment$i(ctx) {
+    	var div4, div0, updating_value, t0, t1, header, p0, t3, p1, t5, p2, t7, p3, t9, p4, t11, p5, t13, p6, t15, div1, t16, footer, div2, p7, t17, t18_value = ctx.repositories.length + "", t18, t19, t20, p8, t22, p9, t23, t24, p10, t25, t26, p11, t27, t28, p12, t29, t30, div3, p13, t31, t32, p14, t34, p15, t35, t36, p16, t37, t38, p17, t39, t40, p18, t41, current;
+
+    	function search_1_value_binding(value) {
+    		ctx.search_1_value_binding.call(null, value);
+    		updating_value = true;
+    		add_flush_callback(() => updating_value = false);
+    	}
+
+    	let search_1_props = {};
+    	if (ctx.search !== void 0) {
+    		search_1_props.value = ctx.search;
+    	}
+    	var search_1 = new Search({ props: search_1_props, $$inline: true });
+
+    	binding_callbacks.push(() => bind(search_1, 'value', search_1_value_binding));
+
+    	var button = new Button({
+    		props: {
+    		icon: "/img/add-white.svg",
+    		$$slots: { default: [create_default_slot$3] },
+    		$$scope: { ctx }
+    	},
+    		$$inline: true
+    	});
+
+    	let each_value = ctx.repositories;
+
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			div4 = element("div");
+    			div0 = element("div");
+    			search_1.$$.fragment.c();
+    			t0 = space();
+    			button.$$.fragment.c();
+    			t1 = space();
+    			header = element("header");
+    			p0 = element("p");
+    			p0.textContent = "Name";
+    			t3 = space();
+    			p1 = element("p");
+    			p1.textContent = "Created";
+    			t5 = space();
+    			p2 = element("p");
+    			p2.textContent = "Pushed";
+    			t7 = space();
+    			p3 = element("p");
+    			p3.textContent = "Watchers";
+    			t9 = space();
+    			p4 = element("p");
+    			p4.textContent = "Stars";
+    			t11 = space();
+    			p5 = element("p");
+    			p5.textContent = "Forks";
+    			t13 = space();
+    			p6 = element("p");
+    			p6.textContent = "Issues";
+    			t15 = space();
+    			div1 = element("div");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t16 = space();
+    			footer = element("footer");
+    			div2 = element("div");
+    			p7 = element("p");
+    			t17 = text("Showing ");
+    			t18 = text(t18_value);
+    			t19 = text(" repositories");
+    			t20 = space();
+    			p8 = element("p");
+    			p8.textContent = "Median";
+    			t22 = space();
+    			p9 = element("p");
+    			t23 = text(ctx.median_watchers);
+    			t24 = space();
+    			p10 = element("p");
+    			t25 = text(ctx.median_stars);
+    			t26 = space();
+    			p11 = element("p");
+    			t27 = text(ctx.median_forks);
+    			t28 = space();
+    			p12 = element("p");
+    			t29 = text(ctx.median_issues);
+    			t30 = space();
+    			div3 = element("div");
+    			p13 = element("p");
+    			t31 = text(ctx.updated_at);
+    			t32 = space();
+    			p14 = element("p");
+    			p14.textContent = "Average";
+    			t34 = space();
+    			p15 = element("p");
+    			t35 = text(ctx.average_watchers);
+    			t36 = space();
+    			p16 = element("p");
+    			t37 = text(ctx.average_stars);
+    			t38 = space();
+    			p17 = element("p");
+    			t39 = text(ctx.average_forks);
+    			t40 = space();
+    			p18 = element("p");
+    			t41 = text(ctx.average_issues);
+    			attr_dev(div0, "class", "search svelte-6djnri");
+    			add_location(div0, file$i, 243, 2, 4972);
+    			attr_dev(p0, "class", "svelte-6djnri");
+    			add_location(p0, file$i, 249, 4, 5105);
+    			attr_dev(p1, "class", "medium svelte-6djnri");
+    			add_location(p1, file$i, 250, 4, 5121);
+    			attr_dev(p2, "class", "medium svelte-6djnri");
+    			add_location(p2, file$i, 251, 4, 5155);
+    			attr_dev(p3, "class", "small svelte-6djnri");
+    			add_location(p3, file$i, 252, 4, 5188);
+    			attr_dev(p4, "class", "small svelte-6djnri");
+    			add_location(p4, file$i, 253, 4, 5222);
+    			attr_dev(p5, "class", "small svelte-6djnri");
+    			add_location(p5, file$i, 254, 4, 5253);
+    			attr_dev(p6, "class", "small svelte-6djnri");
+    			add_location(p6, file$i, 255, 4, 5284);
+    			attr_dev(header, "class", "svelte-6djnri");
+    			add_location(header, file$i, 248, 2, 5092);
+    			attr_dev(div1, "class", "list svelte-6djnri");
+    			add_location(div1, file$i, 258, 2, 5327);
+    			attr_dev(p7, "class", "svelte-6djnri");
+    			add_location(p7, file$i, 287, 6, 6306);
+    			attr_dev(p8, "class", "medium svelte-6djnri");
+    			add_location(p8, file$i, 288, 6, 6362);
+    			attr_dev(p9, "class", "small svelte-6djnri");
+    			add_location(p9, file$i, 289, 6, 6397);
+    			attr_dev(p10, "class", "small svelte-6djnri");
+    			add_location(p10, file$i, 290, 6, 6442);
+    			attr_dev(p11, "class", "small svelte-6djnri");
+    			add_location(p11, file$i, 291, 6, 6484);
+    			attr_dev(p12, "class", "small svelte-6djnri");
+    			add_location(p12, file$i, 292, 6, 6526);
+    			attr_dev(div2, "class", "median svelte-6djnri");
+    			add_location(div2, file$i, 286, 4, 6279);
+    			attr_dev(p13, "class", "svelte-6djnri");
+    			add_location(p13, file$i, 295, 6, 6606);
+    			attr_dev(p14, "class", "medium svelte-6djnri");
+    			add_location(p14, file$i, 296, 6, 6632);
+    			attr_dev(p15, "class", "small svelte-6djnri");
+    			add_location(p15, file$i, 297, 6, 6668);
+    			attr_dev(p16, "class", "small svelte-6djnri");
+    			add_location(p16, file$i, 298, 6, 6714);
+    			attr_dev(p17, "class", "small svelte-6djnri");
+    			add_location(p17, file$i, 299, 6, 6757);
+    			attr_dev(p18, "class", "small svelte-6djnri");
+    			add_location(p18, file$i, 300, 6, 6800);
+    			attr_dev(div3, "class", "average svelte-6djnri");
+    			add_location(div3, file$i, 294, 4, 6578);
+    			attr_dev(footer, "class", "svelte-6djnri");
+    			add_location(footer, file$i, 285, 2, 6266);
+    			attr_dev(div4, "class", "panel svelte-6djnri");
+    			add_location(div4, file$i, 241, 0, 4949);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div4, anchor);
+    			append_dev(div4, div0);
+    			mount_component(search_1, div0, null);
+    			append_dev(div0, t0);
+    			mount_component(button, div0, null);
+    			append_dev(div4, t1);
+    			append_dev(div4, header);
+    			append_dev(header, p0);
+    			append_dev(header, t3);
+    			append_dev(header, p1);
+    			append_dev(header, t5);
+    			append_dev(header, p2);
+    			append_dev(header, t7);
+    			append_dev(header, p3);
+    			append_dev(header, t9);
+    			append_dev(header, p4);
+    			append_dev(header, t11);
+    			append_dev(header, p5);
+    			append_dev(header, t13);
+    			append_dev(header, p6);
+    			append_dev(div4, t15);
+    			append_dev(div4, div1);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(div1, null);
+    			}
+
+    			append_dev(div4, t16);
+    			append_dev(div4, footer);
+    			append_dev(footer, div2);
+    			append_dev(div2, p7);
+    			append_dev(p7, t17);
+    			append_dev(p7, t18);
+    			append_dev(p7, t19);
+    			append_dev(div2, t20);
+    			append_dev(div2, p8);
+    			append_dev(div2, t22);
+    			append_dev(div2, p9);
+    			append_dev(p9, t23);
+    			append_dev(div2, t24);
+    			append_dev(div2, p10);
+    			append_dev(p10, t25);
+    			append_dev(div2, t26);
+    			append_dev(div2, p11);
+    			append_dev(p11, t27);
+    			append_dev(div2, t28);
+    			append_dev(div2, p12);
+    			append_dev(p12, t29);
+    			append_dev(footer, t30);
+    			append_dev(footer, div3);
+    			append_dev(div3, p13);
+    			append_dev(p13, t31);
+    			append_dev(div3, t32);
+    			append_dev(div3, p14);
+    			append_dev(div3, t34);
+    			append_dev(div3, p15);
+    			append_dev(p15, t35);
+    			append_dev(div3, t36);
+    			append_dev(div3, p16);
+    			append_dev(p16, t37);
+    			append_dev(div3, t38);
+    			append_dev(div3, p17);
+    			append_dev(p17, t39);
+    			append_dev(div3, t40);
+    			append_dev(div3, p18);
+    			append_dev(p18, t41);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var search_1_changes = {};
+    			if (!updating_value && changed.search) {
+    				search_1_changes.value = ctx.search;
+    			}
+    			search_1.$set(search_1_changes);
+
+    			var button_changes = {};
+    			if (changed.$$scope) button_changes.$$scope = { changed, ctx };
+    			button.$set(button_changes);
+
+    			if (changed.repositories || changed.average_forks || changed.median_forks || changed.average_stars || changed.median_stars || changed.average_watchers || changed.median_watchers || changed.format) {
+    				each_value = ctx.repositories;
+
+    				let i;
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context$3(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    					} else {
+    						each_blocks[i] = create_each_block$3(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(div1, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+    				each_blocks.length = each_value.length;
+    			}
+
+    			if ((!current || changed.repositories) && t18_value !== (t18_value = ctx.repositories.length + "")) {
+    				set_data_dev(t18, t18_value);
+    			}
+
+    			if (!current || changed.median_watchers) {
+    				set_data_dev(t23, ctx.median_watchers);
+    			}
+
+    			if (!current || changed.median_stars) {
+    				set_data_dev(t25, ctx.median_stars);
+    			}
+
+    			if (!current || changed.median_forks) {
+    				set_data_dev(t27, ctx.median_forks);
+    			}
+
+    			if (!current || changed.median_issues) {
+    				set_data_dev(t29, ctx.median_issues);
+    			}
+
+    			if (!current || changed.updated_at) {
+    				set_data_dev(t31, ctx.updated_at);
+    			}
+
+    			if (!current || changed.average_watchers) {
+    				set_data_dev(t35, ctx.average_watchers);
+    			}
+
+    			if (!current || changed.average_stars) {
+    				set_data_dev(t37, ctx.average_stars);
+    			}
+
+    			if (!current || changed.average_forks) {
+    				set_data_dev(t39, ctx.average_forks);
+    			}
+
+    			if (!current || changed.average_issues) {
+    				set_data_dev(t41, ctx.average_issues);
+    			}
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(search_1.$$.fragment, local);
+
+    			transition_in(button.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(search_1.$$.fragment, local);
+    			transition_out(button.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach_dev(div4);
+    			}
+
+    			destroy_component(search_1);
+
+    			destroy_component(button);
+
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$i.name, type: "component", source: "", ctx });
+    	return block;
+    }
+
+    function format$1( stamp ) {
+    stamp = new Date( stamp );
+
+    let month = stamp.getMonth().toString().padStart( 2, '0' );
+    let date = stamp.getDate().toString().padStart( 2, '0' );
+
+    return `${month}/${date}/${stamp.getFullYear()}`;
+    }
+
+    function formatLong( updated ) {
+    let hours = [
+      12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+      12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    ];
+    let months = [
+      'January',   'February', 'March',    'April', 
+      'May',       'June',     'July',     'August', 
+      'September', 'October',  'November', 'December'
+    ];
+
+    updated = new Date( updated );
+
+    return `As of ${months[updated.getMonth()]} ${updated.getDate()}, ${updated.getFullYear()} at ${hours[updated.getHours()]}:${updated.getMinutes().toString().padStart( 2, '0' )} ${updated.getHours() > 11 ? 'PM' : 'AM'}`;
+    }
+
+    function median( values ) {
+    let result = values[Math.floor( values.length / 2 )];
+
+    if( ( values.length % 2 ) === 0 ) {
+      const low = values.length / 2;
+      const high = low + 1;
+      result = ( values[low] + values[high] ) / 2;
+    }
+
+    return result;
+    }
+
+    function numeric( a, b ) {
+    if( a > b ) return 1;
+    if( a < b ) return -1;
+    return 0;
+    }
+
+    function instance$i($$self, $$props, $$invalidate) {
+    	
+
+    let average_watchers = 0;
+    let average_stars = 0;
+    let average_forks = 0;
+    let average_issues = 0;
+    let median_watchers = 0;
+    let median_stars = 0;
+    let median_forks = 0;
+    let median_issues = 0;
+    let repositories = [];
+    let search = '';
+    let updated_at = undefined;
+
+    onMount( async () => {
+      fetch( '/api/repository' )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        data.sort( ( a, b ) => {
+          if( a.name < b.name ) return -1;
+          if( a.name > b.name ) return 1;
+          return 0;
+        } );
+
+        let sum = {
+          watchers: 0,
+          stars: 0,
+          forks: 0,
+          issues: 0
+        };
+        let statistics = {
+          watchers: [],
+          stars: [],
+          forks: [],
+          issues: []
+        };    
+
+        for( let d = 0; d < data.length; d++ ) {
+          sum.watchers = sum.watchers + data[d].subscribers;
+          sum.stars = sum.stars + data[d].stargazers;
+          sum.forks = sum.forks + data[d].forks;
+          sum.issues = sum.issues + data[d].issues;
+
+          statistics.watchers.push( data[d].subscribers );
+          statistics.stars.push( data[d].stargazers );
+          statistics.forks.push( data[d].forks );
+          statistics.issues.push( data[d].issues );        
+        }
+
+        $$invalidate('average_watchers', average_watchers = Math.round( sum.watchers / data.length ));
+        $$invalidate('average_stars', average_stars = Math.round( sum.stars / data.length ));
+        $$invalidate('average_forks', average_forks = Math.round( sum.forks / data.length ));
+        $$invalidate('average_issues', average_issues = Math.round( sum.issues / data.length ));
+
+        statistics.watchers = statistics.watchers.sort( numeric );
+        $$invalidate('median_watchers', median_watchers = median( statistics.watchers ));
+        statistics.stars = statistics.stars.sort( numeric );  
+        $$invalidate('median_stars', median_stars = median( statistics.stars ));  
+        statistics.forks = statistics.forks.sort( numeric );
+        $$invalidate('median_forks', median_forks = median( statistics.forks ));    
+        statistics.issues = statistics.issues.sort( numeric );
+        $$invalidate('median_issues', median_issues = median( statistics.issues ));      
+
+        $$invalidate('repositories', repositories = data.slice( 0 ));
+
+        $$invalidate('updated_at', updated_at = formatLong( repositories[0].updated_at ));
+      } );
+    } );
+
+    	function search_1_value_binding(value) {
+    		search = value;
+    		$$invalidate('search', search);
+    	}
+
+    	$$self.$capture_state = () => {
+    		return {};
+    	};
+
+    	$$self.$inject_state = $$props => {
+    		if ('average_watchers' in $$props) $$invalidate('average_watchers', average_watchers = $$props.average_watchers);
+    		if ('average_stars' in $$props) $$invalidate('average_stars', average_stars = $$props.average_stars);
+    		if ('average_forks' in $$props) $$invalidate('average_forks', average_forks = $$props.average_forks);
+    		if ('average_issues' in $$props) $$invalidate('average_issues', average_issues = $$props.average_issues);
+    		if ('median_watchers' in $$props) $$invalidate('median_watchers', median_watchers = $$props.median_watchers);
+    		if ('median_stars' in $$props) $$invalidate('median_stars', median_stars = $$props.median_stars);
+    		if ('median_forks' in $$props) $$invalidate('median_forks', median_forks = $$props.median_forks);
+    		if ('median_issues' in $$props) $$invalidate('median_issues', median_issues = $$props.median_issues);
+    		if ('repositories' in $$props) $$invalidate('repositories', repositories = $$props.repositories);
+    		if ('search' in $$props) $$invalidate('search', search = $$props.search);
+    		if ('updated_at' in $$props) $$invalidate('updated_at', updated_at = $$props.updated_at);
+    	};
+
+    	return {
+    		average_watchers,
+    		average_stars,
+    		average_forks,
+    		average_issues,
+    		median_watchers,
+    		median_stars,
+    		median_forks,
+    		median_issues,
+    		repositories,
+    		search,
+    		updated_at,
+    		search_1_value_binding
+    	};
+    }
+
+    class Repositories extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$i, create_fragment$i, safe_not_equal, []);
+    		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Repositories", options, id: create_fragment$i.name });
+    	}
+    }
+
+    /* src/Switcher.svelte generated by Svelte v3.12.1 */
+
+    const file$j = "src/Switcher.svelte";
+
+    function create_fragment$j(ctx) {
     	var div, button0, t_1, button1, dispose;
 
     	const block = {
@@ -6159,12 +6953,12 @@ var app = (function () {
     			button1.textContent = "Repositories";
     			attr_dev(button0, "class", "svelte-z8cxbi");
     			toggle_class(button0, "selected", ctx.index === 0);
-    			add_location(button0, file$i, 43, 2, 672);
+    			add_location(button0, file$j, 43, 2, 672);
     			attr_dev(button1, "class", "svelte-z8cxbi");
     			toggle_class(button1, "selected", ctx.index === 1);
-    			add_location(button1, file$i, 46, 2, 771);
+    			add_location(button1, file$j, 46, 2, 771);
     			attr_dev(div, "class", "svelte-z8cxbi");
-    			add_location(div, file$i, 42, 0, 664);
+    			add_location(div, file$j, 42, 0, 664);
 
     			dispose = [
     				listen_dev(button0, "click", ctx.click_handler),
@@ -6201,11 +6995,11 @@ var app = (function () {
     			run_all(dispose);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$i.name, type: "component", source: "", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$j.name, type: "component", source: "", ctx });
     	return block;
     }
 
-    function instance$i($$self, $$props, $$invalidate) {
+    function instance$j($$self, $$props, $$invalidate) {
     	let { index = 0 } = $$props;
 
     	const writable_props = ['index'];
@@ -6235,8 +7029,8 @@ var app = (function () {
     class Switcher extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$i, create_fragment$i, safe_not_equal, ["index"]);
-    		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Switcher", options, id: create_fragment$i.name });
+    		init(this, options, instance$j, create_fragment$j, safe_not_equal, ["index"]);
+    		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Switcher", options, id: create_fragment$j.name });
     	}
 
     	get index() {
@@ -6250,8 +7044,8 @@ var app = (function () {
 
     /* src/App.svelte generated by Svelte v3.12.1 */
 
-    function create_fragment$j(ctx) {
-    	var t0, updating_index, t1, current;
+    function create_fragment$k(ctx) {
+    	var t0, updating_index, t1, t2, current;
 
     	var header = new Header({ $$inline: true });
 
@@ -6274,6 +7068,11 @@ var app = (function () {
     		$$inline: true
     	});
 
+    	var repositories = new Repositories({
+    		props: { style: "display: " + (ctx.panel === 1 ? 'flex' : 'none') + ";" },
+    		$$inline: true
+    	});
+
     	const block = {
     		c: function create() {
     			header.$$.fragment.c();
@@ -6281,6 +7080,8 @@ var app = (function () {
     			switcher.$$.fragment.c();
     			t1 = space();
     			developers.$$.fragment.c();
+    			t2 = space();
+    			repositories.$$.fragment.c();
     		},
 
     		l: function claim(nodes) {
@@ -6293,6 +7094,8 @@ var app = (function () {
     			mount_component(switcher, target, anchor);
     			insert_dev(target, t1, anchor);
     			mount_component(developers, target, anchor);
+    			insert_dev(target, t2, anchor);
+    			mount_component(repositories, target, anchor);
     			current = true;
     		},
 
@@ -6306,6 +7109,10 @@ var app = (function () {
     			var developers_changes = {};
     			if (changed.panel) developers_changes.style = "display: " + (ctx.panel === 0 ? 'flex' : 'none') + ";";
     			developers.$set(developers_changes);
+
+    			var repositories_changes = {};
+    			if (changed.panel) repositories_changes.style = "display: " + (ctx.panel === 1 ? 'flex' : 'none') + ";";
+    			repositories.$set(repositories_changes);
     		},
 
     		i: function intro(local) {
@@ -6316,6 +7123,8 @@ var app = (function () {
 
     			transition_in(developers.$$.fragment, local);
 
+    			transition_in(repositories.$$.fragment, local);
+
     			current = true;
     		},
 
@@ -6323,6 +7132,7 @@ var app = (function () {
     			transition_out(header.$$.fragment, local);
     			transition_out(switcher.$$.fragment, local);
     			transition_out(developers.$$.fragment, local);
+    			transition_out(repositories.$$.fragment, local);
     			current = false;
     		},
 
@@ -6340,13 +7150,19 @@ var app = (function () {
     			}
 
     			destroy_component(developers, detaching);
+
+    			if (detaching) {
+    				detach_dev(t2);
+    			}
+
+    			destroy_component(repositories, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$j.name, type: "component", source: "", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$k.name, type: "component", source: "", ctx });
     	return block;
     }
 
-    function instance$j($$self, $$props, $$invalidate) {
+    function instance$k($$self, $$props, $$invalidate) {
     	
 
     let panel = 0;
@@ -6370,8 +7186,8 @@ var app = (function () {
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$j, create_fragment$j, safe_not_equal, []);
-    		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "App", options, id: create_fragment$j.name });
+    		init(this, options, instance$k, create_fragment$k, safe_not_equal, []);
+    		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "App", options, id: create_fragment$k.name });
     	}
     }
 

@@ -11,18 +11,34 @@ function doKeyboard( evt ) {
     evt.preventDefault();
 
     let found = false;
+    let tags = [];
 
-    for( let v = 0; v < value.length; v++ ) {
-      if( value[v] === evt.target.value ) {
-        found = true;
-        break;
+    if( evt.target.value.indexOf( ',' ) > 0 ) {
+      tags = evt.target.value.split( ',' );
+    } else {
+      tags = [evt.target.value];
+    }
+
+    for( let t = 0; t < tags.length; t++ ) {
+      for( let v = 0; v < value.length; v++ ) {
+        if( value[v] === tags[t].trim() ) {
+          found = true;
+          break;
+        }
+      }
+
+      if( !found ) {
+        value.push( tags[t] );
       }
     }
 
-    if( !found ) {
-      value = [...value, evt.target.value];
-      evt.target.value = '';
-    }
+    value = value.splice( 0 );
+    evt.target.value = '';
+  }
+
+  if( evt.keyCode === 8 && evt.target.value.trim().length === 0 ) {
+    value.pop();
+    value = value.slice( 0 );
   }
 }
 
@@ -50,10 +66,33 @@ button {
   width: 20px;
 }
 
-div {
+div.control {
   display: flex;
   flex-direction: column;
+  flex-grow: 1; 
+}
+
+div.content {
+  background-color: #f4f4f4;
+  border-bottom: solid 1px #8d8d8d;
+  display: flex;
+  flex-direction: row;
   flex-grow: 1;
+  flex-wrap: wrap;
+  min-height: 39px;
+  margin: 0;
+  outline: solid 2px transparent;
+  outline-offset: -2px;  
+  padding: 0 16px 0 16px;  
+}
+
+div.tag {
+  background-color: #393939;
+  border-radius: 12px;
+  display: inline-flex;  
+  height: 24px;
+  margin: 8px 8px 0 0;
+  padding: 0 0 0 8px; 
 }
 
 input {
@@ -61,14 +100,15 @@ input {
   border: none;
   color: #161616;
   display: block;
+  flex-grow: 1;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
+  height: 39px;
   line-height: 40px;
   margin: 0;
   outline: none;
   padding: 0;
-  width: 100%;
 }
 
 input:disabled {
@@ -84,63 +124,33 @@ label {
   margin: 0 0 8px 0;
 }
 
-li.input {
-  width: 100%;
-}
-
-li.tag {
-  background-color: #393939;
-  border-radius: 12px;
-  box-sizing: border-box;
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  height: 24px;
-  margin: 8px 8px 0 0;
-  overflow: hidden;
-  padding: 0 0 0 8px;
-  position: relative;
-}
-
-ul {
-  background-color: #f4f4f4;
-  border-bottom: solid 1px #8d8d8d;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  flex-wrap: wrap;
-  height: 40px;  
-  list-style: none;
-  min-height: 40px;
-  margin: 0;
-  outline: solid 2px transparent;
-  outline-offset: -2px;  
-  padding: 0 16px 0 16px;
-}
-
 p {
   color: #ffffff;
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;  
   line-height: 24px;
   margin: 0;
   padding: 0;
 }
 
-.disabled {
-  border-bottom: solid 1px transparent;
+.content.disabled {
+  border-bottom: solid 1px transparent !important;
   cursor: not-allowed;
   outline: none;  
 }
 
 .focus {
-  outline: solid 2px #0062ff;
+  outline: solid 2px #0062ff !important;
+}
+
+.tag.disabled {
+  cursor: not-allowed;
+  padding: 0 9px 0 8px;
 }
 </style>
 
-<div>
+<div class="control">
 
   {#if label !== undefined}
 
@@ -148,26 +158,27 @@ p {
 
   {/if}
 
-  <ul class:focus="{focus}" class:disabled="{disabled}">
+  <div class="content" class:focus="{focus}" class:disabled="{disabled}">
 
-  {#each value as tag, t}
+    {#each value as tag, t}
+      <div class="tag" class:disabled="{disabled}">
+        <p>{tag}</p>
+        <button 
+          data-id="{t}" 
+          type="button" 
+          on:click="{doRemove}" 
+          style="display: {disabled ? 'none' : 'initial'};"></button>
+      </div>
+      
+    {/each}
 
-    <li class="tag">
-      <p>{tag}</p>
-      <button data-id="{t}" type="button" on:click="{doRemove}"></button>
-    </li>
+    <input 
+      placeholder="{placeholder}" 
+      on:keydown="{doKeyboard}" 
+      on:focus="{() => focus = true}"
+      on:blur="{() => focus = false}"
+      {disabled}>
 
-  {/each}
-
-    <li class="input">
-      <input 
-        placeholder="{value.length === 0 ? placeholder : ''}" 
-        on:keydown="{doKeyboard}" 
-        on:focus="{() => focus = true}"
-        on:blur="{() => focus = false}"
-        {disabled}>  
-    </li>
-
-  </ul>
+  </div>
 
 </div>

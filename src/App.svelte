@@ -10,5 +10,4 @@ let panel = 0;
 <Header/>
 <Switcher bind:index="{panel}"/>
 <Developers style="display: {panel === 0 ? 'flex' : 'none'};"/>
-
-<!-- <Repositories style="display: {panel === 1 ? 'flex' : 'none'};"/> -->
+<Repositories style="display: {panel === 1 ? 'flex' : 'none'};"/>

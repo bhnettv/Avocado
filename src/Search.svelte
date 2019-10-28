@@ -1,5 +1,6 @@
 <script>
 export let placeholder = 'Search';
+export let value = '';
 </script>
 
 <style>
@@ -22,4 +23,4 @@ input {
 }
 </style>
 
-<input placeholder="{placeholder}">
+<input bind:value="{value}" placeholder="{placeholder}" on:keydown>

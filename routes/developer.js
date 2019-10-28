@@ -142,44 +142,72 @@ router.post( '/:developer/label', ( req, res ) => {
     label_uuid: req.body.label_id
   };
 
-  let ids = req.db.prepare( `
+  let existing = req.db.prepare( `
     SELECT
-      Developer.id AS "developer_id",
-      Label.id AS "label_id"
+      DeveloperLabel.uuid AS "id",
+      DeveloperLabel.created_at,
+      DeveloperLabel.updated_at,
+      Developer.uuid AS "developer_id",
+      Label.uuid AS "label_id"
     FROM
       Developer,
+      DeveloperLabel,
       Label
     WHERE
+      Developer.id = DeveloperLabel.developer_id AND
+      DeveloperLabel.label_id = Label.id AND
       Developer.uuid = ? AND
       Label.uuid = ?
   ` )
-  .get( 
+  .get(
     record.developer_uuid,
     record.label_uuid
   );
-  record.developer_id = ids.developer_id;
-  record.label_id = ids.label_id;
 
-  let info = req.db.prepare( `
-    INSERT INTO DeveloperLabel
-    VALUES ( ?, ?, ?, ?, ?, ? )
-  ` )
-  .run(
-    record.id,
-    record.uuid,
-    record.created_at,
-    record.updated_at,
-    record.developer_id,
-    record.label_id
-  );
+  if( existing === undefined ) {
+    let ids = req.db.prepare( `
+      SELECT
+        Developer.id AS "developer_id",
+        Label.id AS "label_id"
+      FROM
+        Developer,
+        Label
+      WHERE
+        Developer.uuid = ? AND
+        Label.uuid = ?
+    ` )
+    .get( 
+      record.developer_uuid,
+      record.label_uuid
+    );
+    record.developer_id = ids.developer_id;
+    record.label_id = ids.label_id;
 
-  res.json( {
-    id: record.uuid,
-    created_at: record.created_at,
-    updated_at: record.updated_at,
-    developer_id: record.developer_uuid,
-    label_id: record.label_uuid
-  } );
+    let info = req.db.prepare( `
+      INSERT INTO DeveloperLabel
+      VALUES ( ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      record.id,
+      record.uuid,
+      record.created_at,
+      record.updated_at,
+      record.developer_id,
+      record.label_id
+    );
+
+    record = {
+      id: record.uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      label_id: record.label_uuid
+    };    
+  } else {
+    record = existing;
+  }
+
+  res.json( record );
 } );
 
 // Create

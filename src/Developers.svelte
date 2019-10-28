@@ -29,6 +29,7 @@ import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 import { developer_email } from './developers.js';
 import { developer_image } from './developers.js';
+import { developer_labels } from './developers.js';
 import { developer_description } from './developers.js';
 import { controls_mode } from './developers.js';
 
@@ -140,7 +141,19 @@ function doDeveloper( evt ) {
   
   $controls_mode = 2;
 
-  fetch( `api/developer/${$developer_id}/note` )
+  fetch( `/api/developer/${$developer_id}/label` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    let labels = [];
+
+    for( let a = 0; a < data.length; a++ ) {
+      labels.push( data[a].name );
+    }
+
+    $developer_labels = labels.slice( 0 );
+  } );
+
+  fetch( `/api/developer/${$developer_id}/note` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $notes_list = data.slice( 0 );
@@ -214,7 +227,7 @@ function doSaveNew( evt ) {
     body: JSON.stringify( developer )
   } )
   .then( ( response ) => response.json() )
-  .then( ( data ) => {
+  .then( async ( data ) => {
     $developer_list.push( data );
     $developer_list.sort( ( a, b ) => {
       if( a.name > b.name ) return 1;
@@ -224,6 +237,53 @@ function doSaveNew( evt ) {
     } );
     $developer_list = $developer_list.slice( 0 );
     $developer_id = data.id;
+
+    let later = [];
+
+    for( let a = 0; a < $developer_labels.length; a++ ) {
+      let found = false;
+      let label_id = null;
+
+      for( let b = 0; b < $label_list.length; b++ ) {
+        if( $developer_labels[a] === $label_list[b].name ) {
+          found = true;
+          label_id = $label_list[b].id;
+          break;
+        }
+      }
+
+      if( !found ) {
+        let label = await fetch( '/api/label', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify( {
+            name: $developer_labels[a]
+          } )
+        } )
+        .then( ( response ) => response.json() );
+
+        later.push( label );
+        label_id = label.id;
+      }
+
+      await fetch( `/api/developer/${$developer_id}/label`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {
+          label_id: label_id
+        } )
+      } );      
+    }
+
+    for( let a = 0; a < later.length; a++ ) {
+      $label_list.push( later[a] );
+      $label_list.sort();
+      $label_list = $label_list.slice( 0 );
+    }
   } );
 }
 </script>
