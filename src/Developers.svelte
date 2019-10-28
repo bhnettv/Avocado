@@ -20,6 +20,7 @@ import { developer_list } from './developers.js';
 import { developer_index } from './developers.js';
 import { label_list } from './developers.js';
 import { label_index } from './developers.js';
+import { skill_list } from './developers.js';
 import { add_disabled } from './developers.js';
 import { tab_index } from './developers.js';
 import { social_disabled } from './developers.js';
@@ -42,6 +43,9 @@ onMount( async () => {
 
   $label_list = await fetch( '/api/label' )
   .then( ( response ) => response.json() );
+
+  $skill_list = await fetch( '/api/skill' )
+  .then( ( response ) => response.json() );  
 } );
 
 // Add new developer

@@ -5,6 +5,7 @@ export const add_disabled = writable( false );
 export const developer_list = writable( [] );
 export const developer_index = writable( -1 );
 export const label_list = writable( [] );
+export const skill_list = writable( [] );
 export const label_index = writable( -1 );
 export const tab_index = writable( 0 );
 export const social_disabled = writable( true );

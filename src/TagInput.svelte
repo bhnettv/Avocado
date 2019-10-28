@@ -1,10 +1,23 @@
 <script>
+import Menu from './Menu.svelte';
+
+export let characters = 3;
+export let data = [];
 export let disabled = false;
 export let label = undefined;
+export let labelField = 'label';
+export let limit = 4;
 export let placeholder = '';
 export let value = [];
 
 let focus = false;
+let height = 0;
+let menu = [];
+
+function doBlur() {
+  menu = [];
+  focus = false;
+}
 
 function doKeyboard( evt ) {
   if( evt.keyCode === 13 ) {
@@ -40,6 +53,18 @@ function doKeyboard( evt ) {
     value.pop();
     value = value.slice( 0 );
   }
+
+  if( evt.target.value.trim().length >= characters ) {
+    menu = [];
+
+    for( let a = 0; a < data.length; a++ ) {
+      if( data[a][labelField].toLowerCase().indexOf( evt.target.value.toLowerCase().trim() ) > -1 ) {
+        menu.push( data[a] );
+      }
+    }
+
+    menu = menu.slice( 0, limit );
+  }
 }
 
 function doRemove( evt ) {
@@ -70,6 +95,7 @@ div.control {
   display: flex;
   flex-direction: column;
   flex-grow: 1; 
+  position: relative;
 }
 
 div.content {
@@ -150,7 +176,7 @@ p {
 }
 </style>
 
-<div class="control">
+<div class="control" bind:clientHeight="{height}">
 
   {#if label !== undefined}
 
@@ -176,9 +202,15 @@ p {
       placeholder="{placeholder}" 
       on:keydown="{doKeyboard}" 
       on:focus="{() => focus = true}"
-      on:blur="{() => focus = false}"
+      on:blur="{doBlur}"
       {disabled}>
 
   </div>
+
+  {#if data.length > 0}
+
+    <Menu data="{menu}" top="{height + 3}" labelField="name"/>
+  
+  {/if}
 
 </div>

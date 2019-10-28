@@ -11,6 +11,7 @@ import { developer_image } from './developers.js';
 import { developer_labels } from './developers.js';
 import { developer_skills } from './developers.js';
 import { developer_description } from './developers.js';
+import { skill_list } from './developers.js';
 </script>
 
 <style>
@@ -78,6 +79,8 @@ form {
 
   <div class="line">
     <TagInput 
+      data="{$skill_list}"
+      labelField="name"
       label="Skills"
       placeholder="Skills" 
       disabled="{$overview_disabled}"
