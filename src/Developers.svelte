@@ -6,6 +6,8 @@ import Controls from './Controls.svelte';
 import Details from './Details.svelte';
 import Endpoints from './Endpoints.svelte';
 import List from './List.svelte';
+import ListLabelItem from './ListLabelItem.svelte';
+import ListCountItem from './ListCountItem.svelte';
 import Overview from './Overview.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
@@ -108,6 +110,7 @@ function doDelete( evt ) {
     $developer_id = '';
     $developer_name = '';
     $developer_email = '';
+    $developer_labels = [];
     $developer_description = '';
     $developer_image = ''; 
     $social_index = 0;    
@@ -117,7 +120,7 @@ function doDelete( evt ) {
 
 // Show existing developer
 function doDeveloper( evt ) {
-  let id = evt.target.getAttribute( 'data-id' );
+  let id = evt.detail.item.id;
 
   for( let d = 0; d < $developer_list.length; d++ ) {
     if( id === $developer_list[d].id ) {
@@ -326,42 +329,6 @@ h4 {
   margin: 0;
   padding: 0 16px 0 16px;
 }
-
-p.developer {
-  border-bottom: solid 1px #dcdcdc;
-  border-top: solid 1px transparent;
-  color: #393939;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  height: 46px;
-  line-height: 46px;
-  margin: 0;
-  padding: 0 16px 0 16px;
-}
-
-p.label {
-  /*
-  background-image: url( /img/label.svg );
-  background-position: center left 15px;
-  background-repeat: no-repeat;
-  background-size: 18px;
-  */
-  border-bottom: solid 1px #dcdcdc;
-  border-top: solid 1px transparent;
-  color: #393939;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  height: 46px;
-  line-height: 46px;
-  margin: 0;
-  padding: 0 21px 0 16px;
-}
-
-span {
-  float: right;
-}
 </style>
 
 <div class="panel">
@@ -381,18 +348,24 @@ span {
 
     <!-- Developer list -->
     <h4>Developers</h4>
-    <List data="{$developer_list}" let:item="{developer}">
-      <p 
-        data-id="{developer.id}" 
-        on:click="{doDeveloper}" 
-        class="developer">{developer.name}</p>
+    <List 
+      data="{$developer_list}" 
+      let:item="{developer}" 
+      on:change="{( evt ) => doDeveloper( evt )}">
+      <ListLabelItem>{developer.name}</ListLabelItem>
     </List>
 
     <!-- Label list -->
     <!-- Collapsable -->
     <Details summary="Labels">
-      <List data="{$label_list}" let:item="{label}">
-        <p data-id="{label.id}" class="label">{label.name}<span>{label.count}</span></p>
+      <List 
+        data="{$label_list}" 
+        let:item="{label}" 
+        on:change="{( evt ) => console.log( evt.detail )}">
+        <ListCountItem>
+          <span slot="label">{label.name}</span>
+          <span slot="count">{label.count}</span>
+        </ListCountItem>      
       </List>
     </Details>
 

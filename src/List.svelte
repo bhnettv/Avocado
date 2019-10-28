@@ -1,5 +1,21 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 export let data = [];
+export let selectedIndex = undefined;
+export let selectedItem = undefined;
+
+const dispatch = createEventDispatcher();
+
+function doSelect( item, index ) { 
+  selectedItem = item;
+  selectedIndex = index;
+
+  dispatch( 'change', {
+    item: selectedItem,
+    index: selectedIndex
+  } );
+}
 </script>
 
 <style>
@@ -13,6 +29,8 @@ ul {
 }
 
 li {
+  border-bottom: solid 1px #dcdcdc;
+  border-top: solid 1px transparent;  
   margin: 0;
   padding: 0;
 }
@@ -20,16 +38,30 @@ li {
 li:hover {
   background-color: #e5e5e5;
 }
+
+li.selected {
+  background-color: #dcdcdc;
+}
+
+li.selected:first-of-type {
+  border-top: solid 1px #c6c6c6;
+}
+
+li.selected:hover {
+  background-color: #c6c6c6;  
+}
 </style>
 
 <ul>
 
-{#each data as item}
-  
-<li>
-  <slot item="{item}"></slot>
-</li>
-	
-{/each}
+  {#each data as item, i}    
+
+    <li 
+      on:click="{() => doSelect( item, i )}"
+      class:selected="{selectedIndex === i ? true : false}">
+      <slot item="{item}"></slot>
+    </li>
+
+  {/each}
 
 </ul>
