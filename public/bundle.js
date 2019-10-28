@@ -4818,8 +4818,8 @@ var app = (function () {
     		c: function create() {
     			input = element("input");
     			attr_dev(input, "placeholder", ctx.placeholder);
-    			attr_dev(input, "class", "svelte-bn9xay");
-    			add_location(input, file$c, 25, 0, 488);
+    			attr_dev(input, "class", "svelte-1htj1fc");
+    			add_location(input, file$c, 32, 0, 626);
 
     			dispose = [
     				listen_dev(input, "input", ctx.input_input_handler),
