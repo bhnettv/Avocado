@@ -775,6 +775,20 @@ paths:
                     image:
                       type: string
                       example: http://something.com
+                    location:
+                      type: string
+                      example: Armonk, NY
+                    latitude:
+                      type: number
+                      format: float
+                      example: 41.1328412
+                    longitude:
+                      type: number
+                      format: float
+                      example: -73.7492039
+                    public:
+                      type: integer
+                      example: 0
     post:
       tags:
         - 🖥️ Developer
@@ -799,6 +813,20 @@ paths:
                 image:
                   type: string
                   example: http://something.com
+                location:
+                  type: string
+                  example: Armonk, NY
+                latitude:
+                  type: number
+                  format: float
+                  example: 41.1328412
+                longitude:
+                  type: number
+                  format: float
+                  example: -73.7492039
+                public:
+                  type: integer
+                  example: 0
       responses:
         "200":
           description: successful operation
@@ -852,6 +880,20 @@ paths:
                   image:
                     type: string
                     example: http://something.com
+                  location:
+                    type: string
+                    example: Armonk, NY
+                  latitude:
+                    type: number
+                    format: float
+                    example: 41.1328412
+                  longitude:
+                    type: number
+                    format: float
+                    example: -73.7492039
+                  public:
+                    type: integer
+                    example: 0
     put:
       tags:
         - 🖥️ Developer
@@ -876,6 +918,20 @@ paths:
                 image:
                   type: string
                   example: http://something.com
+                location:
+                  type: string
+                  example: Armonk, NY
+                latitude:
+                  type: number
+                  format: float
+                  example: 41.1328412
+                longitude:
+                  type: number
+                  format: float
+                  example: -73.7492039
+                public:
+                  type: integer
+                  example: 0
       responses:
         "200":
           description: successful operation
@@ -1019,6 +1075,20 @@ paths:
                     image:
                       type: string
                       example: http://something.com
+                    location:
+                      type: string
+                      example: Armonk, NY
+                    latitude:
+                      type: number
+                      format: float
+                      example: 41.1328412
+                    longitude:
+                      type: number
+                      format: float
+                      example: -73.7492039
+                    public:
+                      type: integer
+                      example: 0
   /developer/note:
     get:
       tags:
@@ -7014,6 +7084,20 @@ components:
         image:
           type: string
           example: http://something.com
+        location:
+          type: string
+          example: Armonk, NY
+        latitude:
+          type: number
+          format: float
+          example: 41.1328412
+        longitude:
+          type: number
+          format: float
+          example: -73.7492039
+        public:
+          type: integer
+          example: 0
     DeveloperNote:
       required:
         - developer_id

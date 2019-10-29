@@ -19,7 +19,11 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.name,
       Developer.email,
       Developer.description,
-      Developer.image
+      Developer.image,
+      Developer.location,
+      Developer.latitude,
+      Developer.longitude,
+      Developer.public
     FROM 
       Developer,
       DeveloperLabel,
@@ -94,7 +98,11 @@ router.get( '/:id', ( req, res ) => {
       Developer.name,
       Developer.email,
       Developer.description,
-      Developer.image
+      Developer.image,
+      Developer.location,
+      Developer.latitude,
+      Developer.longitude,
+      Developer.public      
     FROM 
       Developer
     WHERE 
@@ -121,7 +129,11 @@ router.get( '/', ( req, res ) => {
       Developer.name,
       Developer.email,
       Developer.description,
-      Developer.image
+      Developer.image,
+      Developer.location,
+      Developer.latitude,
+      Developer.longitude,
+      Developer.public      
     FROM 
       Developer
     ORDER BY name ASC
@@ -220,12 +232,16 @@ router.post( '/', ( req, res ) => {
     name: req.body.name,
     email: req.body.email,
     description: req.body.description,
-    image: req.body.image
+    image: req.body.image,
+    location: req.body.location,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    public: req.body.public
   };
 
   let info = req.db.prepare( `
     INSERT INTO Developer
-    VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
     record.id,
@@ -235,7 +251,11 @@ router.post( '/', ( req, res ) => {
     record.name,
     record.email,
     record.description,
-    record.image
+    record.image,
+    record.location,
+    record.latitude,
+    record.longitude,
+    record.public
   );
 
   res.json( {
@@ -245,7 +265,11 @@ router.post( '/', ( req, res ) => {
     name: record.name,
     email: record.email,
     description: record.description,
-    image: record.image
+    image: record.image,
+    location: record.location,
+    latitude: record.latitude,
+    longitude: record.longitude,
+    public: record.public
   } );
 } );
 
@@ -257,7 +281,11 @@ router.put( '/:id', ( req, res ) => {
     name: req.body.name,
     email: req.body.email,
     description: req.body.description,
-    image: req.body.image
+    image: req.body.image,
+    location: req.body.location,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    public: req.body.public    
   };
 
   let info = req.db.prepare( `
@@ -267,7 +295,11 @@ router.put( '/:id', ( req, res ) => {
       name = ?,
       email = ?,
       description = ?,
-      image = ?
+      image = ?,
+      location = ?,
+      latitude = ?,
+      longitude = ?,
+      public = ?
     WHERE uuid = ?
   ` )
   .run(
@@ -276,6 +308,10 @@ router.put( '/:id', ( req, res ) => {
     record.email,
     record.description,
     record.image,
+    record.location,
+    record.latitude,
+    record.longitude,
+    record.public,
     record.uuid
   );
 
@@ -287,7 +323,11 @@ router.put( '/:id', ( req, res ) => {
       Developer.name,
       Developer.email,
       Developer.description,
-      Developer.image
+      Developer.image,
+      Developer.location,
+      Developer.latitude,
+      Developer.longitude,
+      Developer.public
     FROM
       Developer
     WHERE
