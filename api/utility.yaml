@@ -16,7 +16,7 @@ tags:
 - name: 🧰 Utliity
   description: Tools used that are unrelated to storage
 paths:
- /utility/images/{url}:
+  /utility/images/{url}:
     get:    
       tags:
       - 🧰 Utliity
@@ -62,3 +62,25 @@ paths:
                 items:
                   type: string
                 example: ['http://something.com/bee.jpg', 'http://something.com/whisk.png', 'http://something.com/cat.gif']
+  /utility/geocode:
+    get:    
+      tags:
+      - 🧰 Utliity
+      summary: Find recommended addresses and locations
+      operationId: getUtilityGeocode
+      parameters:
+      - in: query
+        name: location
+        required: false
+        schema:
+          type: string
+          example: 'Armonk, NY'
+          default: 'Armonk, NY'
+        description: The location to geocode
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object

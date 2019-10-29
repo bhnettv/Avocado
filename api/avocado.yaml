@@ -6810,6 +6810,28 @@ paths:
                   - http://something.com/bee.jpg
                   - http://something.com/whisk.png
                   - http://something.com/cat.gif
+  /utility/geocode:
+    get:
+      tags:
+        - 🧰 Utliity
+      summary: Find recommended addresses and locations
+      operationId: getUtilityGeocode
+      parameters:
+        - in: query
+          name: location
+          required: false
+          schema:
+            type: string
+            example: Armonk, NY
+            default: Armonk, NY
+          description: The location to geocode
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     Activity:

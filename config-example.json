@@ -1,4 +1,9 @@
 {
+  "esri": {
+    "key": "_ARCGIS_CLIENT_ID_",
+    "secret": "_ARCGIS_CLIENT_SECRET_",
+    "storage": true
+  },
   "github": {
     "access_token": "_GITHUB_ACCESS_TOKEN_"
   },  

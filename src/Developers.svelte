@@ -405,8 +405,8 @@ h4 {
     <!-- Views -->
     <!-- Work directly with store -->
     <!-- <Overview/> -->
-    <Profile/>
-    <!-- <Summary/> -->
+    <!-- <Profile/> -->
+    <Summary/>
     <Endpoints/>    
     <Timeline/>
     <Notes/>

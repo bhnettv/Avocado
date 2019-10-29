@@ -164,5 +164,40 @@ router.get( '/images/:url', async ( req, res ) => {
   res.json( results );
 } );
 
+// Geocoding
+router.get( '/geocode', async ( req, res ) => {    
+  // Get access token
+  // Tokens only good for two hours
+  let auth = await rp( 'https://www.arcgis.com/sharing/rest/oauth2/token', {
+    method: 'POST',
+    form: {
+      client_id: req.config.esri.client_id,
+      client_secret: req.config.esri.client_secret,
+      grant_type: 'client_credentials'
+    },
+    json: true
+  } );
+
+  let location = 'Armonk, NY';
+
+  if( req.query.location ) {
+    location = req.query.location;
+  }
+
+  // Geocode provided location
+  let results = await rp( 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates', {
+    qs: {
+      f: 'json',
+      SingleLine: location,
+      forStorage: req.config.esri.storage,
+      token: auth.access_token
+    },
+    json: true
+  } );
+
+  // Return full results
+  res.json( results );
+} );
+
 // Export
 module.exports = router;

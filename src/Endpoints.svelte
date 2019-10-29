@@ -109,7 +109,11 @@ div.line {
       placeholder="Reddit"
       helper="User name, as shown in posts"/>
     <div class="gap"></div>
-    <div class="block"></div> 
+    <TextInput 
+      disabled="true"
+      label="Instagram"
+      placeholder="Instagram"
+      helper="Not yet implemented"/>
   </div>        
 
 </div>

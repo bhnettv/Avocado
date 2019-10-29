@@ -216,6 +216,8 @@ paths:
     $ref: 'watson.yaml#/paths/~1watson~1vision~1{url}'
   /utility/images/{url}:
     $ref: 'utility.yaml#/paths/~1utility~1images~1{url}'
+  /utility/geocode:
+    $ref: 'utility.yaml#/paths/~1utility~1geocode'    
 components:
   schemas:
     Activity:

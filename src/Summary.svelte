@@ -1,4 +1,5 @@
 <script>
+import Map from './Map.svelte';
 import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
@@ -47,7 +48,7 @@ form > div:last-of-type {
     <TagInput
       label="Organization"
       placeholder="Organization"
-      helper="Usually company name and/or team nomenclature"/>
+      helper="Company name and/or team nomenclature"/>
   </div>
 
   <div>
@@ -58,7 +59,7 @@ form > div:last-of-type {
   </div>
 
   <div>
-    <map style="flex-basis: 0; flex-grow: 1; background-color: #dcdcdc;"></map>  
+    <Map/>
   </div>
 
 </form>
