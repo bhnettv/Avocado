@@ -17,6 +17,8 @@ tags:
   description: Different types of developer activities
 - name: 🏷️ Label
   description: Logical groupings of developers (tagging)
+- name: 💬 ️Language
+  description: Languages spoken by developers around the world  
 - name: 🔧 Skill
   description: Skills available to developers (tagging)
 - name: 🖥️ Developer
@@ -75,7 +77,13 @@ paths:
   /label/{id}:
     $ref: 'label.yaml#/paths/~1label~1{id}'
   /label/name/{prefix}:
-    $ref: 'label.yaml#/paths/~1label~1name~1{prefix}'    
+    $ref: 'label.yaml#/paths/~1label~1name~1{prefix}'
+  /language:
+    $ref: 'language.yaml#/paths/~1language'
+  /language/{id}:
+    $ref: 'language.yaml#/paths/~1language~1{id}'
+  /language/name/{prefix}:
+    $ref: 'language.yaml#/paths/~1language~1name~1{prefix}'        
   /skill:
     $ref: 'skill.yaml#/paths/~1skill'
   /skill/{id}:
@@ -234,6 +242,8 @@ components:
       $ref: 'github-event.yaml#/components/schemas/GitHubEvent'
     Label:
       $ref: 'label.yaml#/components/schemas/Label'
+    Language:
+      $ref: 'language.yaml#/components/schemas/Language'      
     Media:
       $ref: 'media.yaml#/components/schemas/Media'
     Medium:

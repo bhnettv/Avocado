@@ -67,6 +67,7 @@ app.use( '/', express.static( 'public' ) );
 // Routes
 app.use( '/api/activity', require( './routes/activity' ) );
 app.use( '/api/label', require( './routes/label' ) );
+app.use( '/api/language', require( './routes/language' ) );
 app.use( '/api/skill', require( './routes/skill' ) );
 app.use( '/api/developer/note', require( './routes/developer-note' ) );
 app.use( '/api/developer', require( './routes/developer' ) );
