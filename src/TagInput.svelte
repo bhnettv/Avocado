@@ -1,9 +1,11 @@
 <script>
 import Menu from './Menu.svelte';
+import Tag from './Tag.svelte';
 
 export let characters = 3;
 export let data = [];
 export let disabled = false;
+export let helper = undefined;
 export let label = undefined;
 export let labelField = 'label';
 export let limit = 4;
@@ -130,21 +132,6 @@ function doSelect( evt ) {
 </script>
 
 <style>
-button {
-  background: none;
-  background-image: url( /img/close-white.svg );
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 14px;
-  border: none;
-  cursor: pointer;
-  height: 20px;
-  margin: 2px 2px 0 3px;
-  outline: none;
-  padding: 0;
-  width: 20px;
-}
-
 div.control {
   display: flex;
   flex-direction: column;
@@ -164,15 +151,6 @@ div.content {
   outline: solid 2px transparent;
   outline-offset: -2px;  
   padding: 0 16px 0 16px;  
-}
-
-div.tag {
-  background-color: #393939;
-  border-radius: 12px;
-  display: inline-flex;  
-  height: 24px;
-  margin: 8px 8px 0 0;
-  padding: 0 0 0 8px; 
 }
 
 input {
@@ -205,13 +183,12 @@ label {
 }
 
 p {
-  color: #ffffff;
+  color: #6f6f6f;
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;  
-  line-height: 24px;
-  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
   padding: 0;
+  margin: -6px 0 8px 0;
 }
 
 .content.disabled {
@@ -223,11 +200,6 @@ p {
 .focus {
   outline: solid 2px #0062ff !important;
 }
-
-.tag.disabled {
-  cursor: not-allowed;
-  padding: 0 9px 0 8px;
-}
 </style>
 
 <div class="control" bind:clientHeight="{height}">
@@ -238,18 +210,16 @@ p {
 
   {/if}
 
+  {#if helper !== undefined}
+
+    <p style="color: {disabled ? '#c6c6c6' : '#6f6f6f'}">{helper}</p>
+
+  {/if}
+
   <div class="content" class:focus="{focus}" class:disabled="{disabled}">
 
     {#each value as tag, t}
-      <div class="tag" class:disabled="{disabled}">
-        <p>{tag}</p>
-        <button 
-          data-id="{t}" 
-          type="button" 
-          on:click="{doRemove}" 
-          style="display: {disabled ? 'none' : 'initial'};"></button>
-      </div>
-      
+      <Tag>{tag}</Tag>      
     {/each}
 
     <input 

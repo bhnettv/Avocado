@@ -24,6 +24,7 @@ function doFocus( evt ) {
 <style>
 div {
   display: flex;
+  flex-basis: 0;  
   flex-direction: column;
   flex-grow: 1;
 }
@@ -49,7 +50,7 @@ textarea {
   font-weight: 400;
   line-height: 20px;
   margin: 0;
-  min-height: 79px; 
+  /* min-height: 79px; */
   outline: solid 2px transparent;
   outline-offset: -2px;
   padding: 11px 16px 11px 16px;

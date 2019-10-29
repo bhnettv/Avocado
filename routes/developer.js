@@ -355,8 +355,17 @@ router.delete( '/:id', ( req, res ) => {
     req.params.id
   );
 
-  // Labels
+  // Languages
   let info = req.db.prepare( `
+    DELETE FROM DeveloperLanguage
+    WHERE DeveloperLanguage.developer_id = ?
+  ` )
+  .run(
+    developer.id
+  );    
+
+  // Labels
+  info = req.db.prepare( `
     DELETE FROM DeveloperLabel
     WHERE DeveloperLabel.developer_id = ?
   ` )

@@ -15,6 +15,9 @@ import Tab from './Tab.svelte';
 import TabBar from './TabBar.svelte';
 import Timeline from './Timeline.svelte';
 
+import Summary from './Summary.svelte';
+import Profile from './Profile.svelte';
+
 import { search } from './developers.js';
 import { developer_list } from './developers.js';
 import { developer_index } from './developers.js';
@@ -364,7 +367,7 @@ h4 {
 
     <!-- Label list -->
     <!-- Collapsable -->
-    <Details summary="Labels">
+    <Details summary="Organizations">
       <List 
         data="{$label_list}" 
         let:item="{label}" 
@@ -385,20 +388,25 @@ h4 {
     <TabBar>
       <Tab 
         on:click="{() => $tab_index = 0}"
-        selected="{$tab_index === 0 ? true : false}">Overview</Tab>
+        selected="{$tab_index === 0 ? true : false}">Summary</Tab>
       <Tab 
         on:click="{() => $tab_index = 1}"
-        selected="{$tab_index === 1 ? true : false}" 
-        disabled="{$social_disabled}">Social</Tab>
+        selected="{$tab_index === 1 ? true : false}">Profile</Tab>        
       <Tab 
         on:click="{() => $tab_index = 2}"
         selected="{$tab_index === 2 ? true : false}" 
+        disabled="{$social_disabled}">Social</Tab>
+      <Tab 
+        on:click="{() => $tab_index = 3}"
+        selected="{$tab_index === 3 ? true : false}" 
         disabled="{$notes_disabled}">Notes</Tab>
     </TabBar>
 
     <!-- Views -->
     <!-- Work directly with store -->
-    <Overview/>
+    <!-- <Overview/> -->
+    <Profile/>
+    <!-- <Summary/> -->
     <Endpoints/>    
     <Timeline/>
     <Notes/>
