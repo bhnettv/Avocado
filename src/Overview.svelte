@@ -12,6 +12,7 @@ import { developer_labels } from './developers.js';
 import { developer_skills } from './developers.js';
 import { developer_description } from './developers.js';
 import { skill_list } from './developers.js';
+import { label_list } from './developers.js';
 </script>
 
 <style>
@@ -71,6 +72,8 @@ form {
 
   <div class="line">
     <TagInput 
+      data="{$label_list}"
+      labelField="name"
       label="Labels"
       placeholder="Labels" 
       disabled="{$overview_disabled}" 

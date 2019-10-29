@@ -1,12 +1,25 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 export let data = [];
 export let labelField = 'label';
 export let selectedIndex = undefined;
 export let selectedItem = undefined;
 export let top = 0;
 
-function doSelect( item, index ) {
+const dispatch = createEventDispatcher();
 
+function doSelect( item, index ) {
+  console.log( 'Menu select' );
+
+  selectedIndex = index;
+  selectedItem = item;
+
+  dispatch( 'select', {
+    index: index,
+    item: item,
+    label: item[labelField]
+  } );
 }
 </script>
 
@@ -32,10 +45,18 @@ ul {
   padding: 0;
   position: absolute;
   width: 100%;
+  z-index: 100;
 }
 
 li {
+  outline: solid 2px transparent;    
+  outline-offset: -2px;    
   width: 100%;
+}
+
+li.selected {
+  background-color: #e5e5e5; 
+  outline: solid 2px #0062ff;  
 }
 
 li:hover {

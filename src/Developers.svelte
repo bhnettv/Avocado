@@ -33,6 +33,7 @@ import { developer_name } from './developers.js';
 import { developer_email } from './developers.js';
 import { developer_image } from './developers.js';
 import { developer_labels } from './developers.js';
+import { developer_skills } from './developers.js';
 import { developer_description } from './developers.js';
 import { controls_mode } from './developers.js';
 
@@ -90,7 +91,9 @@ function doCancelNew( evt ) {
   $social_disabled = true;
   $overview_disabled = true;
   $social_index = 1;
-  $controls_mode = 0;  
+  $controls_mode = 0;
+  $developer_labels = [];
+  $developer_skills = [];
 }
 
 // Delete existing developer

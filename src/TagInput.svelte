@@ -12,6 +12,7 @@ export let value = [];
 
 let focus = false;
 let height = 0;
+let index = -1;
 let menu = [];
 
 function doBlur() {
@@ -19,39 +20,76 @@ function doBlur() {
   focus = false;
 }
 
-function doKeyboard( evt ) {
+function doKeyUp( evt ) {
   if( evt.keyCode === 13 ) {
-    evt.preventDefault();
-
-    let found = false;
-    let tags = [];
-
-    if( evt.target.value.indexOf( ',' ) > 0 ) {
-      tags = evt.target.value.split( ',' );
+    if( index > - 1 ) {
+      value.push( menu[index][labelField] );
+      focus = true;
     } else {
-      tags = [evt.target.value];
-    }
+      let found = false;
+      let tags = [];
 
-    for( let t = 0; t < tags.length; t++ ) {
-      for( let v = 0; v < value.length; v++ ) {
-        if( value[v] === tags[t].trim() ) {
-          found = true;
-          break;
+      if( evt.target.value.indexOf( ',' ) > 0 ) {
+        tags = evt.target.value.split( ',' );
+      } else {
+        tags = [evt.target.value];
+      }
+
+      for( let t = 0; t < tags.length; t++ ) {
+        for( let v = 0; v < value.length; v++ ) {
+          if( value[v] === tags[t].trim() ) {
+            found = true;
+            break;
+          }
         }
-      }
 
-      if( !found ) {
-        value.push( tags[t] );
-      }
+        if( !found ) {
+          value.push( tags[t] );
+        }
+      }      
     }
 
     value = value.splice( 0 );
     evt.target.value = '';
+    menu = [];
+    index = -1;
   }
 
   if( evt.keyCode === 8 && evt.target.value.trim().length === 0 ) {
-    value.pop();
-    value = value.slice( 0 );
+    if( value.length > 0 ) {
+      value.pop();
+      value = value.slice( 0 );
+    }
+  }
+
+  if( evt.keyCode === 40 ) {
+    if( menu.length > 0 ) {
+      if( index === -1 ) {
+        focus = false;        
+        index = 0;
+      } else {
+        if( index === ( menu.length - 1 ) ) {
+          index = 0;
+        } else {
+          index = index + 1;
+        }
+      }      
+    }
+  }
+
+  if( evt.keyCode === 38 ) {
+    if( menu.length > 0 ) {
+      if( index === -1 ) {
+        focus = false;          
+        index = menu.length - 1;
+      } else {
+        if( index === 0 ) {
+          index = menu.length - 1;
+        } else {
+          index = index - 1;
+        }
+      }
+    }
   }
 
   if( evt.target.value.trim().length >= characters ) {
@@ -59,7 +97,18 @@ function doKeyboard( evt ) {
 
     for( let a = 0; a < data.length; a++ ) {
       if( data[a][labelField].toLowerCase().indexOf( evt.target.value.toLowerCase().trim() ) > -1 ) {
-        menu.push( data[a] );
+        let found = false;
+
+        for( let b = 0; b < value.length; b++ ) {
+          if( data[a][labelField].toLowerCase() === value[b].toLowerCase() ) {
+            found = true;
+            break;
+          }
+        }
+
+        if( !found ) {
+          menu.push( data[a] );
+        }
       }
     }
 
@@ -72,6 +121,11 @@ function doRemove( evt ) {
 
   value.splice( index, 1 );
   value = [...value];
+}
+
+function doSelect( evt ) {
+  console.log( 'Select' );
+  console.log( evt.detail.item[labelField] );
 }
 </script>
 
@@ -199,8 +253,9 @@ p {
     {/each}
 
     <input 
+      type="text"
       placeholder="{placeholder}" 
-      on:keydown="{doKeyboard}" 
+      on:keyup="{doKeyUp}" 
       on:focus="{() => focus = true}"
       on:blur="{doBlur}"
       {disabled}>
@@ -209,7 +264,12 @@ p {
 
   {#if data.length > 0}
 
-    <Menu data="{menu}" top="{height + 3}" labelField="name"/>
+    <Menu 
+      data="{menu}" 
+      top="{height + 3}" 
+      labelField="name" 
+      selectedIndex="{index}"
+      on:select="{doSelect}"/>
   
   {/if}
 
