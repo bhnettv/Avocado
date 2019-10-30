@@ -1,15 +1,17 @@
 <script>
-import { social_index } from './developers.js';
-import { tab_index } from './developers.js';
+export let hide = false;
 </script>
 
 <style>
 div {
   flex-grow: 1;
 }
+
+.hide {
+  display: none;
+}
 </style>
 
-<div 
-  style="display: {( $tab_index === 1 && $social_index === 1 ) ? 'flex' : 'none'}">
+<div class:hide>
   <p>Timeline</p>
 </div>

@@ -1,8 +1,6 @@
 <script>
 import TextInput from './TextInput.svelte';
 
-import { social_index } from './developers.js';
-import { tab_index } from './developers.js';
 import { endpoint_website } from './developers.js';
 import { endpoint_rss } from './developers.js';
 import { endpoint_devto } from './developers.js';
@@ -12,26 +10,22 @@ import { endpoint_twitter } from './developers.js';
 import { endpoint_so } from './developers.js';
 import { endpoint_github } from './developers.js';
 import { endpoint_reddit } from './developers.js';
+
+export let hide = false;
+export let disabled = false;
 </script>
 
 <style>
-div.block {
-  flex-basis: 0;  
-  flex-grow: 1; 
-  margin: 0; 
-  padding: 0; 
-}
-
 div.endpoints {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 21px 16px 0 16px;
+  margin: 16px 16px 0 16px;
   padding: 0;
 }
 
 div.gap {
-  min-width: 32px;
+  min-width: 16px;
 }
 
 div.line {
@@ -40,11 +34,13 @@ div.line {
   margin: 0 0 16px 0;
   padding: 0;
 }
+
+div.endpoints.hide {
+  display: none;
+}
 </style>
 
-<div 
-  class="endpoints" 
-  style="display: {( $tab_index === 1 && $social_index === 0 ) ? 'flex' : 'none'};">
+<div class="endpoints" class:hide>
 
   <div class="line">
     <TextInput 

@@ -6,13 +6,11 @@ import Pagination from './Pagination.svelte';
 import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
-import { tab_index } from './developers.js';
-import { developer_id } from './developers.js';
-import { developer_name } from './developers.js';
 import { notes_list } from './developers.js';
+import { developer_name } from './developers.js';
 
-export let developer = null;
-export let visible = false;
+export let hide = false;
+export let disabled = false;
 
 let activity = [];
 let activity_id = null;
@@ -51,6 +49,7 @@ function format( updated ) {
   return result;
 }
 
+/*
 function doNext( evt ) {
   if( index === ( $notes_list.length - 1 ) ) {
     index = 0;
@@ -102,6 +101,7 @@ function doSave( evt ) {
     text = '';
   } );
 }
+*/
 </script>
 
 <style>
@@ -117,7 +117,7 @@ div.controls {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 24px 0 0 0;
+  margin: 16px 0 0 0;
 }
 
 div.none {
@@ -129,7 +129,7 @@ div.none {
 }
 
 div.panel {
-  display: none;
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
@@ -140,7 +140,7 @@ form {
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 21px 16px 16px 16px;
+  padding: 16px 16px 16px 16px;
 }
 
 p {
@@ -163,9 +163,13 @@ p.pagination {
   margin: 0;
   padding: 0 0 0 16px;
 }
+
+div.panel.hide {
+  display: none;
+}
 </style>
 
-<div class="panel" style="display: {$tab_index === 2 ? 'flex': 'none'}">
+<div class="panel" class:hide>
   <form>
     <div class="activity">
       <Select 
@@ -185,8 +189,7 @@ p.pagination {
       <Button 
         icon="/img/save-white.svg"
         disabledIcon="/img/save.svg"
-        disabled="{text.trim().length > 0 ? false : true}"        
-        on:click="{doSave}">Save</Button>    
+        disabled="{text.trim().length > 0 ? false : true}">Save</Button>    
     </div>
   </form>
 
@@ -198,9 +201,7 @@ p.pagination {
     <Pagination 
       index="{index + 1}" 
       length="{$notes_list.length}" 
-      noun="notes"
-      on:previous="{doPrevious}"
-      on:next="{doNext}">
+      noun="notes">
       <p class="pagination">{format( new Date( $notes_list[index].updated_at ) )}</p>
       <p class="pagination">{$notes_list[index].activity_name}</p>
     </Pagination>

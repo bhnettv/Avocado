@@ -30,4 +30,4 @@ input:focus {
 }
 </style>
 
-<input bind:value="{value}" placeholder="{placeholder}" on:keydown>
+<input type="text" bind:value placeholder="{placeholder}" on:keyup>

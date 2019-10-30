@@ -3,6 +3,17 @@ import Map from './Map.svelte';
 import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
+
+import { organization_list } from './developers.js';
+
+import { developer_name } from './developers.js';
+import { developer_email } from './developers.js';
+import { developer_image } from './developers.js';
+import { developer_organizations } from './developers.js';
+import { developer_location } from './developers.js';
+
+export let hide = false;
+export let disabled = false;
 </script>
 
 <style>
@@ -20,42 +31,62 @@ form {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 24px 16px 24px 16px;
+  margin: 16px 16px 16px 16px;
 }
 
 form > div:last-of-type {
   flex-grow: 1;
   margin-bottom: 0;
 }
+
+.hide {
+  display: none;
+}
 </style>
 
-<form>
+<form class:hide>
 
   <div>
-    <TextInput label="Full name" placeholder="Full name"/>
+    <TextInput 
+      label="Full name" 
+      placeholder="Full name" 
+      bind:value="{$developer_name}"
+      {disabled}/>
     <div></div>
-    <TextInput label="Email address" placeholder="Email address"/>
+    <TextInput 
+      label="Email address" 
+      placeholder="Email address" 
+      bind:value="{$developer_email}"
+      {disabled}/>
   </div>
 
   <div>
     <TextInput 
       label="Profile image" 
       placeholder="Profile image"
-      helper="Full path to profile image, including HTTP/S"/>
+      helper="Full path to profile image, including HTTP/S"
+      bind:value="{$developer_image}"
+      {disabled}/>
   </div>
 
   <div>
     <TagInput
+      data="{$organization_list}"
+      labelField="name"
       label="Organization"
       placeholder="Organization"
-      helper="Company name and/or team nomenclature"/>
+      helper="Company name and/or team nomenclature"
+      bind:value="{$developer_organizations}"
+      {disabled}/>
   </div>
 
   <div>
     <TextInput
       label="Location"
       placeholder="Location"
-      helper="As specific or general as is needed"/>
+      helper="As specific or general as is needed"
+      bind:value="{$developer_location}"
+      {disabled}/>
   </div>
 
   <div>

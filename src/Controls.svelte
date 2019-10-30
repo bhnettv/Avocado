@@ -3,15 +3,14 @@ import { createEventDispatcher } from 'svelte';
 
 import Button from './Button.svelte';
 
-import { controls_mode } from './developers.js';
-import { tab_index } from './developers.js';
+export const mode = 0;
+export const hidden = false;
 
 const dispatch = createEventDispatcher();
 </script>
 
 <style>
 div {
-  /* border-top: solid 1px #f3f3f3; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -21,14 +20,18 @@ div {
 div.block {
   flex-grow: 1;
 }
+
+div.hidden {
+  display: none;
+}
 </style>
 
-<div style="display: {$tab_index < 2 ? 'flex' : 'none'}">
+<div class:hidden>
 
 <!-- Default: Nothing -->
 
 <!-- Creating: Cancel, Save -->
-{#if $controls_mode === 1}
+{#if mode === 1}
 
   <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">Cancel</Button>
   <Button 
@@ -38,14 +41,14 @@ div.block {
 {/if}
 
 <!-- Viewing: Edit -->
-{#if $controls_mode === 2}
+{#if mode === 2}
 
   <Button icon="/img/edit.svg" on:click="{() => dispatch( 'edit' )}">Edit</Button>
 
 {/if}
 
 <!-- Editing: Delete, Cancel, Save -->
-{#if $controls_mode === 3}
+{#if mode === 3}
 
   <Button 
     kind="danger" 

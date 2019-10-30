@@ -8,50 +8,256 @@ import Endpoints from './Endpoints.svelte';
 import List from './List.svelte';
 import ListLabelItem from './ListLabelItem.svelte';
 import ListCountItem from './ListCountItem.svelte';
-import Overview from './Overview.svelte';
+import Profile from './Profile.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
+import Summary from './Summary.svelte';
 import Tab from './Tab.svelte';
 import TabBar from './TabBar.svelte';
 import Timeline from './Timeline.svelte';
 
-import Summary from './Summary.svelte';
-import Profile from './Profile.svelte';
-
-import { search } from './developers.js';
+import { search_term } from './developers.js';
 import { developer_list } from './developers.js';
-import { developer_index } from './developers.js';
-import { label_list } from './developers.js';
-import { label_index } from './developers.js';
-import { skill_list } from './developers.js';
+import { filtered_list } from './developers.js';
+import { organization_list } from './developers.js';
 import { add_disabled } from './developers.js';
-import { tab_index } from './developers.js';
-import { social_disabled } from './developers.js';
-import { social_index } from './developers.js';
-import { notes_disabled } from './developers.js';
-import { notes_list } from './developers.js';
-import { overview_disabled } from './developers.js';
+
+import { summary_tab } from './developers.js';
+import { profile_tab } from './developers.js';
+import { social_tab } from './developers.js';
+import { notes_tab } from './developers.js';
+
+import { summary_selected } from './developers.js';
+import { profile_selected } from './developers.js';
+import { social_selected } from './developers.js';
+import { notes_selected } from './developers.js';
+
+import { summary_hidden } from './developers.js';
+import { profile_hidden } from './developers.js';
+import { endpoints_hidden } from './developers.js';
+import { timeline_hidden } from './developers.js';
+import { notes_hidden } from './developers.js';
+
+import { summary_disabled } from './developers.js';
+import { profile_disabled } from './developers.js';
+import { endpoints_disabled } from './developers.js';
+
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 import { developer_email } from './developers.js';
 import { developer_image } from './developers.js';
-import { developer_labels } from './developers.js';
-import { developer_skills } from './developers.js';
-import { developer_description } from './developers.js';
+import { developer_organizations } from './developers.js';
+import { developer_location } from './developers.js';
+
+import { notes_list } from './developers.js';
+
+import { controls_hidden } from './developers.js';
 import { controls_mode } from './developers.js';
+
+// Filter developer list on search term
+function filter() {
+  let trimmed = $search_term.trim();
+
+  if( trimmed.length === 0 ) {
+    $filtered_list = $developer_list.slice();
+  } else {
+    let matches = [];
+
+    for( let a = 0; a < $developer_list.length; a++ ) {
+      if( $developer_list[a].name.indexOf( trimmed ) >= 0 ) {
+        matches.push( $developer_list[a] );
+      }
+    }
+
+    $filtered_list = matches.slice();
+  }
+}
+
+// Add clicked
+function doAddClick( evt ) {
+  $add_disabled = true;
+  
+  $summary_selected = true;
+  $profile_selected = false;
+  $social_selected = false;
+  $notes_selected = false;
+
+  $summary_tab = false;
+  $profile_tab = false;
+  $social_tab = false;
+  $notes_tab = true;
+
+  $summary_disabled = false;
+  $profile_disabled = false;
+  $endpoints_disabled = false;
+
+  $developer_id = null;
+  $developer_name = '';
+  $developer_email = '';
+  $developer_image = '';
+  $developer_organizations = [];
+  $developer_location = '';
+
+  controls_hidden.set( false );
+  controls_mode.set( 1 );
+}
+
+function doCancelNew( evt ) {
+  $add_disabled = false;
+
+  $summary_selected = true;
+  $profile_selected = false;
+  $social_selected = false;
+  $notes_selected = false;
+
+  $summary_tab = false;
+  $profile_tab = true;
+  $social_tab = true;
+  $notes_tab = true;
+
+  $summary_disabled = true;
+  $profile_disabled = true;
+  $endpoints_disabled = true;
+
+  $developer_id = null;
+  $developer_name = '';
+  $developer_email = '';
+  $developer_image = '';
+  $developer_organizations = [];
+  $developer_location = '';
+
+  $controls_hidden = true;
+  $controls_mode = 0;
+}
+
+// Save new developer
+function doSaveNew( evt ) {
+  fetch( '/api/developer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( {
+      name: $developer_name.trim().length > 0 ? $developer_name : null,
+      email: $developer_email.trim().length > 0 ? $developer_email : null,      
+      description: null,      
+      image: $developer_image.trim().length > 0 ? $developer_image : null,
+      location: $developer_location.trim().length > 0 ? $developer_location : null,      
+      latitude: null,      
+      longitude: null,
+      public: 0
+    } )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_id = data.id;
+    $developer_list.push( data );
+    $developer_list.sort( ( a, b ) => {
+      if( a.name > b.name ) return 1;
+      if( a.name < b.name ) return -1;
+      return 0;
+    } );
+    $developer_list = $developer_list.slice();
+    filter( $developer_list, $search_term, $filtered_list );
+
+    $add_disabled = false;
+
+    $summary_tab = false;
+    $profile_tab = false;
+    $social_tab = false;
+    $notes_tab = false;
+
+    $summary_disabled = true;
+    $profile_disabled = true;
+    $endpoints_disabled = true;
+
+    $controls_mode = 2;
+    $controls_hidden = true;
+  } );
+}
+
+// Tab clicked
+function doTabClick( index ) {
+  switch( index ) {
+    case 0:
+      $summary_selected = true;
+      $profile_selected = false;
+      $social_selected = false;
+      $notes_selected = false;
+
+      $summary_hidden = false;
+      $profile_hidden = true;
+      $endpoints_hidden = true;
+      $timeline_hidden = true;
+      $notes_hidden = true;
+
+      $controls_hidden = false;
+      break;
+
+    case 1:
+      $summary_selected = false;
+      $profile_selected = true;
+      $social_selected = false;
+      $notes_selected = false;
+
+      $summary_hidden = true;
+      $profile_hidden = false;
+      $endpoints_hidden = true;
+      $timeline_hidden = true;
+      $notes_hidden = true;     
+      
+      $controls_hidden = false;      
+      break;      
+
+    case 2:
+      $summary_selected = false;
+      $profile_selected = false;
+      $social_selected = true;
+      $notes_selected = false;
+
+      $summary_hidden = true;
+      $profile_hidden = true;
+      $endpoints_hidden = $add_disabled ? false : true;
+      $timeline_hidden = $add_disabled ? true : false;      
+      $notes_hidden = true;     
+      
+      $controls_hidden = false;
+      break;      
+
+    case 3:
+      $summary_selected = false;
+      $profile_selected = false;
+      $social_selected = false;
+      $notes_selected = true;
+
+      $summary_hidden = true;
+      $profile_hidden = true;
+      $endpoints_hidden = true;
+      $timeline_hidden = true;
+      $notes_hidden = false;      
+
+      $controls_hidden = true;
+      break;      
+  }
+}
 
 // Load external data
 onMount( async () => {
-  $developer_list = await fetch( '/api/developer' )
-  .then( ( response ) => response.json() );
+  fetch( '/api/developer' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    developer_list.set( data.slice() );
+    filter();    
+  } );
 
-  $label_list = await fetch( '/api/label' )
-  .then( ( response ) => response.json() );
-
-  $skill_list = await fetch( '/api/skill' )
-  .then( ( response ) => response.json() );  
+  fetch( '/api/organization' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    organization_list.set( data.slice() );
+  } );
 } );
 
+/*
 // Add new developer
 function doAdd( evt ) {
   $add_disabled = true;
@@ -299,6 +505,7 @@ function doSaveNew( evt ) {
     }
   } );
 }
+*/
 </script>
 
 <style>
@@ -348,20 +555,19 @@ h4 {
 
     <!-- Search -->
     <div class="search">
-      <Search/>
+      <Search bind:value="{$search_term}" on:keyup="{filter}"/>
       <Button
+        on:click="{doAddClick}"
         icon="/img/add-white.svg"
         disabledIcon="/img/add.svg"
-        on:click="{doAdd}"
         disabled="{$add_disabled}">Add</Button>
     </div>
 
     <!-- Developer list -->
     <h4>Developers</h4>
     <List 
-      data="{$developer_list}" 
-      let:item="{developer}" 
-      on:change="{( evt ) => doDeveloper( evt )}">
+      data="{$filtered_list}" 
+      let:item="{developer}">
       <ListLabelItem>{developer.name}</ListLabelItem>
     </List>
 
@@ -369,12 +575,11 @@ h4 {
     <!-- Collapsable -->
     <Details summary="Organizations">
       <List 
-        data="{$label_list}" 
-        let:item="{label}" 
-        on:change="{( evt ) => console.log( evt.detail )}">
+        data="{$organization_list}" 
+        let:item="{organization}">
         <ListCountItem>
-          <span slot="label">{label.name}</span>
-          <span slot="count">{label.count}</span>
+          <span slot="label">{organization.name}</span>
+          <span slot="count">{organization.count}</span>
         </ListCountItem>      
       </List>
     </Details>
@@ -387,39 +592,44 @@ h4 {
     <!-- Tabs -->
     <TabBar>
       <Tab 
-        on:click="{() => $tab_index = 0}"
-        selected="{$tab_index === 0 ? true : false}">Summary</Tab>
+        on:click="{() => doTabClick( 0 )}"
+        selected="{$summary_selected}"
+        disabled="{$summary_tab}">Summary</Tab>
       <Tab 
-        on:click="{() => $tab_index = 1}"
-        selected="{$tab_index === 1 ? true : false}">Profile</Tab>        
+        on:click="{() => doTabClick( 1 )}"      
+        selected="{$profile_selected}"
+        disabled="{$profile_tab}">Profile</Tab>        
       <Tab 
-        on:click="{() => $tab_index = 2}"
-        selected="{$tab_index === 2 ? true : false}" 
-        disabled="{$social_disabled}">Social</Tab>
+        on:click="{() => doTabClick( 2 )}"      
+        selected="{$social_selected}" 
+        disabled="{$social_tab}">Social</Tab>
       <Tab 
-        on:click="{() => $tab_index = 3}"
-        selected="{$tab_index === 3 ? true : false}" 
-        disabled="{$notes_disabled}">Notes</Tab>
+        on:click="{() => doTabClick( 3 )}"      
+        selected="{$notes_selected}" 
+        disabled="{$notes_tab}">Notes</Tab>
     </TabBar>
 
     <!-- Views -->
     <!-- Work directly with store -->
-    <!-- <Overview/> -->
-    <!-- <Profile/> -->
-    <Summary/>
-    <Endpoints/>    
-    <Timeline/>
-    <Notes/>
+    <Summary 
+      hide="{$summary_hidden}"
+      disabled="{$summary_disabled}"/>
+    <Profile 
+      hide="{$profile_hidden}"
+      disabled="{$profile_disabled}"/>
+    <Endpoints 
+      hide="{$endpoints_hidden}"
+      disabled="{$endpoints_disabled}"/>    
+    <Timeline hide="{$timeline_hidden}"/>
+    <Notes hide="{$notes_hidden}"/>
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
     <Controls 
-      on:cancelnew="{doCancelNew}" 
-      on:savenew="{doSaveNew}"
-      on:edit="{doEdit}"
-      on:delete="{doDelete}"
-      on:saveexisting="{doSaveExisting}"
-      on:cancelexisting="{doCancelExisting}"/>
+      mode="{$controls_mode}"
+      hidden="{$controls_hidden}"
+      on:cancelnew="{doCancelNew}"
+      on:savenew="{doSaveNew}"/>
 
   </article>
 
