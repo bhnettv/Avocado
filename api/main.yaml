@@ -15,10 +15,10 @@ servers:
 tags:
 - name: 🤝 Activity
   description: Different types of developer activities
-- name: 🏷️ Label
-  description: Logical groupings of developers (tagging)
 - name: 💬 ️Language
   description: Languages spoken by developers around the world  
+- name: 🏢 Organization
+  description: Logical groupings of developers (tagging)  
 - name: 🔧 Skill
   description: Skills available to developers (tagging)
 - name: 🖥️ Developer
@@ -72,18 +72,18 @@ paths:
     $ref: 'activity.yaml#/paths/~1activity'
   /activity/{id}:
     $ref: 'activity.yaml#/paths/~1activity~1{id}'
-  /label:
-    $ref: 'label.yaml#/paths/~1label'
-  /label/{id}:
-    $ref: 'label.yaml#/paths/~1label~1{id}'
-  /label/name/{prefix}:
-    $ref: 'label.yaml#/paths/~1label~1name~1{prefix}'
   /language:
     $ref: 'language.yaml#/paths/~1language'
   /language/{id}:
     $ref: 'language.yaml#/paths/~1language~1{id}'
   /language/name/{prefix}:
     $ref: 'language.yaml#/paths/~1language~1name~1{prefix}'        
+  /organization:
+    $ref: 'organization.yaml#/paths/~1organization'
+  /organization/{id}:
+    $ref: 'organization.yaml#/paths/~1organization~1{id}'
+  /organization/name/{prefix}:
+    $ref: 'organization.yaml#/paths/~1organization~1name~1{prefix}'    
   /skill:
     $ref: 'skill.yaml#/paths/~1skill'
   /skill/{id}:
@@ -242,8 +242,6 @@ components:
       $ref: 'github.yaml#/components/schemas/GitHub'
     GitHubEvent:
       $ref: 'github-event.yaml#/components/schemas/GitHubEvent'
-    Label:
-      $ref: 'label.yaml#/components/schemas/Label'
     Language:
       $ref: 'language.yaml#/components/schemas/Language'      
     Media:
@@ -254,6 +252,8 @@ components:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    Organization:
+      $ref: 'organization.yaml#/components/schemas/Organization'      
     Reddit:
       $ref: 'reddit.yaml#/components/schemas/Reddit'      
     RedditPost:

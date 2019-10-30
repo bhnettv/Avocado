@@ -203,7 +203,7 @@ paths:
                     full_text:
                       type: string
                       example: 'IBM was here.'
-  /developer/{id}/label:
+  /developer/{id}/organization:
     parameters:
     - name: id
       in: path
@@ -215,8 +215,8 @@ paths:
     get:
       tags:
       - 🖥️ Developer
-      summary: Get labels associated with a developer by their ID
-      operationId: getDeveloperLabelsByID
+      summary: Get organizations associated with a developer by their ID
+      operationId: getDeveloperOrganizationsByID
       responses:
         200:
           description: successful operation
@@ -242,8 +242,8 @@ paths:
     post:
       tags:
       - 🖥️ Developer
-      summary: Associate a specific developer with a label
-      operationId: createDeveloperLabel
+      summary: Associate a specific developer with an organization
+      operationId: createDeveloperOrganization
       requestBody:
         required: true
         content:
@@ -251,7 +251,7 @@ paths:
             schema:
               type: object
               properties:
-                label_id:
+                organization_id:
                   type: string
                   format: uuid
       responses:
@@ -274,14 +274,14 @@ paths:
                   developer_id:
                     type: string
                     format: uuid
-                  label_id:
+                  organization_id:
                     type: string
                     format: uuid
-  /developer/label/{id}:
+  /developer/organization/{id}:
     parameters:
     - name: id
       in: path
-      description: ID field for desired label
+      description: ID field for desired organization
       required: true
       schema:
         type: string
@@ -289,8 +289,8 @@ paths:
     get:
       tags:
       - 🖥️ Developer
-      summary: Get developers associated with a specific label
-      operationId: getDeveloperLabels
+      summary: Get developers associated with a specific organization
+      operationId: getDeveloperOrganization
       responses:
         200:
           description: successful operation

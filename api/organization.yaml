@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: 🏷 ️Label
+  title: 🏢 Organization
   description: Paths and components
   contact:
     email: parkerkrhoyt@gmail.com
@@ -13,15 +13,15 @@ externalDocs:
 servers:
 - url: http://localhost:3000/api
 tags:
-- name: 🏷️ Label
+- name: 🏢 Organization
   description: Logical groupings of developers (tagging)
 paths:
-  /label:
+  /organization:
     get:
       tags:
-      - 🏷️ Label
-      summary: Read all available labels
-      operationId: getLabels
+      - 🏢 Organization
+      summary: Read all available organizations
+      operationId: getOrganizations
       responses:
         200:
           description: successful operation
@@ -49,9 +49,9 @@ paths:
                       example: 0
     post:
       tags:
-      - 🏷️ Label
-      summary: Create a new label
-      operationId: createLabel
+      - 🏢 Organization
+      summary: Create a new organization
+      operationId: createOrganization
       requestBody:
         required: true
         content:
@@ -68,33 +68,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
-  /label/{id}:
+                $ref: '#/components/schemas/Organization'
+  /organization/{id}:
     parameters:
     - name: id
       in: path
-      description: ID field for desired label
+      description: ID field for desired organization
       required: true
       schema:
         type: string
         format: uuid
     get:
       tags:
-      - 🏷️ Label
-      summary: Read specific label by ID
-      operationId: getLabelByID
+      - 🏢 Organization
+      summary: Read specific organization by ID
+      operationId: getOrganizationByID
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
+                $ref: '#/components/schemas/Organization'
     put:
       tags:
-      - 🏷️ Label
-      summary: Update specific label by ID
-      operationId: updateLabel
+      - 🏢 Organization
+      summary: Update specific organization by ID
+      operationId: updateOrganization
       requestBody:
         required: true
         content:
@@ -111,12 +111,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
+                $ref: '#/components/schemas/Organization'
     delete:
       tags:
-      - 🏷️ Label
-      summary: Delete specific label by ID
-      operationId: deleteLabelByID
+      - 🏢 Organization
+      summary: Delete specific organization by ID
+      operationId: deleteOrganizationByID
       responses:
         200:
           description: successful operation
@@ -128,20 +128,20 @@ paths:
                   id:
                     type: string
                     format: uuid
-  /label/name/{prefix}:
+  /organization/name/{prefix}:
     parameters:
     - name: prefix
       in: path
-      description: Prefix for a given label
+      description: Prefix for a given organization
       required: true
       schema:
         type: string
         example: IB
     get:
       tags:
-      - 🏷️ Label
-      summary: Search for label with given value
-      operationId: searchLabelByName
+      - 🏢 Organization
+      summary: Search for organization with given value
+      operationId: searchOrganizationByName
       responses:
         200:
           description: successful operation
@@ -166,7 +166,7 @@ paths:
                       example: IBM
 components:
   schemas:
-    Label:
+    Organization:
       required:
       - name
       type: object

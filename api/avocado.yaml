@@ -18,10 +18,10 @@ servers:
 tags:
   - name: 🤝 Activity
     description: Different types of developer activities
-  - name: 🏷️ Label
-    description: Logical groupings of developers (tagging)
   - name: 💬 ️Language
     description: Languages spoken by developers around the world
+  - name: 🏢 Organization
+    description: Logical groupings of developers (tagging)
   - name: 🔧 Skill
     description: Skills available to developers (tagging)
   - name: 🖥️ Developer
@@ -199,185 +199,6 @@ paths:
                   id:
                     type: string
                     format: uuid
-  /label:
-    get:
-      tags:
-        - 🏷️ Label
-      summary: Read all available labels
-      operationId: getLabels
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: IBM
-                    count:
-                      type: integer
-                      example: 0
-    post:
-      tags:
-        - 🏷️ Label
-      summary: Create a new label
-      operationId: createLabel
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: IBM
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                required:
-                  - name
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  name:
-                    type: string
-                    example: IBM
-  "/label/{id}":
-    parameters:
-      - name: id
-        in: path
-        description: ID field for desired label
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      tags:
-        - 🏷️ Label
-      summary: Read specific label by ID
-      operationId: getLabelByID
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                required:
-                  - name
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  name:
-                    type: string
-                    example: IBM
-    put:
-      tags:
-        - 🏷️ Label
-      summary: Update specific label by ID
-      operationId: updateLabel
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: IBM
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/paths/~1label~1%7Bid%7D/get/responses/200/content/applicat\
-                  ion~1json/schema"
-    delete:
-      tags:
-        - 🏷️ Label
-      summary: Delete specific label by ID
-      operationId: deleteLabelByID
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-  "/label/name/{prefix}":
-    parameters:
-      - name: prefix
-        in: path
-        description: Prefix for a given label
-        required: true
-        schema:
-          type: string
-          example: IB
-    get:
-      tags:
-        - 🏷️ Label
-      summary: Search for label with given value
-      operationId: searchLabelByName
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: IBM
   /language:
     get:
       tags:
@@ -557,6 +378,185 @@ paths:
                     name:
                       type: string
                       example: English
+  /organization:
+    get:
+      tags:
+        - 🏢 Organization
+      summary: Read all available organizations
+      operationId: getOrganizations
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
+                    count:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 🏢 Organization
+      summary: Create a new organization
+      operationId: createOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: IBM
+  "/organization/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired organization
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🏢 Organization
+      summary: Read specific organization by ID
+      operationId: getOrganizationByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: IBM
+    put:
+      tags:
+        - 🏢 Organization
+      summary: Update specific organization by ID
+      operationId: updateOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IBM
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1organization~1%7Bid%7D/get/responses/200/content/a\
+                  pplication~1json/schema"
+    delete:
+      tags:
+        - 🏢 Organization
+      summary: Delete specific organization by ID
+      operationId: deleteOrganizationByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/organization/name/{prefix}":
+    parameters:
+      - name: prefix
+        in: path
+        description: Prefix for a given organization
+        required: true
+        schema:
+          type: string
+          example: IB
+    get:
+      tags:
+        - 🏢 Organization
+      summary: Search for organization with given value
+      operationId: searchOrganizationByName
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
   /skill:
     get:
       tags:
@@ -956,139 +956,8 @@ paths:
                   id:
                     type: string
                     format: uuid
-  "/developer/{id}/label":
-    parameters:
-      - name: id
-        in: path
-        description: ID field for desired developer
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      tags:
-        - 🖥️ Developer
-      summary: Get labels associated with a developer by their ID
-      operationId: getDeveloperLabelsByID
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: IBM
-    post:
-      tags:
-        - 🖥️ Developer
-      summary: Associate a specific developer with a label
-      operationId: createDeveloperLabel
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                label_id:
-                  type: string
-                  format: uuid
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  developer_id:
-                    type: string
-                    format: uuid
-                  label_id:
-                    type: string
-                    format: uuid
-  "/developer/label/{id}":
-    parameters:
-      - name: id
-        in: path
-        description: ID field for desired label
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      tags:
-        - 🖥️ Developer
-      summary: Get developers associated with a specific label
-      operationId: getDeveloperLabels
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: Kevin Hoyt
-                    email:
-                      type: string
-                      example: krhoyt@us.ibm.com
-                    description:
-                      type: string
-                      example: Some dude at IBM.
-                    image:
-                      type: string
-                      example: http://something.com
-                    location:
-                      type: string
-                      example: Armonk, NY
-                    latitude:
-                      type: number
-                      format: float
-                      example: 41.1328412
-                    longitude:
-                      type: number
-                      format: float
-                      example: -73.7492039
-                    public:
-                      type: integer
-                      example: 0
+  "/developer/{id}/label": {}
+  "/developer/label/{id}": {}
   /developer/note:
     get:
       tags:
@@ -7307,23 +7176,6 @@ components:
         repository_name:
           type: string
           example: phenomnomnominal/betterer
-    Label:
-      required:
-        - name
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        name:
-          type: string
-          example: IBM
     Language:
       required:
         - name
@@ -7488,6 +7340,23 @@ components:
         media_id:
           type: string
           format: uuid
+    Organization:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: IBM
     Reddit:
       required:
         - developer_id

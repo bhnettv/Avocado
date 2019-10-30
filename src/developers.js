@@ -29,4 +29,4 @@ export const endpoint_so = writable( '' );
 export const endpoint_github = writable( '' );
 export const endpoint_reddit = writable( '' );
 export const notes_list = writable( [] );
-export const controls_mode = writable( 1 );
+export const controls_mode = writable( 0 );

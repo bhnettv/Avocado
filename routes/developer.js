@@ -9,8 +9,8 @@ router.get( '/test', ( req, res ) => {
   res.json( {developer: 'Test'} );
 } );
 
-// Read all developers for given label
-router.get( '/label/:id', ( req, res ) => {
+// Read all developers for given organization
+router.get( '/organization/:id', ( req, res ) => {
   let developers = req.db.prepare( `
     SELECT
       Developer.uuid AS "id",
@@ -26,12 +26,12 @@ router.get( '/label/:id', ( req, res ) => {
       Developer.public
     FROM 
       Developer,
-      DeveloperLabel,
-      Label
+      DeveloperOrganization,
+      Organization
     WHERE 
-      Developer.id = DeveloperLabel.developer_id AND
-      DeveloperLabel.label_id = Label.id AND
-      Label.uuid = ?
+      Developer.id = DeveloperOrganization.developer_id AND
+      DeveloperOrganization.organization_id = Organization.id AND
+      Organization.uuid = ?
   ` )
   .all( 
     req.params.id 
@@ -40,26 +40,26 @@ router.get( '/label/:id', ( req, res ) => {
   res.json( developers );
 } );
 
-// Read labels for given developer
-router.get( '/:id/label', ( req, res ) => {
-  let labels = req.db.prepare( `
+// Read organizations for given developer
+router.get( '/:id/organization', ( req, res ) => {
+  let organizations = req.db.prepare( `
     SELECT 
-      Label.uuid AS "id",
-      Label.created_at, 
-      Label.updated_at, 
-      Label.name
+      Organization.uuid AS "id",
+      Organization.created_at, 
+      Organization.updated_at, 
+      Organization.name
     FROM 
-      Developer, DeveloperLabel, Label
+      Developer, DeveloperOrganization, Organization
     WHERE 
-      Label.id = DeveloperLabel.label_id AND
-      DeveloperLabel.developer_id = Developer.id AND
+      Organization.id = DeveloperOrganization.organization_id AND
+      DeveloperOrganization.developer_id = Developer.id AND
       Developer.uuid = ?
   ` )
   .all( 
     req.params.id 
   );
 
-  res.json( labels );
+  res.json( organizations );
 } );
 
 // Read notes for given developer
@@ -143,60 +143,60 @@ router.get( '/', ( req, res ) => {
   res.json( developers );
 } );
 
-// Associate developer with label
-router.post( '/:developer/label', ( req, res ) => {
+// Associate developer with organization
+router.post( '/:developer/organization', ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     developer_uuid: req.params.developer,
-    label_uuid: req.body.label_id
+    organization_uuid: req.body.organization_id
   };
 
   let existing = req.db.prepare( `
     SELECT
-      DeveloperLabel.uuid AS "id",
-      DeveloperLabel.created_at,
-      DeveloperLabel.updated_at,
+      DeveloperOrganization.uuid AS "id",
+      DeveloperOrganization.created_at,
+      DeveloperOrganization.updated_at,
       Developer.uuid AS "developer_id",
-      Label.uuid AS "label_id"
+      Organization.uuid AS "organization_id"
     FROM
       Developer,
-      DeveloperLabel,
-      Label
+      DeveloperOrganization,
+      Organization
     WHERE
-      Developer.id = DeveloperLabel.developer_id AND
-      DeveloperLabel.label_id = Label.id AND
+      Developer.id = DeveloperOrganization.developer_id AND
+      DeveloperOrganization.organization_id = Organization.id AND
       Developer.uuid = ? AND
-      Label.uuid = ?
+      Organization.uuid = ?
   ` )
   .get(
     record.developer_uuid,
-    record.label_uuid
+    record.organization_uuid
   );
 
   if( existing === undefined ) {
     let ids = req.db.prepare( `
       SELECT
         Developer.id AS "developer_id",
-        Label.id AS "label_id"
+        Organization.id AS "organization_id"
       FROM
         Developer,
-        Label
+        Organization
       WHERE
         Developer.uuid = ? AND
-        Label.uuid = ?
+        Organization.uuid = ?
     ` )
     .get( 
       record.developer_uuid,
-      record.label_uuid
+      record.organization_uuid
     );
     record.developer_id = ids.developer_id;
-    record.label_id = ids.label_id;
+    record.organization_id = ids.organization_id;
 
     let info = req.db.prepare( `
-      INSERT INTO DeveloperLabel
+      INSERT INTO DeveloperOrganization
       VALUES ( ?, ?, ?, ?, ?, ? )
     ` )
     .run(
@@ -205,7 +205,7 @@ router.post( '/:developer/label', ( req, res ) => {
       record.created_at,
       record.updated_at,
       record.developer_id,
-      record.label_id
+      record.organization_id
     );
 
     record = {
@@ -213,7 +213,7 @@ router.post( '/:developer/label', ( req, res ) => {
       created_at: record.created_at,
       updated_at: record.updated_at,
       developer_id: record.developer_uuid,
-      label_id: record.label_uuid
+      organization_id: record.organization_uuid
     };    
   } else {
     record = existing;
@@ -340,38 +340,38 @@ router.put( '/:id', ( req, res ) => {
   res.json( record );  
 } );
 
-// Remove developer from label
-router.delete( '/:developer/label/:label', ( req, res ) => {
+// Remove developer from organization
+router.delete( '/:developer/organization/:organization', ( req, res ) => {
   let ids = req.db.prepare( `
     SELECT
       Developer.id AS "developer_id",
-      Label.id AS "label_id"
+      Organization.id AS "organization_id"
     FROM
       Developer,
-      Label
+      Organization
     WHERE
       Developer.uuid = ? AND
-      Label.uuid = ?    
+      Organization.uuid = ?    
   ` )
   .get( 
     req.params.developer,
-    req.params.label
+    req.params.organization
   );
 
   let info = req.db.prepare( `
-    DELETE FROM DeveloperLabel
+    DELETE FROM DeveloperOrganization
     WHERE 
-      DeveloperLabel.developer_id = ? AND
-      DeveloperLabel.label_id = ?
+      DeveloperOrganization.developer_id = ? AND
+      DeveloperOrganization.organization_id = ?
   ` )
   .run(
     ids.developer_id,
-    ids.label_id
+    ids.organization_id
   );  
 
   res.json( {
     developer_id: req.params.developer,
-    label_id: req.params.label
+    organization_id: req.params.organization
   } );
 } );
 
@@ -404,10 +404,10 @@ router.delete( '/:id', ( req, res ) => {
     developer.id
   );    
 
-  // Labels
+  // Organizations
   info = req.db.prepare( `
-    DELETE FROM DeveloperLabel
-    WHERE DeveloperLabel.developer_id = ?
+    DELETE FROM DeveloperOrganization
+    WHERE DeveloperOrganization.developer_id = ?
   ` )
   .run(
     developer.id
