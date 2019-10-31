@@ -51,7 +51,6 @@ import { developer_location } from './developers.js';
 
 import { notes_list } from './developers.js';
 
-import { controls_hidden } from './developers.js';
 import { controls_mode } from './developers.js';
 
 // Filter developer list on search term
@@ -76,16 +75,22 @@ function filter() {
 // Add clicked
 function doAddClick( evt ) {
   $add_disabled = true;
-  
-  $summary_selected = true;
-  $profile_selected = false;
-  $social_selected = false;
-  $notes_selected = false;
 
   $summary_tab = false;
   $profile_tab = false;
   $social_tab = false;
   $notes_tab = true;
+
+  $summary_selected = true;
+  $profile_selected = false;
+  $social_selected = false;
+  $notes_selected = false;
+
+  $summary_hidden = false;
+  $profile_hidden = true;
+  $endpoints_hidden = true;
+  $timeline_hidden = true;
+  $notes_hidden = true;
 
   $summary_disabled = false;
   $profile_disabled = false;
@@ -98,22 +103,25 @@ function doAddClick( evt ) {
   $developer_organizations = [];
   $developer_location = '';
 
-  controls_hidden.set( false );
-  controls_mode.set( 1 );
+  $controls_mode = 1;
 }
 
 function doCancelNew( evt ) {
   $add_disabled = false;
+
+  $summary_tab = false;
+  $profile_tab = true;
+  $social_tab = true;
+  $notes_tab = true;
 
   $summary_selected = true;
   $profile_selected = false;
   $social_selected = false;
   $notes_selected = false;
 
-  $summary_tab = false;
-  $profile_tab = true;
-  $social_tab = true;
-  $notes_tab = true;
+  $summary_hidden = false;
+  $profile_hidden = true;
+  $endpoints_hidden = true;
 
   $summary_disabled = true;
   $profile_disabled = true;
@@ -126,8 +134,30 @@ function doCancelNew( evt ) {
   $developer_organizations = [];
   $developer_location = '';
 
-  $controls_hidden = true;
   $controls_mode = 0;
+}
+
+function doDeveloperClick( evt ) {
+  fetch( `/api/developer/${evt.detail.item.id}` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_id = data.id;
+    $developer_name = data.name;
+    $developer_email = data.email;
+    $developer_location = data.location;
+
+    $profile_tab = false;
+    $social_tab = false;
+    $notes_tab = false;
+
+    $controls_mode = 2;
+  } );
+
+  fetch( `/api/developer/${evt.detail.item.id}/note` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $notes_list = data.slice();
+  } );
 }
 
 // Save new developer
@@ -151,14 +181,14 @@ function doSaveNew( evt ) {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $developer_id = data.id;
-    $developer_list.push( data );
+    $developer_list.push( Object.assign( {}, data ) );
     $developer_list.sort( ( a, b ) => {
       if( a.name > b.name ) return 1;
       if( a.name < b.name ) return -1;
       return 0;
     } );
     $developer_list = $developer_list.slice();
-    filter( $developer_list, $search_term, $filtered_list );
+    filter();
 
     $add_disabled = false;
 
@@ -172,7 +202,6 @@ function doSaveNew( evt ) {
     $endpoints_disabled = true;
 
     $controls_mode = 2;
-    $controls_hidden = true;
   } );
 }
 
@@ -191,7 +220,11 @@ function doTabClick( index ) {
       $timeline_hidden = true;
       $notes_hidden = true;
 
-      $controls_hidden = false;
+      if( $developer_id === null && $add_disabled ) {
+        $controls_mode = 1;
+      } else {
+        $controls_mode = 2;
+      }
       break;
 
     case 1:
@@ -204,9 +237,13 @@ function doTabClick( index ) {
       $profile_hidden = false;
       $endpoints_hidden = true;
       $timeline_hidden = true;
-      $notes_hidden = true;     
+      $notes_hidden = true;  
       
-      $controls_hidden = false;      
+      if( $developer_id === null && $add_disabled ) {
+        $controls_mode = 1;
+      } else {
+        $controls_mode = 2;
+      }
       break;      
 
     case 2:
@@ -220,8 +257,12 @@ function doTabClick( index ) {
       $endpoints_hidden = $add_disabled ? false : true;
       $timeline_hidden = $add_disabled ? true : false;      
       $notes_hidden = true;     
-      
-      $controls_hidden = false;
+
+      if( $developer_id === null && $add_disabled ) {
+        $controls_mode = 1;
+      } else {
+        $controls_mode = 2;
+      }
       break;      
 
     case 3:
@@ -236,7 +277,7 @@ function doTabClick( index ) {
       $timeline_hidden = true;
       $notes_hidden = false;      
 
-      $controls_hidden = true;
+      $controls_mode = 0;
       break;      
   }
 }
@@ -256,256 +297,6 @@ onMount( async () => {
     organization_list.set( data.slice() );
   } );
 } );
-
-/*
-// Add new developer
-function doAdd( evt ) {
-  $add_disabled = true;
-  $tab_index = 0;
-  $social_disabled = false;
-  $notes_disabled = true;
-  $overview_disabled = false;
-  $developer_id = '';
-  $developer_name = '';
-  $developer_email = '';
-  $developer_description = '';
-  $developer_image = ''; 
-  $social_index = 0;  
-  $controls_mode = 1;
-}
-
-// Edit existing developer
-function doEdit( evt ) {
-  $overview_disabled = false;
-  $social_index = 0;
-  $controls_mode = 3;
-}
-
-// Cancel editing a developer
-function doCancelExisting( evt ) {
-  $overview_disabled = true;
-  $social_index = 1;
-  $controls_mode = 2;  
-
-  $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
-  $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
-  $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
-  $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
-}
-
-// Cancel adding a developer
-function doCancelNew( evt ) {
-  $add_disabled = false;
-  $tab_index = 0;
-  $social_disabled = true;
-  $overview_disabled = true;
-  $social_index = 1;
-  $controls_mode = 0;
-  $developer_labels = [];
-  $developer_skills = [];
-}
-
-// Delete existing developer
-function doDelete( evt ) {
-  fetch( `/api/developer/${$developer_id}`, {
-    method: 'DELETE'
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    for( let d = 0; d < $developer_list.length; d++ ) {
-      if( $developer_list[d].id === data.id ) {
-        $developer_list.splice( d, 1 );
-        $developer_list = $developer_list.slice( 0 );
-        break;
-      }
-    }
-
-    $social_disabled = true;
-    $notes_disabled = true;
-    $overview_disabled = true;
-    $developer_id = '';
-    $developer_name = '';
-    $developer_email = '';
-    $developer_labels = [];
-    $developer_description = '';
-    $developer_image = ''; 
-    $social_index = 0;    
-    $controls_mode = 0;
-  } )
-}
-
-// Show existing developer
-function doDeveloper( evt ) {
-  let id = evt.detail.item.id;
-
-  for( let d = 0; d < $developer_list.length; d++ ) {
-    if( id === $developer_list[d].id ) {
-      $developer_index = d;
-      break;
-    }
-  }
-
-  $add_disabled = false;
-
-  $overview_disabled = true;
-  $social_disabled = false;
-  $social_index = 1;
-  $notes_disabled = false;
-
-  $developer_id = id;
-  $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
-  $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
-  $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
-  $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
-  
-  $controls_mode = 2;
-
-  fetch( `/api/developer/${$developer_id}/label` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    let labels = [];
-
-    for( let a = 0; a < data.length; a++ ) {
-      labels.push( data[a].name );
-    }
-
-    $developer_labels = labels.slice( 0 );
-  } );
-
-  fetch( `/api/developer/${$developer_id}/note` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $notes_list = data.slice( 0 );
-  } );
-}
-
-// Save exissting developer
-function doSaveExisting( evt ) {
-  $add_disabled = false;
-  $social_disabled = false;
-  $overview_disabled = true;
-  $social_index = 1;
-  $notes_disabled = false;
-  $controls_mode = 2;  
-
-  let developer = {
-    name: $developer_name,
-    email:  $developer_email.trim().length === 0 ? null : $developer_email,
-    description: $developer_description.trim().length === 0 ? null : $developer_description,
-    image: $developer_image.trim().length === 0 ? null : $developer_image
-  };
-
-  fetch( `/api/developer/${$developer_id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( developer )
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    for( let d = 0; d < $developer_list.length; d++ ) {
-      if( $developer_list[d].id === data.id ) {
-        $developer_list[d] = data;
-        break;
-      }
-    }
-
-    $developer_list.sort( ( a, b ) => {
-      if( a.name > b.name ) return 1;
-      if( a.name < b.name ) return -1;
-
-      return 0;
-    } );
-    $developer_list = $developer_list.slice( 0 );
-  } );
-}
-
-// Save new developer
-function doSaveNew( evt ) {
-  $add_disabled = false;
-  $tab_index = 0;
-  $social_disabled = false;
-  $overview_disabled = true;
-  $social_index = 1;
-  $notes_disabled = false;
-  $controls_mode = 2;  
-
-  let developer = {
-    name: $developer_name,
-    email:  $developer_email.trim().length === 0 ? null : $developer_email,
-    description: $developer_description.trim().length === 0 ? null : $developer_description,
-    image: $developer_image.trim().length === 0 ? null : $developer_image
-  };
-
-  fetch( '/api/developer', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( developer )
-  } )
-  .then( ( response ) => response.json() )
-  .then( async ( data ) => {
-    $developer_list.push( data );
-    $developer_list.sort( ( a, b ) => {
-      if( a.name > b.name ) return 1;
-      if( a.name < b.name ) return -1;
-
-      return 0;
-    } );
-    $developer_list = $developer_list.slice( 0 );
-    $developer_id = data.id;
-
-    let later = [];
-
-    for( let a = 0; a < $developer_labels.length; a++ ) {
-      let found = false;
-      let label_id = null;
-
-      for( let b = 0; b < $label_list.length; b++ ) {
-        if( $developer_labels[a] === $label_list[b].name ) {
-          found = true;
-          label_id = $label_list[b].id;
-          break;
-        }
-      }
-
-      if( !found ) {
-        let label = await fetch( '/api/label', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify( {
-            name: $developer_labels[a]
-          } )
-        } )
-        .then( ( response ) => response.json() );
-
-        later.push( label );
-        label_id = label.id;
-      }
-
-      await fetch( `/api/developer/${$developer_id}/label`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( {
-          label_id: label_id
-        } )
-      } );      
-    }
-
-    for( let a = 0; a < later.length; a++ ) {
-      $label_list.push( later[a] );
-      $label_list.sort();
-      $label_list = $label_list.slice( 0 );
-    }
-  } );
-}
-*/
 </script>
 
 <style>
@@ -566,6 +357,7 @@ h4 {
     <!-- Developer list -->
     <h4>Developers</h4>
     <List 
+      on:change="{doDeveloperClick}"
       data="{$filtered_list}" 
       let:item="{developer}">
       <ListLabelItem>{developer.name}</ListLabelItem>
@@ -612,22 +404,21 @@ h4 {
     <!-- Views -->
     <!-- Work directly with store -->
     <Summary 
-      hide="{$summary_hidden}"
+      hidden="{$summary_hidden}"
       disabled="{$summary_disabled}"/>
     <Profile 
-      hide="{$profile_hidden}"
+      hidden="{$profile_hidden}"
       disabled="{$profile_disabled}"/>
     <Endpoints 
-      hide="{$endpoints_hidden}"
+      hidden="{$endpoints_hidden}"
       disabled="{$endpoints_disabled}"/>    
-    <Timeline hide="{$timeline_hidden}"/>
-    <Notes hide="{$notes_hidden}"/>
+    <Timeline hidden="{$timeline_hidden}"/>
+    <Notes hidden="{$notes_hidden}"/>
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
     <Controls 
       mode="{$controls_mode}"
-      hidden="{$controls_hidden}"
       on:cancelnew="{doCancelNew}"
       on:savenew="{doSaveNew}"/>
 

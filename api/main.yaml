@@ -19,6 +19,8 @@ tags:
   description: Languages spoken by developers around the world  
 - name: 🏢 Organization
   description: Logical groupings of developers (tagging)  
+- name: 👔 Role
+  description: Logical groupings of developers (tagging)  
 - name: 🔧 Skill
   description: Skills available to developers (tagging)
 - name: 🖥️ Developer
@@ -83,7 +85,13 @@ paths:
   /organization/{id}:
     $ref: 'organization.yaml#/paths/~1organization~1{id}'
   /organization/name/{prefix}:
-    $ref: 'organization.yaml#/paths/~1organization~1name~1{prefix}'    
+    $ref: 'organization.yaml#/paths/~1organization~1name~1{prefix}' 
+  /role:
+    $ref: 'role.yaml#/paths/~1role'
+  /role/{id}:
+    $ref: 'role.yaml#/paths/~1role~1{id}'
+  /role/name/{prefix}:
+    $ref: 'role.yaml#/paths/~1role~1name~1{prefix}'       
   /skill:
     $ref: 'skill.yaml#/paths/~1skill'
   /skill/{id}:
@@ -94,14 +102,18 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1{id}'
-  /developer/{id}/label:
-    $ref: 'developer.yaml#/paths/~1developer~1{id}~1label'
-  /developer/label/{id}:
-    $ref: 'developer.yaml#/paths/~1developer~1label~1{id}'
+  /developer/{id}/organization:
+    $ref: 'developer.yaml#/paths/~1developer~1{id}~1organization'
+  /developer/organization/{id}:
+    $ref: 'developer.yaml#/paths/~1developer~1organization~1{id}'
   /developer/note:
     $ref: 'developer-note.yaml#/paths/~1developer~1note'
   /developer/note/{id}:
     $ref: 'developer-note.yaml#/paths/~1developer~1note~1{id}'
+  /developer/role:
+    $ref: 'developer.yaml#/paths/~1developer~1role'
+  /developer/role/{id}:
+    $ref: 'developer.yaml#/paths/~1developer~1role~1{id}'    
   /media:
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:
@@ -260,6 +272,8 @@ components:
       $ref: 'reddit-post.yaml#/components/schemas/RedditPost'            
     Repository:
       $ref: 'repository.yaml#/components/schemas/Repository'
+    Role:
+      $ref: 'role.yaml#/components/schemas/Role' 
     Skill:
       $ref: 'skill.yaml#/components/schemas/Skill'      
     StackOverflow:

@@ -4,7 +4,7 @@ import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
-export let hide = false;
+export let hidden = false;
 export let disabled = false;
 </script>
 
@@ -27,12 +27,12 @@ form > div:last-of-type {
   margin-bottom: 0;
 }
 
-.hide {
+.hidden {
   display: none;
 }
 </style>
 
-<form class:hide>
+<form class:hidden>
 
   <div>
     <TagInput 

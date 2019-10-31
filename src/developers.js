@@ -64,5 +64,4 @@ export const endpoint_instagram = writable( '' );
 export const notes_list = writable( [] );
 
 // Controls
-export const controls_hidden = writable( true );
 export const controls_mode = writable( 0 );

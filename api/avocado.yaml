@@ -22,6 +22,8 @@ tags:
     description: Languages spoken by developers around the world
   - name: 🏢 Organization
     description: Logical groupings of developers (tagging)
+  - name: 👔 Role
+    description: Logical groupings of developers (tagging)
   - name: 🔧 Skill
     description: Skills available to developers (tagging)
   - name: 🖥️ Developer
@@ -557,6 +559,185 @@ paths:
                     name:
                       type: string
                       example: IBM
+  /role:
+    get:
+      tags:
+        - 👔 Role
+      summary: Read all available roles
+      operationId: getRoles
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Engineer
+                    count:
+                      type: integer
+                      example: 0
+    post:
+      tags:
+        - 👔 Role
+      summary: Create a new role
+      operationId: createRole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Engineer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: Engineer
+  "/role/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired role
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 👔 Role
+      summary: Read specific role by ID
+      operationId: getRoleByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  name:
+                    type: string
+                    example: Engineer
+    put:
+      tags:
+        - 👔 Role
+      summary: Update specific role by ID
+      operationId: updateRole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Engineer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1role~1%7Bid%7D/get/responses/200/content/applicati\
+                  on~1json/schema"
+    delete:
+      tags:
+        - 👔 Role
+      summary: Delete specific role by ID
+      operationId: deleteRoleByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/role/name/{prefix}":
+    parameters:
+      - name: prefix
+        in: path
+        description: Prefix for a given role
+        required: true
+        schema:
+          type: string
+          example: Eng
+    get:
+      tags:
+        - 👔 Role
+      summary: Search for role with given value
+      operationId: searchRoleByName
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Engineer
   /skill:
     get:
       tags:
@@ -956,8 +1137,139 @@ paths:
                   id:
                     type: string
                     format: uuid
-  "/developer/{id}/label": {}
-  "/developer/label/{id}": {}
+  "/developer/{id}/organization":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired developer
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get organizations associated with a developer by their ID
+      operationId: getDeveloperOrganizationsByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: IBM
+    post:
+      tags:
+        - 🖥️ Developer
+      summary: Associate a specific developer with an organization
+      operationId: createDeveloperOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization_id:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  organization_id:
+                    type: string
+                    format: uuid
+  "/developer/organization/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired organization
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get developers associated with a specific organization
+      operationId: getDeveloperOrganization
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Kevin Hoyt
+                    email:
+                      type: string
+                      example: krhoyt@us.ibm.com
+                    description:
+                      type: string
+                      example: Some dude at IBM.
+                    image:
+                      type: string
+                      example: http://something.com
+                    location:
+                      type: string
+                      example: Armonk, NY
+                    latitude:
+                      type: number
+                      format: float
+                      example: 41.1328412
+                    longitude:
+                      type: number
+                      format: float
+                      example: -73.7492039
+                    public:
+                      type: integer
+                      example: 0
   /developer/note:
     get:
       tags:
@@ -1135,6 +1447,66 @@ paths:
                   id:
                     type: string
                     format: uuid
+  /developer/role: {}
+  "/developer/role/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired role
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get developers associated with a specific role
+      operationId: getDeveloperRole
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    name:
+                      type: string
+                      example: Kevin Hoyt
+                    email:
+                      type: string
+                      example: krhoyt@us.ibm.com
+                    description:
+                      type: string
+                      example: Some dude at IBM.
+                    image:
+                      type: string
+                      example: http://something.com
+                    location:
+                      type: string
+                      example: Armonk, NY
+                    latitude:
+                      type: number
+                      format: float
+                      example: 41.1328412
+                    longitude:
+                      type: number
+                      format: float
+                      example: -73.7492039
+                    public:
+                      type: integer
+                      example: 0
   /media:
     get:
       tags:
@@ -7509,6 +7881,23 @@ components:
         subscribers:
           type: integer
           example: 0
+    Role:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          example: Engineer
     Skill:
       required:
         - name

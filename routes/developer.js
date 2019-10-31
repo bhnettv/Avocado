@@ -413,6 +413,15 @@ router.delete( '/:id', ( req, res ) => {
     developer.id
   );  
 
+  // Roles
+  info = req.db.prepare( `
+    DELETE FROM DeveloperRole
+    WHERE DeveloperRole.developer_id = ?
+  ` )
+  .run(
+    developer.id
+  );    
+
   // Notes
   info = req.db.prepare( `
     DELETE FROM DeveloperNote

@@ -11,7 +11,7 @@ import { endpoint_so } from './developers.js';
 import { endpoint_github } from './developers.js';
 import { endpoint_reddit } from './developers.js';
 
-export let hide = false;
+export let hidden = false;
 export let disabled = false;
 </script>
 
@@ -35,12 +35,12 @@ div.line {
   padding: 0;
 }
 
-div.endpoints.hide {
+div.endpoints.hidden {
   display: none;
 }
 </style>
 
-<div class="endpoints" class:hide>
+<div class="endpoints" class:hidden>
 
   <div class="line">
     <TextInput 

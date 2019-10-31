@@ -854,7 +854,7 @@ var app = (function () {
 
     const file$1 = "src/Controls.svelte";
 
-    // (34:0) {#if mode === 1}
+    // (29:0) {#if mode === 1}
     function create_if_block_2(ctx) {
     	var t, current;
 
@@ -917,11 +917,11 @@ var app = (function () {
     			destroy_component(button1, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(34:0) {#if mode === 1}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(29:0) {#if mode === 1}", ctx });
     	return block;
     }
 
-    // (36:2) <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">
+    // (31:2) <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">
     function create_default_slot_5(ctx) {
     	var t;
 
@@ -940,11 +940,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(36:2) <Button kind=\"secondary\" on:click=\"{() => dispatch( 'cancelnew' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(31:2) <Button kind=\"secondary\" on:click=\"{() => dispatch( 'cancelnew' )}\">", ctx });
     	return block;
     }
 
-    // (37:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'savenew' )}">
+    // (32:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'savenew' )}">
     function create_default_slot_4(ctx) {
     	var t;
 
@@ -963,11 +963,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(37:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'savenew' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(32:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'savenew' )}\">", ctx });
     	return block;
     }
 
-    // (44:0) {#if mode === 2}
+    // (39:0) {#if mode === 2}
     function create_if_block_1(ctx) {
     	var current;
 
@@ -1007,11 +1007,11 @@ var app = (function () {
     			destroy_component(button, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(44:0) {#if mode === 2}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(39:0) {#if mode === 2}", ctx });
     	return block;
     }
 
-    // (46:2) <Button icon="/img/edit.svg" on:click="{() => dispatch( 'edit' )}">
+    // (41:2) <Button icon="/img/edit.svg" on:click="{() => dispatch( 'edit' )}">
     function create_default_slot_3(ctx) {
     	var t;
 
@@ -1030,11 +1030,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(46:2) <Button icon=\"/img/edit.svg\" on:click=\"{() => dispatch( 'edit' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(41:2) <Button icon=\"/img/edit.svg\" on:click=\"{() => dispatch( 'edit' )}\">", ctx });
     	return block;
     }
 
-    // (51:0) {#if mode === 3}
+    // (46:0) {#if mode === 3}
     function create_if_block$1(ctx) {
     	var t0, div, t1, t2, current;
 
@@ -1077,8 +1077,8 @@ var app = (function () {
     			button1.$$.fragment.c();
     			t2 = space();
     			button2.$$.fragment.c();
-    			attr_dev(div, "class", "block svelte-1ybo6ro");
-    			add_location(div, file$1, 55, 2, 956);
+    			attr_dev(div, "class", "block svelte-joltns");
+    			add_location(div, file$1, 50, 2, 879);
     		},
 
     		m: function mount(target, anchor) {
@@ -1128,11 +1128,11 @@ var app = (function () {
     			destroy_component(button2, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(51:0) {#if mode === 3}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(46:0) {#if mode === 3}", ctx });
     	return block;
     }
 
-    // (53:2) <Button      kind="danger"      on:click="{() => dispatch( 'delete' )}">
+    // (48:2) <Button      kind="danger"      on:click="{() => dispatch( 'delete' )}">
     function create_default_slot_2(ctx) {
     	var t;
 
@@ -1151,11 +1151,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(53:2) <Button      kind=\"danger\"      on:click=\"{() => dispatch( 'delete' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(48:2) <Button      kind=\"danger\"      on:click=\"{() => dispatch( 'delete' )}\">", ctx });
     	return block;
     }
 
-    // (57:2) <Button      kind="secondary"      on:click="{() => dispatch( 'cancelexisting' )}">
+    // (52:2) <Button      kind="secondary"      on:click="{() => dispatch( 'cancelexisting' )}">
     function create_default_slot_1(ctx) {
     	var t;
 
@@ -1174,11 +1174,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(57:2) <Button      kind=\"secondary\"      on:click=\"{() => dispatch( 'cancelexisting' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(52:2) <Button      kind=\"secondary\"      on:click=\"{() => dispatch( 'cancelexisting' )}\">", ctx });
     	return block;
     }
 
-    // (60:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'saveexisting' )}">
+    // (55:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'saveexisting' )}">
     function create_default_slot(ctx) {
     	var t;
 
@@ -1197,7 +1197,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(60:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'saveexisting' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(55:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'saveexisting' )}\">", ctx });
     	return block;
     }
 
@@ -1218,9 +1218,8 @@ var app = (function () {
     			if (if_block1) if_block1.c();
     			t1 = space();
     			if (if_block2) if_block2.c();
-    			attr_dev(div, "class", "svelte-1ybo6ro");
-    			toggle_class(div, "hidden", ctx.hidden);
-    			add_location(div, file$1, 28, 0, 382);
+    			attr_dev(div, "class", "svelte-joltns");
+    			add_location(div, file$1, 23, 0, 318);
     		},
 
     		l: function claim(nodes) {
@@ -1238,8 +1237,49 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if (changed.hidden) {
-    				toggle_class(div, "hidden", ctx.hidden);
+    			if (ctx.mode === 1) {
+    				if (!if_block0) {
+    					if_block0 = create_if_block_2(ctx);
+    					if_block0.c();
+    					transition_in(if_block0, 1);
+    					if_block0.m(div, t0);
+    				} else transition_in(if_block0, 1);
+    			} else if (if_block0) {
+    				group_outros();
+    				transition_out(if_block0, 1, 1, () => {
+    					if_block0 = null;
+    				});
+    				check_outros();
+    			}
+
+    			if (ctx.mode === 2) {
+    				if (!if_block1) {
+    					if_block1 = create_if_block_1(ctx);
+    					if_block1.c();
+    					transition_in(if_block1, 1);
+    					if_block1.m(div, t1);
+    				} else transition_in(if_block1, 1);
+    			} else if (if_block1) {
+    				group_outros();
+    				transition_out(if_block1, 1, 1, () => {
+    					if_block1 = null;
+    				});
+    				check_outros();
+    			}
+
+    			if (ctx.mode === 3) {
+    				if (!if_block2) {
+    					if_block2 = create_if_block$1(ctx);
+    					if_block2.c();
+    					transition_in(if_block2, 1);
+    					if_block2.m(div, null);
+    				} else transition_in(if_block2, 1);
+    			} else if (if_block2) {
+    				group_outros();
+    				transition_out(if_block2, 1, 1, () => {
+    					if_block2 = null;
+    				});
+    				check_outros();
     			}
     		},
 
@@ -1275,9 +1315,14 @@ var app = (function () {
     function instance$1($$self, $$props, $$invalidate) {
     	
 
-    const mode = 0, hidden = false;
+    let { mode = 0 } = $$props;
 
     const dispatch = createEventDispatcher();
+
+    	const writable_props = ['mode'];
+    	Object.keys($$props).forEach(key => {
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Controls> was created with unknown prop '${key}'`);
+    	});
 
     	const click_handler = () => dispatch( 'cancelnew' );
 
@@ -1291,15 +1336,20 @@ var app = (function () {
 
     	const click_handler_5 = () => dispatch( 'saveexisting' );
 
-    	$$self.$capture_state = () => {
-    		return {};
+    	$$self.$set = $$props => {
+    		if ('mode' in $$props) $$invalidate('mode', mode = $$props.mode);
     	};
 
-    	$$self.$inject_state = $$props => {};
+    	$$self.$capture_state = () => {
+    		return { mode };
+    	};
+
+    	$$self.$inject_state = $$props => {
+    		if ('mode' in $$props) $$invalidate('mode', mode = $$props.mode);
+    	};
 
     	return {
     		mode,
-    		hidden,
     		dispatch,
     		click_handler,
     		click_handler_1,
@@ -1313,23 +1363,15 @@ var app = (function () {
     class Controls extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["mode", "hidden"]);
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["mode"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Controls", options, id: create_fragment$1.name });
     	}
 
     	get mode() {
-    		return this.$$.ctx.mode;
+    		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	set mode(value) {
-    		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	get hidden() {
-    		return this.$$.ctx.hidden;
-    	}
-
-    	set hidden(value) {
     		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -1924,7 +1966,6 @@ var app = (function () {
     const notes_list = writable( [] );
 
     // Controls
-    const controls_hidden = writable( true );
     const controls_mode = writable( 0 );
 
     /* src/Endpoints.svelte generated by Svelte v3.12.1 */
@@ -2143,29 +2184,29 @@ var app = (function () {
     			div8 = element("div");
     			t13 = space();
     			textinput9.$$.fragment.c();
-    			attr_dev(div0, "class", "gap svelte-wrg2o4");
-    			add_location(div0, file$4, 50, 4, 1075);
-    			attr_dev(div1, "class", "line svelte-wrg2o4");
-    			add_location(div1, file$4, 44, 2, 912);
-    			attr_dev(div2, "class", "gap svelte-wrg2o4");
-    			add_location(div2, file$4, 64, 4, 1452);
-    			attr_dev(div3, "class", "line svelte-wrg2o4");
-    			add_location(div3, file$4, 58, 2, 1268);
-    			attr_dev(div4, "class", "gap svelte-wrg2o4");
-    			add_location(div4, file$4, 78, 4, 1832);
-    			attr_dev(div5, "class", "line svelte-wrg2o4");
-    			add_location(div5, file$4, 72, 2, 1657);
-    			attr_dev(div6, "class", "gap svelte-wrg2o4");
-    			add_location(div6, file$4, 92, 4, 2214);
-    			attr_dev(div7, "class", "line svelte-wrg2o4");
-    			add_location(div7, file$4, 86, 2, 2037);
-    			attr_dev(div8, "class", "gap svelte-wrg2o4");
-    			add_location(div8, file$4, 106, 4, 2587);
-    			attr_dev(div9, "class", "line svelte-wrg2o4");
-    			add_location(div9, file$4, 100, 3, 2416);
-    			attr_dev(div10, "class", "endpoints svelte-wrg2o4");
-    			toggle_class(div10, "hide", ctx.hide);
-    			add_location(div10, file$4, 42, 0, 874);
+    			attr_dev(div0, "class", "gap svelte-ltq5fs");
+    			add_location(div0, file$4, 50, 4, 1081);
+    			attr_dev(div1, "class", "line svelte-ltq5fs");
+    			add_location(div1, file$4, 44, 2, 918);
+    			attr_dev(div2, "class", "gap svelte-ltq5fs");
+    			add_location(div2, file$4, 64, 4, 1458);
+    			attr_dev(div3, "class", "line svelte-ltq5fs");
+    			add_location(div3, file$4, 58, 2, 1274);
+    			attr_dev(div4, "class", "gap svelte-ltq5fs");
+    			add_location(div4, file$4, 78, 4, 1838);
+    			attr_dev(div5, "class", "line svelte-ltq5fs");
+    			add_location(div5, file$4, 72, 2, 1663);
+    			attr_dev(div6, "class", "gap svelte-ltq5fs");
+    			add_location(div6, file$4, 92, 4, 2220);
+    			attr_dev(div7, "class", "line svelte-ltq5fs");
+    			add_location(div7, file$4, 86, 2, 2043);
+    			attr_dev(div8, "class", "gap svelte-ltq5fs");
+    			add_location(div8, file$4, 106, 4, 2593);
+    			attr_dev(div9, "class", "line svelte-ltq5fs");
+    			add_location(div9, file$4, 100, 3, 2422);
+    			attr_dev(div10, "class", "endpoints svelte-ltq5fs");
+    			toggle_class(div10, "hidden", ctx.hidden);
+    			add_location(div10, file$4, 42, 0, 878);
     		},
 
     		l: function claim(nodes) {
@@ -2266,8 +2307,8 @@ var app = (function () {
     			}
     			textinput8.$set(textinput8_changes);
 
-    			if (changed.hide) {
-    				toggle_class(div10, "hide", ctx.hide);
+    			if (changed.hidden) {
+    				toggle_class(div10, "hidden", ctx.hidden);
     			}
     		},
 
@@ -2364,9 +2405,9 @@ var app = (function () {
 
     	
 
-    let { hide = false, disabled = false } = $$props;
+    let { hidden = false, disabled = false } = $$props;
 
-    	const writable_props = ['hide', 'disabled'];
+    	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Endpoints> was created with unknown prop '${key}'`);
     	});
@@ -2417,16 +2458,16 @@ var app = (function () {
     	}
 
     	$$self.$set = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hide, disabled, $endpoint_website, $endpoint_rss, $endpoint_devto, $endpoint_medium, $endpoint_youtube, $endpoint_twitter, $endpoint_so, $endpoint_github, $endpoint_reddit };
+    		return { hidden, disabled, $endpoint_website, $endpoint_rss, $endpoint_devto, $endpoint_medium, $endpoint_youtube, $endpoint_twitter, $endpoint_so, $endpoint_github, $endpoint_reddit };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     		if ('$endpoint_website' in $$props) endpoint_website.set($endpoint_website);
     		if ('$endpoint_rss' in $$props) endpoint_rss.set($endpoint_rss);
@@ -2440,7 +2481,7 @@ var app = (function () {
     	};
 
     	return {
-    		hide,
+    		hidden,
     		disabled,
     		$endpoint_website,
     		$endpoint_rss,
@@ -2466,15 +2507,15 @@ var app = (function () {
     class Endpoints extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$4, safe_not_equal, ["hide", "disabled"]);
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, ["hidden", "disabled"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Endpoints", options, id: create_fragment$4.name });
     	}
 
-    	get hide() {
+    	get hidden() {
     		throw new Error("<Endpoints>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hide(value) {
+    	set hidden(value) {
     		throw new Error("<Endpoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -4780,20 +4821,20 @@ var app = (function () {
     			t3 = space();
     			div4 = element("div");
     			select.$$.fragment.c();
-    			attr_dev(div0, "class", "svelte-cg8j4q");
-    			add_location(div0, file$d, 36, 2, 557);
-    			attr_dev(div1, "class", "svelte-cg8j4q");
-    			add_location(div1, file$d, 44, 2, 705);
-    			attr_dev(div2, "class", "svelte-cg8j4q");
-    			add_location(div2, file$d, 52, 2, 864);
+    			attr_dev(div0, "class", "svelte-jesd26");
+    			add_location(div0, file$d, 36, 2, 563);
+    			attr_dev(div1, "class", "svelte-jesd26");
+    			add_location(div1, file$d, 44, 2, 711);
+    			attr_dev(div2, "class", "svelte-jesd26");
+    			add_location(div2, file$d, 52, 2, 870);
     			set_style(div3, "flex-grow", "1");
-    			attr_dev(div3, "class", "svelte-cg8j4q");
-    			add_location(div3, file$d, 60, 2, 1040);
-    			attr_dev(div4, "class", "svelte-cg8j4q");
-    			add_location(div4, file$d, 67, 2, 1175);
-    			attr_dev(form, "class", "svelte-cg8j4q");
-    			toggle_class(form, "hide", ctx.hide);
-    			add_location(form, file$d, 34, 0, 536);
+    			attr_dev(div3, "class", "svelte-jesd26");
+    			add_location(div3, file$d, 60, 2, 1046);
+    			attr_dev(div4, "class", "svelte-jesd26");
+    			add_location(div4, file$d, 67, 2, 1181);
+    			attr_dev(form, "class", "svelte-jesd26");
+    			toggle_class(form, "hidden", ctx.hidden);
+    			add_location(form, file$d, 34, 0, 540);
     		},
 
     		l: function claim(nodes) {
@@ -4836,8 +4877,8 @@ var app = (function () {
     			if (changed.disabled) textarea_changes.disabled = ctx.disabled;
     			textarea.$set(textarea_changes);
 
-    			if (changed.hide) {
-    				toggle_class(form, "hide", ctx.hide);
+    			if (changed.hidden) {
+    				toggle_class(form, "hidden", ctx.hidden);
     			}
     		},
 
@@ -4888,42 +4929,42 @@ var app = (function () {
     function instance$d($$self, $$props, $$invalidate) {
     	
 
-    let { hide = false, disabled = false } = $$props;
+    let { hidden = false, disabled = false } = $$props;
 
-    	const writable_props = ['hide', 'disabled'];
+    	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Profile> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$set = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hide, disabled };
+    		return { hidden, disabled };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
-    	return { hide, disabled };
+    	return { hidden, disabled };
     }
 
     class Profile extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$d, create_fragment$d, safe_not_equal, ["hide", "disabled"]);
+    		init(this, options, instance$d, create_fragment$d, safe_not_equal, ["hidden", "disabled"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Profile", options, id: create_fragment$d.name });
     	}
 
-    	get hide() {
+    	get hidden() {
     		throw new Error("<Profile>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hide(value) {
+    	set hidden(value) {
     		throw new Error("<Profile>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -5130,7 +5171,7 @@ var app = (function () {
 
     const file$f = "src/Notes.svelte";
 
-    // (189:6) <Button          icon="/img/save-white.svg"         disabledIcon="/img/save.svg"         disabled="{text.trim().length > 0 ? false : true}">
+    // (182:6) <Button          on:click="{doSave}"         icon="/img/save-white.svg"         disabledIcon="/img/save.svg"         disabled="{text.trim().length > 0 ? false : true}">
     function create_default_slot_1$1(ctx) {
     	var t;
 
@@ -5149,11 +5190,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(189:6) <Button          icon=\"/img/save-white.svg\"         disabledIcon=\"/img/save.svg\"         disabled=\"{text.trim().length > 0 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(182:6) <Button          on:click=\"{doSave}\"         icon=\"/img/save-white.svg\"         disabledIcon=\"/img/save.svg\"         disabled=\"{text.trim().length > 0 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (209:2) {:else}
+    // (205:2) {:else}
     function create_else_block$2(ctx) {
     	var div, p, t0, t1, t2;
 
@@ -5164,10 +5205,10 @@ var app = (function () {
     			t0 = text("No notes available for ");
     			t1 = text(ctx.$developer_name);
     			t2 = text(".");
-    			attr_dev(p, "class", "svelte-h2jqv0");
-    			add_location(p, file$f, 211, 6, 4554);
-    			attr_dev(div, "class", "none svelte-h2jqv0");
-    			add_location(div, file$f, 210, 4, 4529);
+    			attr_dev(p, "class", "svelte-vrjmeg");
+    			add_location(p, file$f, 207, 6, 4577);
+    			attr_dev(div, "class", "none svelte-vrjmeg");
+    			add_location(div, file$f, 206, 4, 4552);
     		},
 
     		m: function mount(target, anchor) {
@@ -5193,17 +5234,17 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block$2.name, type: "else", source: "(209:2) {:else}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block$2.name, type: "else", source: "(205:2) {:else}", ctx });
     	return block;
     }
 
-    // (196:2) {#if $notes_list.length > 0}
+    // (190:2) {#if $notes_list.length > 0}
     function create_if_block$6(ctx) {
-    	var div, p, t0_value = ctx.$notes_list[index].full_text + "", t0, t1, current;
+    	var div, p, t0_value = ctx.$notes_list[ctx.index].full_text + "", t0, t1, current;
 
     	var pagination = new Pagination({
     		props: {
-    		index: index + 1,
+    		index: ctx.index + 1,
     		length: ctx.$notes_list.length,
     		noun: "notes",
     		$$slots: { default: [create_default_slot$2] },
@@ -5211,6 +5252,8 @@ var app = (function () {
     	},
     		$$inline: true
     	});
+    	pagination.$on("previous", ctx.doPrevious);
+    	pagination.$on("next", ctx.doNext);
 
     	const block = {
     		c: function create() {
@@ -5219,11 +5262,11 @@ var app = (function () {
     			t0 = text(t0_value);
     			t1 = space();
     			pagination.$$.fragment.c();
-    			attr_dev(p, "class", "svelte-h2jqv0");
-    			add_location(p, file$f, 198, 6, 4192);
+    			attr_dev(p, "class", "svelte-vrjmeg");
+    			add_location(p, file$f, 192, 6, 4157);
     			set_style(div, "flex-grow", "1");
     			set_style(div, "padding", "16px");
-    			add_location(div, file$f, 197, 4, 4143);
+    			add_location(div, file$f, 191, 4, 4108);
     		},
 
     		m: function mount(target, anchor) {
@@ -5236,13 +5279,14 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if ((!current || changed.$notes_list) && t0_value !== (t0_value = ctx.$notes_list[index].full_text + "")) {
+    			if ((!current || changed.$notes_list || changed.index) && t0_value !== (t0_value = ctx.$notes_list[ctx.index].full_text + "")) {
     				set_data_dev(t0, t0_value);
     			}
 
     			var pagination_changes = {};
+    			if (changed.index) pagination_changes.index = ctx.index + 1;
     			if (changed.$notes_list) pagination_changes.length = ctx.$notes_list.length;
-    			if (changed.$$scope || changed.$notes_list) pagination_changes.$$scope = { changed, ctx };
+    			if (changed.$$scope || changed.$notes_list || changed.index) pagination_changes.$$scope = { changed, ctx };
     			pagination.$set(pagination_changes);
     		},
 
@@ -5267,13 +5311,13 @@ var app = (function () {
     			destroy_component(pagination, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(196:2) {#if $notes_list.length > 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(190:2) {#if $notes_list.length > 0}", ctx });
     	return block;
     }
 
-    // (201:4) <Pagination        index="{index + 1}"        length="{$notes_list.length}"        noun="notes">
+    // (195:4) <Pagination        on:previous="{doPrevious}"       on:next="{doNext}"       index="{index + 1}"        length="{$notes_list.length}"        noun="notes">
     function create_default_slot$2(ctx) {
-    	var p0, t0_value = format( new ctx.Date( ctx.$notes_list[index].updated_at ) ) + "", t0, t1, p1, t2_value = ctx.$notes_list[index].activity_name + "", t2;
+    	var p0, t0_value = format( new ctx.Date( ctx.$notes_list[ctx.index].updated_at ) ) + "", t0, t1, p1, t2_value = ctx.$notes_list[ctx.index].activity_name + "", t2;
 
     	const block = {
     		c: function create() {
@@ -5282,10 +5326,10 @@ var app = (function () {
     			t1 = space();
     			p1 = element("p");
     			t2 = text(t2_value);
-    			attr_dev(p0, "class", "pagination svelte-h2jqv0");
-    			add_location(p0, file$f, 204, 6, 4348);
-    			attr_dev(p1, "class", "pagination svelte-h2jqv0");
-    			add_location(p1, file$f, 205, 6, 4434);
+    			attr_dev(p0, "class", "pagination svelte-vrjmeg");
+    			add_location(p0, file$f, 200, 6, 4371);
+    			attr_dev(p1, "class", "pagination svelte-vrjmeg");
+    			add_location(p1, file$f, 201, 6, 4457);
     		},
 
     		m: function mount(target, anchor) {
@@ -5297,11 +5341,11 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if ((changed.$notes_list) && t0_value !== (t0_value = format( new ctx.Date( ctx.$notes_list[index].updated_at ) ) + "")) {
+    			if ((changed.$notes_list || changed.index) && t0_value !== (t0_value = format( new ctx.Date( ctx.$notes_list[ctx.index].updated_at ) ) + "")) {
     				set_data_dev(t0, t0_value);
     			}
 
-    			if ((changed.$notes_list) && t2_value !== (t2_value = ctx.$notes_list[index].activity_name + "")) {
+    			if ((changed.$notes_list || changed.index) && t2_value !== (t2_value = ctx.$notes_list[ctx.index].activity_name + "")) {
     				set_data_dev(t2, t2_value);
     			}
     		},
@@ -5314,7 +5358,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(201:4) <Pagination        index=\"{index + 1}\"        length=\"{$notes_list.length}\"        noun=\"notes\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(195:4) <Pagination        on:previous=\"{doPrevious}\"       on:next=\"{doNext}\"       index=\"{index + 1}\"        length=\"{$notes_list.length}\"        noun=\"notes\">", ctx });
     	return block;
     }
 
@@ -5369,6 +5413,7 @@ var app = (function () {
     	},
     		$$inline: true
     	});
+    	button.$on("click", ctx.doSave);
 
     	var if_block_creators = [
     		create_if_block$6,
@@ -5398,15 +5443,15 @@ var app = (function () {
     			button.$$.fragment.c();
     			t2 = space();
     			if_block.c();
-    			attr_dev(div0, "class", "activity svelte-h2jqv0");
-    			add_location(div0, file$f, 173, 4, 3505);
-    			attr_dev(div1, "class", "controls svelte-h2jqv0");
-    			add_location(div1, file$f, 187, 4, 3898);
-    			attr_dev(form, "class", "svelte-h2jqv0");
-    			add_location(form, file$f, 172, 2, 3494);
-    			attr_dev(div2, "class", "panel svelte-h2jqv0");
-    			toggle_class(div2, "hide", ctx.hide);
-    			add_location(div2, file$f, 171, 0, 3461);
+    			attr_dev(div0, "class", "activity svelte-vrjmeg");
+    			add_location(div0, file$f, 166, 4, 3442);
+    			attr_dev(div1, "class", "controls svelte-vrjmeg");
+    			add_location(div1, file$f, 180, 4, 3835);
+    			attr_dev(form, "class", "svelte-vrjmeg");
+    			add_location(form, file$f, 165, 2, 3431);
+    			attr_dev(div2, "class", "panel svelte-vrjmeg");
+    			toggle_class(div2, "hidden", ctx.hidden);
+    			add_location(div2, file$f, 164, 0, 3396);
     		},
 
     		l: function claim(nodes) {
@@ -5467,8 +5512,8 @@ var app = (function () {
     				if_block.m(div2, null);
     			}
 
-    			if (changed.hide) {
-    				toggle_class(div2, "hide", ctx.hide);
+    			if (changed.hidden) {
+    				toggle_class(div2, "hidden", ctx.hidden);
     			}
     		},
 
@@ -5510,8 +5555,6 @@ var app = (function () {
     	return block;
     }
 
-    let index = 0;
-
     function format( updated ) {
     let hours = [
       12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -5539,19 +5582,22 @@ var app = (function () {
     }
 
     function instance$f($$self, $$props, $$invalidate) {
-    	let $notes_list, $developer_name;
+    	let $notes_list, $developer_id, $developer_name;
 
     	validate_store(notes_list, 'notes_list');
     	component_subscribe($$self, notes_list, $$value => { $notes_list = $$value; $$invalidate('$notes_list', $notes_list); });
+    	validate_store(developer_id, 'developer_id');
+    	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
     	validate_store(developer_name, 'developer_name');
     	component_subscribe($$self, developer_name, $$value => { $developer_name = $$value; $$invalidate('$developer_name', $developer_name); });
 
     	
 
-    let { hide = false, disabled = false } = $$props;
+    let { hidden = false, disabled = false } = $$props;
 
     let activity = [];
     let activity_id = null;
+    let index = 0;
     let text = '';
 
     onMount( async () => {
@@ -5560,30 +5606,23 @@ var app = (function () {
       $$invalidate('activity_id', activity_id = activity[0].id);
     } );
 
-    /*
     function doNext( evt ) {
       if( index === ( $notes_list.length - 1 ) ) {
-        index = 0;
+        $$invalidate('index', index = 0);
       } else {
-        index = index + 1;
+        $$invalidate('index', index = index + 1);
       }
     }
 
     function doPrevious( evt ) {
       if( index === 0 ) {
-        index = $notes_list.length - 1;
+        $$invalidate('index', index = $notes_list.length - 1);
       } else {
-        index = index - 1;
+        $$invalidate('index', index = index - 1);
       }
     }
 
     function doSave( evt ) {
-      console.log( {
-        developer_id: $developer_id,
-        activity_id: activity_id,
-        full_text: text
-      } );
-
       fetch( '/api/developer/note', {
         method: 'POST',
         headers: {
@@ -5606,15 +5645,14 @@ var app = (function () {
           if( a > b ) return -1;
           return 0;
         } );
-        $notes_list = $notes_list.slice( 0 );
+        set_store_value(notes_list, $notes_list = $notes_list.slice());
 
-        index = 0;
-        text = '';
+        $$invalidate('index', index = 0);
+        $$invalidate('text', text = '');
       } );
     }
-    */
 
-    	const writable_props = ['hide', 'disabled'];
+    	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Notes> was created with unknown prop '${key}'`);
     	});
@@ -5630,31 +5668,36 @@ var app = (function () {
     	}
 
     	$$self.$set = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hide, disabled, activity, activity_id, index, text, $notes_list, $developer_name };
+    		return { hidden, disabled, activity, activity_id, index, text, $notes_list, $developer_id, $developer_name };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     		if ('activity' in $$props) $$invalidate('activity', activity = $$props.activity);
     		if ('activity_id' in $$props) $$invalidate('activity_id', activity_id = $$props.activity_id);
     		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('text' in $$props) $$invalidate('text', text = $$props.text);
     		if ('$notes_list' in $$props) notes_list.set($notes_list);
+    		if ('$developer_id' in $$props) developer_id.set($developer_id);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     	};
 
     	return {
-    		hide,
+    		hidden,
     		disabled,
     		activity,
     		activity_id,
+    		index,
     		text,
+    		doNext,
+    		doPrevious,
+    		doSave,
     		Date,
     		$notes_list,
     		$developer_name,
@@ -5666,15 +5709,15 @@ var app = (function () {
     class Notes extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$f, create_fragment$f, safe_not_equal, ["hide", "disabled"]);
+    		init(this, options, instance$f, create_fragment$f, safe_not_equal, ["hidden", "disabled"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Notes", options, id: create_fragment$f.name });
     	}
 
-    	get hide() {
+    	get hidden() {
     		throw new Error("<Notes>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hide(value) {
+    	set hidden(value) {
     		throw new Error("<Notes>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -6063,21 +6106,21 @@ var app = (function () {
     			t5 = space();
     			div5 = element("div");
     			map.$$.fragment.c();
-    			attr_dev(div0, "class", "svelte-qmlnff");
-    			add_location(div0, file$i, 54, 4, 1026);
-    			attr_dev(div1, "class", "svelte-qmlnff");
-    			add_location(div1, file$i, 48, 2, 888);
-    			attr_dev(div2, "class", "svelte-qmlnff");
-    			add_location(div2, file$i, 62, 2, 1187);
-    			attr_dev(div3, "class", "svelte-qmlnff");
-    			add_location(div3, file$i, 71, 2, 1401);
-    			attr_dev(div4, "class", "svelte-qmlnff");
-    			add_location(div4, file$i, 82, 2, 1669);
-    			attr_dev(div5, "class", "svelte-qmlnff");
-    			add_location(div5, file$i, 91, 2, 1865);
-    			attr_dev(form, "class", "svelte-qmlnff");
-    			toggle_class(form, "hide", ctx.hide);
-    			add_location(form, file$i, 46, 0, 867);
+    			attr_dev(div0, "class", "svelte-1c1qnk7");
+    			add_location(div0, file$i, 54, 4, 1032);
+    			attr_dev(div1, "class", "svelte-1c1qnk7");
+    			add_location(div1, file$i, 48, 2, 894);
+    			attr_dev(div2, "class", "svelte-1c1qnk7");
+    			add_location(div2, file$i, 62, 2, 1193);
+    			attr_dev(div3, "class", "svelte-1c1qnk7");
+    			add_location(div3, file$i, 71, 2, 1407);
+    			attr_dev(div4, "class", "svelte-1c1qnk7");
+    			add_location(div4, file$i, 82, 2, 1675);
+    			attr_dev(div5, "class", "svelte-1c1qnk7");
+    			add_location(div5, file$i, 91, 2, 1871);
+    			attr_dev(form, "class", "svelte-1c1qnk7");
+    			toggle_class(form, "hidden", ctx.hidden);
+    			add_location(form, file$i, 46, 0, 871);
     		},
 
     		l: function claim(nodes) {
@@ -6144,8 +6187,8 @@ var app = (function () {
     			}
     			textinput3.$set(textinput3_changes);
 
-    			if (changed.hide) {
-    				toggle_class(form, "hide", ctx.hide);
+    			if (changed.hidden) {
+    				toggle_class(form, "hidden", ctx.hidden);
     			}
     		},
 
@@ -6216,9 +6259,9 @@ var app = (function () {
 
     	
 
-    let { hide = false, disabled = false } = $$props;
+    let { hidden = false, disabled = false } = $$props;
 
-    	const writable_props = ['hide', 'disabled'];
+    	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Summary> was created with unknown prop '${key}'`);
     	});
@@ -6249,16 +6292,16 @@ var app = (function () {
     	}
 
     	$$self.$set = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hide, disabled, $developer_name, $developer_email, $developer_image, $organization_list, $developer_organizations, $developer_location };
+    		return { hidden, disabled, $developer_name, $developer_email, $developer_image, $organization_list, $developer_organizations, $developer_location };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     		if ('$developer_email' in $$props) developer_email.set($developer_email);
@@ -6269,7 +6312,7 @@ var app = (function () {
     	};
 
     	return {
-    		hide,
+    		hidden,
     		disabled,
     		$developer_name,
     		$developer_email,
@@ -6288,15 +6331,15 @@ var app = (function () {
     class Summary extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$i, create_fragment$i, safe_not_equal, ["hide", "disabled"]);
+    		init(this, options, instance$i, create_fragment$i, safe_not_equal, ["hidden", "disabled"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Summary", options, id: create_fragment$i.name });
     	}
 
-    	get hide() {
+    	get hidden() {
     		throw new Error("<Summary>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hide(value) {
+    	set hidden(value) {
     		throw new Error("<Summary>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -6553,10 +6596,10 @@ var app = (function () {
     			div = element("div");
     			p = element("p");
     			p.textContent = "Timeline";
-    			add_location(p, file$l, 15, 2, 134);
-    			attr_dev(div, "class", "svelte-1msmp64");
-    			toggle_class(div, "hide", ctx.hide);
-    			add_location(div, file$l, 14, 0, 115);
+    			add_location(p, file$l, 15, 2, 140);
+    			attr_dev(div, "class", "svelte-1sc8umo");
+    			toggle_class(div, "hidden", ctx.hidden);
+    			add_location(div, file$l, 14, 0, 119);
     		},
 
     		l: function claim(nodes) {
@@ -6569,8 +6612,8 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if (changed.hide) {
-    				toggle_class(div, "hide", ctx.hide);
+    			if (changed.hidden) {
+    				toggle_class(div, "hidden", ctx.hidden);
     			}
     		},
 
@@ -6588,40 +6631,40 @@ var app = (function () {
     }
 
     function instance$l($$self, $$props, $$invalidate) {
-    	let { hide = false } = $$props;
+    	let { hidden = false } = $$props;
 
-    	const writable_props = ['hide'];
+    	const writable_props = ['hidden'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Timeline> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$set = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hide };
+    		return { hidden };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hide' in $$props) $$invalidate('hide', hide = $$props.hide);
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     	};
 
-    	return { hide };
+    	return { hidden };
     }
 
     class Timeline extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$l, create_fragment$l, safe_not_equal, ["hide"]);
+    		init(this, options, instance$l, create_fragment$l, safe_not_equal, ["hidden"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Timeline", options, id: create_fragment$l.name });
     	}
 
-    	get hide() {
+    	get hidden() {
     		throw new Error("<Timeline>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hide(value) {
+    	set hidden(value) {
     		throw new Error("<Timeline>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -6630,7 +6673,7 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (559:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{$add_disabled}">
+    // (350:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{$add_disabled}">
     function create_default_slot_10(ctx) {
     	var t;
 
@@ -6649,11 +6692,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(559:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{$add_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(350:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{$add_disabled}\">", ctx });
     	return block;
     }
 
-    // (571:6) <ListLabelItem>
+    // (363:6) <ListLabelItem>
     function create_default_slot_9(ctx) {
     	var t_value = ctx.developer.name + "", t;
 
@@ -6678,11 +6721,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(571:6) <ListLabelItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(363:6) <ListLabelItem>", ctx });
     	return block;
     }
 
-    // (568:4) <List        data="{$filtered_list}"        let:item="{developer}">
+    // (359:4) <List        on:change="{doDeveloperClick}"       data="{$filtered_list}"        let:item="{developer}">
     function create_default_slot_8(ctx) {
     	var current;
 
@@ -6726,11 +6769,11 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(568:4) <List        data=\"{$filtered_list}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(359:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{$filtered_list}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (581:10) <span slot="label">
+    // (373:10) <span slot="label">
     function create_label_slot(ctx) {
     	var span, t_value = ctx.organization.name + "", t;
 
@@ -6739,7 +6782,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "label");
-    			add_location(span, file$m, 580, 10, 14950);
+    			add_location(span, file$m, 372, 10, 9137);
     		},
 
     		m: function mount(target, anchor) {
@@ -6759,11 +6802,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(581:10) <span slot=\"label\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(373:10) <span slot=\"label\">", ctx });
     	return block;
     }
 
-    // (582:10) <span slot="count">
+    // (374:10) <span slot="count">
     function create_count_slot(ctx) {
     	var span, t_value = ctx.organization.count + "", t;
 
@@ -6772,7 +6815,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "count");
-    			add_location(span, file$m, 581, 10, 15006);
+    			add_location(span, file$m, 373, 10, 9193);
     		},
 
     		m: function mount(target, anchor) {
@@ -6792,11 +6835,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(582:10) <span slot=\"count\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(374:10) <span slot=\"count\">", ctx });
     	return block;
     }
 
-    // (580:8) <ListCountItem>
+    // (372:8) <ListCountItem>
     function create_default_slot_7(ctx) {
     	var t;
 
@@ -6817,11 +6860,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(580:8) <ListCountItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(372:8) <ListCountItem>", ctx });
     	return block;
     }
 
-    // (577:6) <List          data="{$organization_list}"          let:item="{organization}">
+    // (369:6) <List          data="{$organization_list}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6869,11 +6912,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(577:6) <List          data=\"{$organization_list}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(369:6) <List          data=\"{$organization_list}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (576:4) <Details summary="Organizations">
+    // (368:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
@@ -6921,11 +6964,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(576:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(368:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (594:6) <Tab          on:click="{() => doTabClick( 0 )}"         selected="{$summary_selected}"         disabled="{$summary_tab}">
+    // (386:6) <Tab          on:click="{() => doTabClick( 0 )}"         selected="{$summary_selected}"         disabled="{$summary_tab}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -6944,11 +6987,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(594:6) <Tab          on:click=\"{() => doTabClick( 0 )}\"         selected=\"{$summary_selected}\"         disabled=\"{$summary_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(386:6) <Tab          on:click=\"{() => doTabClick( 0 )}\"         selected=\"{$summary_selected}\"         disabled=\"{$summary_tab}\">", ctx });
     	return block;
     }
 
-    // (598:6) <Tab          on:click="{() => doTabClick( 1 )}"               selected="{$profile_selected}"         disabled="{$profile_tab}">
+    // (390:6) <Tab          on:click="{() => doTabClick( 1 )}"               selected="{$profile_selected}"         disabled="{$profile_tab}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -6967,11 +7010,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(598:6) <Tab          on:click=\"{() => doTabClick( 1 )}\"               selected=\"{$profile_selected}\"         disabled=\"{$profile_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(390:6) <Tab          on:click=\"{() => doTabClick( 1 )}\"               selected=\"{$profile_selected}\"         disabled=\"{$profile_tab}\">", ctx });
     	return block;
     }
 
-    // (602:6) <Tab          on:click="{() => doTabClick( 2 )}"               selected="{$social_selected}"          disabled="{$social_tab}">
+    // (394:6) <Tab          on:click="{() => doTabClick( 2 )}"               selected="{$social_selected}"          disabled="{$social_tab}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -6990,11 +7033,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(602:6) <Tab          on:click=\"{() => doTabClick( 2 )}\"               selected=\"{$social_selected}\"          disabled=\"{$social_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(394:6) <Tab          on:click=\"{() => doTabClick( 2 )}\"               selected=\"{$social_selected}\"          disabled=\"{$social_tab}\">", ctx });
     	return block;
     }
 
-    // (606:6) <Tab          on:click="{() => doTabClick( 3 )}"               selected="{$notes_selected}"          disabled="{$notes_tab}">
+    // (398:6) <Tab          on:click="{() => doTabClick( 3 )}"               selected="{$notes_selected}"          disabled="{$notes_tab}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7013,11 +7056,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(606:6) <Tab          on:click=\"{() => doTabClick( 3 )}\"               selected=\"{$notes_selected}\"          disabled=\"{$notes_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(398:6) <Tab          on:click=\"{() => doTabClick( 3 )}\"               selected=\"{$notes_selected}\"          disabled=\"{$notes_tab}\">", ctx });
     	return block;
     }
 
-    // (593:4) <TabBar>
+    // (385:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7156,7 +7199,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(593:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(385:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -7200,6 +7243,7 @@ var app = (function () {
     	},
     		$$inline: true
     	});
+    	list.$on("change", ctx.doDeveloperClick);
 
     	var details = new Details({
     		props: {
@@ -7220,7 +7264,7 @@ var app = (function () {
 
     	var summary = new Summary({
     		props: {
-    		hide: ctx.$summary_hidden,
+    		hidden: ctx.$summary_hidden,
     		disabled: ctx.$summary_disabled
     	},
     		$$inline: true
@@ -7228,7 +7272,7 @@ var app = (function () {
 
     	var profile = new Profile({
     		props: {
-    		hide: ctx.$profile_hidden,
+    		hidden: ctx.$profile_hidden,
     		disabled: ctx.$profile_disabled
     	},
     		$$inline: true
@@ -7236,27 +7280,24 @@ var app = (function () {
 
     	var endpoints = new Endpoints({
     		props: {
-    		hide: ctx.$endpoints_hidden,
+    		hidden: ctx.$endpoints_hidden,
     		disabled: ctx.$endpoints_disabled
     	},
     		$$inline: true
     	});
 
     	var timeline = new Timeline({
-    		props: { hide: ctx.$timeline_hidden },
+    		props: { hidden: ctx.$timeline_hidden },
     		$$inline: true
     	});
 
     	var notes = new Notes({
-    		props: { hide: ctx.$notes_hidden },
+    		props: { hidden: ctx.$notes_hidden },
     		$$inline: true
     	});
 
     	var controls = new Controls({
-    		props: {
-    		mode: ctx.$controls_mode,
-    		hidden: ctx.$controls_hidden
-    	},
+    		props: { mode: ctx.$controls_mode },
     		$$inline: true
     	});
     	controls.$on("cancelnew", ctx.doCancelNew);
@@ -7295,17 +7336,17 @@ var app = (function () {
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 556, 4, 14292);
+    			add_location(div0, file$m, 347, 4, 8442);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 566, 4, 14585);
+    			add_location(h4, file$m, 357, 4, 8735);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 553, 2, 14259);
+    			add_location(aside0, file$m, 344, 2, 8409);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 589, 2, 15152);
+    			add_location(article, file$m, 381, 2, 9339);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 637, 2, 16465);
+    			add_location(aside1, file$m, 428, 2, 10628);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 550, 0, 14214);
+    			add_location(div1, file$m, 341, 0, 8364);
     		},
 
     		l: function claim(nodes) {
@@ -7371,31 +7412,30 @@ var app = (function () {
     			tabbar.$set(tabbar_changes);
 
     			var summary_changes = {};
-    			if (changed.$summary_hidden) summary_changes.hide = ctx.$summary_hidden;
+    			if (changed.$summary_hidden) summary_changes.hidden = ctx.$summary_hidden;
     			if (changed.$summary_disabled) summary_changes.disabled = ctx.$summary_disabled;
     			summary.$set(summary_changes);
 
     			var profile_changes = {};
-    			if (changed.$profile_hidden) profile_changes.hide = ctx.$profile_hidden;
+    			if (changed.$profile_hidden) profile_changes.hidden = ctx.$profile_hidden;
     			if (changed.$profile_disabled) profile_changes.disabled = ctx.$profile_disabled;
     			profile.$set(profile_changes);
 
     			var endpoints_changes = {};
-    			if (changed.$endpoints_hidden) endpoints_changes.hide = ctx.$endpoints_hidden;
+    			if (changed.$endpoints_hidden) endpoints_changes.hidden = ctx.$endpoints_hidden;
     			if (changed.$endpoints_disabled) endpoints_changes.disabled = ctx.$endpoints_disabled;
     			endpoints.$set(endpoints_changes);
 
     			var timeline_changes = {};
-    			if (changed.$timeline_hidden) timeline_changes.hide = ctx.$timeline_hidden;
+    			if (changed.$timeline_hidden) timeline_changes.hidden = ctx.$timeline_hidden;
     			timeline.$set(timeline_changes);
 
     			var notes_changes = {};
-    			if (changed.$notes_hidden) notes_changes.hide = ctx.$notes_hidden;
+    			if (changed.$notes_hidden) notes_changes.hidden = ctx.$notes_hidden;
     			notes.$set(notes_changes);
 
     			var controls_changes = {};
     			if (changed.$controls_mode) controls_changes.mode = ctx.$controls_mode;
-    			if (changed.$controls_hidden) controls_changes.hidden = ctx.$controls_hidden;
     			controls.$set(controls_changes);
     		},
 
@@ -7474,7 +7514,7 @@ var app = (function () {
     }
 
     function instance$m($$self, $$props, $$invalidate) {
-    	let $search_term, $filtered_list, $developer_list, $add_disabled, $summary_selected, $profile_selected, $social_selected, $notes_selected, $summary_tab, $profile_tab, $social_tab, $notes_tab, $summary_disabled, $profile_disabled, $endpoints_disabled, $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $controls_hidden, $controls_mode, $summary_hidden, $profile_hidden, $endpoints_hidden, $timeline_hidden, $notes_hidden, $organization_list;
+    	let $search_term, $filtered_list, $developer_list, $add_disabled, $summary_tab, $profile_tab, $social_tab, $notes_tab, $summary_selected, $profile_selected, $social_selected, $notes_selected, $summary_hidden, $profile_hidden, $endpoints_hidden, $timeline_hidden, $notes_hidden, $summary_disabled, $profile_disabled, $endpoints_disabled, $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $controls_mode, $notes_list, $organization_list;
 
     	validate_store(search_term, 'search_term');
     	component_subscribe($$self, search_term, $$value => { $search_term = $$value; $$invalidate('$search_term', $search_term); });
@@ -7484,14 +7524,6 @@ var app = (function () {
     	component_subscribe($$self, developer_list, $$value => { $developer_list = $$value; $$invalidate('$developer_list', $developer_list); });
     	validate_store(add_disabled, 'add_disabled');
     	component_subscribe($$self, add_disabled, $$value => { $add_disabled = $$value; $$invalidate('$add_disabled', $add_disabled); });
-    	validate_store(summary_selected, 'summary_selected');
-    	component_subscribe($$self, summary_selected, $$value => { $summary_selected = $$value; $$invalidate('$summary_selected', $summary_selected); });
-    	validate_store(profile_selected, 'profile_selected');
-    	component_subscribe($$self, profile_selected, $$value => { $profile_selected = $$value; $$invalidate('$profile_selected', $profile_selected); });
-    	validate_store(social_selected, 'social_selected');
-    	component_subscribe($$self, social_selected, $$value => { $social_selected = $$value; $$invalidate('$social_selected', $social_selected); });
-    	validate_store(notes_selected, 'notes_selected');
-    	component_subscribe($$self, notes_selected, $$value => { $notes_selected = $$value; $$invalidate('$notes_selected', $notes_selected); });
     	validate_store(summary_tab, 'summary_tab');
     	component_subscribe($$self, summary_tab, $$value => { $summary_tab = $$value; $$invalidate('$summary_tab', $summary_tab); });
     	validate_store(profile_tab, 'profile_tab');
@@ -7500,6 +7532,24 @@ var app = (function () {
     	component_subscribe($$self, social_tab, $$value => { $social_tab = $$value; $$invalidate('$social_tab', $social_tab); });
     	validate_store(notes_tab, 'notes_tab');
     	component_subscribe($$self, notes_tab, $$value => { $notes_tab = $$value; $$invalidate('$notes_tab', $notes_tab); });
+    	validate_store(summary_selected, 'summary_selected');
+    	component_subscribe($$self, summary_selected, $$value => { $summary_selected = $$value; $$invalidate('$summary_selected', $summary_selected); });
+    	validate_store(profile_selected, 'profile_selected');
+    	component_subscribe($$self, profile_selected, $$value => { $profile_selected = $$value; $$invalidate('$profile_selected', $profile_selected); });
+    	validate_store(social_selected, 'social_selected');
+    	component_subscribe($$self, social_selected, $$value => { $social_selected = $$value; $$invalidate('$social_selected', $social_selected); });
+    	validate_store(notes_selected, 'notes_selected');
+    	component_subscribe($$self, notes_selected, $$value => { $notes_selected = $$value; $$invalidate('$notes_selected', $notes_selected); });
+    	validate_store(summary_hidden, 'summary_hidden');
+    	component_subscribe($$self, summary_hidden, $$value => { $summary_hidden = $$value; $$invalidate('$summary_hidden', $summary_hidden); });
+    	validate_store(profile_hidden, 'profile_hidden');
+    	component_subscribe($$self, profile_hidden, $$value => { $profile_hidden = $$value; $$invalidate('$profile_hidden', $profile_hidden); });
+    	validate_store(endpoints_hidden, 'endpoints_hidden');
+    	component_subscribe($$self, endpoints_hidden, $$value => { $endpoints_hidden = $$value; $$invalidate('$endpoints_hidden', $endpoints_hidden); });
+    	validate_store(timeline_hidden, 'timeline_hidden');
+    	component_subscribe($$self, timeline_hidden, $$value => { $timeline_hidden = $$value; $$invalidate('$timeline_hidden', $timeline_hidden); });
+    	validate_store(notes_hidden, 'notes_hidden');
+    	component_subscribe($$self, notes_hidden, $$value => { $notes_hidden = $$value; $$invalidate('$notes_hidden', $notes_hidden); });
     	validate_store(summary_disabled, 'summary_disabled');
     	component_subscribe($$self, summary_disabled, $$value => { $summary_disabled = $$value; $$invalidate('$summary_disabled', $summary_disabled); });
     	validate_store(profile_disabled, 'profile_disabled');
@@ -7518,20 +7568,10 @@ var app = (function () {
     	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
     	validate_store(developer_location, 'developer_location');
     	component_subscribe($$self, developer_location, $$value => { $developer_location = $$value; $$invalidate('$developer_location', $developer_location); });
-    	validate_store(controls_hidden, 'controls_hidden');
-    	component_subscribe($$self, controls_hidden, $$value => { $controls_hidden = $$value; $$invalidate('$controls_hidden', $controls_hidden); });
     	validate_store(controls_mode, 'controls_mode');
     	component_subscribe($$self, controls_mode, $$value => { $controls_mode = $$value; $$invalidate('$controls_mode', $controls_mode); });
-    	validate_store(summary_hidden, 'summary_hidden');
-    	component_subscribe($$self, summary_hidden, $$value => { $summary_hidden = $$value; $$invalidate('$summary_hidden', $summary_hidden); });
-    	validate_store(profile_hidden, 'profile_hidden');
-    	component_subscribe($$self, profile_hidden, $$value => { $profile_hidden = $$value; $$invalidate('$profile_hidden', $profile_hidden); });
-    	validate_store(endpoints_hidden, 'endpoints_hidden');
-    	component_subscribe($$self, endpoints_hidden, $$value => { $endpoints_hidden = $$value; $$invalidate('$endpoints_hidden', $endpoints_hidden); });
-    	validate_store(timeline_hidden, 'timeline_hidden');
-    	component_subscribe($$self, timeline_hidden, $$value => { $timeline_hidden = $$value; $$invalidate('$timeline_hidden', $timeline_hidden); });
-    	validate_store(notes_hidden, 'notes_hidden');
-    	component_subscribe($$self, notes_hidden, $$value => { $notes_hidden = $$value; $$invalidate('$notes_hidden', $notes_hidden); });
+    	validate_store(notes_list, 'notes_list');
+    	component_subscribe($$self, notes_list, $$value => { $notes_list = $$value; $$invalidate('$notes_list', $notes_list); });
     	validate_store(organization_list, 'organization_list');
     	component_subscribe($$self, organization_list, $$value => { $organization_list = $$value; $$invalidate('$organization_list', $organization_list); });
 
@@ -7559,16 +7599,22 @@ var app = (function () {
     // Add clicked
     function doAddClick( evt ) {
       set_store_value(add_disabled, $add_disabled = true);
-      
-      set_store_value(summary_selected, $summary_selected = true);
-      set_store_value(profile_selected, $profile_selected = false);
-      set_store_value(social_selected, $social_selected = false);
-      set_store_value(notes_selected, $notes_selected = false);
 
       set_store_value(summary_tab, $summary_tab = false);
       set_store_value(profile_tab, $profile_tab = false);
       set_store_value(social_tab, $social_tab = false);
       set_store_value(notes_tab, $notes_tab = true);
+
+      set_store_value(summary_selected, $summary_selected = true);
+      set_store_value(profile_selected, $profile_selected = false);
+      set_store_value(social_selected, $social_selected = false);
+      set_store_value(notes_selected, $notes_selected = false);
+
+      set_store_value(summary_hidden, $summary_hidden = false);
+      set_store_value(profile_hidden, $profile_hidden = true);
+      set_store_value(endpoints_hidden, $endpoints_hidden = true);
+      set_store_value(timeline_hidden, $timeline_hidden = true);
+      set_store_value(notes_hidden, $notes_hidden = true);
 
       set_store_value(summary_disabled, $summary_disabled = false);
       set_store_value(profile_disabled, $profile_disabled = false);
@@ -7581,22 +7627,25 @@ var app = (function () {
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
 
-      controls_hidden.set( false );
-      controls_mode.set( 1 );
+      set_store_value(controls_mode, $controls_mode = 1);
     }
 
     function doCancelNew( evt ) {
       set_store_value(add_disabled, $add_disabled = false);
+
+      set_store_value(summary_tab, $summary_tab = false);
+      set_store_value(profile_tab, $profile_tab = true);
+      set_store_value(social_tab, $social_tab = true);
+      set_store_value(notes_tab, $notes_tab = true);
 
       set_store_value(summary_selected, $summary_selected = true);
       set_store_value(profile_selected, $profile_selected = false);
       set_store_value(social_selected, $social_selected = false);
       set_store_value(notes_selected, $notes_selected = false);
 
-      set_store_value(summary_tab, $summary_tab = false);
-      set_store_value(profile_tab, $profile_tab = true);
-      set_store_value(social_tab, $social_tab = true);
-      set_store_value(notes_tab, $notes_tab = true);
+      set_store_value(summary_hidden, $summary_hidden = false);
+      set_store_value(profile_hidden, $profile_hidden = true);
+      set_store_value(endpoints_hidden, $endpoints_hidden = true);
 
       set_store_value(summary_disabled, $summary_disabled = true);
       set_store_value(profile_disabled, $profile_disabled = true);
@@ -7609,8 +7658,30 @@ var app = (function () {
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
 
-      set_store_value(controls_hidden, $controls_hidden = true);
       set_store_value(controls_mode, $controls_mode = 0);
+    }
+
+    function doDeveloperClick( evt ) {
+      fetch( `/api/developer/${evt.detail.item.id}` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(developer_id, $developer_id = data.id);
+        set_store_value(developer_name, $developer_name = data.name);
+        set_store_value(developer_email, $developer_email = data.email);
+        set_store_value(developer_location, $developer_location = data.location);
+
+        set_store_value(profile_tab, $profile_tab = false);
+        set_store_value(social_tab, $social_tab = false);
+        set_store_value(notes_tab, $notes_tab = false);
+
+        set_store_value(controls_mode, $controls_mode = 2);
+      } );
+
+      fetch( `/api/developer/${evt.detail.item.id}/note` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(notes_list, $notes_list = data.slice());
+      } );
     }
 
     // Save new developer
@@ -7634,7 +7705,7 @@ var app = (function () {
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(developer_id, $developer_id = data.id);
-        $developer_list.push( data );
+        $developer_list.push( Object.assign( {}, data ) );
         $developer_list.sort( ( a, b ) => {
           if( a.name > b.name ) return 1;
           if( a.name < b.name ) return -1;
@@ -7655,7 +7726,6 @@ var app = (function () {
         set_store_value(endpoints_disabled, $endpoints_disabled = true);
 
         set_store_value(controls_mode, $controls_mode = 2);
-        set_store_value(controls_hidden, $controls_hidden = true);
       } );
     }
 
@@ -7674,7 +7744,11 @@ var app = (function () {
           set_store_value(timeline_hidden, $timeline_hidden = true);
           set_store_value(notes_hidden, $notes_hidden = true);
 
-          set_store_value(controls_hidden, $controls_hidden = false);
+          if( $developer_id === null && $add_disabled ) {
+            set_store_value(controls_mode, $controls_mode = 1);
+          } else {
+            set_store_value(controls_mode, $controls_mode = 2);
+          }
           break;
 
         case 1:
@@ -7687,9 +7761,13 @@ var app = (function () {
           set_store_value(profile_hidden, $profile_hidden = false);
           set_store_value(endpoints_hidden, $endpoints_hidden = true);
           set_store_value(timeline_hidden, $timeline_hidden = true);
-          set_store_value(notes_hidden, $notes_hidden = true);     
+          set_store_value(notes_hidden, $notes_hidden = true);  
           
-          set_store_value(controls_hidden, $controls_hidden = false);      
+          if( $developer_id === null && $add_disabled ) {
+            set_store_value(controls_mode, $controls_mode = 1);
+          } else {
+            set_store_value(controls_mode, $controls_mode = 2);
+          }
           break;      
 
         case 2:
@@ -7703,8 +7781,12 @@ var app = (function () {
           set_store_value(endpoints_hidden, $endpoints_hidden = $add_disabled ? false : true);
           set_store_value(timeline_hidden, $timeline_hidden = $add_disabled ? true : false);      
           set_store_value(notes_hidden, $notes_hidden = true);     
-          
-          set_store_value(controls_hidden, $controls_hidden = false);
+
+          if( $developer_id === null && $add_disabled ) {
+            set_store_value(controls_mode, $controls_mode = 1);
+          } else {
+            set_store_value(controls_mode, $controls_mode = 2);
+          }
           break;      
 
         case 3:
@@ -7719,7 +7801,7 @@ var app = (function () {
           set_store_value(timeline_hidden, $timeline_hidden = true);
           set_store_value(notes_hidden, $notes_hidden = false);      
 
-          set_store_value(controls_hidden, $controls_hidden = true);
+          set_store_value(controls_mode, $controls_mode = 0);
           break;      
       }
     }
@@ -7739,256 +7821,6 @@ var app = (function () {
         organization_list.set( data.slice() );
       } );
     } );
-
-    /*
-    // Add new developer
-    function doAdd( evt ) {
-      $add_disabled = true;
-      $tab_index = 0;
-      $social_disabled = false;
-      $notes_disabled = true;
-      $overview_disabled = false;
-      $developer_id = '';
-      $developer_name = '';
-      $developer_email = '';
-      $developer_description = '';
-      $developer_image = ''; 
-      $social_index = 0;  
-      $controls_mode = 1;
-    }
-
-    // Edit existing developer
-    function doEdit( evt ) {
-      $overview_disabled = false;
-      $social_index = 0;
-      $controls_mode = 3;
-    }
-
-    // Cancel editing a developer
-    function doCancelExisting( evt ) {
-      $overview_disabled = true;
-      $social_index = 1;
-      $controls_mode = 2;  
-
-      $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
-      $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
-      $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
-      $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
-    }
-
-    // Cancel adding a developer
-    function doCancelNew( evt ) {
-      $add_disabled = false;
-      $tab_index = 0;
-      $social_disabled = true;
-      $overview_disabled = true;
-      $social_index = 1;
-      $controls_mode = 0;
-      $developer_labels = [];
-      $developer_skills = [];
-    }
-
-    // Delete existing developer
-    function doDelete( evt ) {
-      fetch( `/api/developer/${$developer_id}`, {
-        method: 'DELETE'
-      } )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        for( let d = 0; d < $developer_list.length; d++ ) {
-          if( $developer_list[d].id === data.id ) {
-            $developer_list.splice( d, 1 );
-            $developer_list = $developer_list.slice( 0 );
-            break;
-          }
-        }
-
-        $social_disabled = true;
-        $notes_disabled = true;
-        $overview_disabled = true;
-        $developer_id = '';
-        $developer_name = '';
-        $developer_email = '';
-        $developer_labels = [];
-        $developer_description = '';
-        $developer_image = ''; 
-        $social_index = 0;    
-        $controls_mode = 0;
-      } )
-    }
-
-    // Show existing developer
-    function doDeveloper( evt ) {
-      let id = evt.detail.item.id;
-
-      for( let d = 0; d < $developer_list.length; d++ ) {
-        if( id === $developer_list[d].id ) {
-          $developer_index = d;
-          break;
-        }
-      }
-
-      $add_disabled = false;
-
-      $overview_disabled = true;
-      $social_disabled = false;
-      $social_index = 1;
-      $notes_disabled = false;
-
-      $developer_id = id;
-      $developer_name = $developer_list[$developer_index].name === null ? '' : $developer_list[$developer_index].name;
-      $developer_email = $developer_list[$developer_index].email === null ? '' : $developer_list[$developer_index].email;
-      $developer_description = $developer_list[$developer_index].description === null ? '' : $developer_list[$developer_index].description;
-      $developer_image = $developer_list[$developer_index].image === null ? '' : $developer_list[$developer_index].image;
-      
-      $controls_mode = 2;
-
-      fetch( `/api/developer/${$developer_id}/label` )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        let labels = [];
-
-        for( let a = 0; a < data.length; a++ ) {
-          labels.push( data[a].name );
-        }
-
-        $developer_labels = labels.slice( 0 );
-      } );
-
-      fetch( `/api/developer/${$developer_id}/note` )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        $notes_list = data.slice( 0 );
-      } );
-    }
-
-    // Save exissting developer
-    function doSaveExisting( evt ) {
-      $add_disabled = false;
-      $social_disabled = false;
-      $overview_disabled = true;
-      $social_index = 1;
-      $notes_disabled = false;
-      $controls_mode = 2;  
-
-      let developer = {
-        name: $developer_name,
-        email:  $developer_email.trim().length === 0 ? null : $developer_email,
-        description: $developer_description.trim().length === 0 ? null : $developer_description,
-        image: $developer_image.trim().length === 0 ? null : $developer_image
-      };
-
-      fetch( `/api/developer/${$developer_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( developer )
-      } )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        for( let d = 0; d < $developer_list.length; d++ ) {
-          if( $developer_list[d].id === data.id ) {
-            $developer_list[d] = data;
-            break;
-          }
-        }
-
-        $developer_list.sort( ( a, b ) => {
-          if( a.name > b.name ) return 1;
-          if( a.name < b.name ) return -1;
-
-          return 0;
-        } );
-        $developer_list = $developer_list.slice( 0 );
-      } );
-    }
-
-    // Save new developer
-    function doSaveNew( evt ) {
-      $add_disabled = false;
-      $tab_index = 0;
-      $social_disabled = false;
-      $overview_disabled = true;
-      $social_index = 1;
-      $notes_disabled = false;
-      $controls_mode = 2;  
-
-      let developer = {
-        name: $developer_name,
-        email:  $developer_email.trim().length === 0 ? null : $developer_email,
-        description: $developer_description.trim().length === 0 ? null : $developer_description,
-        image: $developer_image.trim().length === 0 ? null : $developer_image
-      };
-
-      fetch( '/api/developer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( developer )
-      } )
-      .then( ( response ) => response.json() )
-      .then( async ( data ) => {
-        $developer_list.push( data );
-        $developer_list.sort( ( a, b ) => {
-          if( a.name > b.name ) return 1;
-          if( a.name < b.name ) return -1;
-
-          return 0;
-        } );
-        $developer_list = $developer_list.slice( 0 );
-        $developer_id = data.id;
-
-        let later = [];
-
-        for( let a = 0; a < $developer_labels.length; a++ ) {
-          let found = false;
-          let label_id = null;
-
-          for( let b = 0; b < $label_list.length; b++ ) {
-            if( $developer_labels[a] === $label_list[b].name ) {
-              found = true;
-              label_id = $label_list[b].id;
-              break;
-            }
-          }
-
-          if( !found ) {
-            let label = await fetch( '/api/label', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify( {
-                name: $developer_labels[a]
-              } )
-            } )
-            .then( ( response ) => response.json() );
-
-            later.push( label );
-            label_id = label.id;
-          }
-
-          await fetch( `/api/developer/${$developer_id}/label`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify( {
-              label_id: label_id
-            } )
-          } );      
-        }
-
-        for( let a = 0; a < later.length; a++ ) {
-          $label_list.push( later[a] );
-          $label_list.sort();
-          $label_list = $label_list.slice( 0 );
-        }
-      } );
-    }
-    */
 
     	function search_value_binding(value) {
     		$search_term = value;
@@ -8012,14 +7844,19 @@ var app = (function () {
     		if ('$filtered_list' in $$props) filtered_list.set($filtered_list);
     		if ('$developer_list' in $$props) developer_list.set($developer_list);
     		if ('$add_disabled' in $$props) add_disabled.set($add_disabled);
-    		if ('$summary_selected' in $$props) summary_selected.set($summary_selected);
-    		if ('$profile_selected' in $$props) profile_selected.set($profile_selected);
-    		if ('$social_selected' in $$props) social_selected.set($social_selected);
-    		if ('$notes_selected' in $$props) notes_selected.set($notes_selected);
     		if ('$summary_tab' in $$props) summary_tab.set($summary_tab);
     		if ('$profile_tab' in $$props) profile_tab.set($profile_tab);
     		if ('$social_tab' in $$props) social_tab.set($social_tab);
     		if ('$notes_tab' in $$props) notes_tab.set($notes_tab);
+    		if ('$summary_selected' in $$props) summary_selected.set($summary_selected);
+    		if ('$profile_selected' in $$props) profile_selected.set($profile_selected);
+    		if ('$social_selected' in $$props) social_selected.set($social_selected);
+    		if ('$notes_selected' in $$props) notes_selected.set($notes_selected);
+    		if ('$summary_hidden' in $$props) summary_hidden.set($summary_hidden);
+    		if ('$profile_hidden' in $$props) profile_hidden.set($profile_hidden);
+    		if ('$endpoints_hidden' in $$props) endpoints_hidden.set($endpoints_hidden);
+    		if ('$timeline_hidden' in $$props) timeline_hidden.set($timeline_hidden);
+    		if ('$notes_hidden' in $$props) notes_hidden.set($notes_hidden);
     		if ('$summary_disabled' in $$props) summary_disabled.set($summary_disabled);
     		if ('$profile_disabled' in $$props) profile_disabled.set($profile_disabled);
     		if ('$endpoints_disabled' in $$props) endpoints_disabled.set($endpoints_disabled);
@@ -8029,13 +7866,8 @@ var app = (function () {
     		if ('$developer_image' in $$props) developer_image.set($developer_image);
     		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
-    		if ('$controls_hidden' in $$props) controls_hidden.set($controls_hidden);
     		if ('$controls_mode' in $$props) controls_mode.set($controls_mode);
-    		if ('$summary_hidden' in $$props) summary_hidden.set($summary_hidden);
-    		if ('$profile_hidden' in $$props) profile_hidden.set($profile_hidden);
-    		if ('$endpoints_hidden' in $$props) endpoints_hidden.set($endpoints_hidden);
-    		if ('$timeline_hidden' in $$props) timeline_hidden.set($timeline_hidden);
-    		if ('$notes_hidden' in $$props) notes_hidden.set($notes_hidden);
+    		if ('$notes_list' in $$props) notes_list.set($notes_list);
     		if ('$organization_list' in $$props) organization_list.set($organization_list);
     	};
 
@@ -8043,29 +7875,29 @@ var app = (function () {
     		filter,
     		doAddClick,
     		doCancelNew,
+    		doDeveloperClick,
     		doSaveNew,
     		doTabClick,
     		$search_term,
     		$filtered_list,
     		$add_disabled,
-    		$summary_selected,
-    		$profile_selected,
-    		$social_selected,
-    		$notes_selected,
     		$summary_tab,
     		$profile_tab,
     		$social_tab,
     		$notes_tab,
-    		$summary_disabled,
-    		$profile_disabled,
-    		$endpoints_disabled,
-    		$controls_hidden,
-    		$controls_mode,
+    		$summary_selected,
+    		$profile_selected,
+    		$social_selected,
+    		$notes_selected,
     		$summary_hidden,
     		$profile_hidden,
     		$endpoints_hidden,
     		$timeline_hidden,
     		$notes_hidden,
+    		$summary_disabled,
+    		$profile_disabled,
+    		$endpoints_disabled,
+    		$controls_mode,
     		$organization_list,
     		search_value_binding,
     		click_handler,

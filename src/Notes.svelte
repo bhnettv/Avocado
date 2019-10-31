@@ -7,9 +7,10 @@ import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
 import { notes_list } from './developers.js';
+import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 
-export let hide = false;
+export let hidden = false;
 export let disabled = false;
 
 let activity = [];
@@ -49,7 +50,6 @@ function format( updated ) {
   return result;
 }
 
-/*
 function doNext( evt ) {
   if( index === ( $notes_list.length - 1 ) ) {
     index = 0;
@@ -67,12 +67,6 @@ function doPrevious( evt ) {
 }
 
 function doSave( evt ) {
-  console.log( {
-    developer_id: $developer_id,
-    activity_id: activity_id,
-    full_text: text
-  } );
-
   fetch( '/api/developer/note', {
     method: 'POST',
     headers: {
@@ -95,13 +89,12 @@ function doSave( evt ) {
       if( a > b ) return -1;
       return 0;
     } );
-    $notes_list = $notes_list.slice( 0 );
+    $notes_list = $notes_list.slice();
 
     index = 0;
     text = '';
   } );
 }
-*/
 </script>
 
 <style>
@@ -164,12 +157,12 @@ p.pagination {
   padding: 0 0 0 16px;
 }
 
-div.panel.hide {
+div.panel.hidden {
   display: none;
 }
 </style>
 
-<div class="panel" class:hide>
+<div class="panel" class:hidden>
   <form>
     <div class="activity">
       <Select 
@@ -187,6 +180,7 @@ div.panel.hide {
       bind:value="{text}"/>
     <div class="controls">
       <Button 
+        on:click="{doSave}"
         icon="/img/save-white.svg"
         disabledIcon="/img/save.svg"
         disabled="{text.trim().length > 0 ? false : true}">Save</Button>    
@@ -199,6 +193,8 @@ div.panel.hide {
       <p>{$notes_list[index].full_text}</p>
     </div>
     <Pagination 
+      on:previous="{doPrevious}"
+      on:next="{doNext}"
       index="{index + 1}" 
       length="{$notes_list.length}" 
       noun="notes">

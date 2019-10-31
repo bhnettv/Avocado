@@ -12,7 +12,7 @@ import { developer_image } from './developers.js';
 import { developer_organizations } from './developers.js';
 import { developer_location } from './developers.js';
 
-export let hide = false;
+export let hidden = false;
 export let disabled = false;
 </script>
 
@@ -39,12 +39,12 @@ form > div:last-of-type {
   margin-bottom: 0;
 }
 
-.hide {
+.hidden {
   display: none;
 }
 </style>
 
-<form class:hide>
+<form class:hidden>
 
   <div>
     <TextInput 
