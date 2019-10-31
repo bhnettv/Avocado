@@ -3,6 +3,7 @@ import { createEventDispatcher } from 'svelte';
 
 import Button from './Button.svelte';
 
+export let hidden = false;
 export let mode = 0;
 
 const dispatch = createEventDispatcher();
@@ -19,9 +20,13 @@ div {
 div.block {
   flex-grow: 1;
 }
+
+div.hidden {
+  display: none;
+}
 </style>
 
-<div>
+<div class:hidden>
 
 <!-- Default: Nothing -->
 

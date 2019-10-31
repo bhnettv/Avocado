@@ -6,7 +6,7 @@ import Pagination from './Pagination.svelte';
 import Select from './Select.svelte';
 import TextArea from './TextArea.svelte';
 
-import { notes_list } from './developers.js';
+import { notes } from './developers.js';
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 
@@ -51,7 +51,7 @@ function format( updated ) {
 }
 
 function doNext( evt ) {
-  if( index === ( $notes_list.length - 1 ) ) {
+  if( index === ( $notes.length - 1 ) ) {
     index = 0;
   } else {
     index = index + 1;
@@ -60,7 +60,7 @@ function doNext( evt ) {
 
 function doPrevious( evt ) {
   if( index === 0 ) {
-    index = $notes_list.length - 1;
+    index = $notes.length - 1;
   } else {
     index = index - 1;
   }
@@ -80,8 +80,8 @@ function doSave( evt ) {
   } )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
-    $notes_list.push( data );
-    $notes_list.sort( ( a, b ) => {
+    $notes.push( data );
+    $notes.sort( ( a, b ) => {
       a = new Date( a.updated_at ).getTime();
       b = new Date( b.updated_at ).getTime();
 
@@ -89,7 +89,7 @@ function doSave( evt ) {
       if( a > b ) return -1;
       return 0;
     } );
-    $notes_list = $notes_list.slice();
+    $notes = $notes.slice();
 
     index = 0;
     text = '';
@@ -187,19 +187,19 @@ div.panel.hidden {
     </div>
   </form>
 
-  {#if $notes_list.length > 0}
+  {#if $notes.length > 0}
 
     <div style="flex-grow: 1; padding: 16px;">
-      <p>{$notes_list[index].full_text}</p>
+      <p>{$notes[index].full_text}</p>
     </div>
     <Pagination 
       on:previous="{doPrevious}"
       on:next="{doNext}"
       index="{index + 1}" 
-      length="{$notes_list.length}" 
+      length="{$notes.length}" 
       noun="notes">
-      <p class="pagination">{format( new Date( $notes_list[index].updated_at ) )}</p>
-      <p class="pagination">{$notes_list[index].activity_name}</p>
+      <p class="pagination">{format( new Date( $notes[index].updated_at ) )}</p>
+      <p class="pagination">{$notes[index].activity_name}</p>
     </Pagination>
 
   {:else}

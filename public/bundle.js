@@ -854,7 +854,7 @@ var app = (function () {
 
     const file$1 = "src/Controls.svelte";
 
-    // (29:0) {#if mode === 1}
+    // (34:0) {#if mode === 1}
     function create_if_block_2(ctx) {
     	var t, current;
 
@@ -917,11 +917,11 @@ var app = (function () {
     			destroy_component(button1, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(29:0) {#if mode === 1}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(34:0) {#if mode === 1}", ctx });
     	return block;
     }
 
-    // (31:2) <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">
+    // (36:2) <Button kind="secondary" on:click="{() => dispatch( 'cancelnew' )}">
     function create_default_slot_5(ctx) {
     	var t;
 
@@ -940,11 +940,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(31:2) <Button kind=\"secondary\" on:click=\"{() => dispatch( 'cancelnew' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(36:2) <Button kind=\"secondary\" on:click=\"{() => dispatch( 'cancelnew' )}\">", ctx });
     	return block;
     }
 
-    // (32:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'savenew' )}">
+    // (37:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'savenew' )}">
     function create_default_slot_4(ctx) {
     	var t;
 
@@ -963,11 +963,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(32:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'savenew' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(37:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'savenew' )}\">", ctx });
     	return block;
     }
 
-    // (39:0) {#if mode === 2}
+    // (44:0) {#if mode === 2}
     function create_if_block_1(ctx) {
     	var current;
 
@@ -1007,11 +1007,11 @@ var app = (function () {
     			destroy_component(button, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(39:0) {#if mode === 2}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(44:0) {#if mode === 2}", ctx });
     	return block;
     }
 
-    // (41:2) <Button icon="/img/edit.svg" on:click="{() => dispatch( 'edit' )}">
+    // (46:2) <Button icon="/img/edit.svg" on:click="{() => dispatch( 'edit' )}">
     function create_default_slot_3(ctx) {
     	var t;
 
@@ -1030,11 +1030,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(41:2) <Button icon=\"/img/edit.svg\" on:click=\"{() => dispatch( 'edit' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(46:2) <Button icon=\"/img/edit.svg\" on:click=\"{() => dispatch( 'edit' )}\">", ctx });
     	return block;
     }
 
-    // (46:0) {#if mode === 3}
+    // (51:0) {#if mode === 3}
     function create_if_block$1(ctx) {
     	var t0, div, t1, t2, current;
 
@@ -1077,8 +1077,8 @@ var app = (function () {
     			button1.$$.fragment.c();
     			t2 = space();
     			button2.$$.fragment.c();
-    			attr_dev(div, "class", "block svelte-joltns");
-    			add_location(div, file$1, 50, 2, 879);
+    			attr_dev(div, "class", "block svelte-1ybo6ro");
+    			add_location(div, file$1, 55, 2, 952);
     		},
 
     		m: function mount(target, anchor) {
@@ -1128,11 +1128,11 @@ var app = (function () {
     			destroy_component(button2, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(46:0) {#if mode === 3}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(51:0) {#if mode === 3}", ctx });
     	return block;
     }
 
-    // (48:2) <Button      kind="danger"      on:click="{() => dispatch( 'delete' )}">
+    // (53:2) <Button      kind="danger"      on:click="{() => dispatch( 'delete' )}">
     function create_default_slot_2(ctx) {
     	var t;
 
@@ -1151,11 +1151,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(48:2) <Button      kind=\"danger\"      on:click=\"{() => dispatch( 'delete' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(53:2) <Button      kind=\"danger\"      on:click=\"{() => dispatch( 'delete' )}\">", ctx });
     	return block;
     }
 
-    // (52:2) <Button      kind="secondary"      on:click="{() => dispatch( 'cancelexisting' )}">
+    // (57:2) <Button      kind="secondary"      on:click="{() => dispatch( 'cancelexisting' )}">
     function create_default_slot_1(ctx) {
     	var t;
 
@@ -1174,11 +1174,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(52:2) <Button      kind=\"secondary\"      on:click=\"{() => dispatch( 'cancelexisting' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(57:2) <Button      kind=\"secondary\"      on:click=\"{() => dispatch( 'cancelexisting' )}\">", ctx });
     	return block;
     }
 
-    // (55:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'saveexisting' )}">
+    // (60:2) <Button      icon="/img/save-white.svg"      on:click="{() => dispatch( 'saveexisting' )}">
     function create_default_slot(ctx) {
     	var t;
 
@@ -1197,7 +1197,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(55:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'saveexisting' )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(60:2) <Button      icon=\"/img/save-white.svg\"      on:click=\"{() => dispatch( 'saveexisting' )}\">", ctx });
     	return block;
     }
 
@@ -1218,8 +1218,9 @@ var app = (function () {
     			if (if_block1) if_block1.c();
     			t1 = space();
     			if (if_block2) if_block2.c();
-    			attr_dev(div, "class", "svelte-joltns");
-    			add_location(div, file$1, 23, 0, 318);
+    			attr_dev(div, "class", "svelte-1ybo6ro");
+    			toggle_class(div, "hidden", ctx.hidden);
+    			add_location(div, file$1, 28, 0, 378);
     		},
 
     		l: function claim(nodes) {
@@ -1281,6 +1282,10 @@ var app = (function () {
     				});
     				check_outros();
     			}
+
+    			if (changed.hidden) {
+    				toggle_class(div, "hidden", ctx.hidden);
+    			}
     		},
 
     		i: function intro(local) {
@@ -1315,11 +1320,11 @@ var app = (function () {
     function instance$1($$self, $$props, $$invalidate) {
     	
 
-    let { mode = 0 } = $$props;
+    let { hidden = false, mode = 0 } = $$props;
 
     const dispatch = createEventDispatcher();
 
-    	const writable_props = ['mode'];
+    	const writable_props = ['hidden', 'mode'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Controls> was created with unknown prop '${key}'`);
     	});
@@ -1337,18 +1342,21 @@ var app = (function () {
     	const click_handler_5 = () => dispatch( 'saveexisting' );
 
     	$$self.$set = $$props => {
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('mode' in $$props) $$invalidate('mode', mode = $$props.mode);
     	};
 
     	$$self.$capture_state = () => {
-    		return { mode };
+    		return { hidden, mode };
     	};
 
     	$$self.$inject_state = $$props => {
+    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('mode' in $$props) $$invalidate('mode', mode = $$props.mode);
     	};
 
     	return {
+    		hidden,
     		mode,
     		dispatch,
     		click_handler,
@@ -1363,8 +1371,16 @@ var app = (function () {
     class Controls extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["mode"]);
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["hidden", "mode"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Controls", options, id: create_fragment$1.name });
+    	}
+
+    	get hidden() {
+    		throw new Error("<Controls>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set hidden(value) {
+    		throw new Error("<Controls>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get mode() {
@@ -1912,36 +1928,7 @@ var app = (function () {
         return { set, update, subscribe };
     }
 
-    // Left column
-    const search_term = writable( '' );
-    const add_disabled = writable( false );
-    const developer_list = writable( [] );
-    const filtered_list = writable( [] );
-    const organization_list = writable( [] );
-
-    // Tabs disabled
-    const summary_tab = writable( false );
-    const profile_tab = writable( true );
-    const social_tab = writable( true );
-    const notes_tab = writable( true );
-
-    // Tabs selected
-    const summary_selected = writable( true );
-    const profile_selected = writable( false );
-    const social_selected = writable( false );
-    const notes_selected = writable( false );
-
-    // Panels hidden
-    const summary_hidden = writable( false );
-    const profile_hidden = writable( true );
-    const endpoints_hidden = writable( true );
-    const timeline_hidden = writable( true );
-    const notes_hidden = writable( true );
-
-    // Panels disabled
-    const summary_disabled = writable( true );
-    const profile_disabled = writable( true );
-    const endpoints_disabled = writable( true );
+    const organizations = writable( [] );
 
     // Summary
     const developer_id = writable( null );
@@ -1963,10 +1950,7 @@ var app = (function () {
     const endpoint_reddit = writable( '' );
 
     // Notes
-    const notes_list = writable( [] );
-
-    // Controls
-    const controls_mode = writable( 0 );
+    const notes = writable( [] );
 
     /* src/Endpoints.svelte generated by Svelte v3.12.1 */
 
@@ -5206,9 +5190,9 @@ var app = (function () {
     			t1 = text(ctx.$developer_name);
     			t2 = text(".");
     			attr_dev(p, "class", "svelte-vrjmeg");
-    			add_location(p, file$f, 207, 6, 4577);
+    			add_location(p, file$f, 207, 6, 4517);
     			attr_dev(div, "class", "none svelte-vrjmeg");
-    			add_location(div, file$f, 206, 4, 4552);
+    			add_location(div, file$f, 206, 4, 4492);
     		},
 
     		m: function mount(target, anchor) {
@@ -5238,14 +5222,14 @@ var app = (function () {
     	return block;
     }
 
-    // (190:2) {#if $notes_list.length > 0}
+    // (190:2) {#if $notes.length > 0}
     function create_if_block$6(ctx) {
-    	var div, p, t0_value = ctx.$notes_list[ctx.index].full_text + "", t0, t1, current;
+    	var div, p, t0_value = ctx.$notes[ctx.index].full_text + "", t0, t1, current;
 
     	var pagination = new Pagination({
     		props: {
     		index: ctx.index + 1,
-    		length: ctx.$notes_list.length,
+    		length: ctx.$notes.length,
     		noun: "notes",
     		$$slots: { default: [create_default_slot$2] },
     		$$scope: { ctx }
@@ -5263,10 +5247,10 @@ var app = (function () {
     			t1 = space();
     			pagination.$$.fragment.c();
     			attr_dev(p, "class", "svelte-vrjmeg");
-    			add_location(p, file$f, 192, 6, 4157);
+    			add_location(p, file$f, 192, 6, 4117);
     			set_style(div, "flex-grow", "1");
     			set_style(div, "padding", "16px");
-    			add_location(div, file$f, 191, 4, 4108);
+    			add_location(div, file$f, 191, 4, 4068);
     		},
 
     		m: function mount(target, anchor) {
@@ -5279,14 +5263,14 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if ((!current || changed.$notes_list || changed.index) && t0_value !== (t0_value = ctx.$notes_list[ctx.index].full_text + "")) {
+    			if ((!current || changed.$notes || changed.index) && t0_value !== (t0_value = ctx.$notes[ctx.index].full_text + "")) {
     				set_data_dev(t0, t0_value);
     			}
 
     			var pagination_changes = {};
     			if (changed.index) pagination_changes.index = ctx.index + 1;
-    			if (changed.$notes_list) pagination_changes.length = ctx.$notes_list.length;
-    			if (changed.$$scope || changed.$notes_list || changed.index) pagination_changes.$$scope = { changed, ctx };
+    			if (changed.$notes) pagination_changes.length = ctx.$notes.length;
+    			if (changed.$$scope || changed.$notes || changed.index) pagination_changes.$$scope = { changed, ctx };
     			pagination.$set(pagination_changes);
     		},
 
@@ -5311,13 +5295,13 @@ var app = (function () {
     			destroy_component(pagination, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(190:2) {#if $notes_list.length > 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(190:2) {#if $notes.length > 0}", ctx });
     	return block;
     }
 
-    // (195:4) <Pagination        on:previous="{doPrevious}"       on:next="{doNext}"       index="{index + 1}"        length="{$notes_list.length}"        noun="notes">
+    // (195:4) <Pagination        on:previous="{doPrevious}"       on:next="{doNext}"       index="{index + 1}"        length="{$notes.length}"        noun="notes">
     function create_default_slot$2(ctx) {
-    	var p0, t0_value = format( new ctx.Date( ctx.$notes_list[ctx.index].updated_at ) ) + "", t0, t1, p1, t2_value = ctx.$notes_list[ctx.index].activity_name + "", t2;
+    	var p0, t0_value = format( new ctx.Date( ctx.$notes[ctx.index].updated_at ) ) + "", t0, t1, p1, t2_value = ctx.$notes[ctx.index].activity_name + "", t2;
 
     	const block = {
     		c: function create() {
@@ -5327,9 +5311,9 @@ var app = (function () {
     			p1 = element("p");
     			t2 = text(t2_value);
     			attr_dev(p0, "class", "pagination svelte-vrjmeg");
-    			add_location(p0, file$f, 200, 6, 4371);
+    			add_location(p0, file$f, 200, 6, 4321);
     			attr_dev(p1, "class", "pagination svelte-vrjmeg");
-    			add_location(p1, file$f, 201, 6, 4457);
+    			add_location(p1, file$f, 201, 6, 4402);
     		},
 
     		m: function mount(target, anchor) {
@@ -5341,11 +5325,11 @@ var app = (function () {
     		},
 
     		p: function update(changed, ctx) {
-    			if ((changed.$notes_list || changed.index) && t0_value !== (t0_value = format( new ctx.Date( ctx.$notes_list[ctx.index].updated_at ) ) + "")) {
+    			if ((changed.$notes || changed.index) && t0_value !== (t0_value = format( new ctx.Date( ctx.$notes[ctx.index].updated_at ) ) + "")) {
     				set_data_dev(t0, t0_value);
     			}
 
-    			if ((changed.$notes_list || changed.index) && t2_value !== (t2_value = ctx.$notes_list[ctx.index].activity_name + "")) {
+    			if ((changed.$notes || changed.index) && t2_value !== (t2_value = ctx.$notes[ctx.index].activity_name + "")) {
     				set_data_dev(t2, t2_value);
     			}
     		},
@@ -5358,7 +5342,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(195:4) <Pagination        on:previous=\"{doPrevious}\"       on:next=\"{doNext}\"       index=\"{index + 1}\"        length=\"{$notes_list.length}\"        noun=\"notes\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(195:4) <Pagination        on:previous=\"{doPrevious}\"       on:next=\"{doNext}\"       index=\"{index + 1}\"        length=\"{$notes.length}\"        noun=\"notes\">", ctx });
     	return block;
     }
 
@@ -5423,7 +5407,7 @@ var app = (function () {
     	var if_blocks = [];
 
     	function select_block_type(changed, ctx) {
-    		if (ctx.$notes_list.length > 0) return 0;
+    		if (ctx.$notes.length > 0) return 0;
     		return 1;
     	}
 
@@ -5444,14 +5428,14 @@ var app = (function () {
     			t2 = space();
     			if_block.c();
     			attr_dev(div0, "class", "activity svelte-vrjmeg");
-    			add_location(div0, file$f, 166, 4, 3442);
+    			add_location(div0, file$f, 166, 4, 3407);
     			attr_dev(div1, "class", "controls svelte-vrjmeg");
-    			add_location(div1, file$f, 180, 4, 3835);
+    			add_location(div1, file$f, 180, 4, 3800);
     			attr_dev(form, "class", "svelte-vrjmeg");
-    			add_location(form, file$f, 165, 2, 3431);
+    			add_location(form, file$f, 165, 2, 3396);
     			attr_dev(div2, "class", "panel svelte-vrjmeg");
     			toggle_class(div2, "hidden", ctx.hidden);
-    			add_location(div2, file$f, 164, 0, 3396);
+    			add_location(div2, file$f, 164, 0, 3361);
     		},
 
     		l: function claim(nodes) {
@@ -5582,10 +5566,10 @@ var app = (function () {
     }
 
     function instance$f($$self, $$props, $$invalidate) {
-    	let $notes_list, $developer_id, $developer_name;
+    	let $notes, $developer_id, $developer_name;
 
-    	validate_store(notes_list, 'notes_list');
-    	component_subscribe($$self, notes_list, $$value => { $notes_list = $$value; $$invalidate('$notes_list', $notes_list); });
+    	validate_store(notes, 'notes');
+    	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
     	validate_store(developer_name, 'developer_name');
@@ -5607,7 +5591,7 @@ var app = (function () {
     } );
 
     function doNext( evt ) {
-      if( index === ( $notes_list.length - 1 ) ) {
+      if( index === ( $notes.length - 1 ) ) {
         $$invalidate('index', index = 0);
       } else {
         $$invalidate('index', index = index + 1);
@@ -5616,7 +5600,7 @@ var app = (function () {
 
     function doPrevious( evt ) {
       if( index === 0 ) {
-        $$invalidate('index', index = $notes_list.length - 1);
+        $$invalidate('index', index = $notes.length - 1);
       } else {
         $$invalidate('index', index = index - 1);
       }
@@ -5636,8 +5620,8 @@ var app = (function () {
       } )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
-        $notes_list.push( data );
-        $notes_list.sort( ( a, b ) => {
+        $notes.push( data );
+        $notes.sort( ( a, b ) => {
           a = new Date( a.updated_at ).getTime();
           b = new Date( b.updated_at ).getTime();
 
@@ -5645,7 +5629,7 @@ var app = (function () {
           if( a > b ) return -1;
           return 0;
         } );
-        set_store_value(notes_list, $notes_list = $notes_list.slice());
+        set_store_value(notes, $notes = $notes.slice());
 
         $$invalidate('index', index = 0);
         $$invalidate('text', text = '');
@@ -5673,7 +5657,7 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, disabled, activity, activity_id, index, text, $notes_list, $developer_id, $developer_name };
+    		return { hidden, disabled, activity, activity_id, index, text, $notes, $developer_id, $developer_name };
     	};
 
     	$$self.$inject_state = $$props => {
@@ -5683,7 +5667,7 @@ var app = (function () {
     		if ('activity_id' in $$props) $$invalidate('activity_id', activity_id = $$props.activity_id);
     		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('text' in $$props) $$invalidate('text', text = $$props.text);
-    		if ('$notes_list' in $$props) notes_list.set($notes_list);
+    		if ('$notes' in $$props) notes.set($notes);
     		if ('$developer_id' in $$props) developer_id.set($developer_id);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     	};
@@ -5699,7 +5683,7 @@ var app = (function () {
     		doPrevious,
     		doSave,
     		Date,
-    		$notes_list,
+    		$notes,
     		$developer_name,
     		select_selected_binding,
     		textarea_value_binding
@@ -6050,7 +6034,7 @@ var app = (function () {
     	}
 
     	let taginput_props = {
-    		data: ctx.$organization_list,
+    		data: ctx.$organizations,
     		labelField: "name",
     		label: "Organization",
     		placeholder: "Organization",
@@ -6107,20 +6091,20 @@ var app = (function () {
     			div5 = element("div");
     			map.$$.fragment.c();
     			attr_dev(div0, "class", "svelte-1c1qnk7");
-    			add_location(div0, file$i, 54, 4, 1032);
+    			add_location(div0, file$i, 54, 4, 1028);
     			attr_dev(div1, "class", "svelte-1c1qnk7");
-    			add_location(div1, file$i, 48, 2, 894);
+    			add_location(div1, file$i, 48, 2, 890);
     			attr_dev(div2, "class", "svelte-1c1qnk7");
-    			add_location(div2, file$i, 62, 2, 1193);
+    			add_location(div2, file$i, 62, 2, 1189);
     			attr_dev(div3, "class", "svelte-1c1qnk7");
-    			add_location(div3, file$i, 71, 2, 1407);
+    			add_location(div3, file$i, 71, 2, 1403);
     			attr_dev(div4, "class", "svelte-1c1qnk7");
-    			add_location(div4, file$i, 82, 2, 1675);
+    			add_location(div4, file$i, 82, 2, 1667);
     			attr_dev(div5, "class", "svelte-1c1qnk7");
-    			add_location(div5, file$i, 91, 2, 1871);
+    			add_location(div5, file$i, 91, 2, 1863);
     			attr_dev(form, "class", "svelte-1c1qnk7");
     			toggle_class(form, "hidden", ctx.hidden);
-    			add_location(form, file$i, 46, 0, 871);
+    			add_location(form, file$i, 46, 0, 867);
     		},
 
     		l: function claim(nodes) {
@@ -6173,7 +6157,7 @@ var app = (function () {
     			textinput2.$set(textinput2_changes);
 
     			var taginput_changes = {};
-    			if (changed.$organization_list) taginput_changes.data = ctx.$organization_list;
+    			if (changed.$organizations) taginput_changes.data = ctx.$organizations;
     			if (changed.disabled) taginput_changes.disabled = ctx.disabled;
     			if (!updating_value_3 && changed.$developer_organizations) {
     				taginput_changes.value = ctx.$developer_organizations;
@@ -6242,7 +6226,7 @@ var app = (function () {
     }
 
     function instance$i($$self, $$props, $$invalidate) {
-    	let $developer_name, $developer_email, $developer_image, $organization_list, $developer_organizations, $developer_location;
+    	let $developer_name, $developer_email, $developer_image, $organizations, $developer_organizations, $developer_location;
 
     	validate_store(developer_name, 'developer_name');
     	component_subscribe($$self, developer_name, $$value => { $developer_name = $$value; $$invalidate('$developer_name', $developer_name); });
@@ -6250,8 +6234,8 @@ var app = (function () {
     	component_subscribe($$self, developer_email, $$value => { $developer_email = $$value; $$invalidate('$developer_email', $developer_email); });
     	validate_store(developer_image, 'developer_image');
     	component_subscribe($$self, developer_image, $$value => { $developer_image = $$value; $$invalidate('$developer_image', $developer_image); });
-    	validate_store(organization_list, 'organization_list');
-    	component_subscribe($$self, organization_list, $$value => { $organization_list = $$value; $$invalidate('$organization_list', $organization_list); });
+    	validate_store(organizations, 'organizations');
+    	component_subscribe($$self, organizations, $$value => { $organizations = $$value; $$invalidate('$organizations', $organizations); });
     	validate_store(developer_organizations, 'developer_organizations');
     	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
     	validate_store(developer_location, 'developer_location');
@@ -6297,7 +6281,7 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, disabled, $developer_name, $developer_email, $developer_image, $organization_list, $developer_organizations, $developer_location };
+    		return { hidden, disabled, $developer_name, $developer_email, $developer_image, $organizations, $developer_organizations, $developer_location };
     	};
 
     	$$self.$inject_state = $$props => {
@@ -6306,7 +6290,7 @@ var app = (function () {
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     		if ('$developer_email' in $$props) developer_email.set($developer_email);
     		if ('$developer_image' in $$props) developer_image.set($developer_image);
-    		if ('$organization_list' in $$props) organization_list.set($organization_list);
+    		if ('$organizations' in $$props) organizations.set($organizations);
     		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
     	};
@@ -6317,7 +6301,7 @@ var app = (function () {
     		$developer_name,
     		$developer_email,
     		$developer_image,
-    		$organization_list,
+    		$organizations,
     		$developer_organizations,
     		$developer_location,
     		textinput0_value_binding,
@@ -6673,7 +6657,7 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (350:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{$add_disabled}">
+    // (228:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
     function create_default_slot_10(ctx) {
     	var t;
 
@@ -6692,11 +6676,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(350:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{$add_disabled}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(228:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (363:6) <ListLabelItem>
+    // (241:6) <ListLabelItem>
     function create_default_slot_9(ctx) {
     	var t_value = ctx.developer.name + "", t;
 
@@ -6721,11 +6705,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(363:6) <ListLabelItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(241:6) <ListLabelItem>", ctx });
     	return block;
     }
 
-    // (359:4) <List        on:change="{doDeveloperClick}"       data="{$filtered_list}"        let:item="{developer}">
+    // (237:4) <List        on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
     function create_default_slot_8(ctx) {
     	var current;
 
@@ -6769,11 +6753,11 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(359:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{$filtered_list}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(237:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (373:10) <span slot="label">
+    // (251:10) <span slot="label">
     function create_label_slot(ctx) {
     	var span, t_value = ctx.organization.name + "", t;
 
@@ -6782,7 +6766,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "label");
-    			add_location(span, file$m, 372, 10, 9137);
+    			add_location(span, file$m, 250, 10, 5658);
     		},
 
     		m: function mount(target, anchor) {
@@ -6802,11 +6786,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(373:10) <span slot=\"label\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(251:10) <span slot=\"label\">", ctx });
     	return block;
     }
 
-    // (374:10) <span slot="count">
+    // (252:10) <span slot="count">
     function create_count_slot(ctx) {
     	var span, t_value = ctx.organization.count + "", t;
 
@@ -6815,7 +6799,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "count");
-    			add_location(span, file$m, 373, 10, 9193);
+    			add_location(span, file$m, 251, 10, 5714);
     		},
 
     		m: function mount(target, anchor) {
@@ -6835,11 +6819,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(374:10) <span slot=\"count\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(252:10) <span slot=\"count\">", ctx });
     	return block;
     }
 
-    // (372:8) <ListCountItem>
+    // (250:8) <ListCountItem>
     function create_default_slot_7(ctx) {
     	var t;
 
@@ -6860,11 +6844,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(372:8) <ListCountItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(250:8) <ListCountItem>", ctx });
     	return block;
     }
 
-    // (369:6) <List          data="{$organization_list}"          let:item="{organization}">
+    // (247:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6912,17 +6896,17 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(369:6) <List          data=\"{$organization_list}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(247:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (368:4) <Details summary="Organizations">
+    // (246:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
     	var list = new List({
     		props: {
-    		data: ctx.$organization_list,
+    		data: ctx.$organizations,
     		$$slots: {
     		default: [create_default_slot_6, ({ item: organization }) => ({ organization })]
     	},
@@ -6943,7 +6927,7 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var list_changes = {};
-    			if (changed.$organization_list) list_changes.data = ctx.$organization_list;
+    			if (changed.$organizations) list_changes.data = ctx.$organizations;
     			if (changed.$$scope) list_changes.$$scope = { changed, ctx };
     			list.$set(list_changes);
     		},
@@ -6964,11 +6948,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(368:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(246:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (386:6) <Tab          on:click="{() => doTabClick( 0 )}"         selected="{$summary_selected}"         disabled="{$summary_tab}">
+    // (264:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -6987,11 +6971,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(386:6) <Tab          on:click=\"{() => doTabClick( 0 )}\"         selected=\"{$summary_selected}\"         disabled=\"{$summary_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(264:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (390:6) <Tab          on:click="{() => doTabClick( 1 )}"               selected="{$profile_selected}"         disabled="{$profile_tab}">
+    // (267:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -7010,11 +6994,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(390:6) <Tab          on:click=\"{() => doTabClick( 1 )}\"               selected=\"{$profile_selected}\"         disabled=\"{$profile_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(267:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (394:6) <Tab          on:click="{() => doTabClick( 2 )}"               selected="{$social_selected}"          disabled="{$social_tab}">
+    // (271:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -7033,11 +7017,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(394:6) <Tab          on:click=\"{() => doTabClick( 2 )}\"               selected=\"{$social_selected}\"          disabled=\"{$social_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(271:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (398:6) <Tab          on:click="{() => doTabClick( 3 )}"               selected="{$notes_selected}"          disabled="{$notes_tab}">
+    // (275:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7056,18 +7040,17 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(398:6) <Tab          on:click=\"{() => doTabClick( 3 )}\"               selected=\"{$notes_selected}\"          disabled=\"{$notes_tab}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(275:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (385:4) <TabBar>
+    // (263:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
     	var tab0 = new Tab({
     		props: {
-    		selected: ctx.$summary_selected,
-    		disabled: ctx.$summary_tab,
+    		selected: ctx.tab === 0 ? true : false,
     		$$slots: { default: [create_default_slot_4$1] },
     		$$scope: { ctx }
     	},
@@ -7077,8 +7060,8 @@ var app = (function () {
 
     	var tab1 = new Tab({
     		props: {
-    		selected: ctx.$profile_selected,
-    		disabled: ctx.$profile_tab,
+    		selected: ctx.tab === 1 ? true : false,
+    		disabled: ctx.enabled >= 1 ? false : true,
     		$$slots: { default: [create_default_slot_3$1] },
     		$$scope: { ctx }
     	},
@@ -7088,8 +7071,8 @@ var app = (function () {
 
     	var tab2 = new Tab({
     		props: {
-    		selected: ctx.$social_selected,
-    		disabled: ctx.$social_tab,
+    		selected: ctx.tab === 2 ? true : false,
+    		disabled: ctx.enabled >= 2 ? false : true,
     		$$slots: { default: [create_default_slot_2$1] },
     		$$scope: { ctx }
     	},
@@ -7099,8 +7082,8 @@ var app = (function () {
 
     	var tab3 = new Tab({
     		props: {
-    		selected: ctx.$notes_selected,
-    		disabled: ctx.$notes_tab,
+    		selected: ctx.tab === 3 ? true : false,
+    		disabled: ctx.enabled >= 3 ? false : true,
     		$$slots: { default: [create_default_slot_1$2] },
     		$$scope: { ctx }
     	},
@@ -7132,26 +7115,25 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var tab0_changes = {};
-    			if (changed.$summary_selected) tab0_changes.selected = ctx.$summary_selected;
-    			if (changed.$summary_tab) tab0_changes.disabled = ctx.$summary_tab;
+    			if (changed.tab) tab0_changes.selected = ctx.tab === 0 ? true : false;
     			if (changed.$$scope) tab0_changes.$$scope = { changed, ctx };
     			tab0.$set(tab0_changes);
 
     			var tab1_changes = {};
-    			if (changed.$profile_selected) tab1_changes.selected = ctx.$profile_selected;
-    			if (changed.$profile_tab) tab1_changes.disabled = ctx.$profile_tab;
+    			if (changed.tab) tab1_changes.selected = ctx.tab === 1 ? true : false;
+    			if (changed.enabled) tab1_changes.disabled = ctx.enabled >= 1 ? false : true;
     			if (changed.$$scope) tab1_changes.$$scope = { changed, ctx };
     			tab1.$set(tab1_changes);
 
     			var tab2_changes = {};
-    			if (changed.$social_selected) tab2_changes.selected = ctx.$social_selected;
-    			if (changed.$social_tab) tab2_changes.disabled = ctx.$social_tab;
+    			if (changed.tab) tab2_changes.selected = ctx.tab === 2 ? true : false;
+    			if (changed.enabled) tab2_changes.disabled = ctx.enabled >= 2 ? false : true;
     			if (changed.$$scope) tab2_changes.$$scope = { changed, ctx };
     			tab2.$set(tab2_changes);
 
     			var tab3_changes = {};
-    			if (changed.$notes_selected) tab3_changes.selected = ctx.$notes_selected;
-    			if (changed.$notes_tab) tab3_changes.disabled = ctx.$notes_tab;
+    			if (changed.tab) tab3_changes.selected = ctx.tab === 3 ? true : false;
+    			if (changed.enabled) tab3_changes.disabled = ctx.enabled >= 3 ? false : true;
     			if (changed.$$scope) tab3_changes.$$scope = { changed, ctx };
     			tab3.$set(tab3_changes);
     		},
@@ -7199,33 +7181,33 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(385:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(263:4) <TabBar>", ctx });
     	return block;
     }
 
     function create_fragment$m(ctx) {
     	var div1, aside0, div0, updating_value, t0, t1, h4, t3, t4, t5, article, t6, t7, t8, t9, t10, t11, t12, aside1, current;
 
-    	function search_value_binding(value) {
-    		ctx.search_value_binding.call(null, value);
+    	function search_1_value_binding(value) {
+    		ctx.search_1_value_binding.call(null, value);
     		updating_value = true;
     		add_flush_callback(() => updating_value = false);
     	}
 
-    	let search_props = {};
-    	if (ctx.$search_term !== void 0) {
-    		search_props.value = ctx.$search_term;
+    	let search_1_props = {};
+    	if (ctx.search !== void 0) {
+    		search_1_props.value = ctx.search;
     	}
-    	var search = new Search({ props: search_props, $$inline: true });
+    	var search_1 = new Search({ props: search_1_props, $$inline: true });
 
-    	binding_callbacks.push(() => bind(search, 'value', search_value_binding));
-    	search.$on("keyup", ctx.filter);
+    	binding_callbacks.push(() => bind(search_1, 'value', search_1_value_binding));
+    	search_1.$on("keyup", ctx.filter);
 
     	var button = new Button({
     		props: {
     		icon: "/img/add-white.svg",
     		disabledIcon: "/img/add.svg",
-    		disabled: ctx.$add_disabled,
+    		disabled: ctx.add,
     		$$slots: { default: [create_default_slot_10] },
     		$$scope: { ctx }
     	},
@@ -7235,7 +7217,7 @@ var app = (function () {
 
     	var list = new List({
     		props: {
-    		data: ctx.$filtered_list,
+    		data: ctx.filtered,
     		$$slots: {
     		default: [create_default_slot_8, ({ item: developer }) => ({ developer })]
     	},
@@ -7262,53 +7244,56 @@ var app = (function () {
     		$$inline: true
     	});
 
-    	var summary = new Summary({
+    	var summary_1 = new Summary({
     		props: {
-    		hidden: ctx.$summary_hidden,
-    		disabled: ctx.$summary_disabled
+    		hidden: ctx.tab === 0 ? false : true,
+    		disabled: ctx.summary
     	},
     		$$inline: true
     	});
 
-    	var profile = new Profile({
+    	var profile_1 = new Profile({
     		props: {
-    		hidden: ctx.$profile_hidden,
-    		disabled: ctx.$profile_disabled
+    		hidden: ctx.tab === 1 ? false : true,
+    		disabled: ctx.profile
     	},
     		$$inline: true
     	});
 
-    	var endpoints = new Endpoints({
+    	var endpoints_1 = new Endpoints({
     		props: {
-    		hidden: ctx.$endpoints_hidden,
-    		disabled: ctx.$endpoints_disabled
+    		hidden: ctx.social === 0 && ctx.tab === 2 ? false : true,
+    		disabled: ctx.endpoints
     	},
     		$$inline: true
     	});
 
     	var timeline = new Timeline({
-    		props: { hidden: ctx.$timeline_hidden },
+    		props: { hidden: ctx.social === 1 && ctx.tab === 2 ? false : true },
     		$$inline: true
     	});
 
-    	var notes = new Notes({
-    		props: { hidden: ctx.$notes_hidden },
+    	var notes_1 = new Notes({
+    		props: { hidden: ctx.tab === 3 ? false : true },
     		$$inline: true
     	});
 
-    	var controls = new Controls({
-    		props: { mode: ctx.$controls_mode },
+    	var controls_1 = new Controls({
+    		props: {
+    		hidden: ctx.tab === 3 ? true : false,
+    		mode: ctx.controls
+    	},
     		$$inline: true
     	});
-    	controls.$on("cancelnew", ctx.doCancelNew);
-    	controls.$on("savenew", ctx.doSaveNew);
+    	controls_1.$on("cancelnew", ctx.doCancelNew);
+    	controls_1.$on("savenew", ctx.doSaveNew);
 
     	const block = {
     		c: function create() {
     			div1 = element("div");
     			aside0 = element("aside");
     			div0 = element("div");
-    			search.$$.fragment.c();
+    			search_1.$$.fragment.c();
     			t0 = space();
     			button.$$.fragment.c();
     			t1 = space();
@@ -7322,31 +7307,31 @@ var app = (function () {
     			article = element("article");
     			tabbar.$$.fragment.c();
     			t6 = space();
-    			summary.$$.fragment.c();
+    			summary_1.$$.fragment.c();
     			t7 = space();
-    			profile.$$.fragment.c();
+    			profile_1.$$.fragment.c();
     			t8 = space();
-    			endpoints.$$.fragment.c();
+    			endpoints_1.$$.fragment.c();
     			t9 = space();
     			timeline.$$.fragment.c();
     			t10 = space();
-    			notes.$$.fragment.c();
+    			notes_1.$$.fragment.c();
     			t11 = space();
-    			controls.$$.fragment.c();
+    			controls_1.$$.fragment.c();
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 347, 4, 8442);
+    			add_location(div0, file$m, 225, 4, 4989);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 357, 4, 8735);
+    			add_location(h4, file$m, 235, 4, 5266);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 344, 2, 8409);
+    			add_location(aside0, file$m, 222, 2, 4956);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 381, 2, 9339);
+    			add_location(article, file$m, 259, 2, 5860);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 428, 2, 10628);
+    			add_location(aside1, file$m, 308, 2, 7258);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 341, 0, 8364);
+    			add_location(div1, file$m, 219, 0, 4911);
     		},
 
     		l: function claim(nodes) {
@@ -7357,7 +7342,7 @@ var app = (function () {
     			insert_dev(target, div1, anchor);
     			append_dev(div1, aside0);
     			append_dev(aside0, div0);
-    			mount_component(search, div0, null);
+    			mount_component(search_1, div0, null);
     			append_dev(div0, t0);
     			mount_component(button, div0, null);
     			append_dev(aside0, t1);
@@ -7370,78 +7355,79 @@ var app = (function () {
     			append_dev(div1, article);
     			mount_component(tabbar, article, null);
     			append_dev(article, t6);
-    			mount_component(summary, article, null);
+    			mount_component(summary_1, article, null);
     			append_dev(article, t7);
-    			mount_component(profile, article, null);
+    			mount_component(profile_1, article, null);
     			append_dev(article, t8);
-    			mount_component(endpoints, article, null);
+    			mount_component(endpoints_1, article, null);
     			append_dev(article, t9);
     			mount_component(timeline, article, null);
     			append_dev(article, t10);
-    			mount_component(notes, article, null);
+    			mount_component(notes_1, article, null);
     			append_dev(article, t11);
-    			mount_component(controls, article, null);
+    			mount_component(controls_1, article, null);
     			append_dev(div1, t12);
     			append_dev(div1, aside1);
     			current = true;
     		},
 
     		p: function update(changed, ctx) {
-    			var search_changes = {};
-    			if (!updating_value && changed.$search_term) {
-    				search_changes.value = ctx.$search_term;
+    			var search_1_changes = {};
+    			if (!updating_value && changed.search) {
+    				search_1_changes.value = ctx.search;
     			}
-    			search.$set(search_changes);
+    			search_1.$set(search_1_changes);
 
     			var button_changes = {};
-    			if (changed.$add_disabled) button_changes.disabled = ctx.$add_disabled;
+    			if (changed.add) button_changes.disabled = ctx.add;
     			if (changed.$$scope) button_changes.$$scope = { changed, ctx };
     			button.$set(button_changes);
 
     			var list_changes = {};
-    			if (changed.$filtered_list) list_changes.data = ctx.$filtered_list;
+    			if (changed.filtered) list_changes.data = ctx.filtered;
     			if (changed.$$scope) list_changes.$$scope = { changed, ctx };
     			list.$set(list_changes);
 
     			var details_changes = {};
-    			if (changed.$$scope || changed.$organization_list) details_changes.$$scope = { changed, ctx };
+    			if (changed.$$scope || changed.$organizations) details_changes.$$scope = { changed, ctx };
     			details.$set(details_changes);
 
     			var tabbar_changes = {};
-    			if (changed.$$scope || changed.$notes_selected || changed.$notes_tab || changed.$social_selected || changed.$social_tab || changed.$profile_selected || changed.$profile_tab || changed.$summary_selected || changed.$summary_tab) tabbar_changes.$$scope = { changed, ctx };
+    			if (changed.$$scope || changed.tab || changed.enabled) tabbar_changes.$$scope = { changed, ctx };
     			tabbar.$set(tabbar_changes);
 
-    			var summary_changes = {};
-    			if (changed.$summary_hidden) summary_changes.hidden = ctx.$summary_hidden;
-    			if (changed.$summary_disabled) summary_changes.disabled = ctx.$summary_disabled;
-    			summary.$set(summary_changes);
+    			var summary_1_changes = {};
+    			if (changed.tab) summary_1_changes.hidden = ctx.tab === 0 ? false : true;
+    			if (changed.summary) summary_1_changes.disabled = ctx.summary;
+    			summary_1.$set(summary_1_changes);
 
-    			var profile_changes = {};
-    			if (changed.$profile_hidden) profile_changes.hidden = ctx.$profile_hidden;
-    			if (changed.$profile_disabled) profile_changes.disabled = ctx.$profile_disabled;
-    			profile.$set(profile_changes);
+    			var profile_1_changes = {};
+    			if (changed.tab) profile_1_changes.hidden = ctx.tab === 1 ? false : true;
+    			if (changed.profile) profile_1_changes.disabled = ctx.profile;
+    			profile_1.$set(profile_1_changes);
 
-    			var endpoints_changes = {};
-    			if (changed.$endpoints_hidden) endpoints_changes.hidden = ctx.$endpoints_hidden;
-    			if (changed.$endpoints_disabled) endpoints_changes.disabled = ctx.$endpoints_disabled;
-    			endpoints.$set(endpoints_changes);
+    			var endpoints_1_changes = {};
+    			if (changed.social || changed.tab) endpoints_1_changes.hidden = ctx.social === 0 && ctx.tab === 2 ? false : true;
+    			if (changed.endpoints) endpoints_1_changes.disabled = ctx.endpoints;
+    			endpoints_1.$set(endpoints_1_changes);
 
     			var timeline_changes = {};
-    			if (changed.$timeline_hidden) timeline_changes.hidden = ctx.$timeline_hidden;
+    			if (changed.social || changed.tab) timeline_changes.hidden = ctx.social === 1 && ctx.tab === 2 ? false : true;
     			timeline.$set(timeline_changes);
 
-    			var notes_changes = {};
-    			if (changed.$notes_hidden) notes_changes.hidden = ctx.$notes_hidden;
-    			notes.$set(notes_changes);
+    			var notes_1_changes = {};
+    			if (changed.tab) notes_1_changes.hidden = ctx.tab === 3 ? false : true;
+    			notes_1.$set(notes_1_changes);
 
-    			var controls_changes = {};
-    			if (changed.$controls_mode) controls_changes.mode = ctx.$controls_mode;
-    			controls.$set(controls_changes);
+    			var controls_1_changes = {};
+    			if (changed.tab) controls_1_changes.hidden = ctx.tab === 3 ? true : false;
+    			if (changed.controls) controls_1_changes.mode = ctx.controls;
+    			controls_1.$set(controls_1_changes);
     		},
 
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(search.$$.fragment, local);
+    			transition_in(search_1.$$.fragment, local);
 
     			transition_in(button.$$.fragment, local);
 
@@ -7451,33 +7437,33 @@ var app = (function () {
 
     			transition_in(tabbar.$$.fragment, local);
 
-    			transition_in(summary.$$.fragment, local);
+    			transition_in(summary_1.$$.fragment, local);
 
-    			transition_in(profile.$$.fragment, local);
+    			transition_in(profile_1.$$.fragment, local);
 
-    			transition_in(endpoints.$$.fragment, local);
+    			transition_in(endpoints_1.$$.fragment, local);
 
     			transition_in(timeline.$$.fragment, local);
 
-    			transition_in(notes.$$.fragment, local);
+    			transition_in(notes_1.$$.fragment, local);
 
-    			transition_in(controls.$$.fragment, local);
+    			transition_in(controls_1.$$.fragment, local);
 
     			current = true;
     		},
 
     		o: function outro(local) {
-    			transition_out(search.$$.fragment, local);
+    			transition_out(search_1.$$.fragment, local);
     			transition_out(button.$$.fragment, local);
     			transition_out(list.$$.fragment, local);
     			transition_out(details.$$.fragment, local);
     			transition_out(tabbar.$$.fragment, local);
-    			transition_out(summary.$$.fragment, local);
-    			transition_out(profile.$$.fragment, local);
-    			transition_out(endpoints.$$.fragment, local);
+    			transition_out(summary_1.$$.fragment, local);
+    			transition_out(profile_1.$$.fragment, local);
+    			transition_out(endpoints_1.$$.fragment, local);
     			transition_out(timeline.$$.fragment, local);
-    			transition_out(notes.$$.fragment, local);
-    			transition_out(controls.$$.fragment, local);
+    			transition_out(notes_1.$$.fragment, local);
+    			transition_out(controls_1.$$.fragment, local);
     			current = false;
     		},
 
@@ -7486,7 +7472,7 @@ var app = (function () {
     				detach_dev(div1);
     			}
 
-    			destroy_component(search);
+    			destroy_component(search_1);
 
     			destroy_component(button);
 
@@ -7496,17 +7482,17 @@ var app = (function () {
 
     			destroy_component(tabbar);
 
-    			destroy_component(summary);
+    			destroy_component(summary_1);
 
-    			destroy_component(profile);
+    			destroy_component(profile_1);
 
-    			destroy_component(endpoints);
+    			destroy_component(endpoints_1);
 
     			destroy_component(timeline);
 
-    			destroy_component(notes);
+    			destroy_component(notes_1);
 
-    			destroy_component(controls);
+    			destroy_component(controls_1);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$m.name, type: "component", source: "", ctx });
@@ -7514,48 +7500,8 @@ var app = (function () {
     }
 
     function instance$m($$self, $$props, $$invalidate) {
-    	let $search_term, $filtered_list, $developer_list, $add_disabled, $summary_tab, $profile_tab, $social_tab, $notes_tab, $summary_selected, $profile_selected, $social_selected, $notes_selected, $summary_hidden, $profile_hidden, $endpoints_hidden, $timeline_hidden, $notes_hidden, $summary_disabled, $profile_disabled, $endpoints_disabled, $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $controls_mode, $notes_list, $organization_list;
+    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $notes, $organizations;
 
-    	validate_store(search_term, 'search_term');
-    	component_subscribe($$self, search_term, $$value => { $search_term = $$value; $$invalidate('$search_term', $search_term); });
-    	validate_store(filtered_list, 'filtered_list');
-    	component_subscribe($$self, filtered_list, $$value => { $filtered_list = $$value; $$invalidate('$filtered_list', $filtered_list); });
-    	validate_store(developer_list, 'developer_list');
-    	component_subscribe($$self, developer_list, $$value => { $developer_list = $$value; $$invalidate('$developer_list', $developer_list); });
-    	validate_store(add_disabled, 'add_disabled');
-    	component_subscribe($$self, add_disabled, $$value => { $add_disabled = $$value; $$invalidate('$add_disabled', $add_disabled); });
-    	validate_store(summary_tab, 'summary_tab');
-    	component_subscribe($$self, summary_tab, $$value => { $summary_tab = $$value; $$invalidate('$summary_tab', $summary_tab); });
-    	validate_store(profile_tab, 'profile_tab');
-    	component_subscribe($$self, profile_tab, $$value => { $profile_tab = $$value; $$invalidate('$profile_tab', $profile_tab); });
-    	validate_store(social_tab, 'social_tab');
-    	component_subscribe($$self, social_tab, $$value => { $social_tab = $$value; $$invalidate('$social_tab', $social_tab); });
-    	validate_store(notes_tab, 'notes_tab');
-    	component_subscribe($$self, notes_tab, $$value => { $notes_tab = $$value; $$invalidate('$notes_tab', $notes_tab); });
-    	validate_store(summary_selected, 'summary_selected');
-    	component_subscribe($$self, summary_selected, $$value => { $summary_selected = $$value; $$invalidate('$summary_selected', $summary_selected); });
-    	validate_store(profile_selected, 'profile_selected');
-    	component_subscribe($$self, profile_selected, $$value => { $profile_selected = $$value; $$invalidate('$profile_selected', $profile_selected); });
-    	validate_store(social_selected, 'social_selected');
-    	component_subscribe($$self, social_selected, $$value => { $social_selected = $$value; $$invalidate('$social_selected', $social_selected); });
-    	validate_store(notes_selected, 'notes_selected');
-    	component_subscribe($$self, notes_selected, $$value => { $notes_selected = $$value; $$invalidate('$notes_selected', $notes_selected); });
-    	validate_store(summary_hidden, 'summary_hidden');
-    	component_subscribe($$self, summary_hidden, $$value => { $summary_hidden = $$value; $$invalidate('$summary_hidden', $summary_hidden); });
-    	validate_store(profile_hidden, 'profile_hidden');
-    	component_subscribe($$self, profile_hidden, $$value => { $profile_hidden = $$value; $$invalidate('$profile_hidden', $profile_hidden); });
-    	validate_store(endpoints_hidden, 'endpoints_hidden');
-    	component_subscribe($$self, endpoints_hidden, $$value => { $endpoints_hidden = $$value; $$invalidate('$endpoints_hidden', $endpoints_hidden); });
-    	validate_store(timeline_hidden, 'timeline_hidden');
-    	component_subscribe($$self, timeline_hidden, $$value => { $timeline_hidden = $$value; $$invalidate('$timeline_hidden', $timeline_hidden); });
-    	validate_store(notes_hidden, 'notes_hidden');
-    	component_subscribe($$self, notes_hidden, $$value => { $notes_hidden = $$value; $$invalidate('$notes_hidden', $notes_hidden); });
-    	validate_store(summary_disabled, 'summary_disabled');
-    	component_subscribe($$self, summary_disabled, $$value => { $summary_disabled = $$value; $$invalidate('$summary_disabled', $summary_disabled); });
-    	validate_store(profile_disabled, 'profile_disabled');
-    	component_subscribe($$self, profile_disabled, $$value => { $profile_disabled = $$value; $$invalidate('$profile_disabled', $profile_disabled); });
-    	validate_store(endpoints_disabled, 'endpoints_disabled');
-    	component_subscribe($$self, endpoints_disabled, $$value => { $endpoints_disabled = $$value; $$invalidate('$endpoints_disabled', $endpoints_disabled); });
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
     	validate_store(developer_name, 'developer_name');
@@ -7568,57 +7514,57 @@ var app = (function () {
     	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
     	validate_store(developer_location, 'developer_location');
     	component_subscribe($$self, developer_location, $$value => { $developer_location = $$value; $$invalidate('$developer_location', $developer_location); });
-    	validate_store(controls_mode, 'controls_mode');
-    	component_subscribe($$self, controls_mode, $$value => { $controls_mode = $$value; $$invalidate('$controls_mode', $controls_mode); });
-    	validate_store(notes_list, 'notes_list');
-    	component_subscribe($$self, notes_list, $$value => { $notes_list = $$value; $$invalidate('$notes_list', $notes_list); });
-    	validate_store(organization_list, 'organization_list');
-    	component_subscribe($$self, organization_list, $$value => { $organization_list = $$value; $$invalidate('$organization_list', $organization_list); });
+    	validate_store(notes, 'notes');
+    	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
+    	validate_store(organizations, 'organizations');
+    	component_subscribe($$self, organizations, $$value => { $organizations = $$value; $$invalidate('$organizations', $organizations); });
 
     	
 
+    // View state
+    let add = false;
+    let controls = 0;
+    let developers = [];
+    let enabled = 0;
+    let filtered = [];
+    let search = '';
+    let social = 0;
+    let tab = 0;
+
+    // Panels disabled
+    let endpoints = true;
+    let profile = true;
+    let summary = true;
+
     // Filter developer list on search term
     function filter() {
-      let trimmed = $search_term.trim();
+      let trimmed = search.trim().toLowerCase();
 
       if( trimmed.length === 0 ) {
-        set_store_value(filtered_list, $filtered_list = $developer_list.slice());
+        $$invalidate('filtered', filtered = developers.slice());
       } else {
         let matches = [];
 
-        for( let a = 0; a < $developer_list.length; a++ ) {
-          if( $developer_list[a].name.indexOf( trimmed ) >= 0 ) {
-            matches.push( $developer_list[a] );
+        for( let a = 0; a < developers.length; a++ ) {
+          if( developers[a].name.indexOf( trimmed ) >= 0 ) {
+            matches.push( developers[a] );
           }
         }
 
-        set_store_value(filtered_list, $filtered_list = matches.slice());
+        $$invalidate('filtered', filtered = matches.slice());
       }
     }
 
     // Add clicked
     function doAddClick( evt ) {
-      set_store_value(add_disabled, $add_disabled = true);
-
-      set_store_value(summary_tab, $summary_tab = false);
-      set_store_value(profile_tab, $profile_tab = false);
-      set_store_value(social_tab, $social_tab = false);
-      set_store_value(notes_tab, $notes_tab = true);
-
-      set_store_value(summary_selected, $summary_selected = true);
-      set_store_value(profile_selected, $profile_selected = false);
-      set_store_value(social_selected, $social_selected = false);
-      set_store_value(notes_selected, $notes_selected = false);
-
-      set_store_value(summary_hidden, $summary_hidden = false);
-      set_store_value(profile_hidden, $profile_hidden = true);
-      set_store_value(endpoints_hidden, $endpoints_hidden = true);
-      set_store_value(timeline_hidden, $timeline_hidden = true);
-      set_store_value(notes_hidden, $notes_hidden = true);
-
-      set_store_value(summary_disabled, $summary_disabled = false);
-      set_store_value(profile_disabled, $profile_disabled = false);
-      set_store_value(endpoints_disabled, $endpoints_disabled = false);
+      $$invalidate('add', add = true);
+      $$invalidate('tab', tab = 0);
+      $$invalidate('enabled', enabled = 2);
+      $$invalidate('social', social = 0);
+      $$invalidate('summary', summary = false);
+      $$invalidate('profile', profile = false);
+      $$invalidate('endpoints', endpoints = false);
+      $$invalidate('controls', controls = 1);  
 
       set_store_value(developer_id, $developer_id = null);
       set_store_value(developer_name, $developer_name = '');
@@ -7626,30 +7572,17 @@ var app = (function () {
       set_store_value(developer_image, $developer_image = '');
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
-
-      set_store_value(controls_mode, $controls_mode = 1);
     }
 
     function doCancelNew( evt ) {
-      set_store_value(add_disabled, $add_disabled = false);
-
-      set_store_value(summary_tab, $summary_tab = false);
-      set_store_value(profile_tab, $profile_tab = true);
-      set_store_value(social_tab, $social_tab = true);
-      set_store_value(notes_tab, $notes_tab = true);
-
-      set_store_value(summary_selected, $summary_selected = true);
-      set_store_value(profile_selected, $profile_selected = false);
-      set_store_value(social_selected, $social_selected = false);
-      set_store_value(notes_selected, $notes_selected = false);
-
-      set_store_value(summary_hidden, $summary_hidden = false);
-      set_store_value(profile_hidden, $profile_hidden = true);
-      set_store_value(endpoints_hidden, $endpoints_hidden = true);
-
-      set_store_value(summary_disabled, $summary_disabled = true);
-      set_store_value(profile_disabled, $profile_disabled = true);
-      set_store_value(endpoints_disabled, $endpoints_disabled = true);
+      $$invalidate('add', add = false);
+      $$invalidate('tab', tab = 0);
+      $$invalidate('enabled', enabled = 0);
+      $$invalidate('social', social = 0);
+      $$invalidate('summary', summary = true);
+      $$invalidate('profile', profile = true);
+      $$invalidate('endpoints', endpoints = true);
+      $$invalidate('controls', controls = 0);  
 
       set_store_value(developer_id, $developer_id = null);
       set_store_value(developer_name, $developer_name = '');
@@ -7657,8 +7590,6 @@ var app = (function () {
       set_store_value(developer_image, $developer_image = '');
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
-
-      set_store_value(controls_mode, $controls_mode = 0);
     }
 
     function doDeveloperClick( evt ) {
@@ -7670,17 +7601,18 @@ var app = (function () {
         set_store_value(developer_email, $developer_email = data.email);
         set_store_value(developer_location, $developer_location = data.location);
 
-        set_store_value(profile_tab, $profile_tab = false);
-        set_store_value(social_tab, $social_tab = false);
-        set_store_value(notes_tab, $notes_tab = false);
-
-        set_store_value(controls_mode, $controls_mode = 2);
+        $$invalidate('enabled', enabled = 3);
+        $$invalidate('social', social = 0);
+        $$invalidate('summary', summary = false);
+        $$invalidate('profile', profile = false);
+        $$invalidate('endpoints', endpoints = false);
+        $$invalidate('controls', controls = 2);
       } );
 
       fetch( `/api/developer/${evt.detail.item.id}/note` )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
-        set_store_value(notes_list, $notes_list = data.slice());
+        set_store_value(notes, $notes = data.slice());
       } );
     }
 
@@ -7705,105 +7637,22 @@ var app = (function () {
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(developer_id, $developer_id = data.id);
-        $developer_list.push( Object.assign( {}, data ) );
-        $developer_list.sort( ( a, b ) => {
+        developers.push( Object.assign( {}, data ) );
+        developers.sort( ( a, b ) => {
           if( a.name > b.name ) return 1;
           if( a.name < b.name ) return -1;
           return 0;
         } );
-        set_store_value(developer_list, $developer_list = $developer_list.slice());
+        developers = developers.slice();
         filter();
 
-        set_store_value(add_disabled, $add_disabled = false);
-
-        set_store_value(summary_tab, $summary_tab = false);
-        set_store_value(profile_tab, $profile_tab = false);
-        set_store_value(social_tab, $social_tab = false);
-        set_store_value(notes_tab, $notes_tab = false);
-
-        set_store_value(summary_disabled, $summary_disabled = true);
-        set_store_value(profile_disabled, $profile_disabled = true);
-        set_store_value(endpoints_disabled, $endpoints_disabled = true);
-
-        set_store_value(controls_mode, $controls_mode = 2);
+        $$invalidate('add', add = false);
+        $$invalidate('enabled', enabled = 3);
+        $$invalidate('summary', summary = true);
+        $$invalidate('profile', profile = true);
+        $$invalidate('endpoints', endpoints = true);
+        $$invalidate('controls', controls = 2);
       } );
-    }
-
-    // Tab clicked
-    function doTabClick( index ) {
-      switch( index ) {
-        case 0:
-          set_store_value(summary_selected, $summary_selected = true);
-          set_store_value(profile_selected, $profile_selected = false);
-          set_store_value(social_selected, $social_selected = false);
-          set_store_value(notes_selected, $notes_selected = false);
-
-          set_store_value(summary_hidden, $summary_hidden = false);
-          set_store_value(profile_hidden, $profile_hidden = true);
-          set_store_value(endpoints_hidden, $endpoints_hidden = true);
-          set_store_value(timeline_hidden, $timeline_hidden = true);
-          set_store_value(notes_hidden, $notes_hidden = true);
-
-          if( $developer_id === null && $add_disabled ) {
-            set_store_value(controls_mode, $controls_mode = 1);
-          } else {
-            set_store_value(controls_mode, $controls_mode = 2);
-          }
-          break;
-
-        case 1:
-          set_store_value(summary_selected, $summary_selected = false);
-          set_store_value(profile_selected, $profile_selected = true);
-          set_store_value(social_selected, $social_selected = false);
-          set_store_value(notes_selected, $notes_selected = false);
-
-          set_store_value(summary_hidden, $summary_hidden = true);
-          set_store_value(profile_hidden, $profile_hidden = false);
-          set_store_value(endpoints_hidden, $endpoints_hidden = true);
-          set_store_value(timeline_hidden, $timeline_hidden = true);
-          set_store_value(notes_hidden, $notes_hidden = true);  
-          
-          if( $developer_id === null && $add_disabled ) {
-            set_store_value(controls_mode, $controls_mode = 1);
-          } else {
-            set_store_value(controls_mode, $controls_mode = 2);
-          }
-          break;      
-
-        case 2:
-          set_store_value(summary_selected, $summary_selected = false);
-          set_store_value(profile_selected, $profile_selected = false);
-          set_store_value(social_selected, $social_selected = true);
-          set_store_value(notes_selected, $notes_selected = false);
-
-          set_store_value(summary_hidden, $summary_hidden = true);
-          set_store_value(profile_hidden, $profile_hidden = true);
-          set_store_value(endpoints_hidden, $endpoints_hidden = $add_disabled ? false : true);
-          set_store_value(timeline_hidden, $timeline_hidden = $add_disabled ? true : false);      
-          set_store_value(notes_hidden, $notes_hidden = true);     
-
-          if( $developer_id === null && $add_disabled ) {
-            set_store_value(controls_mode, $controls_mode = 1);
-          } else {
-            set_store_value(controls_mode, $controls_mode = 2);
-          }
-          break;      
-
-        case 3:
-          set_store_value(summary_selected, $summary_selected = false);
-          set_store_value(profile_selected, $profile_selected = false);
-          set_store_value(social_selected, $social_selected = false);
-          set_store_value(notes_selected, $notes_selected = true);
-
-          set_store_value(summary_hidden, $summary_hidden = true);
-          set_store_value(profile_hidden, $profile_hidden = true);
-          set_store_value(endpoints_hidden, $endpoints_hidden = true);
-          set_store_value(timeline_hidden, $timeline_hidden = true);
-          set_store_value(notes_hidden, $notes_hidden = false);      
-
-          set_store_value(controls_mode, $controls_mode = 0);
-          break;      
-      }
     }
 
     // Load external data
@@ -7811,95 +7660,74 @@ var app = (function () {
       fetch( '/api/developer' )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
-        developer_list.set( data.slice() );
+        developers = data.slice();
         filter();    
       } );
 
       fetch( '/api/organization' )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
-        organization_list.set( data.slice() );
+        set_store_value(organizations, $organizations = data.slice());
       } );
     } );
 
-    	function search_value_binding(value) {
-    		$search_term = value;
-    		search_term.set($search_term);
+    	function search_1_value_binding(value) {
+    		search = value;
+    		$$invalidate('search', search);
     	}
 
-    	const click_handler = () => doTabClick( 0 );
+    	const click_handler = () => $$invalidate('tab', tab = 0);
 
-    	const click_handler_1 = () => doTabClick( 1 );
+    	const click_handler_1 = () => $$invalidate('tab', tab = 1);
 
-    	const click_handler_2 = () => doTabClick( 2 );
+    	const click_handler_2 = () => $$invalidate('tab', tab = 2);
 
-    	const click_handler_3 = () => doTabClick( 3 );
+    	const click_handler_3 = () => $$invalidate('tab', tab = 3);
 
     	$$self.$capture_state = () => {
     		return {};
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('$search_term' in $$props) search_term.set($search_term);
-    		if ('$filtered_list' in $$props) filtered_list.set($filtered_list);
-    		if ('$developer_list' in $$props) developer_list.set($developer_list);
-    		if ('$add_disabled' in $$props) add_disabled.set($add_disabled);
-    		if ('$summary_tab' in $$props) summary_tab.set($summary_tab);
-    		if ('$profile_tab' in $$props) profile_tab.set($profile_tab);
-    		if ('$social_tab' in $$props) social_tab.set($social_tab);
-    		if ('$notes_tab' in $$props) notes_tab.set($notes_tab);
-    		if ('$summary_selected' in $$props) summary_selected.set($summary_selected);
-    		if ('$profile_selected' in $$props) profile_selected.set($profile_selected);
-    		if ('$social_selected' in $$props) social_selected.set($social_selected);
-    		if ('$notes_selected' in $$props) notes_selected.set($notes_selected);
-    		if ('$summary_hidden' in $$props) summary_hidden.set($summary_hidden);
-    		if ('$profile_hidden' in $$props) profile_hidden.set($profile_hidden);
-    		if ('$endpoints_hidden' in $$props) endpoints_hidden.set($endpoints_hidden);
-    		if ('$timeline_hidden' in $$props) timeline_hidden.set($timeline_hidden);
-    		if ('$notes_hidden' in $$props) notes_hidden.set($notes_hidden);
-    		if ('$summary_disabled' in $$props) summary_disabled.set($summary_disabled);
-    		if ('$profile_disabled' in $$props) profile_disabled.set($profile_disabled);
-    		if ('$endpoints_disabled' in $$props) endpoints_disabled.set($endpoints_disabled);
+    		if ('add' in $$props) $$invalidate('add', add = $$props.add);
+    		if ('controls' in $$props) $$invalidate('controls', controls = $$props.controls);
+    		if ('developers' in $$props) developers = $$props.developers;
+    		if ('enabled' in $$props) $$invalidate('enabled', enabled = $$props.enabled);
+    		if ('filtered' in $$props) $$invalidate('filtered', filtered = $$props.filtered);
+    		if ('search' in $$props) $$invalidate('search', search = $$props.search);
+    		if ('social' in $$props) $$invalidate('social', social = $$props.social);
+    		if ('tab' in $$props) $$invalidate('tab', tab = $$props.tab);
+    		if ('endpoints' in $$props) $$invalidate('endpoints', endpoints = $$props.endpoints);
+    		if ('profile' in $$props) $$invalidate('profile', profile = $$props.profile);
+    		if ('summary' in $$props) $$invalidate('summary', summary = $$props.summary);
     		if ('$developer_id' in $$props) developer_id.set($developer_id);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     		if ('$developer_email' in $$props) developer_email.set($developer_email);
     		if ('$developer_image' in $$props) developer_image.set($developer_image);
     		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
-    		if ('$controls_mode' in $$props) controls_mode.set($controls_mode);
-    		if ('$notes_list' in $$props) notes_list.set($notes_list);
-    		if ('$organization_list' in $$props) organization_list.set($organization_list);
+    		if ('$notes' in $$props) notes.set($notes);
+    		if ('$organizations' in $$props) organizations.set($organizations);
     	};
 
     	return {
+    		add,
+    		controls,
+    		enabled,
+    		filtered,
+    		search,
+    		social,
+    		tab,
+    		endpoints,
+    		profile,
+    		summary,
     		filter,
     		doAddClick,
     		doCancelNew,
     		doDeveloperClick,
     		doSaveNew,
-    		doTabClick,
-    		$search_term,
-    		$filtered_list,
-    		$add_disabled,
-    		$summary_tab,
-    		$profile_tab,
-    		$social_tab,
-    		$notes_tab,
-    		$summary_selected,
-    		$profile_selected,
-    		$social_selected,
-    		$notes_selected,
-    		$summary_hidden,
-    		$profile_hidden,
-    		$endpoints_hidden,
-    		$timeline_hidden,
-    		$notes_hidden,
-    		$summary_disabled,
-    		$profile_disabled,
-    		$endpoints_disabled,
-    		$controls_mode,
-    		$organization_list,
-    		search_value_binding,
+    		$organizations,
+    		search_1_value_binding,
     		click_handler,
     		click_handler_1,
     		click_handler_2,

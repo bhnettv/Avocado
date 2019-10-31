@@ -4,7 +4,7 @@ import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
-import { organization_list } from './developers.js';
+import { organizations } from './developers.js';
 
 import { developer_name } from './developers.js';
 import { developer_email } from './developers.js';
@@ -71,7 +71,7 @@ form > div:last-of-type {
 
   <div>
     <TagInput
-      data="{$organization_list}"
+      data="{$organizations}"
       labelField="name"
       label="Organization"
       placeholder="Organization"
