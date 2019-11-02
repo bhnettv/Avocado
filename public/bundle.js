@@ -6657,7 +6657,7 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (228:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
+    // (335:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
     function create_default_slot_10(ctx) {
     	var t;
 
@@ -6676,11 +6676,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(228:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(335:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (241:6) <ListLabelItem>
+    // (348:6) <ListLabelItem>
     function create_default_slot_9(ctx) {
     	var t_value = ctx.developer.name + "", t;
 
@@ -6705,11 +6705,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(241:6) <ListLabelItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(348:6) <ListLabelItem>", ctx });
     	return block;
     }
 
-    // (237:4) <List        on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
+    // (344:4) <List        on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
     function create_default_slot_8(ctx) {
     	var current;
 
@@ -6753,11 +6753,11 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(237:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(344:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (251:10) <span slot="label">
+    // (358:10) <span slot="label">
     function create_label_slot(ctx) {
     	var span, t_value = ctx.organization.name + "", t;
 
@@ -6766,7 +6766,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "label");
-    			add_location(span, file$m, 250, 10, 5658);
+    			add_location(span, file$m, 357, 10, 7988);
     		},
 
     		m: function mount(target, anchor) {
@@ -6786,11 +6786,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(251:10) <span slot=\"label\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(358:10) <span slot=\"label\">", ctx });
     	return block;
     }
 
-    // (252:10) <span slot="count">
+    // (359:10) <span slot="count">
     function create_count_slot(ctx) {
     	var span, t_value = ctx.organization.count + "", t;
 
@@ -6799,7 +6799,7 @@ var app = (function () {
     			span = element("span");
     			t = text(t_value);
     			attr_dev(span, "slot", "count");
-    			add_location(span, file$m, 251, 10, 5714);
+    			add_location(span, file$m, 358, 10, 8044);
     		},
 
     		m: function mount(target, anchor) {
@@ -6819,11 +6819,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(252:10) <span slot=\"count\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(359:10) <span slot=\"count\">", ctx });
     	return block;
     }
 
-    // (250:8) <ListCountItem>
+    // (357:8) <ListCountItem>
     function create_default_slot_7(ctx) {
     	var t;
 
@@ -6844,11 +6844,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(250:8) <ListCountItem>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(357:8) <ListCountItem>", ctx });
     	return block;
     }
 
-    // (247:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (354:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6896,11 +6896,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(247:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(354:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (246:4) <Details summary="Organizations">
+    // (353:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
@@ -6948,11 +6948,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(246:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(353:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (264:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (371:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -6971,11 +6971,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(264:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(371:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (267:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
+    // (374:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -6994,11 +6994,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(267:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(374:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (271:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
+    // (378:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -7017,11 +7017,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(271:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(378:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (275:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
+    // (382:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7040,11 +7040,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(275:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(382:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (263:4) <TabBar>
+    // (370:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7181,7 +7181,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(263:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(370:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -7287,6 +7287,10 @@ var app = (function () {
     	});
     	controls_1.$on("cancelnew", ctx.doCancelNew);
     	controls_1.$on("savenew", ctx.doSaveNew);
+    	controls_1.$on("edit", ctx.doEdit);
+    	controls_1.$on("cancelexisting", ctx.doCancelExisting);
+    	controls_1.$on("saveexisting", ctx.doSaveExisting);
+    	controls_1.$on("delete", ctx.doDelete);
 
     	const block = {
     		c: function create() {
@@ -7321,17 +7325,17 @@ var app = (function () {
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 225, 4, 4989);
+    			add_location(div0, file$m, 332, 4, 7319);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 235, 4, 5266);
+    			add_location(h4, file$m, 342, 4, 7596);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 222, 2, 4956);
+    			add_location(aside0, file$m, 329, 2, 7286);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 259, 2, 5860);
+    			add_location(article, file$m, 366, 2, 8190);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 308, 2, 7258);
+    			add_location(aside1, file$m, 419, 2, 9728);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 219, 0, 4911);
+    			add_location(div1, file$m, 326, 0, 7241);
     		},
 
     		l: function claim(nodes) {
@@ -7574,6 +7578,31 @@ var app = (function () {
       set_store_value(developer_location, $developer_location = '');
     }
 
+    function doCancelExisting( evt ) {
+      fetch( `/api/developer/${$developer_id}` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(developer_id, $developer_id = data.id);
+        set_store_value(developer_name, $developer_name = data.name);
+        set_store_value(developer_email, $developer_email = data.email);
+        set_store_value(developer_location, $developer_location = data.location);
+
+        $$invalidate('add', add = false);
+        $$invalidate('enabled', enabled = 3);
+        $$invalidate('social', social = 1);
+        $$invalidate('summary', summary = true);
+        $$invalidate('profile', profile = true);
+        $$invalidate('endpoints', endpoints = true);
+        $$invalidate('controls', controls = 2);    
+      } );
+
+      fetch( `/api/developer/${$developer_id}/note` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(notes, $notes = data.slice());
+      } );
+    }
+
     function doCancelNew( evt ) {
       $$invalidate('add', add = false);
       $$invalidate('tab', tab = 0);
@@ -7592,6 +7621,38 @@ var app = (function () {
       set_store_value(developer_location, $developer_location = '');
     }
 
+    function doDelete( evt ) {
+      fetch( `/api/developer/${$developer_id}`, {
+        method: 'DELETE'
+      } )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        for( let a = 0; a < developers.length; a++ ) {
+          if( developers[a].id === $developer_id ) {
+            developers.splice( a, 1 );
+            break;
+          }
+        }
+
+        filter();
+
+        set_store_value(developer_id, $developer_id = null);
+        set_store_value(developer_name, $developer_name = '');
+        set_store_value(developer_email, $developer_email = '');
+        set_store_value(developer_image, $developer_image = '');
+        set_store_value(developer_organizations, $developer_organizations = []);
+        set_store_value(developer_location, $developer_location = '');
+
+        $$invalidate('add', add = false);
+        $$invalidate('enabled', enabled = 0);
+        $$invalidate('social', social = 1);
+        $$invalidate('summary', summary = true);
+        $$invalidate('profile', profile = true);
+        $$invalidate('endpoints', endpoints = true);
+        $$invalidate('controls', controls = 0);     
+      } ); 
+    }
+
     function doDeveloperClick( evt ) {
       fetch( `/api/developer/${evt.detail.item.id}` )
       .then( ( response ) => response.json() )
@@ -7602,10 +7663,10 @@ var app = (function () {
         set_store_value(developer_location, $developer_location = data.location);
 
         $$invalidate('enabled', enabled = 3);
-        $$invalidate('social', social = 0);
-        $$invalidate('summary', summary = false);
-        $$invalidate('profile', profile = false);
-        $$invalidate('endpoints', endpoints = false);
+        $$invalidate('social', social = 1);
+        $$invalidate('summary', summary = true);
+        $$invalidate('profile', profile = true);
+        $$invalidate('endpoints', endpoints = true);
         $$invalidate('controls', controls = 2);
       } );
 
@@ -7613,6 +7674,56 @@ var app = (function () {
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(notes, $notes = data.slice());
+      } );
+    }
+
+    function doEdit( evt ) {
+      $$invalidate('add', add = true);
+      $$invalidate('enabled', enabled = 3);
+      $$invalidate('social', social = 0);
+      $$invalidate('summary', summary = false);
+      $$invalidate('profile', profile = false);
+      $$invalidate('endpoints', endpoints = false);
+      $$invalidate('controls', controls = 3);
+    }
+
+    function doSaveExisting( evt ) {
+      let developer = {
+        id: $developer_id,
+        name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
+        email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
+        description: null,
+        image: null,
+        location: null,
+        latitude: null,
+        longitude: null,
+        public: 0
+      };
+
+      fetch( `/api/developer/${$developer_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( developer )
+      } )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        $$invalidate('add', add = false);
+        $$invalidate('enabled', enabled = 3);
+        $$invalidate('social', social = 1);
+        $$invalidate('summary', summary = true);
+        $$invalidate('profile', profile = true);
+        $$invalidate('endpoints', endpoints = true);
+        $$invalidate('controls', controls = 2);    
+
+        for( let a = 0; a < developers.length; a++ ) {
+          if( developers[a].id === developer.id ) {
+            developers[a] = Object.assign( {}, developer );
+            filter();
+            break;
+          }
+        }
       } );
     }
 
@@ -7723,8 +7834,12 @@ var app = (function () {
     		summary,
     		filter,
     		doAddClick,
+    		doCancelExisting,
     		doCancelNew,
+    		doDelete,
     		doDeveloperClick,
+    		doEdit,
+    		doSaveExisting,
     		doSaveNew,
     		$organizations,
     		search_1_value_binding,

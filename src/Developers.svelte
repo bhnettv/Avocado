@@ -79,6 +79,31 @@ function doAddClick( evt ) {
   $developer_location = '';
 }
 
+function doCancelExisting( evt ) {
+  fetch( `/api/developer/${$developer_id}` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_id = data.id;
+    $developer_name = data.name;
+    $developer_email = data.email;
+    $developer_location = data.location;
+
+    add = false;
+    enabled = 3;
+    social = 1;
+    summary = true;
+    profile = true;
+    endpoints = true;
+    controls = 2;    
+  } );
+
+  fetch( `/api/developer/${$developer_id}/note` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $notes = data.slice();
+  } );
+}
+
 function doCancelNew( evt ) {
   add = false;
   tab = 0;
@@ -97,6 +122,38 @@ function doCancelNew( evt ) {
   $developer_location = '';
 }
 
+function doDelete( evt ) {
+  fetch( `/api/developer/${$developer_id}`, {
+    method: 'DELETE'
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    for( let a = 0; a < developers.length; a++ ) {
+      if( developers[a].id === $developer_id ) {
+        developers.splice( a, 1 );
+        break;
+      }
+    }
+
+    filter();
+
+    $developer_id = null;
+    $developer_name = '';
+    $developer_email = '';
+    $developer_image = '';
+    $developer_organizations = [];
+    $developer_location = '';
+
+    add = false;
+    enabled = 0;
+    social = 1;
+    summary = true;
+    profile = true;
+    endpoints = true;
+    controls = 0;     
+  } ); 
+}
+
 function doDeveloperClick( evt ) {
   fetch( `/api/developer/${evt.detail.item.id}` )
   .then( ( response ) => response.json() )
@@ -107,10 +164,10 @@ function doDeveloperClick( evt ) {
     $developer_location = data.location;
 
     enabled = 3;
-    social = 0;
-    summary = false;
-    profile = false;
-    endpoints = false;
+    social = 1;
+    summary = true;
+    profile = true;
+    endpoints = true;
     controls = 2;
   } );
 
@@ -118,6 +175,56 @@ function doDeveloperClick( evt ) {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $notes = data.slice();
+  } );
+}
+
+function doEdit( evt ) {
+  add = true;
+  enabled = 3;
+  social = 0;
+  summary = false;
+  profile = false;
+  endpoints = false;
+  controls = 3;
+}
+
+function doSaveExisting( evt ) {
+  let developer = {
+    id: $developer_id,
+    name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
+    email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
+    description: null,
+    image: null,
+    location: null,
+    latitude: null,
+    longitude: null,
+    public: 0
+  };
+
+  fetch( `/api/developer/${$developer_id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( developer )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    add = false;
+    enabled = 3;
+    social = 1;
+    summary = true;
+    profile = true;
+    endpoints = true;
+    controls = 2;    
+
+    for( let a = 0; a < developers.length; a++ ) {
+      if( developers[a].id === developer.id ) {
+        developers[a] = Object.assign( {}, developer );
+        filter();
+        break;
+      }
+    }
   } );
 }
 
@@ -300,7 +407,11 @@ h4 {
       hidden="{tab === 3 ? true : false}"
       mode="{controls}"
       on:cancelnew="{doCancelNew}"
-      on:savenew="{doSaveNew}"/>
+      on:savenew="{doSaveNew}"
+      on:edit="{doEdit}"
+      on:cancelexisting="{doCancelExisting}"
+      on:saveexisting="{doSaveExisting}"
+      on:delete="{doDelete}"/>
 
   </article>
 
