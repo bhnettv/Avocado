@@ -1,3 +1,7 @@
+<script>
+export let label = '';
+</script>
+
 <style>
 p {
   color: #393939;
@@ -11,6 +15,4 @@ p {
 }
 </style>
 
-<p>
-  <slot></slot>
-</p>
+<p>{label}</p>

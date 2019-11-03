@@ -1,4 +1,5 @@
 const express = require( 'express' );
+const rp = require( 'request-promise-native' );
 const uuidv4 = require( 'uuid' );
 
 // Router
@@ -223,7 +224,7 @@ router.post( '/:developer/organization', ( req, res ) => {
 } );
 
 // Create
-router.post( '/', ( req, res ) => {
+router.post( '/', async ( req, res ) => {
   let record = {
     id: null,
     uuid: uuidv4(),
@@ -238,6 +239,40 @@ router.post( '/', ( req, res ) => {
     longitude: req.body.longitude,
     public: req.body.public
   };
+
+  // Location provided
+  if( record.location !== null ) {
+    // But specifics are unknown
+    // Lookup some data
+    if( record.latitude === null ) {
+      // Get access token
+      // Tokens only good for two hours
+      let auth = await rp( 'https://www.arcgis.com/sharing/rest/oauth2/token', {
+        method: 'POST',
+        form: {
+          client_id: req.config.esri.client_id,
+          client_secret: req.config.esri.client_secret,
+          grant_type: 'client_credentials'
+        },
+        json: true
+      } );
+
+      // Geocode provided location
+      let results = await rp( 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates', {
+        qs: {
+          f: 'json',
+          SingleLine: record.location,
+          forStorage: req.config.esri.storage,
+          token: auth.access_token
+        },
+        json: true
+      } );
+
+      // Geolocation
+      record.latitude = results.candidates[0].location.y;
+      record.longitude = results.candidates[0].location.x;
+    }
+  }
 
   let info = req.db.prepare( `
     INSERT INTO Developer
@@ -274,7 +309,7 @@ router.post( '/', ( req, res ) => {
 } );
 
 // Update
-router.put( '/:id', ( req, res ) => {
+router.put( '/:id', async ( req, res ) => {
   let record = {
     uuid: req.params.id,
     updated_at: new Date().toISOString(),
@@ -287,6 +322,55 @@ router.put( '/:id', ( req, res ) => {
     longitude: req.body.longitude,
     public: req.body.public    
   };
+
+  // Location provided
+  if( record.location !== null ) {
+    // What is currently stored
+    let existing = req.db.prepare( `
+      SELECT Developer.location
+      FROM Developer
+      WHERE Developer.uuid = ?
+    ` ).get(
+      record.uuid  
+    )
+    
+    // May be null in the database
+    // Force to empty string for easy compare
+    if( existing.location === null ) {
+      existing.location = '';
+    }
+
+    // If the location entries do not match (case-insensitive)
+    // Then update geolocation (latitude, longitude)
+    if( existing.location.trim().toLowerCase() !== record.location.trim().toLowerCase() ) {
+      // Get access token
+      // Tokens only good for two hours
+      let auth = await rp( 'https://www.arcgis.com/sharing/rest/oauth2/token', {
+        method: 'POST',
+        form: {
+          client_id: req.config.esri.client_id,
+          client_secret: req.config.esri.client_secret,
+          grant_type: 'client_credentials'
+        },
+        json: true
+      } );
+
+      // Geocode provided location
+      let results = await rp( 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates', {
+        qs: {
+          f: 'json',
+          SingleLine: record.location,
+          forStorage: req.config.esri.storage,
+          token: auth.access_token
+        },
+        json: true
+      } );
+
+      // Geolocation
+      record.latitude = results.candidates[0].location.y;
+      record.longitude = results.candidates[0].location.x;
+    }
+  }
 
   let info = req.db.prepare( `
     UPDATE Developer

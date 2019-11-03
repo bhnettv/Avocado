@@ -1937,6 +1937,8 @@ var app = (function () {
     const developer_image = writable( '' );
     const developer_organizations = writable( [] );
     const developer_location = writable( '' );
+    const developer_latitude = writable( null );
+    const developer_longitude = writable( null );
 
     // Social
     const endpoint_website = writable( '' );
@@ -2790,62 +2792,38 @@ var app = (function () {
     const file$6 = "src/ListLabelItem.svelte";
 
     function create_fragment$6(ctx) {
-    	var p, current;
-
-    	const default_slot_template = ctx.$$slots.default;
-    	const default_slot = create_slot(default_slot_template, ctx, null);
+    	var p, t;
 
     	const block = {
     		c: function create() {
     			p = element("p");
-
-    			if (default_slot) default_slot.c();
-
+    			t = text(ctx.label);
     			attr_dev(p, "class", "svelte-kda79i");
-    			add_location(p, file$6, 13, 0, 201);
+    			add_location(p, file$6, 17, 0, 244);
     		},
 
     		l: function claim(nodes) {
-    			if (default_slot) default_slot.l(p_nodes);
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
-
-    			if (default_slot) {
-    				default_slot.m(p, null);
-    			}
-
-    			current = true;
+    			append_dev(p, t);
     		},
 
     		p: function update(changed, ctx) {
-    			if (default_slot && default_slot.p && changed.$$scope) {
-    				default_slot.p(
-    					get_slot_changes(default_slot_template, ctx, changed, null),
-    					get_slot_context(default_slot_template, ctx, null)
-    				);
+    			if (changed.label) {
+    				set_data_dev(t, ctx.label);
     			}
     		},
 
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(default_slot, local);
-    			current = true;
-    		},
-
-    		o: function outro(local) {
-    			transition_out(default_slot, local);
-    			current = false;
-    		},
+    		i: noop,
+    		o: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
     				detach_dev(p);
     			}
-
-    			if (default_slot) default_slot.d(detaching);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$6.name, type: "component", source: "", ctx });
@@ -2853,26 +2831,41 @@ var app = (function () {
     }
 
     function instance$6($$self, $$props, $$invalidate) {
-    	let { $$slots = {}, $$scope } = $$props;
+    	let { label = '' } = $$props;
+
+    	const writable_props = ['label'];
+    	Object.keys($$props).forEach(key => {
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<ListLabelItem> was created with unknown prop '${key}'`);
+    	});
 
     	$$self.$set = $$props => {
-    		if ('$$scope' in $$props) $$invalidate('$$scope', $$scope = $$props.$$scope);
+    		if ('label' in $$props) $$invalidate('label', label = $$props.label);
     	};
 
     	$$self.$capture_state = () => {
-    		return {};
+    		return { label };
     	};
 
-    	$$self.$inject_state = $$props => {};
+    	$$self.$inject_state = $$props => {
+    		if ('label' in $$props) $$invalidate('label', label = $$props.label);
+    	};
 
-    	return { $$slots, $$scope };
+    	return { label };
     }
 
     class ListLabelItem extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$6, create_fragment$6, safe_not_equal, []);
+    		init(this, options, instance$6, create_fragment$6, safe_not_equal, ["label"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "ListLabelItem", options, id: create_fragment$6.name });
+    	}
+
+    	get label() {
+    		throw new Error("<ListLabelItem>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set label(value) {
+    		throw new Error("<ListLabelItem>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
@@ -2880,98 +2873,51 @@ var app = (function () {
 
     const file$7 = "src/ListCountItem.svelte";
 
-    const get_count_slot_changes = () => ({});
-    const get_count_slot_context = () => ({});
-
-    const get_label_slot_changes = () => ({});
-    const get_label_slot_context = () => ({});
-
     function create_fragment$7(ctx) {
-    	var p, t, span, current;
-
-    	const label_slot_template = ctx.$$slots.label;
-    	const label_slot = create_slot(label_slot_template, ctx, get_label_slot_context);
-
-    	const count_slot_template = ctx.$$slots.count;
-    	const count_slot = create_slot(count_slot_template, ctx, get_count_slot_context);
+    	var p, t0, t1, span, t2;
 
     	const block = {
     		c: function create() {
     			p = element("p");
-
-    			if (label_slot) label_slot.c();
-    			t = space();
+    			t0 = text(ctx.label);
+    			t1 = space();
     			span = element("span");
-
-    			if (count_slot) count_slot.c();
-
+    			t2 = text(ctx.count);
     			attr_dev(span, "class", "svelte-1kqfkdt");
-    			add_location(span, file$7, 19, 2, 262);
+    			add_location(span, file$7, 22, 11, 303);
     			attr_dev(p, "class", "svelte-1kqfkdt");
-    			add_location(p, file$7, 17, 0, 227);
+    			add_location(p, file$7, 22, 0, 292);
     		},
 
     		l: function claim(nodes) {
-    			if (label_slot) label_slot.l(p_nodes);
-
-    			if (count_slot) count_slot.l(span_nodes);
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
-
-    			if (label_slot) {
-    				label_slot.m(p, null);
-    			}
-
-    			append_dev(p, t);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
     			append_dev(p, span);
-
-    			if (count_slot) {
-    				count_slot.m(span, null);
-    			}
-
-    			current = true;
+    			append_dev(span, t2);
     		},
 
     		p: function update(changed, ctx) {
-    			if (label_slot && label_slot.p && changed.$$scope) {
-    				label_slot.p(
-    					get_slot_changes(label_slot_template, ctx, changed, get_label_slot_changes),
-    					get_slot_context(label_slot_template, ctx, get_label_slot_context)
-    				);
+    			if (changed.label) {
+    				set_data_dev(t0, ctx.label);
     			}
 
-    			if (count_slot && count_slot.p && changed.$$scope) {
-    				count_slot.p(
-    					get_slot_changes(count_slot_template, ctx, changed, get_count_slot_changes),
-    					get_slot_context(count_slot_template, ctx, get_count_slot_context)
-    				);
+    			if (changed.count) {
+    				set_data_dev(t2, ctx.count);
     			}
     		},
 
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(label_slot, local);
-    			transition_in(count_slot, local);
-    			current = true;
-    		},
-
-    		o: function outro(local) {
-    			transition_out(label_slot, local);
-    			transition_out(count_slot, local);
-    			current = false;
-    		},
+    		i: noop,
+    		o: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
     				detach_dev(p);
     			}
-
-    			if (label_slot) label_slot.d(detaching);
-
-    			if (count_slot) count_slot.d(detaching);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$7.name, type: "component", source: "", ctx });
@@ -2979,26 +2925,51 @@ var app = (function () {
     }
 
     function instance$7($$self, $$props, $$invalidate) {
-    	let { $$slots = {}, $$scope } = $$props;
+    	let { count = 0, label = '' } = $$props;
+
+    	const writable_props = ['count', 'label'];
+    	Object.keys($$props).forEach(key => {
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<ListCountItem> was created with unknown prop '${key}'`);
+    	});
 
     	$$self.$set = $$props => {
-    		if ('$$scope' in $$props) $$invalidate('$$scope', $$scope = $$props.$$scope);
+    		if ('count' in $$props) $$invalidate('count', count = $$props.count);
+    		if ('label' in $$props) $$invalidate('label', label = $$props.label);
     	};
 
     	$$self.$capture_state = () => {
-    		return {};
+    		return { count, label };
     	};
 
-    	$$self.$inject_state = $$props => {};
+    	$$self.$inject_state = $$props => {
+    		if ('count' in $$props) $$invalidate('count', count = $$props.count);
+    		if ('label' in $$props) $$invalidate('label', label = $$props.label);
+    	};
 
-    	return { $$slots, $$scope };
+    	return { count, label };
     }
 
     class ListCountItem extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$7, create_fragment$7, safe_not_equal, []);
+    		init(this, options, instance$7, create_fragment$7, safe_not_equal, ["count", "label"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "ListCountItem", options, id: create_fragment$7.name });
+    	}
+
+    	get count() {
+    		throw new Error("<ListCountItem>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set count(value) {
+    		throw new Error("<ListCountItem>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get label() {
+    		throw new Error("<ListCountItem>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set label(value) {
+    		throw new Error("<ListCountItem>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
@@ -6657,8 +6628,8 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (335:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
-    function create_default_slot_10(ctx) {
+    // (347:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
+    function create_default_slot_8(ctx) {
     	var t;
 
     	const block = {
@@ -6676,48 +6647,16 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_10.name, type: "slot", source: "(335:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(347:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (348:6) <ListLabelItem>
-    function create_default_slot_9(ctx) {
-    	var t_value = ctx.developer.name + "", t;
-
-    	const block = {
-    		c: function create() {
-    			t = text(t_value);
-    		},
-
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-
-    		p: function update(changed, ctx) {
-    			if ((changed.developer) && t_value !== (t_value = ctx.developer.name + "")) {
-    				set_data_dev(t, t_value);
-    			}
-    		},
-
-    		d: function destroy(detaching) {
-    			if (detaching) {
-    				detach_dev(t);
-    			}
-    		}
-    	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_9.name, type: "slot", source: "(348:6) <ListLabelItem>", ctx });
-    	return block;
-    }
-
-    // (344:4) <List        on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
-    function create_default_slot_8(ctx) {
+    // (356:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
+    function create_default_slot_7(ctx) {
     	var current;
 
     	var listlabelitem = new ListLabelItem({
-    		props: {
-    		$$slots: { default: [create_default_slot_9] },
-    		$$scope: { ctx }
-    	},
+    		props: { label: ctx.developer.name },
     		$$inline: true
     	});
 
@@ -6733,7 +6672,7 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var listlabelitem_changes = {};
-    			if (changed.$$scope) listlabelitem_changes.$$scope = { changed, ctx };
+    			if (changed.developer) listlabelitem_changes.label = ctx.developer.name;
     			listlabelitem.$set(listlabelitem_changes);
     		},
 
@@ -6753,113 +6692,18 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(344:4) <List        on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(356:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (358:10) <span slot="label">
-    function create_label_slot(ctx) {
-    	var span, t_value = ctx.organization.name + "", t;
-
-    	const block = {
-    		c: function create() {
-    			span = element("span");
-    			t = text(t_value);
-    			attr_dev(span, "slot", "label");
-    			add_location(span, file$m, 357, 10, 7988);
-    		},
-
-    		m: function mount(target, anchor) {
-    			insert_dev(target, span, anchor);
-    			append_dev(span, t);
-    		},
-
-    		p: function update(changed, ctx) {
-    			if ((changed.organization) && t_value !== (t_value = ctx.organization.name + "")) {
-    				set_data_dev(t, t_value);
-    			}
-    		},
-
-    		d: function destroy(detaching) {
-    			if (detaching) {
-    				detach_dev(span);
-    			}
-    		}
-    	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_label_slot.name, type: "slot", source: "(358:10) <span slot=\"label\">", ctx });
-    	return block;
-    }
-
-    // (359:10) <span slot="count">
-    function create_count_slot(ctx) {
-    	var span, t_value = ctx.organization.count + "", t;
-
-    	const block = {
-    		c: function create() {
-    			span = element("span");
-    			t = text(t_value);
-    			attr_dev(span, "slot", "count");
-    			add_location(span, file$m, 358, 10, 8044);
-    		},
-
-    		m: function mount(target, anchor) {
-    			insert_dev(target, span, anchor);
-    			append_dev(span, t);
-    		},
-
-    		p: function update(changed, ctx) {
-    			if ((changed.organization) && t_value !== (t_value = ctx.organization.count + "")) {
-    				set_data_dev(t, t_value);
-    			}
-    		},
-
-    		d: function destroy(detaching) {
-    			if (detaching) {
-    				detach_dev(span);
-    			}
-    		}
-    	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_count_slot.name, type: "slot", source: "(359:10) <span slot=\"count\">", ctx });
-    	return block;
-    }
-
-    // (357:8) <ListCountItem>
-    function create_default_slot_7(ctx) {
-    	var t;
-
-    	const block = {
-    		c: function create() {
-    			t = space();
-    		},
-
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-
-    		p: noop,
-
-    		d: function destroy(detaching) {
-    			if (detaching) {
-    				detach_dev(t);
-    			}
-    		}
-    	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(357:8) <ListCountItem>", ctx });
-    	return block;
-    }
-
-    // (354:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (367:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
     	var listcountitem = new ListCountItem({
     		props: {
-    		$$slots: {
-    		default: [create_default_slot_7],
-    		count: [create_count_slot],
-    		label: [create_label_slot]
-    	},
-    		$$scope: { ctx }
+    		label: ctx.organization.name,
+    		count: ctx.organization.count
     	},
     		$$inline: true
     	});
@@ -6876,7 +6720,8 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var listcountitem_changes = {};
-    			if (changed.$$scope) listcountitem_changes.$$scope = { changed, ctx };
+    			if (changed.organization) listcountitem_changes.label = ctx.organization.name;
+    			if (changed.organization) listcountitem_changes.count = ctx.organization.count;
     			listcountitem.$set(listcountitem_changes);
     		},
 
@@ -6896,11 +6741,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(354:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(367:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (353:4) <Details summary="Organizations">
+    // (366:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
@@ -6948,11 +6793,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(353:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(366:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (371:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (381:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -6971,11 +6816,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(371:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(381:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (374:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
+    // (384:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -6994,11 +6839,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(374:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(384:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (378:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
+    // (388:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -7017,11 +6862,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(378:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(388:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (382:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
+    // (392:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7040,11 +6885,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(382:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(392:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (370:4) <TabBar>
+    // (380:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7181,12 +7026,12 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(370:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(380:4) <TabBar>", ctx });
     	return block;
     }
 
     function create_fragment$m(ctx) {
-    	var div1, aside0, div0, updating_value, t0, t1, h4, t3, t4, t5, article, t6, t7, t8, t9, t10, t11, t12, aside1, current;
+    	var div1, aside0, div0, updating_value, t0, t1, h4, t3, updating_selectedIndex, t4, t5, article, t6, t7, t8, t9, t10, t11, t12, aside1, current;
 
     	function search_1_value_binding(value) {
     		ctx.search_1_value_binding.call(null, value);
@@ -7208,23 +7053,32 @@ var app = (function () {
     		icon: "/img/add-white.svg",
     		disabledIcon: "/img/add.svg",
     		disabled: ctx.add,
-    		$$slots: { default: [create_default_slot_10] },
+    		$$slots: { default: [create_default_slot_8] },
     		$$scope: { ctx }
     	},
     		$$inline: true
     	});
     	button.$on("click", ctx.doAddClick);
 
-    	var list = new List({
-    		props: {
+    	function list_selectedIndex_binding(value_1) {
+    		ctx.list_selectedIndex_binding.call(null, value_1);
+    		updating_selectedIndex = true;
+    		add_flush_callback(() => updating_selectedIndex = false);
+    	}
+
+    	let list_props = {
     		data: ctx.filtered,
     		$$slots: {
-    		default: [create_default_slot_8, ({ item: developer }) => ({ developer })]
+    		default: [create_default_slot_7, ({ item: developer }) => ({ developer })]
     	},
     		$$scope: { ctx }
-    	},
-    		$$inline: true
-    	});
+    	};
+    	if (ctx.index !== void 0) {
+    		list_props.selectedIndex = ctx.index;
+    	}
+    	var list = new List({ props: list_props, $$inline: true });
+
+    	binding_callbacks.push(() => bind(list, 'selectedIndex', list_selectedIndex_binding));
     	list.$on("change", ctx.doDeveloperClick);
 
     	var details = new Details({
@@ -7325,17 +7179,17 @@ var app = (function () {
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 332, 4, 7319);
+    			add_location(div0, file$m, 344, 4, 8178);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 342, 4, 7596);
+    			add_location(h4, file$m, 354, 4, 8455);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 329, 2, 7286);
+    			add_location(aside0, file$m, 341, 2, 8145);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 366, 2, 8190);
+    			add_location(article, file$m, 376, 2, 8992);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 419, 2, 9728);
+    			add_location(aside1, file$m, 429, 2, 10530);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 326, 0, 7241);
+    			add_location(div1, file$m, 338, 0, 8100);
     		},
 
     		l: function claim(nodes) {
@@ -7390,6 +7244,9 @@ var app = (function () {
     			var list_changes = {};
     			if (changed.filtered) list_changes.data = ctx.filtered;
     			if (changed.$$scope) list_changes.$$scope = { changed, ctx };
+    			if (!updating_selectedIndex && changed.index) {
+    				list_changes.selectedIndex = ctx.index;
+    			}
     			list.$set(list_changes);
 
     			var details_changes = {};
@@ -7504,7 +7361,7 @@ var app = (function () {
     }
 
     function instance$m($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $notes, $organizations;
+    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $notes, $organizations;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
@@ -7518,6 +7375,10 @@ var app = (function () {
     	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
     	validate_store(developer_location, 'developer_location');
     	component_subscribe($$self, developer_location, $$value => { $developer_location = $$value; $$invalidate('$developer_location', $developer_location); });
+    	validate_store(developer_latitude, 'developer_latitude');
+    	component_subscribe($$self, developer_latitude, $$value => { $developer_latitude = $$value; $$invalidate('$developer_latitude', $developer_latitude); });
+    	validate_store(developer_longitude, 'developer_longitude');
+    	component_subscribe($$self, developer_longitude, $$value => { $developer_longitude = $$value; $$invalidate('$developer_longitude', $developer_longitude); });
     	validate_store(notes, 'notes');
     	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
     	validate_store(organizations, 'organizations');
@@ -7531,6 +7392,7 @@ var app = (function () {
     let developers = [];
     let enabled = 0;
     let filtered = [];
+    let index = -1;
     let search = '';
     let social = 0;
     let tab = 0;
@@ -7550,7 +7412,7 @@ var app = (function () {
         let matches = [];
 
         for( let a = 0; a < developers.length; a++ ) {
-          if( developers[a].name.indexOf( trimmed ) >= 0 ) {
+          if( developers[a].name.toLowerCase().indexOf( trimmed ) >= 0 ) {
             matches.push( developers[a] );
           }
         }
@@ -7576,6 +7438,8 @@ var app = (function () {
       set_store_value(developer_image, $developer_image = '');
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
+      set_store_value(developer_latitude, $developer_latitude = null);
+      set_store_value(developer_longitude, $developer_longitude = null);
     }
 
     function doCancelExisting( evt ) {
@@ -7585,7 +7449,12 @@ var app = (function () {
         set_store_value(developer_id, $developer_id = data.id);
         set_store_value(developer_name, $developer_name = data.name);
         set_store_value(developer_email, $developer_email = data.email);
+        set_store_value(developer_image, $developer_image = data.image);
+        set_store_value(developer_organizations, $developer_organizations = []);
         set_store_value(developer_location, $developer_location = data.location);
+        set_store_value(developer_latitude, $developer_latitude = data.latitude);
+        set_store_value(developer_longitude, $developer_longitude = data.longitude);
+
 
         $$invalidate('add', add = false);
         $$invalidate('enabled', enabled = 3);
@@ -7594,12 +7463,6 @@ var app = (function () {
         $$invalidate('profile', profile = true);
         $$invalidate('endpoints', endpoints = true);
         $$invalidate('controls', controls = 2);    
-      } );
-
-      fetch( `/api/developer/${$developer_id}/note` )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        set_store_value(notes, $notes = data.slice());
       } );
     }
 
@@ -7619,6 +7482,8 @@ var app = (function () {
       set_store_value(developer_image, $developer_image = '');
       set_store_value(developer_organizations, $developer_organizations = []);
       set_store_value(developer_location, $developer_location = '');
+      set_store_value(developer_latitude, $developer_latitude = null);
+      set_store_value(developer_longitude, $developer_longitude = null);
     }
 
     function doDelete( evt ) {
@@ -7642,6 +7507,8 @@ var app = (function () {
         set_store_value(developer_image, $developer_image = '');
         set_store_value(developer_organizations, $developer_organizations = []);
         set_store_value(developer_location, $developer_location = '');
+        set_store_value(developer_latitude, $developer_latitude = null);
+        set_store_value(developer_longitude, $developer_longitude = null);
 
         $$invalidate('add', add = false);
         $$invalidate('enabled', enabled = 0);
@@ -7658,9 +7525,13 @@ var app = (function () {
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(developer_id, $developer_id = data.id);
-        set_store_value(developer_name, $developer_name = data.name);
-        set_store_value(developer_email, $developer_email = data.email);
-        set_store_value(developer_location, $developer_location = data.location);
+        set_store_value(developer_name, $developer_name = data.name === null ? '' : data.name);
+        set_store_value(developer_email, $developer_email = data.email === null ? '' : data.email);
+        set_store_value(developer_image, $developer_image = data.image === null ? '' : data.image);
+        set_store_value(developer_organizations, $developer_organizations = []);
+        set_store_value(developer_location, $developer_location = data.location === null ? '' : data.location);
+        set_store_value(developer_latitude, $developer_latitude = data.latitude);
+        set_store_value(developer_longitude, $developer_longitude = data.longitude);
 
         $$invalidate('enabled', enabled = 3);
         $$invalidate('social', social = 1);
@@ -7693,10 +7564,10 @@ var app = (function () {
         name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
         email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
         description: null,
-        image: null,
-        location: null,
-        latitude: null,
-        longitude: null,
+        image: $developer_image.trim().length === 0 ? null : $developer_image.trim(),
+        location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
+        latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
+        longitude: $developer_location.trim().length === 0 ? null : $developer_longitude,
         public: 0
       };
 
@@ -7787,6 +7658,11 @@ var app = (function () {
     		$$invalidate('search', search);
     	}
 
+    	function list_selectedIndex_binding(value_1) {
+    		index = value_1;
+    		$$invalidate('index', index);
+    	}
+
     	const click_handler = () => $$invalidate('tab', tab = 0);
 
     	const click_handler_1 = () => $$invalidate('tab', tab = 1);
@@ -7805,6 +7681,7 @@ var app = (function () {
     		if ('developers' in $$props) developers = $$props.developers;
     		if ('enabled' in $$props) $$invalidate('enabled', enabled = $$props.enabled);
     		if ('filtered' in $$props) $$invalidate('filtered', filtered = $$props.filtered);
+    		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('search' in $$props) $$invalidate('search', search = $$props.search);
     		if ('social' in $$props) $$invalidate('social', social = $$props.social);
     		if ('tab' in $$props) $$invalidate('tab', tab = $$props.tab);
@@ -7817,6 +7694,8 @@ var app = (function () {
     		if ('$developer_image' in $$props) developer_image.set($developer_image);
     		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
+    		if ('$developer_latitude' in $$props) developer_latitude.set($developer_latitude);
+    		if ('$developer_longitude' in $$props) developer_longitude.set($developer_longitude);
     		if ('$notes' in $$props) notes.set($notes);
     		if ('$organizations' in $$props) organizations.set($organizations);
     	};
@@ -7826,6 +7705,7 @@ var app = (function () {
     		controls,
     		enabled,
     		filtered,
+    		index,
     		search,
     		social,
     		tab,
@@ -7843,6 +7723,7 @@ var app = (function () {
     		doSaveNew,
     		$organizations,
     		search_1_value_binding,
+    		list_selectedIndex_binding,
     		click_handler,
     		click_handler_1,
     		click_handler_2,

@@ -1,3 +1,8 @@
+<script>
+export let count = 0;
+export let label = '';
+</script>
+
 <style>
 p {
   color: #393939;
@@ -15,9 +20,4 @@ span {
 }
 </style>
 
-<p>
-  <slot name="label"></slot>
-  <span>
-    <slot name="count"></slot>
-  </span>
-</p>
+<p>{label} <span>{count}</span></p>

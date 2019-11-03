@@ -24,6 +24,8 @@ import { developer_email } from './developers.js';
 import { developer_image } from './developers.js';
 import { developer_organizations } from './developers.js';
 import { developer_location } from './developers.js';
+import { developer_latitude } from './developers.js';
+import { developer_longitude } from './developers.js';
 import { notes } from './developers.js';
 
 // View state
@@ -32,6 +34,7 @@ let controls = 0;
 let developers = [];
 let enabled = 0;
 let filtered = [];
+let index = -1;
 let search = '';
 let social = 0;
 let tab = 0;
@@ -51,7 +54,7 @@ function filter() {
     let matches = [];
 
     for( let a = 0; a < developers.length; a++ ) {
-      if( developers[a].name.indexOf( trimmed ) >= 0 ) {
+      if( developers[a].name.toLowerCase().indexOf( trimmed ) >= 0 ) {
         matches.push( developers[a] );
       }
     }
@@ -77,6 +80,8 @@ function doAddClick( evt ) {
   $developer_image = '';
   $developer_organizations = [];
   $developer_location = '';
+  $developer_latitude = null;
+  $developer_longitude = null;
 }
 
 function doCancelExisting( evt ) {
@@ -86,7 +91,12 @@ function doCancelExisting( evt ) {
     $developer_id = data.id;
     $developer_name = data.name;
     $developer_email = data.email;
+    $developer_image = data.image;
+    $developer_organizations = [];
     $developer_location = data.location;
+    $developer_latitude = data.latitude;
+    $developer_longitude = data.longitude;
+
 
     add = false;
     enabled = 3;
@@ -95,12 +105,6 @@ function doCancelExisting( evt ) {
     profile = true;
     endpoints = true;
     controls = 2;    
-  } );
-
-  fetch( `/api/developer/${$developer_id}/note` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $notes = data.slice();
   } );
 }
 
@@ -120,6 +124,8 @@ function doCancelNew( evt ) {
   $developer_image = '';
   $developer_organizations = [];
   $developer_location = '';
+  $developer_latitude = null;
+  $developer_longitude = null;
 }
 
 function doDelete( evt ) {
@@ -143,6 +149,8 @@ function doDelete( evt ) {
     $developer_image = '';
     $developer_organizations = [];
     $developer_location = '';
+    $developer_latitude = null;
+    $developer_longitude = null;
 
     add = false;
     enabled = 0;
@@ -159,9 +167,13 @@ function doDeveloperClick( evt ) {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $developer_id = data.id;
-    $developer_name = data.name;
-    $developer_email = data.email;
-    $developer_location = data.location;
+    $developer_name = data.name === null ? '' : data.name;
+    $developer_email = data.email === null ? '' : data.email;
+    $developer_image = data.image === null ? '' : data.image;
+    $developer_organizations = [];
+    $developer_location = data.location === null ? '' : data.location;
+    $developer_latitude = data.latitude;
+    $developer_longitude = data.longitude;
 
     enabled = 3;
     social = 1;
@@ -194,10 +206,10 @@ function doSaveExisting( evt ) {
     name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
     email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
     description: null,
-    image: null,
-    location: null,
-    latitude: null,
-    longitude: null,
+    image: $developer_image.trim().length === 0 ? null : $developer_image.trim(),
+    location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
+    latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
+    longitude: $developer_location.trim().length === 0 ? null : $developer_longitude,
     public: 0
   };
 
@@ -342,10 +354,11 @@ h4 {
     <!-- Developer list -->
     <h4>Developers</h4>
     <List 
+      bind:selectedIndex="{index}"
       on:change="{doDeveloperClick}"
       data="{filtered}" 
       let:item="{developer}">
-      <ListLabelItem>{developer.name}</ListLabelItem>
+      <ListLabelItem label="{developer.name}"/>
     </List>
 
     <!-- Label list -->
@@ -354,10 +367,7 @@ h4 {
       <List 
         data="{$organizations}" 
         let:item="{organization}">
-        <ListCountItem>
-          <span slot="label">{organization.name}</span>
-          <span slot="count">{organization.count}</span>
-        </ListCountItem>      
+        <ListCountItem label="{organization.name}" count="{organization.count}"/>
       </List>
     </Details>
 
