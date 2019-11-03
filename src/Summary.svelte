@@ -11,6 +11,8 @@ import { developer_email } from './developers.js';
 import { developer_image } from './developers.js';
 import { developer_organizations } from './developers.js';
 import { developer_location } from './developers.js';
+import { developer_latitude } from './developers.js';
+import { developer_longitude } from './developers.js';
 
 export let hidden = false;
 export let disabled = false;
@@ -90,7 +92,7 @@ form > div:last-of-type {
   </div>
 
   <div>
-    <Map/>
+    <Map latitude="{$developer_latitude}" longitude="{$developer_longitude}"/>
   </div>
 
 </form>

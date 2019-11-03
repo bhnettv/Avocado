@@ -10,7 +10,8 @@ export let top = 0;
 const dispatch = createEventDispatcher();
 
 function doSelect( item, index ) {
-  console.log( 'Menu select' );
+  console.log( 'Menu' );
+  console.log( item );
 
   selectedIndex = index;
   selectedItem = item;
@@ -70,7 +71,7 @@ li:hover {
 
     <li class:selected="{selectedIndex === i ? true : false}">
       <button 
-        on:click="{() => doSelect( item, i )}" 
+        on:click="{() => doSelect( item, i )}"
         type="button">{item[labelField]}</button>
     </li>
 

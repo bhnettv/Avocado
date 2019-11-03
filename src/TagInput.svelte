@@ -24,7 +24,7 @@ function doBlur() {
 
 function doKeyUp( evt ) {
   if( evt.keyCode === 13 ) {
-    if( index > - 1 ) {
+    if( index > -1 ) {
       value.push( menu[index][labelField] );
       focus = true;
     } else {
@@ -126,8 +126,11 @@ function doRemove( evt ) {
 }
 
 function doSelect( evt ) {
-  console.log( 'Select' );
-  console.log( evt.detail.item[labelField] );
+  console.log( 'Select via click' );
+  console.log( evt.detail.item );
+
+  value.push( evt.detail.item );
+  value = [...value];
 }
 </script>
 

@@ -1,11 +1,18 @@
 <script>    
-export let latitude = 41.1135751;
-export let longitude = -73.7182409;
+export let latitude = null;
+export let longitude = null;
 export let zoom = 11;
 
 let container = undefined;
 let map = undefined;
 let view = undefined;
+
+$: if( view !== undefined ) {
+  view.goTo( [
+    longitude === null ? -73.7182409 : longitude, 
+    latitude === null ? 41.1135751 : latitude
+  ] );
+}
 
 require( [
   'esri/Map',

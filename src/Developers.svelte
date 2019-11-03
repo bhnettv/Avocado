@@ -175,6 +175,8 @@ function doDeveloperClick( evt ) {
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
 
+    console.log( $developer_latitude + ', ' + $developer_longitude );    
+
     enabled = 3;
     social = 1;
     summary = true;
@@ -201,6 +203,8 @@ function doEdit( evt ) {
 }
 
 function doSaveExisting( evt ) {
+  console.log( $developer_organizations );
+
   let developer = {
     id: $developer_id,
     name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
