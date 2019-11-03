@@ -1939,6 +1939,7 @@ var app = (function () {
     const developer_location = writable( '' );
     const developer_latitude = writable( null );
     const developer_longitude = writable( null );
+    const developer_description = writable( '' );
 
     // Social
     const endpoint_website = writable( '' );
@@ -4720,7 +4721,7 @@ var app = (function () {
     const file$d = "src/Profile.svelte";
 
     function create_fragment$d(ctx) {
-    	var form, div0, t0, div1, t1, div2, t2, div3, t3, div4, current;
+    	var form, div0, t0, div1, t1, div2, t2, div3, updating_value, t3, div4, current;
 
     	var taginput0 = new TagInput({
     		props: {
@@ -4752,14 +4753,23 @@ var app = (function () {
     		$$inline: true
     	});
 
-    	var textarea = new TextArea({
-    		props: {
+    	function textarea_value_binding(value) {
+    		ctx.textarea_value_binding.call(null, value);
+    		updating_value = true;
+    		add_flush_callback(() => updating_value = false);
+    	}
+
+    	let textarea_props = {
     		label: "Description/Bio",
     		placeholder: "Description",
     		disabled: ctx.disabled
-    	},
-    		$$inline: true
-    	});
+    	};
+    	if (ctx.$developer_description !== void 0) {
+    		textarea_props.value = ctx.$developer_description;
+    	}
+    	var textarea = new TextArea({ props: textarea_props, $$inline: true });
+
+    	binding_callbacks.push(() => bind(textarea, 'value', textarea_value_binding));
 
     	var select = new Select({ $$inline: true });
 
@@ -4781,19 +4791,19 @@ var app = (function () {
     			div4 = element("div");
     			select.$$.fragment.c();
     			attr_dev(div0, "class", "svelte-jesd26");
-    			add_location(div0, file$d, 36, 2, 563);
+    			add_location(div0, file$d, 38, 2, 621);
     			attr_dev(div1, "class", "svelte-jesd26");
-    			add_location(div1, file$d, 44, 2, 711);
+    			add_location(div1, file$d, 46, 2, 769);
     			attr_dev(div2, "class", "svelte-jesd26");
-    			add_location(div2, file$d, 52, 2, 870);
+    			add_location(div2, file$d, 54, 2, 928);
     			set_style(div3, "flex-grow", "1");
     			attr_dev(div3, "class", "svelte-jesd26");
-    			add_location(div3, file$d, 60, 2, 1046);
+    			add_location(div3, file$d, 62, 2, 1104);
     			attr_dev(div4, "class", "svelte-jesd26");
-    			add_location(div4, file$d, 67, 2, 1181);
+    			add_location(div4, file$d, 70, 2, 1283);
     			attr_dev(form, "class", "svelte-jesd26");
     			toggle_class(form, "hidden", ctx.hidden);
-    			add_location(form, file$d, 34, 0, 540);
+    			add_location(form, file$d, 36, 0, 598);
     		},
 
     		l: function claim(nodes) {
@@ -4834,6 +4844,9 @@ var app = (function () {
 
     			var textarea_changes = {};
     			if (changed.disabled) textarea_changes.disabled = ctx.disabled;
+    			if (!updating_value && changed.$developer_description) {
+    				textarea_changes.value = ctx.$developer_description;
+    			}
     			textarea.$set(textarea_changes);
 
     			if (changed.hidden) {
@@ -4886,6 +4899,11 @@ var app = (function () {
     }
 
     function instance$d($$self, $$props, $$invalidate) {
+    	let $developer_description;
+
+    	validate_store(developer_description, 'developer_description');
+    	component_subscribe($$self, developer_description, $$value => { $developer_description = $$value; $$invalidate('$developer_description', $developer_description); });
+
     	
 
     let { hidden = false, disabled = false } = $$props;
@@ -4895,21 +4913,32 @@ var app = (function () {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Profile> was created with unknown prop '${key}'`);
     	});
 
+    	function textarea_value_binding(value) {
+    		$developer_description = value;
+    		developer_description.set($developer_description);
+    	}
+
     	$$self.$set = $$props => {
     		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, disabled };
+    		return { hidden, disabled, $developer_description };
     	};
 
     	$$self.$inject_state = $$props => {
     		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
+    		if ('$developer_description' in $$props) developer_description.set($developer_description);
     	};
 
-    	return { hidden, disabled };
+    	return {
+    		hidden,
+    		disabled,
+    		$developer_description,
+    		textarea_value_binding
+    	};
     }
 
     class Profile extends SvelteComponentDev {
@@ -6660,7 +6689,7 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (351:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
+    // (356:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
     function create_default_slot_8(ctx) {
     	var t;
 
@@ -6679,11 +6708,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(351:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(356:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (360:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
+    // (365:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
     function create_default_slot_7(ctx) {
     	var current;
 
@@ -6724,11 +6753,11 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(360:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(365:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (371:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (376:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6773,11 +6802,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(371:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(376:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (370:4) <Details summary="Organizations">
+    // (375:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
@@ -6825,11 +6854,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(370:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(375:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (385:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (390:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -6848,11 +6877,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(385:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(390:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (388:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
+    // (393:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -6871,11 +6900,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(388:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(393:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (392:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
+    // (397:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -6894,11 +6923,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(392:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(397:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (396:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
+    // (401:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -6917,11 +6946,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(396:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(401:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (384:4) <TabBar>
+    // (389:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7058,7 +7087,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(384:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(389:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -7211,17 +7240,17 @@ var app = (function () {
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 348, 4, 8297);
+    			add_location(div0, file$m, 353, 4, 8803);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 358, 4, 8574);
+    			add_location(h4, file$m, 363, 4, 9080);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 345, 2, 8264);
+    			add_location(aside0, file$m, 350, 2, 8770);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 380, 2, 9111);
+    			add_location(article, file$m, 385, 2, 9617);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 433, 2, 10649);
+    			add_location(aside1, file$m, 438, 2, 11155);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 342, 0, 8219);
+    			add_location(div1, file$m, 347, 0, 8725);
     		},
 
     		l: function claim(nodes) {
@@ -7393,7 +7422,7 @@ var app = (function () {
     }
 
     function instance$m($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $notes, $organizations;
+    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $developer_description, $notes, $organizations;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
@@ -7411,6 +7440,8 @@ var app = (function () {
     	component_subscribe($$self, developer_latitude, $$value => { $developer_latitude = $$value; $$invalidate('$developer_latitude', $developer_latitude); });
     	validate_store(developer_longitude, 'developer_longitude');
     	component_subscribe($$self, developer_longitude, $$value => { $developer_longitude = $$value; $$invalidate('$developer_longitude', $developer_longitude); });
+    	validate_store(developer_description, 'developer_description');
+    	component_subscribe($$self, developer_description, $$value => { $developer_description = $$value; $$invalidate('$developer_description', $developer_description); });
     	validate_store(notes, 'notes');
     	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
     	validate_store(organizations, 'organizations');
@@ -7564,8 +7595,7 @@ var app = (function () {
         set_store_value(developer_location, $developer_location = data.location === null ? '' : data.location);
         set_store_value(developer_latitude, $developer_latitude = data.latitude);
         set_store_value(developer_longitude, $developer_longitude = data.longitude);
-
-        console.log( $developer_latitude + ', ' + $developer_longitude );    
+        set_store_value(developer_description, $developer_description = data.description === null ? '' : data.description);
 
         $$invalidate('enabled', enabled = 3);
         $$invalidate('social', social = 1);
@@ -7599,7 +7629,7 @@ var app = (function () {
         id: $developer_id,
         name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
         email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
-        description: null,
+        description: $developer_description.trim().length === 0 ? null : $developer_description.trim(),
         image: $developer_image.trim().length === 0 ? null : $developer_image.trim(),
         location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
         latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
@@ -7624,6 +7654,9 @@ var app = (function () {
         $$invalidate('endpoints', endpoints = true);
         $$invalidate('controls', controls = 2);    
 
+        set_store_value(developer_latitude, $developer_latitude = data.latitude === null ? null : data.latitude);
+        set_store_value(developer_longitude, $developer_longitude = data.longitude === null ? null : data.longitude);
+
         for( let a = 0; a < developers.length; a++ ) {
           if( developers[a].id === developer.id ) {
             developers[a] = Object.assign( {}, developer );
@@ -7644,7 +7677,7 @@ var app = (function () {
         body: JSON.stringify( {
           name: $developer_name.trim().length > 0 ? $developer_name : null,
           email: $developer_email.trim().length > 0 ? $developer_email : null,      
-          description: null,      
+          description: $developer_description.trim().length > 0 ? $developer_description : null,      
           image: $developer_image.trim().length > 0 ? $developer_image : null,
           location: $developer_location.trim().length > 0 ? $developer_location : null,      
           latitude: null,      
@@ -7655,6 +7688,8 @@ var app = (function () {
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(developer_id, $developer_id = data.id);
+        set_store_value(developer_latitude, $developer_latitude = data.latitude === null ? null : data.latitude);
+        set_store_value(developer_longitude, $developer_longitude = data.longitude === null ? null : data.longitude);
         developers.push( Object.assign( {}, data ) );
         developers.sort( ( a, b ) => {
           if( a.name > b.name ) return 1;
@@ -7732,6 +7767,7 @@ var app = (function () {
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
     		if ('$developer_latitude' in $$props) developer_latitude.set($developer_latitude);
     		if ('$developer_longitude' in $$props) developer_longitude.set($developer_longitude);
+    		if ('$developer_description' in $$props) developer_description.set($developer_description);
     		if ('$notes' in $$props) notes.set($notes);
     		if ('$organizations' in $$props) organizations.set($organizations);
     	};

@@ -26,6 +26,7 @@ import { developer_organizations } from './developers.js';
 import { developer_location } from './developers.js';
 import { developer_latitude } from './developers.js';
 import { developer_longitude } from './developers.js';
+import { developer_description } from './developers.js';
 import { notes } from './developers.js';
 
 // View state
@@ -174,8 +175,7 @@ function doDeveloperClick( evt ) {
     $developer_location = data.location === null ? '' : data.location;
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
-
-    console.log( $developer_latitude + ', ' + $developer_longitude );    
+    $developer_description = data.description === null ? '' : data.description;
 
     enabled = 3;
     social = 1;
@@ -209,7 +209,7 @@ function doSaveExisting( evt ) {
     id: $developer_id,
     name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
     email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
-    description: null,
+    description: $developer_description.trim().length === 0 ? null : $developer_description.trim(),
     image: $developer_image.trim().length === 0 ? null : $developer_image.trim(),
     location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
     latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
@@ -234,6 +234,9 @@ function doSaveExisting( evt ) {
     endpoints = true;
     controls = 2;    
 
+    $developer_latitude = data.latitude === null ? null : data.latitude;
+    $developer_longitude = data.longitude === null ? null : data.longitude;
+
     for( let a = 0; a < developers.length; a++ ) {
       if( developers[a].id === developer.id ) {
         developers[a] = Object.assign( {}, developer );
@@ -254,7 +257,7 @@ function doSaveNew( evt ) {
     body: JSON.stringify( {
       name: $developer_name.trim().length > 0 ? $developer_name : null,
       email: $developer_email.trim().length > 0 ? $developer_email : null,      
-      description: null,      
+      description: $developer_description.trim().length > 0 ? $developer_description : null,      
       image: $developer_image.trim().length > 0 ? $developer_image : null,
       location: $developer_location.trim().length > 0 ? $developer_location : null,      
       latitude: null,      
@@ -265,6 +268,8 @@ function doSaveNew( evt ) {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $developer_id = data.id;
+    $developer_latitude = data.latitude === null ? null : data.latitude;
+    $developer_longitude = data.longitude === null ? null : data.longitude;
     developers.push( Object.assign( {}, data ) );
     developers.sort( ( a, b ) => {
       if( a.name > b.name ) return 1;

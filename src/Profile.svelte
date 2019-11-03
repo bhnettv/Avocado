@@ -4,6 +4,8 @@ import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
+import { developer_description } from './developers.js';
+
 export let hidden = false;
 export let disabled = false;
 </script>
@@ -62,6 +64,7 @@ form > div:last-of-type {
     <TextArea
       label="Description/Bio"
       placeholder="Description"
+      bind:value="{$developer_description}"
       {disabled}/>
   </div>
 
