@@ -1,6 +1,8 @@
 <script>
 export let dataField = 'data';
+export let disabled = false;
 export let helper = undefined;
+export let inline = false;
 export let label = undefined;
 export let labelField = 'label';
 export let options = [];
@@ -11,7 +13,19 @@ export let value = 'id';
 <style>
 div {
   display: flex;
+}
+
+div.outline {
   flex-direction: column;
+}
+
+div.inline {
+  align-items: center;
+  flex-direction: row;
+}
+
+div.inline > label {
+  margin: 0 16px 0 0;
 }
 
 label {
@@ -28,13 +42,11 @@ select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: none;
-  background-color: #f4f4f4;
   background-image: url( /img/arrow-down.svg );
   background-position: center right 16px;
   background-repeat: no-repeat;
   background-size: 20px;    
   border: none;
-  border-bottom: solid 1px #8d8d8d;
   border-radius: 0;
   box-shadow: none;
   color: #161616;
@@ -48,11 +60,29 @@ select {
   min-width: 100px;
   outline: solid 2px transparent;
   outline-offset: -2px;
-  padding: 0 60px 0 16px;  
+  padding: 0 60px 0 16px;
+}
+
+select.inline {
+  background-color: #ffffff;
+}
+
+select.inline:disabled {
+  background-image: url( /img/arrow-down-disabled.svg );  
+  cursor: not-allowed;
+}
+
+select.outline {
+  background-color: #f4f4f4;
+  border-bottom: solid 1px #8d8d8d;
 }
 
 select:focus {
   outline: solid 2px #0062ff;
+}
+
+select.inline:disabled:hover {
+  background-color: #ffffff;
 }
 
 select:hover {
@@ -69,18 +99,32 @@ p {
 }
 </style>
 
-<div>
+<div class:inline class:outline="{inline === false ? true : false}">
 
   {#if label !== undefined}
-    <label>{label}</label>
+    <label style="color: {disabled ? '#c6c6c6' : '#393939'}">{label}</label>
   {/if}
-  {#if helper !== undefined}
-    <p>{helper}</p>
-  {/if}  
-  <select bind:value="{selected}">
+
+  {#if inline === false}
+    {#if helper !== undefined}
+      <p>{helper}</p>
+    {/if}  
+  {/if}
+
+  <select 
+    bind:value="{selected}" 
+    class:inline 
+    class:outline="{inline === false ? true : false}" 
+    {disabled}>
     {#each options as option}
       <option value="{option[dataField]}">{option[labelField]}</option>
     {/each}  
   </select>  
+
+  {#if inline === true}
+    {#if helper !== undefined}
+      <p>{helper}</p>
+    {/if}  
+  {/if}
 
 </div>

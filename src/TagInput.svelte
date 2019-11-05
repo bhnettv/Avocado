@@ -9,13 +9,13 @@ export let helper = undefined;
 export let label = undefined;
 export let labelField = 'label';
 export let limit = 4;
+export let menu = false;
 export let placeholder = '';
 export let value = [];
 
 let focus = false;
 let height = 0;
 let index = -1;
-let menu = [];
 
 function doBlur() {
   menu = [];
@@ -254,11 +254,9 @@ p {
   {#if data.length > 0}
 
     <Menu 
-      data="{menu}" 
+      options="{data}" 
       top="{height + 3}" 
-      labelField="name" 
-      selectedIndex="{index}"
-      on:select="{doSelect}"/>
+      labelField="name"/>
   
   {/if}
 

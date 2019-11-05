@@ -27,6 +27,7 @@ import { developer_location } from './developers.js';
 import { developer_latitude } from './developers.js';
 import { developer_longitude } from './developers.js';
 import { developer_description } from './developers.js';
+import { developer_public } from './developers.js';
 import { notes } from './developers.js';
 
 // View state
@@ -83,6 +84,7 @@ function doAddClick( evt ) {
   $developer_location = '';
   $developer_latitude = null;
   $developer_longitude = null;
+  $developer_description = '';
 }
 
 function doCancelExisting( evt ) {
@@ -97,7 +99,7 @@ function doCancelExisting( evt ) {
     $developer_location = data.location;
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
-
+    $developer_public = data.public;
 
     add = false;
     enabled = 3;
@@ -127,6 +129,8 @@ function doCancelNew( evt ) {
   $developer_location = '';
   $developer_latitude = null;
   $developer_longitude = null;
+  $developer_description = '';
+  $developer_public = 0;
 }
 
 function doDelete( evt ) {
@@ -152,6 +156,8 @@ function doDelete( evt ) {
     $developer_location = '';
     $developer_latitude = null;
     $developer_longitude = null;
+    $developer_description = '';
+    $developer_public = 0;
 
     add = false;
     enabled = 0;
@@ -176,6 +182,7 @@ function doDeveloperClick( evt ) {
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
     $developer_description = data.description === null ? '' : data.description;
+    $developer_public = data.public;
 
     enabled = 3;
     social = 1;
@@ -214,7 +221,7 @@ function doSaveExisting( evt ) {
     location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
     latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
     longitude: $developer_location.trim().length === 0 ? null : $developer_longitude,
-    public: 0
+    public: $developer_public
   };
 
   fetch( `/api/developer/${$developer_id}`, {
@@ -264,7 +271,7 @@ function doSaveNew( evt ) {
       location: $developer_location.trim().length > 0 ? $developer_location : null,      
       latitude: null,      
       longitude: null,
-      public: 0
+      public: $developer_public
     } )
   } )
   .then( ( response ) => response.json() )

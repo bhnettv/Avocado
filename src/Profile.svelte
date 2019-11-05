@@ -5,9 +5,15 @@ import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
 import { developer_description } from './developers.js';
+import { developer_public } from './developers.js';
 
 export let hidden = false;
 export let disabled = false;
+
+let external = [
+  {id: 0, label: 'No'}, 
+  {id: 1, label: 'Yes'}
+];
 </script>
 
 <style>
@@ -69,7 +75,14 @@ form > div:last-of-type {
   </div>
 
   <div>
-    <Select/>
+    <Select 
+      options="{external}"
+      dataField="id" 
+      labelField="label" 
+      inline="true" 
+      label="Publish"
+      bind:selected="{$developer_public}"
+      {disabled}/>
   </div>
 
 </form>

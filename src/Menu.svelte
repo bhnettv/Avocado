@@ -1,26 +1,17 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 
-export let data = [];
+export let hidden = true;
 export let labelField = 'label';
-export let selectedIndex = undefined;
-export let selectedItem = undefined;
+export let options = [];
 export let top = 0;
+
+let index = -1;
 
 const dispatch = createEventDispatcher();
 
-function doSelect( item, index ) {
-  console.log( 'Menu' );
-  console.log( item );
+function doKeyDown( evt ) {
 
-  selectedIndex = index;
-  selectedItem = item;
-
-  dispatch( 'select', {
-    index: index,
-    item: item,
-    label: item[labelField]
-  } );
 }
 </script>
 
@@ -49,6 +40,10 @@ ul {
   z-index: 100;
 }
 
+ul.hidden {
+  display: none;
+}
+
 li {
   outline: solid 2px transparent;    
   outline-offset: -2px;    
@@ -65,15 +60,14 @@ li:hover {
 }
 </style>
 
-<ul style="display: {data.length > 0 ? 'flex' : 'none'}; top: {top}px;">
+<svelte:window on:keyup="{doKeyDown}"/>
 
-  {#each data as item, i}    
+<ul class:hidden style="top: {top}px;">
 
-    <li class:selected="{selectedIndex === i ? true : false}">
-      <!-- TODO: Blur on input causes button to be ignored -->
-      <button
-        on:click="{() => doSelect( item, i )}"
-        type="button">{item[labelField]}</button>
+  {#each options as item, i}    
+
+    <li class:selected="{index === i ? true : false}">
+      <button type="button">{item[labelField]}</button>
     </li>
 
   {/each}
