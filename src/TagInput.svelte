@@ -25,7 +25,7 @@ function doBlur() {
 function doKeyUp( evt ) {
   if( evt.keyCode === 13 ) {
     if( index > -1 ) {
-      value.push( menu[index][labelField] );
+      value.push( menu[index] );
       focus = true;
     } else {
       let found = false;
@@ -38,15 +38,31 @@ function doKeyUp( evt ) {
       }
 
       for( let t = 0; t < tags.length; t++ ) {
-        for( let v = 0; v < value.length; v++ ) {
-          if( value[v] === tags[t].trim() ) {
-            found = true;
+        let exists = null;
+
+        for( let d = 0; d < data.length; d++ ) {
+          if( data[d][labelField] === tags[t] ) {
+            exists = data[d];
             break;
+
           }
         }
 
-        if( !found ) {
-          value.push( tags[t] );
+        if( exists !== null ) {
+          value.push( exists );
+        } else {
+          for( let v = 0; v < value.length; v++ ) {
+            if( value[v] === tags[t].trim() ) {
+              found = true;
+              break;
+            }
+          }
+
+          if( !found ) {
+            let tag = {id: null};
+            tag[labelField] = tags[t];
+            value.push( tag );
+          }          
         }
       }      
     }
@@ -102,7 +118,7 @@ function doKeyUp( evt ) {
         let found = false;
 
         for( let b = 0; b < value.length; b++ ) {
-          if( data[a][labelField].toLowerCase() === value[b].toLowerCase() ) {
+          if( data[a][labelField].toLowerCase() === evt.target.value[b].toLowerCase() ) {
             found = true;
             break;
           }
@@ -222,7 +238,7 @@ p {
   <div class="content" class:focus="{focus}" class:disabled="{disabled}">
 
     {#each value as tag, t}
-      <Tag>{tag}</Tag>      
+      <Tag>{tag[labelField]}</Tag>      
     {/each}
 
     <input 

@@ -249,6 +249,8 @@ function doSaveExisting( evt ) {
 
 // Save new developer
 function doSaveNew( evt ) {
+  console.log( $developer_organizations );
+
   fetch( '/api/developer', {
     method: 'POST',
     headers: {

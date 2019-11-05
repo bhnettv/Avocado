@@ -70,7 +70,8 @@ li:hover {
   {#each data as item, i}    
 
     <li class:selected="{selectedIndex === i ? true : false}">
-      <button 
+      <!-- TODO: Blur on input causes button to be ignored -->
+      <button
         on:click="{() => doSelect( item, i )}"
         type="button">{item[labelField]}</button>
     </li>
