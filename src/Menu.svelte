@@ -1,18 +1,8 @@
 <script>
-import { createEventDispatcher } from 'svelte';
-
-export let hidden = true;
+export let index = -1;
 export let labelField = 'label';
 export let options = [];
 export let top = 0;
-
-let index = -1;
-
-const dispatch = createEventDispatcher();
-
-function doKeyDown( evt ) {
-
-}
 </script>
 
 <style>
@@ -40,10 +30,6 @@ ul {
   z-index: 100;
 }
 
-ul.hidden {
-  display: none;
-}
-
 li {
   outline: solid 2px transparent;    
   outline-offset: -2px;    
@@ -60,9 +46,7 @@ li:hover {
 }
 </style>
 
-<svelte:window on:keyup="{doKeyDown}"/>
-
-<ul class:hidden style="top: {top}px;">
+<ul style="top: {top}px;">
 
   {#each options as item, i}    
 

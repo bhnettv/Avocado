@@ -1,9 +1,5 @@
 <script>
 export let disabled = false;
-
-function doRemove( evt ) {
-
-}
 </script>
 
 <style>
@@ -51,6 +47,6 @@ p {
   <p><slot></slot></p>
   <button 
     type="button" 
-    on:click="{doRemove}" 
+    on:click
     style="display: {disabled ? 'none' : 'initial'};"></button>
 </div>

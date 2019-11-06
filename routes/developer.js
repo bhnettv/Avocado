@@ -144,40 +144,67 @@ router.get( '/', ( req, res ) => {
   res.json( developers );
 } );
 
-// Associate developer with organization
+// Associate developer with organization(s)
 router.post( '/:developer/organization', ( req, res ) => {
-  let record = {
-    id: null,
-    uuid: uuidv4(),
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    developer_uuid: req.params.developer,
-    organization_uuid: req.body.organization_id
-  };
+  let organizations = [];
 
-  let existing = req.db.prepare( `
-    SELECT
-      DeveloperOrganization.uuid AS "id",
-      DeveloperOrganization.created_at,
-      DeveloperOrganization.updated_at,
-      Developer.uuid AS "developer_id",
-      Organization.uuid AS "organization_id"
-    FROM
-      Developer,
-      DeveloperOrganization,
-      Organization
-    WHERE
-      Developer.id = DeveloperOrganization.developer_id AND
-      DeveloperOrganization.organization_id = Organization.id AND
-      Developer.uuid = ? AND
-      Organization.uuid = ?
-  ` )
-  .get(
-    record.developer_uuid,
-    record.organization_uuid
-  );
+  // Loop through organizations provided as array
+  for( let a = 0; a < req.body.length; a++ ) {
+    let record = {
+      id: null,
+      organization_uuid: req.body[a].id,
+      developer_uuid: req.params.developer,
+      name: req.body[a].name
+    }
 
-  if( existing === undefined ) {
+    // Check if organization exists
+    // By name
+    // Case-insensitive
+    let existing = req.db.prepare( `
+      SELECT
+        Organization.uuid AS "id",
+        Organization.created_at,
+        Organization.updated_at,
+        Organization.name
+      FROM
+        Organization
+      WHERE
+        LOWER( Organization.name ) = ?
+    ` )
+    .get(
+      record.name.trim().toLowerCase()
+    );
+
+    // Organization does not exist
+    if( existing === undefined ) {
+      // Assign external UUID
+      // Assign created and updated stamps
+      record.organization_uuid = uuidv4();
+      record.created_at = new Date().toISOString();
+      record.updated_at = new Date().toISOString();
+
+      // Create organization
+      let info = req.db.prepare( `
+        INSERT INTO Organization
+        VALUES ( ?, ?, ?, ?, ? )
+      ` )
+      .run(
+        record.id,
+        record.organization_uuid,
+        record.created_at,
+        record.updated_at,
+        record.name
+      );
+    } else {
+      // Carry over existing organization data
+      record.organization_uuid = existing.id;
+      record.created_at = existing.created_at;
+      record.updated_at = existing.updated_at;        
+      record.name = existing.name;
+    }
+
+    // Organization now exists
+    // Get internal IDs
     let ids = req.db.prepare( `
       SELECT
         Developer.id AS "developer_id",
@@ -193,34 +220,220 @@ router.post( '/:developer/organization', ( req, res ) => {
       record.developer_uuid,
       record.organization_uuid
     );
+
+    // Assign IDs
     record.developer_id = ids.developer_id;
     record.organization_id = ids.organization_id;
+    record.relation_uuid = uuidv4();
 
+    // Create relationship
     let info = req.db.prepare( `
       INSERT INTO DeveloperOrganization
       VALUES ( ?, ?, ?, ?, ?, ? )
     ` )
     .run(
       record.id,
-      record.uuid,
+      record.relation_uuid,
       record.created_at,
       record.updated_at,
       record.developer_id,
       record.organization_id
     );
 
-    record = {
-      id: record.uuid,
+    // Mirror organization record
+    // Hydrated with complete details
+    organizations.push( {
+      id: record.organization_uuid,
       created_at: record.created_at,
       updated_at: record.updated_at,
       developer_id: record.developer_uuid,
-      organization_id: record.organization_uuid
-    };    
-  } else {
-    record = existing;
+      name: record.name
+    } );
   }
 
-  res.json( record );
+  res.json( organizations );
+} );
+
+// Update developer association to organization(s)
+router.put( '/:developer/organization', ( req, res ) => {
+  let organizations = [];
+
+  // Preserve existing relationships
+  // Between developer and organization
+  let relationships = req.db.prepare( `
+    SELECT 
+      DeveloperOrganization.id,
+      Organization.uuid AS "organization_id"
+    FROM 
+      Developer,
+      DeveloperOrganization,
+      Organization
+    WHERE 
+      Organization.id = DeveloperOrganization.organization_id AND
+      DeveloperOrganization.developer_id = Developer.id AND
+      Developer.uuid = ?
+  ` )
+  .all(
+    req.params.developer
+  );
+
+  // Loop through organizations provided as array
+  for( let a = 0; a < req.body.length; a++ ) {
+    let record = {
+      id: null,
+      organization_uuid: req.body[a].id,
+      developer_uuid: req.params.developer,
+      name: req.body[a].name
+    }
+
+    // Check if organization exists
+    // By name
+    // Case-insensitive
+    let existing = req.db.prepare( `
+      SELECT
+        Organization.uuid AS "id",
+        Organization.created_at,
+        Organization.updated_at,
+        Organization.name
+      FROM
+        Organization
+      WHERE
+        LOWER( Organization.name ) = ?
+    ` )
+    .get(
+      record.name.trim().toLowerCase()
+    );
+
+    // Organization does not exist
+    if( existing === undefined ) {
+      // Assign external UUID
+      // Assign created and updated stamps
+      record.organization_uuid = uuidv4();
+      record.created_at = new Date().toISOString();
+      record.updated_at = new Date().toISOString();
+
+      // Create organization
+      let info = req.db.prepare( `
+        INSERT INTO Organization
+        VALUES ( ?, ?, ?, ?, ? )
+      ` )
+      .run(
+        record.id,
+        record.organization_uuid,
+        record.created_at,
+        record.updated_at,
+        record.name
+      );
+    } else {
+      // Carry over existing organization data
+      record.organization_uuid = existing.id;
+      record.created_at = existing.created_at;
+      record.updated_at = existing.updated_at;        
+      record.name = existing.name;
+    }
+
+    // Organization exists
+    // Check if relationship to developer exists
+    let relates = req.db.prepare( `
+      SELECT
+        DeveloperOrganization.uuid AS "id",
+        DeveloperOrganization.created_at,
+        DeveloperOrganization.updated_at,
+        Developer.uuid AS "developer_id",
+        Organization.uuid AS "organization_id",
+        Organization.name
+      FROM
+        Developer,
+        DeveloperOrganization,
+        Organization
+      WHERE
+        Developer.id = DeveloperOrganization.developer_id AND
+        DeveloperOrganization.organization_id = Organization.id AND
+        Developer.uuid = ? AND
+        Organization.uuid = ?
+    ` )
+    .get(
+      record.developer_uuid,
+      record.organization_uuid
+    );
+
+    // No existing relationship
+    if( relates === undefined ) {
+      // Get internal IDs
+      let ids = req.db.prepare( `
+        SELECT
+          Developer.id AS "developer_id",
+          Organization.id AS "organization_id"
+        FROM
+          Developer,
+          Organization
+        WHERE
+          Developer.uuid = ? AND
+          Organization.uuid = ?
+      ` )
+      .get( 
+        record.developer_uuid,
+        record.organization_uuid
+      );
+
+      // Assign IDs
+      record.developer_id = ids.developer_id;
+      record.organization_id = ids.organization_id;
+      record.relation_uuid = uuidv4();
+  
+      // Create relationship
+      let info = req.db.prepare( `
+        INSERT INTO DeveloperOrganization
+        VALUES ( ?, ?, ?, ?, ?, ? )
+      ` )
+      .run(
+        record.id,
+        record.relation_uuid,
+        record.created_at,
+        record.updated_at,
+        record.developer_id,
+        record.organization_id
+      );
+    }
+
+    // Mirror organization record
+    // Hydrated with complete details
+    organizations.push( {
+      id: record.organization_uuid,
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      name: record.name
+    } );
+  }
+
+  // Now check for orphans
+  // Organizations that used to have an association
+  // That are no longer desired to have an association
+  for( let a = 0; a < relationships.length; a++ ) {
+    let found = false;
+
+    // Name matches
+    for( let b = 0; b < organizations.length; b++ ) {
+      if( relationships[a].organization_id === organizations[b].id ) {
+        found = true;
+        break;
+      }
+    }
+
+    // Not found in new associations
+    if( !found ) {
+      let removed = req.db.prepare( `
+        DELETE FROM DeveloperOrganization
+        WHERE DeveloperOrganization.id = ?
+      ` )
+      .run(
+        relationships[a].id
+      );
+    }
+  }
+
+  res.json( organizations );
 } );
 
 // Create

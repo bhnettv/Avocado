@@ -74,6 +74,7 @@ form > div:last-of-type {
   <div>
     <TagInput
       data="{$organizations}"
+      dataField="id"
       labelField="name"
       label="Organization"
       placeholder="Organization"
@@ -86,7 +87,7 @@ form > div:last-of-type {
     <TextInput
       label="Location"
       placeholder="Location"
-      helper="As specific or general as is needed"
+      helper="As specific or general as is desired"
       bind:value="{$developer_location}"
       {disabled}/>
   </div>

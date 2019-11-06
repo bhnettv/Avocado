@@ -46,6 +46,9 @@ let endpoints = true;
 let profile = true;
 let summary = true;
 
+// Changes
+let before_organizations = [];
+
 // Filter developer list on search term
 function filter() {
   let trimmed = search.trim().toLowerCase();
@@ -63,6 +66,25 @@ function filter() {
 
     filtered = matches.slice();
   }
+}
+
+function refreshOrganization( create = false ) {
+  fetch( `/api/developer/${$developer_id}/organization`, {
+    method: create === true ? 'POST' : 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( $developer_organizations )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_organizations = data.slice();
+    return fetch( '/api/organization' );
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $organizations = data.slice();
+  } );
 }
 
 // Add clicked
@@ -95,11 +117,16 @@ function doCancelExisting( evt ) {
     $developer_name = data.name;
     $developer_email = data.email;
     $developer_image = data.image;
-    $developer_organizations = [];
     $developer_location = data.location;
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
     $developer_public = data.public;
+
+    fetch( `/api/developer/${$developer_id}/organization` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      $developer_organizations = data.slice();
+    } );
 
     add = false;
     enabled = 3;
@@ -177,12 +204,17 @@ function doDeveloperClick( evt ) {
     $developer_name = data.name === null ? '' : data.name;
     $developer_email = data.email === null ? '' : data.email;
     $developer_image = data.image === null ? '' : data.image;
-    $developer_organizations = [];
     $developer_location = data.location === null ? '' : data.location;
     $developer_latitude = data.latitude;
     $developer_longitude = data.longitude;
     $developer_description = data.description === null ? '' : data.description;
     $developer_public = data.public;
+
+    fetch( `/api/developer/${$developer_id}/organization` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_organizations = data.slice();
+    } );
 
     enabled = 3;
     social = 1;
@@ -241,6 +273,8 @@ function doSaveExisting( evt ) {
     endpoints = true;
     controls = 2;    
 
+    refreshOrganization( false );
+
     $developer_latitude = data.latitude === null ? null : data.latitude;
     $developer_longitude = data.longitude === null ? null : data.longitude;
 
@@ -256,8 +290,6 @@ function doSaveExisting( evt ) {
 
 // Save new developer
 function doSaveNew( evt ) {
-  console.log( $developer_organizations );
-
   fetch( '/api/developer', {
     method: 'POST',
     headers: {
@@ -287,6 +319,8 @@ function doSaveNew( evt ) {
     } );
     developers = developers.slice();
     filter();
+
+    refreshOrganization( true );
 
     add = false;
     enabled = 3;

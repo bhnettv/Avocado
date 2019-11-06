@@ -4,12 +4,13 @@ import Tag from './Tag.svelte';
 
 export let characters = 3;
 export let data = [];
+export let dataField = 'data';
 export let disabled = false;
 export let helper = undefined;
 export let label = undefined;
 export let labelField = 'label';
 export let limit = 4;
-export let menu = false;
+export let menu = [];
 export let placeholder = '';
 export let value = [];
 
@@ -23,7 +24,9 @@ function doBlur() {
 }
 
 function doKeyUp( evt ) {
+  // Enter
   if( evt.keyCode === 13 ) {
+    // From menu
     if( index > -1 ) {
       value.push( menu[index] );
       focus = true;
@@ -31,15 +34,18 @@ function doKeyUp( evt ) {
       let found = false;
       let tags = [];
 
+      // Multiples separated by comma
       if( evt.target.value.indexOf( ',' ) > 0 ) {
         tags = evt.target.value.split( ',' );
       } else {
         tags = [evt.target.value];
       }
 
+      // Iterate provided value(s)
       for( let t = 0; t < tags.length; t++ ) {
         let exists = null;
 
+        // Look in provided values
         for( let d = 0; d < data.length; d++ ) {
           if( data[d][labelField] === tags[t] ) {
             exists = data[d];
@@ -48,9 +54,11 @@ function doKeyUp( evt ) {
           }
         }
 
+        // Use provided value if match
         if( exists !== null ) {
           value.push( exists );
         } else {
+          // Check if already in list
           for( let v = 0; v < value.length; v++ ) {
             if( value[v] === tags[t].trim() ) {
               found = true;
@@ -58,6 +66,8 @@ function doKeyUp( evt ) {
             }
           }
 
+          // Totally unique tag
+          // Add to list with null ID
           if( !found ) {
             let tag = {id: null};
             tag[labelField] = tags[t];
@@ -67,20 +77,32 @@ function doKeyUp( evt ) {
       }      
     }
 
-    value = value.splice( 0 );
+    // Update form field value
+    // Clear value provided
+    // Hide menu
+    // Clear menu selection
+    value = value.slice( 0 );
     evt.target.value = '';
     menu = [];
     index = -1;
   }
 
+  // Backspace and empty input
   if( evt.keyCode === 8 && evt.target.value.trim().length === 0 ) {
+    evt.preventDefault();
+
+    // List has values
+    // User wants to delete from values
     if( value.length > 0 ) {
       value.pop();
       value = value.slice( 0 );
     }
   }
 
+  // Down arrow
   if( evt.keyCode === 40 ) {
+    // A menu is present
+    // Move displayed focus
     if( menu.length > 0 ) {
       if( index === -1 ) {
         focus = false;        
@@ -95,7 +117,10 @@ function doKeyUp( evt ) {
     }
   }
 
+  // Up arrow
   if( evt.keyCode === 38 ) {
+    // A menu is present
+    // Move displayed focus    
     if( menu.length > 0 ) {
       if( index === -1 ) {
         focus = false;          
@@ -110,9 +135,13 @@ function doKeyUp( evt ) {
     }
   }
 
+  // Field has enough characters to display menu
   if( evt.target.value.trim().length >= characters ) {
+    // Clear existing
     menu = [];
 
+    // Build new menu
+    // Case-insensitive
     for( let a = 0; a < data.length; a++ ) {
       if( data[a][labelField].toLowerCase().indexOf( evt.target.value.toLowerCase().trim() ) > -1 ) {
         let found = false;
@@ -130,17 +159,20 @@ function doKeyUp( evt ) {
       }
     }
 
+    // Trigger update
+    // Limit to number of desired matches
     menu = menu.slice( 0, limit );
   }
 }
 
-function doRemove( evt ) {
-  let index = evt.target.getAttribute( 'data-id' );
-
+// Remove specific tag by mouse click
+function doRemove( id, index ) {
   value.splice( index, 1 );
   value = [...value];
 }
 
+// TODO: Allow mouse select on menu
+// TODO: Not yet fully implemented
 function doSelect( evt ) {
   console.log( 'Select via click' );
   console.log( evt.detail.item );
@@ -238,7 +270,9 @@ p {
   <div class="content" class:focus="{focus}" class:disabled="{disabled}">
 
     {#each value as tag, t}
-      <Tag>{tag[labelField]}</Tag>      
+      <Tag 
+        {disabled} 
+        on:click="{() => doRemove( tag[dataField], t )}">{tag[labelField]}</Tag>      
     {/each}
 
     <input 
@@ -251,10 +285,11 @@ p {
 
   </div>
 
-  {#if data.length > 0}
+  {#if menu.length > 0}
 
     <Menu 
-      options="{data}" 
+      index="{index}"
+      options="{menu}" 
       top="{height + 3}" 
       labelField="name"/>
   

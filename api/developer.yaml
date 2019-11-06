@@ -249,34 +249,86 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                organization_id:
-                  type: string
-                  format: uuid
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    example: 'IBM'                    
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                      example: 'IBM'
+    put:
+      tags:
+      - 🖥️ Developer
+      summary: Update developer association with an organization(s)
+      operationId: updateDeveloperOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
                 type: object
                 properties:
                   id:
                     type: string
                     format: uuid
-                  created_at:
+                  name:
                     type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  developer_id:
-                    type: string
-                    format: uuid
-                  organization_id:
-                    type: string
-                    format: uuid
+                    example: 'IBM'                    
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                      example: 'IBM'                      
   /developer/organization/{id}:
     parameters:
     - name: id

@@ -3533,7 +3533,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (67:2) {#each options as item, i}
+    // (51:2) {#each options as item, i}
     function create_each_block$2(ctx) {
     	var li, button, t0_value = ctx.item[ctx.labelField] + "", t0, t1;
 
@@ -3544,11 +3544,11 @@ var app = (function () {
     			t0 = text(t0_value);
     			t1 = space();
     			attr_dev(button, "type", "button");
-    			attr_dev(button, "class", "svelte-1pia1yq");
-    			add_location(button, file$9, 69, 6, 1112);
-    			attr_dev(li, "class", "svelte-1pia1yq");
+    			attr_dev(button, "class", "svelte-sc289e");
+    			add_location(button, file$9, 53, 6, 882);
+    			attr_dev(li, "class", "svelte-sc289e");
     			toggle_class(li, "selected", ctx.index === ctx.i ? true : false);
-    			add_location(li, file$9, 68, 4, 1055);
+    			add_location(li, file$9, 52, 4, 825);
     		},
 
     		m: function mount(target, anchor) {
@@ -3574,12 +3574,12 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$2.name, type: "each", source: "(67:2) {#each options as item, i}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$2.name, type: "each", source: "(51:2) {#each options as item, i}", ctx });
     	return block;
     }
 
     function create_fragment$9(ctx) {
-    	var ul, dispose;
+    	var ul;
 
     	let each_value = ctx.options;
 
@@ -3597,10 +3597,8 @@ var app = (function () {
     				each_blocks[i].c();
     			}
     			set_style(ul, "top", "" + ctx.top + "px");
-    			attr_dev(ul, "class", "svelte-1pia1yq");
-    			toggle_class(ul, "hidden", ctx.hidden);
-    			add_location(ul, file$9, 64, 0, 976);
-    			dispose = listen_dev(window, "keyup", doKeyDown);
+    			attr_dev(ul, "class", "svelte-sc289e");
+    			add_location(ul, file$9, 48, 0, 759);
     		},
 
     		l: function claim(nodes) {
@@ -3641,10 +3639,6 @@ var app = (function () {
     			if (changed.top) {
     				set_style(ul, "top", "" + ctx.top + "px");
     			}
-
-    			if (changed.hidden) {
-    				toggle_class(ul, "hidden", ctx.hidden);
-    			}
     		},
 
     		i: noop,
@@ -3656,62 +3650,53 @@ var app = (function () {
     			}
 
     			destroy_each(each_blocks, detaching);
-
-    			dispose();
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$9.name, type: "component", source: "", ctx });
     	return block;
     }
 
-    function doKeyDown( evt ) {
-
-    }
-
     function instance$9($$self, $$props, $$invalidate) {
-    	let { hidden = true, labelField = 'label', options = [], top = 0 } = $$props;
+    	let { index = -1, labelField = 'label', options = [], top = 0 } = $$props;
 
-    let index = -1;
-
-    	const writable_props = ['hidden', 'labelField', 'options', 'top'];
+    	const writable_props = ['index', 'labelField', 'options', 'top'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Menu> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$set = $$props => {
-    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
+    		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('labelField' in $$props) $$invalidate('labelField', labelField = $$props.labelField);
     		if ('options' in $$props) $$invalidate('options', options = $$props.options);
     		if ('top' in $$props) $$invalidate('top', top = $$props.top);
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, labelField, options, top, index };
+    		return { index, labelField, options, top };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
+    		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('labelField' in $$props) $$invalidate('labelField', labelField = $$props.labelField);
     		if ('options' in $$props) $$invalidate('options', options = $$props.options);
     		if ('top' in $$props) $$invalidate('top', top = $$props.top);
-    		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     	};
 
-    	return { hidden, labelField, options, top, index };
+    	return { index, labelField, options, top };
     }
 
     class Menu extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$9, create_fragment$9, safe_not_equal, ["hidden", "labelField", "options", "top"]);
+    		init(this, options, instance$9, create_fragment$9, safe_not_equal, ["index", "labelField", "options", "top"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Menu", options, id: create_fragment$9.name });
     	}
 
-    	get hidden() {
+    	get index() {
     		throw new Error("<Menu>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set hidden(value) {
+    	set index(value) {
     		throw new Error("<Menu>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -3760,15 +3745,15 @@ var app = (function () {
     			button = element("button");
 
     			attr_dev(p, "class", "svelte-1vqvdip");
-    			add_location(p, file$a, 50, 2, 805);
+    			add_location(p, file$a, 46, 2, 774);
     			attr_dev(button, "type", "button");
     			set_style(button, "display", (ctx.disabled ? 'none' : 'initial'));
     			attr_dev(button, "class", "svelte-1vqvdip");
-    			add_location(button, file$a, 51, 2, 828);
+    			add_location(button, file$a, 47, 2, 797);
     			attr_dev(div, "class", "tag svelte-1vqvdip");
     			toggle_class(div, "disabled", ctx.disabled);
-    			add_location(div, file$a, 49, 0, 757);
-    			dispose = listen_dev(button, "click", doRemove);
+    			add_location(div, file$a, 45, 0, 726);
+    			dispose = listen_dev(button, "click", ctx.click_handler);
     		},
 
     		l: function claim(nodes) {
@@ -3830,10 +3815,6 @@ var app = (function () {
     	return block;
     }
 
-    function doRemove( evt ) {
-
-    }
-
     function instance$a($$self, $$props, $$invalidate) {
     	let { disabled = false } = $$props;
 
@@ -3843,6 +3824,10 @@ var app = (function () {
     	});
 
     	let { $$slots = {}, $$scope } = $$props;
+
+    	function click_handler(event) {
+    		bubble($$self, event);
+    	}
 
     	$$self.$set = $$props => {
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
@@ -3857,7 +3842,12 @@ var app = (function () {
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
-    	return { disabled, $$slots, $$scope };
+    	return {
+    		disabled,
+    		click_handler,
+    		$$slots,
+    		$$scope
+    	};
     }
 
     class Tag extends SvelteComponentDev {
@@ -3888,7 +3878,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (226:2) {#if label !== undefined}
+    // (258:2) {#if label !== undefined}
     function create_if_block_2$2(ctx) {
     	var label_1, t;
 
@@ -3898,7 +3888,7 @@ var app = (function () {
     			t = text(ctx.label);
     			set_style(label_1, "color", (ctx.disabled ? '#c6c6c6' : '#393939'));
     			attr_dev(label_1, "class", "svelte-sznk6l");
-    			add_location(label_1, file$b, 227, 4, 4461);
+    			add_location(label_1, file$b, 259, 4, 5379);
     		},
 
     		m: function mount(target, anchor) {
@@ -3922,11 +3912,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2$2.name, type: "if", source: "(226:2) {#if label !== undefined}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2$2.name, type: "if", source: "(258:2) {#if label !== undefined}", ctx });
     	return block;
     }
 
-    // (232:2) {#if helper !== undefined}
+    // (264:2) {#if helper !== undefined}
     function create_if_block_1$3(ctx) {
     	var p, t;
 
@@ -3936,7 +3926,7 @@ var app = (function () {
     			t = text(ctx.helper);
     			set_style(p, "color", (ctx.disabled ? '#c6c6c6' : '#6f6f6f'));
     			attr_dev(p, "class", "svelte-sznk6l");
-    			add_location(p, file$b, 233, 4, 4578);
+    			add_location(p, file$b, 265, 4, 5496);
     		},
 
     		m: function mount(target, anchor) {
@@ -3960,11 +3950,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$3.name, type: "if", source: "(232:2) {#if helper !== undefined}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$3.name, type: "if", source: "(264:2) {#if helper !== undefined}", ctx });
     	return block;
     }
 
-    // (241:6) <Tag>
+    // (273:6) <Tag          {disabled}          on:click="{() => doRemove( tag[dataField], t )}">
     function create_default_slot$1(ctx) {
     	var t_value = ctx.tag[ctx.labelField] + "", t;
 
@@ -3989,21 +3979,27 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$1.name, type: "slot", source: "(241:6) <Tag>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$1.name, type: "slot", source: "(273:6) <Tag          {disabled}          on:click=\"{() => doRemove( tag[dataField], t )}\">", ctx });
     	return block;
     }
 
-    // (240:4) {#each value as tag, t}
+    // (272:4) {#each value as tag, t}
     function create_each_block$3(ctx) {
     	var current;
 
+    	function click_handler() {
+    		return ctx.click_handler(ctx);
+    	}
+
     	var tag = new Tag({
     		props: {
+    		disabled: ctx.disabled,
     		$$slots: { default: [create_default_slot$1] },
     		$$scope: { ctx }
     	},
     		$$inline: true
     	});
+    	tag.$on("click", click_handler);
 
     	const block = {
     		c: function create() {
@@ -4015,8 +4011,10 @@ var app = (function () {
     			current = true;
     		},
 
-    		p: function update(changed, ctx) {
+    		p: function update(changed, new_ctx) {
+    			ctx = new_ctx;
     			var tag_changes = {};
+    			if (changed.disabled) tag_changes.disabled = ctx.disabled;
     			if (changed.$$scope || changed.value || changed.labelField) tag_changes.$$scope = { changed, ctx };
     			tag.$set(tag_changes);
     		},
@@ -4037,17 +4035,18 @@ var app = (function () {
     			destroy_component(tag, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$3.name, type: "each", source: "(240:4) {#each value as tag, t}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$3.name, type: "each", source: "(272:4) {#each value as tag, t}", ctx });
     	return block;
     }
 
-    // (254:2) {#if data.length > 0}
+    // (288:2) {#if menu.length > 0}
     function create_if_block$4(ctx) {
     	var current;
 
     	var menu_1 = new Menu({
     		props: {
-    		options: ctx.data,
+    		index: ctx.index,
+    		options: ctx.menu,
     		top: ctx.height + 3,
     		labelField: "name"
     	},
@@ -4066,7 +4065,8 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var menu_1_changes = {};
-    			if (changed.data) menu_1_changes.options = ctx.data;
+    			if (changed.index) menu_1_changes.index = ctx.index;
+    			if (changed.menu) menu_1_changes.options = ctx.menu;
     			if (changed.height) menu_1_changes.top = ctx.height + 3;
     			menu_1.$set(menu_1_changes);
     		},
@@ -4087,7 +4087,7 @@ var app = (function () {
     			destroy_component(menu_1, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$4.name, type: "if", source: "(254:2) {#if data.length > 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$4.name, type: "if", source: "(288:2) {#if menu.length > 0}", ctx });
     	return block;
     }
 
@@ -4110,7 +4110,7 @@ var app = (function () {
     		each_blocks[i] = null;
     	});
 
-    	var if_block2 = (ctx.data.length > 0) && create_if_block$4(ctx);
+    	var if_block2 = (ctx.menu.length > 0) && create_if_block$4(ctx);
 
     	const block = {
     		c: function create() {
@@ -4133,14 +4133,14 @@ var app = (function () {
     			attr_dev(input, "placeholder", ctx.placeholder);
     			input.disabled = ctx.disabled;
     			attr_dev(input, "class", "svelte-sznk6l");
-    			add_location(input, file$b, 243, 4, 4815);
+    			add_location(input, file$b, 277, 4, 5811);
     			attr_dev(div0, "class", "content svelte-sznk6l");
     			toggle_class(div0, "focus", ctx.focus);
     			toggle_class(div0, "disabled", ctx.disabled);
-    			add_location(div0, file$b, 237, 2, 4656);
+    			add_location(div0, file$b, 269, 2, 5574);
     			add_render_callback(() => ctx.div1_resize_handler.call(div1));
     			attr_dev(div1, "class", "control svelte-sznk6l");
-    			add_location(div1, file$b, 223, 0, 4376);
+    			add_location(div1, file$b, 255, 0, 5294);
 
     			dispose = [
     				listen_dev(input, "keyup", ctx.doKeyUp),
@@ -4200,7 +4200,7 @@ var app = (function () {
     				if_block1 = null;
     			}
 
-    			if (changed.value || changed.labelField) {
+    			if (changed.disabled || changed.value || changed.labelField) {
     				each_value = ctx.value;
 
     				let i;
@@ -4241,7 +4241,7 @@ var app = (function () {
     				toggle_class(div0, "disabled", ctx.disabled);
     			}
 
-    			if (ctx.data.length > 0) {
+    			if (ctx.menu.length > 0) {
     				if (if_block2) {
     					if_block2.p(changed, ctx);
     					transition_in(if_block2, 1);
@@ -4302,7 +4302,7 @@ var app = (function () {
     function instance$b($$self, $$props, $$invalidate) {
     	
 
-    let { characters = 3, data = [], disabled = false, helper = undefined, label = undefined, labelField = 'label', limit = 4, menu = false, placeholder = '', value = [] } = $$props;
+    let { characters = 3, data = [], dataField = 'data', disabled = false, helper = undefined, label = undefined, labelField = 'label', limit = 4, menu = [], placeholder = '', value = [] } = $$props;
 
     let focus = false;
     let height = 0;
@@ -4314,7 +4314,9 @@ var app = (function () {
     }
 
     function doKeyUp( evt ) {
+      // Enter
       if( evt.keyCode === 13 ) {
+        // From menu
         if( index > -1 ) {
           value.push( menu[index] );
           $$invalidate('focus', focus = true);
@@ -4322,15 +4324,18 @@ var app = (function () {
           let found = false;
           let tags = [];
 
+          // Multiples separated by comma
           if( evt.target.value.indexOf( ',' ) > 0 ) {
             tags = evt.target.value.split( ',' );
           } else {
             tags = [evt.target.value];
           }
 
+          // Iterate provided value(s)
           for( let t = 0; t < tags.length; t++ ) {
             let exists = null;
 
+            // Look in provided values
             for( let d = 0; d < data.length; d++ ) {
               if( data[d][labelField] === tags[t] ) {
                 exists = data[d];
@@ -4339,9 +4344,11 @@ var app = (function () {
               }
             }
 
+            // Use provided value if match
             if( exists !== null ) {
               value.push( exists );
             } else {
+              // Check if already in list
               for( let v = 0; v < value.length; v++ ) {
                 if( value[v] === tags[t].trim() ) {
                   found = true;
@@ -4349,6 +4356,8 @@ var app = (function () {
                 }
               }
 
+              // Totally unique tag
+              // Add to list with null ID
               if( !found ) {
                 let tag = {id: null};
                 tag[labelField] = tags[t];
@@ -4358,52 +4367,71 @@ var app = (function () {
           }      
         }
 
-        $$invalidate('value', value = value.splice( 0 ));
+        // Update form field value
+        // Clear value provided
+        // Hide menu
+        // Clear menu selection
+        $$invalidate('value', value = value.slice( 0 ));
         evt.target.value = '';
         $$invalidate('menu', menu = []);
-        index = -1;
+        $$invalidate('index', index = -1);
       }
 
+      // Backspace and empty input
       if( evt.keyCode === 8 && evt.target.value.trim().length === 0 ) {
+        evt.preventDefault();
+
+        // List has values
+        // User wants to delete from values
         if( value.length > 0 ) {
           value.pop();
           $$invalidate('value', value = value.slice( 0 ));
         }
       }
 
+      // Down arrow
       if( evt.keyCode === 40 ) {
+        // A menu is present
+        // Move displayed focus
         if( menu.length > 0 ) {
           if( index === -1 ) {
             $$invalidate('focus', focus = false);        
-            index = 0;
+            $$invalidate('index', index = 0);
           } else {
             if( index === ( menu.length - 1 ) ) {
-              index = 0;
+              $$invalidate('index', index = 0);
             } else {
-              index = index + 1;
+              $$invalidate('index', index = index + 1);
             }
           }      
         }
       }
 
+      // Up arrow
       if( evt.keyCode === 38 ) {
+        // A menu is present
+        // Move displayed focus    
         if( menu.length > 0 ) {
           if( index === -1 ) {
             $$invalidate('focus', focus = false);          
-            index = menu.length - 1;
+            $$invalidate('index', index = menu.length - 1);
           } else {
             if( index === 0 ) {
-              index = menu.length - 1;
+              $$invalidate('index', index = menu.length - 1);
             } else {
-              index = index - 1;
+              $$invalidate('index', index = index - 1);
             }
           }
         }
       }
 
+      // Field has enough characters to display menu
       if( evt.target.value.trim().length >= characters ) {
+        // Clear existing
         $$invalidate('menu', menu = []);
 
+        // Build new menu
+        // Case-insensitive
         for( let a = 0; a < data.length; a++ ) {
           if( data[a][labelField].toLowerCase().indexOf( evt.target.value.toLowerCase().trim() ) > -1 ) {
             let found = false;
@@ -4421,14 +4449,24 @@ var app = (function () {
           }
         }
 
+        // Trigger update
+        // Limit to number of desired matches
         $$invalidate('menu', menu = menu.slice( 0, limit ));
       }
     }
 
-    	const writable_props = ['characters', 'data', 'disabled', 'helper', 'label', 'labelField', 'limit', 'menu', 'placeholder', 'value'];
+    // Remove specific tag by mouse click
+    function doRemove( id, index ) {
+      value.splice( index, 1 );
+      $$invalidate('value', value = [...value]);
+    }
+
+    	const writable_props = ['characters', 'data', 'dataField', 'disabled', 'helper', 'label', 'labelField', 'limit', 'menu', 'placeholder', 'value'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console_1.warn(`<TagInput> was created with unknown prop '${key}'`);
     	});
+
+    	const click_handler = ({ tag, t }) => doRemove( tag[dataField], t );
 
     	const focus_handler = () => $$invalidate('focus', focus = true);
 
@@ -4440,6 +4478,7 @@ var app = (function () {
     	$$self.$set = $$props => {
     		if ('characters' in $$props) $$invalidate('characters', characters = $$props.characters);
     		if ('data' in $$props) $$invalidate('data', data = $$props.data);
+    		if ('dataField' in $$props) $$invalidate('dataField', dataField = $$props.dataField);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     		if ('helper' in $$props) $$invalidate('helper', helper = $$props.helper);
     		if ('label' in $$props) $$invalidate('label', label = $$props.label);
@@ -4451,12 +4490,13 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { characters, data, disabled, helper, label, labelField, limit, menu, placeholder, value, focus, height, index };
+    		return { characters, data, dataField, disabled, helper, label, labelField, limit, menu, placeholder, value, focus, height, index };
     	};
 
     	$$self.$inject_state = $$props => {
     		if ('characters' in $$props) $$invalidate('characters', characters = $$props.characters);
     		if ('data' in $$props) $$invalidate('data', data = $$props.data);
+    		if ('dataField' in $$props) $$invalidate('dataField', dataField = $$props.dataField);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     		if ('helper' in $$props) $$invalidate('helper', helper = $$props.helper);
     		if ('label' in $$props) $$invalidate('label', label = $$props.label);
@@ -4467,12 +4507,13 @@ var app = (function () {
     		if ('value' in $$props) $$invalidate('value', value = $$props.value);
     		if ('focus' in $$props) $$invalidate('focus', focus = $$props.focus);
     		if ('height' in $$props) $$invalidate('height', height = $$props.height);
-    		if ('index' in $$props) index = $$props.index;
+    		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     	};
 
     	return {
     		characters,
     		data,
+    		dataField,
     		disabled,
     		helper,
     		label,
@@ -4483,9 +4524,12 @@ var app = (function () {
     		value,
     		focus,
     		height,
+    		index,
     		doBlur,
     		doKeyUp,
+    		doRemove,
     		undefined,
+    		click_handler,
     		focus_handler,
     		div1_resize_handler
     	};
@@ -4494,7 +4538,7 @@ var app = (function () {
     class TagInput extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$b, create_fragment$b, safe_not_equal, ["characters", "data", "disabled", "helper", "label", "labelField", "limit", "menu", "placeholder", "value"]);
+    		init(this, options, instance$b, create_fragment$b, safe_not_equal, ["characters", "data", "dataField", "disabled", "helper", "label", "labelField", "limit", "menu", "placeholder", "value"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "TagInput", options, id: create_fragment$b.name });
     	}
 
@@ -4511,6 +4555,14 @@ var app = (function () {
     	}
 
     	set data(value) {
+    		throw new Error("<TagInput>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get dataField() {
+    		throw new Error("<TagInput>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set dataField(value) {
     		throw new Error("<TagInput>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -4944,7 +4996,7 @@ var app = (function () {
     	}
 
     	let select_props = {
-    		options: ctx.external,
+    		options: ctx.publish,
     		dataField: "id",
     		labelField: "label",
     		inline: "true",
@@ -4976,19 +5028,19 @@ var app = (function () {
     			div4 = element("div");
     			select.$$.fragment.c();
     			attr_dev(div0, "class", "svelte-jesd26");
-    			add_location(div0, file$d, 44, 2, 743);
+    			add_location(div0, file$d, 44, 2, 742);
     			attr_dev(div1, "class", "svelte-jesd26");
-    			add_location(div1, file$d, 52, 2, 891);
+    			add_location(div1, file$d, 52, 2, 890);
     			attr_dev(div2, "class", "svelte-jesd26");
-    			add_location(div2, file$d, 60, 2, 1050);
+    			add_location(div2, file$d, 60, 2, 1049);
     			set_style(div3, "flex-grow", "1");
     			attr_dev(div3, "class", "svelte-jesd26");
-    			add_location(div3, file$d, 68, 2, 1226);
+    			add_location(div3, file$d, 68, 2, 1225);
     			attr_dev(div4, "class", "svelte-jesd26");
-    			add_location(div4, file$d, 76, 2, 1405);
+    			add_location(div4, file$d, 76, 2, 1404);
     			attr_dev(form, "class", "svelte-jesd26");
     			toggle_class(form, "hidden", ctx.hidden);
-    			add_location(form, file$d, 42, 0, 720);
+    			add_location(form, file$d, 42, 0, 719);
     		},
 
     		l: function claim(nodes) {
@@ -5102,7 +5154,7 @@ var app = (function () {
 
     let { hidden = false, disabled = false } = $$props;
 
-    let external = [
+    let publish = [
       {id: 0, label: 'No'}, 
       {id: 1, label: 'Yes'}
     ];
@@ -5128,13 +5180,13 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, disabled, external, $developer_description, $developer_public };
+    		return { hidden, disabled, publish, $developer_description, $developer_public };
     	};
 
     	$$self.$inject_state = $$props => {
     		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
-    		if ('external' in $$props) $$invalidate('external', external = $$props.external);
+    		if ('publish' in $$props) $$invalidate('publish', publish = $$props.publish);
     		if ('$developer_description' in $$props) developer_description.set($developer_description);
     		if ('$developer_public' in $$props) developer_public.set($developer_public);
     	};
@@ -5142,7 +5194,7 @@ var app = (function () {
     	return {
     		hidden,
     		disabled,
-    		external,
+    		publish,
     		$developer_description,
     		$developer_public,
     		textarea_value_binding,
@@ -6257,6 +6309,7 @@ var app = (function () {
 
     	let taginput_props = {
     		data: ctx.$organizations,
+    		dataField: "id",
     		labelField: "name",
     		label: "Organization",
     		placeholder: "Organization",
@@ -6279,7 +6332,7 @@ var app = (function () {
     	let textinput3_props = {
     		label: "Location",
     		placeholder: "Location",
-    		helper: "As specific or general as is needed",
+    		helper: "As specific or general as is desired",
     		disabled: ctx.disabled
     	};
     	if (ctx.$developer_location !== void 0) {
@@ -6327,9 +6380,9 @@ var app = (function () {
     			attr_dev(div3, "class", "svelte-1c1qnk7");
     			add_location(div3, file$i, 73, 2, 1512);
     			attr_dev(div4, "class", "svelte-1c1qnk7");
-    			add_location(div4, file$i, 84, 2, 1776);
+    			add_location(div4, file$i, 85, 2, 1797);
     			attr_dev(div5, "class", "svelte-1c1qnk7");
-    			add_location(div5, file$i, 93, 2, 1972);
+    			add_location(div5, file$i, 94, 2, 1994);
     			attr_dev(form, "class", "svelte-1c1qnk7");
     			toggle_class(form, "hidden", ctx.hidden);
     			add_location(form, file$i, 48, 0, 976);
@@ -6898,7 +6951,7 @@ var app = (function () {
 
     const file$m = "src/Developers.svelte";
 
-    // (365:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
+    // (399:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
     function create_default_slot_8(ctx) {
     	var t;
 
@@ -6917,11 +6970,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(365:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(399:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (374:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
+    // (408:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
     function create_default_slot_7(ctx) {
     	var current;
 
@@ -6962,11 +7015,11 @@ var app = (function () {
     			destroy_component(listlabelitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(374:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(408:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (385:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (419:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -7011,11 +7064,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(385:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(419:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (384:4) <Details summary="Organizations">
+    // (418:4) <Details summary="Organizations">
     function create_default_slot_5$1(ctx) {
     	var current;
 
@@ -7063,11 +7116,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(384:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5$1.name, type: "slot", source: "(418:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (399:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (433:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4$1(ctx) {
     	var t;
 
@@ -7086,11 +7139,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(399:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4$1.name, type: "slot", source: "(433:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (402:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
+    // (436:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}"         disabled="{enabled >= 1 ? false : true}">
     function create_default_slot_3$1(ctx) {
     	var t;
 
@@ -7109,11 +7162,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(402:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3$1.name, type: "slot", source: "(436:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\"         disabled=\"{enabled >= 1 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (406:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
+    // (440:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}"          disabled="{enabled >= 2 ? false : true}">
     function create_default_slot_2$1(ctx) {
     	var t;
 
@@ -7132,11 +7185,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(406:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2$1.name, type: "slot", source: "(440:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\"          disabled=\"{enabled >= 2 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (410:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
+    // (444:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}"          disabled="{enabled >= 3 ? false : true}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7155,11 +7208,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(410:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(444:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\"          disabled=\"{enabled >= 3 ? false : true}\">", ctx });
     	return block;
     }
 
-    // (398:4) <TabBar>
+    // (432:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7296,7 +7349,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(398:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(432:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -7449,17 +7502,17 @@ var app = (function () {
     			t12 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$m, 362, 4, 9151);
+    			add_location(div0, file$m, 396, 4, 10069);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$m, 372, 4, 9428);
+    			add_location(h4, file$m, 406, 4, 10346);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$m, 359, 2, 9118);
+    			add_location(aside0, file$m, 393, 2, 10036);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$m, 394, 2, 9965);
+    			add_location(article, file$m, 428, 2, 10883);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$m, 447, 2, 11503);
+    			add_location(aside1, file$m, 481, 2, 12421);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$m, 356, 0, 9073);
+    			add_location(div1, file$m, 390, 0, 9991);
     		},
 
     		l: function claim(nodes) {
@@ -7631,18 +7684,20 @@ var app = (function () {
     }
 
     function instance$m($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $developer_description, $developer_public, $notes, $organizations;
+    	let $developer_id, $developer_organizations, $organizations, $developer_name, $developer_email, $developer_image, $developer_location, $developer_latitude, $developer_longitude, $developer_description, $developer_public, $notes;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
+    	validate_store(developer_organizations, 'developer_organizations');
+    	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
+    	validate_store(organizations, 'organizations');
+    	component_subscribe($$self, organizations, $$value => { $organizations = $$value; $$invalidate('$organizations', $organizations); });
     	validate_store(developer_name, 'developer_name');
     	component_subscribe($$self, developer_name, $$value => { $developer_name = $$value; $$invalidate('$developer_name', $developer_name); });
     	validate_store(developer_email, 'developer_email');
     	component_subscribe($$self, developer_email, $$value => { $developer_email = $$value; $$invalidate('$developer_email', $developer_email); });
     	validate_store(developer_image, 'developer_image');
     	component_subscribe($$self, developer_image, $$value => { $developer_image = $$value; $$invalidate('$developer_image', $developer_image); });
-    	validate_store(developer_organizations, 'developer_organizations');
-    	component_subscribe($$self, developer_organizations, $$value => { $developer_organizations = $$value; $$invalidate('$developer_organizations', $developer_organizations); });
     	validate_store(developer_location, 'developer_location');
     	component_subscribe($$self, developer_location, $$value => { $developer_location = $$value; $$invalidate('$developer_location', $developer_location); });
     	validate_store(developer_latitude, 'developer_latitude');
@@ -7655,8 +7710,6 @@ var app = (function () {
     	component_subscribe($$self, developer_public, $$value => { $developer_public = $$value; $$invalidate('$developer_public', $developer_public); });
     	validate_store(notes, 'notes');
     	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
-    	validate_store(organizations, 'organizations');
-    	component_subscribe($$self, organizations, $$value => { $organizations = $$value; $$invalidate('$organizations', $organizations); });
 
     	
 
@@ -7676,6 +7729,9 @@ var app = (function () {
     let profile = true;
     let summary = true;
 
+    // Changes
+    let before_organizations = [];
+
     // Filter developer list on search term
     function filter() {
       let trimmed = search.trim().toLowerCase();
@@ -7693,6 +7749,25 @@ var app = (function () {
 
         $$invalidate('filtered', filtered = matches.slice());
       }
+    }
+
+    function refreshOrganization( create = false ) {
+      fetch( `/api/developer/${$developer_id}/organization`, {
+        method: create === true ? 'POST' : 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( $developer_organizations )
+      } )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(developer_organizations, $developer_organizations = data.slice());
+        return fetch( '/api/organization' );
+      } )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(organizations, $organizations = data.slice());
+      } );
     }
 
     // Add clicked
@@ -7725,11 +7800,16 @@ var app = (function () {
         set_store_value(developer_name, $developer_name = data.name);
         set_store_value(developer_email, $developer_email = data.email);
         set_store_value(developer_image, $developer_image = data.image);
-        set_store_value(developer_organizations, $developer_organizations = []);
         set_store_value(developer_location, $developer_location = data.location);
         set_store_value(developer_latitude, $developer_latitude = data.latitude);
         set_store_value(developer_longitude, $developer_longitude = data.longitude);
         set_store_value(developer_public, $developer_public = data.public);
+
+        fetch( `/api/developer/${$developer_id}/organization` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => {
+          set_store_value(developer_organizations, $developer_organizations = data.slice());
+        } );
 
         $$invalidate('add', add = false);
         $$invalidate('enabled', enabled = 3);
@@ -7807,12 +7887,17 @@ var app = (function () {
         set_store_value(developer_name, $developer_name = data.name === null ? '' : data.name);
         set_store_value(developer_email, $developer_email = data.email === null ? '' : data.email);
         set_store_value(developer_image, $developer_image = data.image === null ? '' : data.image);
-        set_store_value(developer_organizations, $developer_organizations = []);
         set_store_value(developer_location, $developer_location = data.location === null ? '' : data.location);
         set_store_value(developer_latitude, $developer_latitude = data.latitude);
         set_store_value(developer_longitude, $developer_longitude = data.longitude);
         set_store_value(developer_description, $developer_description = data.description === null ? '' : data.description);
         set_store_value(developer_public, $developer_public = data.public);
+
+        fetch( `/api/developer/${$developer_id}/organization` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => { 
+          set_store_value(developer_organizations, $developer_organizations = data.slice());
+        } );
 
         $$invalidate('enabled', enabled = 3);
         $$invalidate('social', social = 1);
@@ -7871,6 +7956,8 @@ var app = (function () {
         $$invalidate('endpoints', endpoints = true);
         $$invalidate('controls', controls = 2);    
 
+        refreshOrganization( false );
+
         set_store_value(developer_latitude, $developer_latitude = data.latitude === null ? null : data.latitude);
         set_store_value(developer_longitude, $developer_longitude = data.longitude === null ? null : data.longitude);
 
@@ -7886,8 +7973,6 @@ var app = (function () {
 
     // Save new developer
     function doSaveNew( evt ) {
-      console.log( $developer_organizations );
-
       fetch( '/api/developer', {
         method: 'POST',
         headers: {
@@ -7917,6 +8002,8 @@ var app = (function () {
         } );
         developers = developers.slice();
         filter();
+
+        refreshOrganization( true );
 
         $$invalidate('add', add = false);
         $$invalidate('enabled', enabled = 3);
@@ -7978,18 +8065,19 @@ var app = (function () {
     		if ('endpoints' in $$props) $$invalidate('endpoints', endpoints = $$props.endpoints);
     		if ('profile' in $$props) $$invalidate('profile', profile = $$props.profile);
     		if ('summary' in $$props) $$invalidate('summary', summary = $$props.summary);
+    		if ('before_organizations' in $$props) before_organizations = $$props.before_organizations;
     		if ('$developer_id' in $$props) developer_id.set($developer_id);
+    		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
+    		if ('$organizations' in $$props) organizations.set($organizations);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     		if ('$developer_email' in $$props) developer_email.set($developer_email);
     		if ('$developer_image' in $$props) developer_image.set($developer_image);
-    		if ('$developer_organizations' in $$props) developer_organizations.set($developer_organizations);
     		if ('$developer_location' in $$props) developer_location.set($developer_location);
     		if ('$developer_latitude' in $$props) developer_latitude.set($developer_latitude);
     		if ('$developer_longitude' in $$props) developer_longitude.set($developer_longitude);
     		if ('$developer_description' in $$props) developer_description.set($developer_description);
     		if ('$developer_public' in $$props) developer_public.set($developer_public);
     		if ('$notes' in $$props) notes.set($notes);
-    		if ('$organizations' in $$props) organizations.set($organizations);
     	};
 
     	return {

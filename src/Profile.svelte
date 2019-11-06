@@ -10,7 +10,7 @@ import { developer_public } from './developers.js';
 export let hidden = false;
 export let disabled = false;
 
-let external = [
+let publish = [
   {id: 0, label: 'No'}, 
   {id: 1, label: 'Yes'}
 ];
@@ -76,7 +76,7 @@ form > div:last-of-type {
 
   <div>
     <Select 
-      options="{external}"
+      options="{publish}"
       dataField="id" 
       labelField="label" 
       inline="true" 
