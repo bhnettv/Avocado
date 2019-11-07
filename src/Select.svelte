@@ -77,6 +77,17 @@ select.outline {
   border-bottom: solid 1px #8d8d8d;
 }
 
+select.outline:disabled {
+  background-image: url( /img/arrow-down-disabled.svg );    
+  border-bottom: solid 1px transparent;
+  color: #c6c6c6;
+  cursor: not-allowed;
+}
+
+select.outline:disabled:hover {
+  background-color: #f4f4f4;
+}
+
 select:focus {
   outline: solid 2px #0062ff;
 }

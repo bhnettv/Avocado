@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const organizations = writable( [] );
+export const skills = writable( [] );
 
 // Summary
 export const developer_id = writable( null );

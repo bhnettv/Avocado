@@ -4,6 +4,9 @@ import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
+import { skills } from './developers.js';
+
+import { developer_skills } from './developers.js';
 import { developer_description } from './developers.js';
 import { developer_public } from './developers.js';
 
@@ -60,10 +63,14 @@ form > div:last-of-type {
 
   <div>
     <TagInput
+      data="{$skills}"
+      dataField="id"
+      labelField="name"
       label="Skills"
       placeholder="Skills"
       helper="Capable of delivering hands-on training with zero preparation"
-      {disabled}/>
+      bind:value="{$developer_skills}"
+      {disabled}/> 
   </div>
 
   <div style="flex-grow: 1;">

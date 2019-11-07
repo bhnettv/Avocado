@@ -4,20 +4,21 @@ import { onMount } from 'svelte';
 import Button from './Button.svelte';
 import Controls from './Controls.svelte';
 import Details from './Details.svelte';
-import Endpoints from './Endpoints.svelte';
 import List from './List.svelte';
 import ListLabelItem from './ListLabelItem.svelte';
 import ListCountItem from './ListCountItem.svelte';
 import Profile from './Profile.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
+import Social from './Social.svelte';
 import Summary from './Summary.svelte';
 import Tab from './Tab.svelte';
 import TabBar from './TabBar.svelte';
-import Timeline from './Timeline.svelte';
 
 // Store
 import { organizations } from './developers.js';
+import { skills } from './developers.js';
+
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 import { developer_email } from './developers.js';
@@ -38,12 +39,11 @@ let enabled = 0;
 let filtered = [];
 let index = -1;
 let search = '';
-let social = 0;
 let tab = 0;
 
 // Panels disabled
-let endpoints = true;
 let profile = true;
+let social = true;
 let summary = true;
 
 // Changes
@@ -92,10 +92,9 @@ function doAddClick( evt ) {
   add = true;
   tab = 0;
   enabled = 2;
-  social = 0;
   summary = false;
   profile = false;
-  endpoints = false;
+  social = false;
   controls = 1;  
 
   $developer_id = null;
@@ -130,10 +129,9 @@ function doCancelExisting( evt ) {
 
     add = false;
     enabled = 3;
-    social = 1;
     summary = true;
     profile = true;
-    endpoints = true;
+    social = true;
     controls = 2;    
   } );
 }
@@ -142,10 +140,9 @@ function doCancelNew( evt ) {
   add = false;
   tab = 0;
   enabled = 0;
-  social = 0;
   summary = true;
   profile = true;
-  endpoints = true;
+  social = true;
   controls = 0;  
 
   $developer_id = null;
@@ -188,10 +185,9 @@ function doDelete( evt ) {
 
     add = false;
     enabled = 0;
-    social = 1;
     summary = true;
     profile = true;
-    endpoints = true;
+    social = true;
     controls = 0;     
   } ); 
 }
@@ -217,10 +213,9 @@ function doDeveloperClick( evt ) {
     } );
 
     enabled = 3;
-    social = 1;
     summary = true;
     profile = true;
-    endpoints = true;
+    social = true;
     controls = 2;
   } );
 
@@ -234,16 +229,13 @@ function doDeveloperClick( evt ) {
 function doEdit( evt ) {
   add = true;
   enabled = 3;
-  social = 0;
   summary = false;
   profile = false;
-  endpoints = false;
+  social = false;
   controls = 3;
 }
 
 function doSaveExisting( evt ) {
-  console.log( $developer_organizations );
-
   let developer = {
     id: $developer_id,
     name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
@@ -267,10 +259,9 @@ function doSaveExisting( evt ) {
   .then( ( data ) => {
     add = false;
     enabled = 3;
-    social = 1;
     summary = true;
     profile = true;
-    endpoints = true;
+    social = true;
     controls = 2;    
 
     refreshOrganization( false );
@@ -326,7 +317,7 @@ function doSaveNew( evt ) {
     enabled = 3;
     summary = true;
     profile = true;
-    endpoints = true;
+    social = true;
     controls = 2;
   } );
 }
@@ -345,6 +336,12 @@ onMount( async () => {
   .then( ( data ) => {
     $organizations = data.slice();
   } );
+
+   fetch( '/api/skill' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $skills = data.slice();
+  } ); 
 } );
 </script>
 
@@ -455,18 +452,16 @@ h4 {
     <Profile 
       hidden="{tab === 1 ? false : true}"
       disabled="{profile}"/>
-    <Endpoints 
-      hidden="{social === 0 && tab === 2 ? false : true}"
-      disabled="{endpoints}"/>    
-    <Timeline 
-      hidden="{social === 1 && tab === 2 ? false : true}"/>
+    <Social
+      hidden="{tab === 2 ? false : true}"
+      disabled="{social}"/>
     <Notes 
       hidden="{tab === 3 ? false : true}"/>
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
     <Controls 
-      hidden="{tab === 3 ? true : false}"
+      hidden="{tab === 3 || tab === 2 ? true : false}"
       mode="{controls}"
       on:cancelnew="{doCancelNew}"
       on:savenew="{doSaveNew}"
