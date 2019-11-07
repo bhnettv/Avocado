@@ -446,20 +446,14 @@ h4 {
 
     <!-- Views -->
     <!-- Work directly with store -->
-    <Summary 
-      hidden="{tab === 0 ? false : true}"
-      disabled="{summary}"/>
-    <Profile 
-      hidden="{tab === 1 ? false : true}"
-      disabled="{profile}"/>
-    <Social
-      hidden="{tab === 2 ? false : true}"
-      disabled="{social}"/>
-    <Notes 
-      hidden="{tab === 3 ? false : true}"/>
+    <Summary hidden="{tab === 0 ? false : true}"/>
+    <Profile hidden="{tab === 1 ? false : true}"/>
+    <Social hidden="{tab === 2 ? false : true}"/>
+    <Notes hidden="{tab === 3 ? false : true}"/>
 
     <!-- Controls -->
     <!-- Cancel, Save, Edit, Delete -->
+    <!--
     <Controls 
       hidden="{tab === 3 || tab === 2 ? true : false}"
       mode="{controls}"
@@ -469,6 +463,7 @@ h4 {
       on:cancelexisting="{doCancelExisting}"
       on:saveexisting="{doSaveExisting}"
       on:delete="{doDelete}"/>
+    -->
 
   </article>
 

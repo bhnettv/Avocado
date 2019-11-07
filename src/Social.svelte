@@ -3,6 +3,7 @@ import Button from './Button.svelte';
 import Select from './Select.svelte';
 import TextInput from './TextInput.svelte';
 
+import { developer_name } from './developers.js';
 import { endpoint_website } from './developers.js';
 import { endpoint_rss } from './developers.js';
 import { endpoint_devto } from './developers.js';
@@ -13,6 +14,7 @@ import { endpoint_so } from './developers.js';
 import { endpoint_github } from './developers.js';
 import { endpoint_reddit } from './developers.js';
 
+export let data = [];
 export let hidden = false;
 export let disabled = false;
 
@@ -46,6 +48,14 @@ div.input {
   padding: 0 16px 16px 16px;
 }
 
+div.none {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 div.social {
   display: flex;
   flex-direction: column;
@@ -56,6 +66,14 @@ div.social {
 
 div.social.hidden {
   display: none;
+}
+
+p {
+  color: #171717;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px; 
+  margin: 0 0 8px 0;
+  padding: 0;   
 }
 </style>
 
@@ -76,5 +94,17 @@ div.social.hidden {
       disabledIcon="/img/add.svg"
       disabled="{endpoint.trim().length > 0 ? false : true}">Add</Button>
   </div>
+
+  {#if data.length === 0}
+
+    <div class="none">
+      <p>No social endpoints available for {$developer_name}.</p>
+    </div>
+
+  {:else}
+
+    <p>List here.</p>
+
+  {/if}
 
 </div>

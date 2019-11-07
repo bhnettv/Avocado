@@ -101,7 +101,6 @@ function doSave( evt ) {
 div.activity {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
   margin: 0 0 16px 0;
   padding: 0;
 }
@@ -117,21 +116,25 @@ div.none {
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-basis: 0;
+  flex-grow: 50;
   justify-content: center;
+  margin: 40px 0 40px 0;
 }
 
 div.panel {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-grow: 3;
 }
 
 form {
   /* border-bottom: solid 1px #f3f3f3; */
   border-bottom: solid 1px #e0e0e0;  
   display: flex;
+  flex-basis: 0;
   flex-direction: column;
+  flex-grow: 100;
   margin: 0;
   padding: 16px 16px 16px 16px;
 }
@@ -189,7 +192,7 @@ div.panel.hidden {
 
   {#if $notes.length > 0}
 
-    <div style="flex-grow: 1; padding: 16px;">
+    <div style="flex-basis: 0; flex-grow: 50; padding: 16px;">
       <p>{$notes[index].full_text}</p>
     </div>
     <Pagination 
