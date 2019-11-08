@@ -1,4 +1,6 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 import Menu from './Menu.svelte';
 import Tag from './Tag.svelte';
 
@@ -19,6 +21,8 @@ let focus = false;
 let height = 0;
 let index = -1;
 
+const dispatch = createEventDispatcher();
+
 function doBlur() {
   menu = [];
   focus = false;
@@ -30,10 +34,13 @@ function doFocus( evt ) {
 }
 
 function doKeyUp( evt ) {
+  let item = null;
+
   // Enter
   if( evt.keyCode === 13 ) {
     // From menu
     if( index > -1 ) {
+      item = Object.assign( {}, menu[index] );
       value.push( menu[index] );
       focus = true;
     } else {
@@ -62,6 +69,7 @@ function doKeyUp( evt ) {
 
         // Use provided value if match
         if( exists !== null ) {
+          item = Object.assign( {}, exists );
           value.push( exists );
         } else {
           // Check if already in list
@@ -77,6 +85,7 @@ function doKeyUp( evt ) {
           if( !found ) {
             let tag = {id: null};
             tag[labelField] = tags[t];
+            item = Object.assign( {}, tag );
             value.push( tag );
           }          
         }
@@ -91,6 +100,9 @@ function doKeyUp( evt ) {
     evt.target.value = '';
     menu = [];
     index = -1;
+
+    // Announce change
+    dispatch( 'add', item );
   }
 
   // Backspace and empty input
@@ -100,8 +112,15 @@ function doKeyUp( evt ) {
     // List has values
     // User wants to delete from values
     if( value.length > 0 ) {
+      // Get item to be removed
+      let item = Object.assign( {}, value[value.length - 1] );
+
       value.pop();
       value = value.slice( 0 );
+
+      // Announce change
+      // Send item removed
+      dispatch( 'remove', item );      
     }
   }
 
@@ -173,8 +192,11 @@ function doKeyUp( evt ) {
 
 // Remove specific tag by mouse click
 function doRemove( id, index ) {
-  value.splice( index, 1 );
+  let items = value.splice( index, 1 );
   value = [...value];
+
+  // Announce change
+  dispatch( 'remove', items[0] );  
 }
 
 // TODO: Allow mouse select on menu

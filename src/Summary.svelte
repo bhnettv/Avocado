@@ -50,6 +50,28 @@ function doInputChange( evt ) {
     dispatch( 'change', data );
   } );
 }
+
+function doTagAdd( evt ) {
+  doTagChange( evt.detail );
+}
+
+function doTagChange( item ) {
+  fetch( `/api/developer/${$developer_id}/organization`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( $developer_organizations )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $developer_organizations = data.slice();
+  } );
+}
+
+function doTagRemove( evt ) {
+  doTagChange( evt.detail );
+}
 </script>
 
 <style>
@@ -117,6 +139,8 @@ form > div:last-of-type {
       placeholder="Organization"
       helper="Company name and/or team nomenclature"
       bind:value="{$developer_organizations}"
+      on:add="{doTagAdd}"
+      on:remove="{doTagRemove}"
       {disabled}/>
   </div>
 
