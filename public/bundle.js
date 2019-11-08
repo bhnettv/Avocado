@@ -127,34 +127,6 @@ var app = (function () {
         const selected_option = select.querySelector(':checked') || select.options[0];
         return selected_option && selected_option.__value;
     }
-    function add_resize_listener(element, fn) {
-        if (getComputedStyle(element).position === 'static') {
-            element.style.position = 'relative';
-        }
-        const object = document.createElement('object');
-        object.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
-        object.type = 'text/html';
-        object.tabIndex = -1;
-        let win;
-        object.onload = () => {
-            win = object.contentDocument.defaultView;
-            win.addEventListener('resize', fn);
-        };
-        if (/Trident/.test(navigator.userAgent)) {
-            element.appendChild(object);
-            object.data = 'about:blank';
-        }
-        else {
-            object.data = 'about:blank';
-            element.appendChild(object);
-        }
-        return {
-            cancel: () => {
-                win && win.removeEventListener && win.removeEventListener('resize', fn);
-                element.removeChild(object);
-            }
-        };
-    }
     function toggle_class(element, name, toggle) {
         element.classList[toggle ? 'add' : 'remove'](name);
     }
@@ -2403,7 +2375,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (258:2) {#if label !== undefined}
+    // (264:2) {#if label !== undefined}
     function create_if_block_2$1(ctx) {
     	var label_1, t;
 
@@ -2413,7 +2385,7 @@ var app = (function () {
     			t = text(ctx.label);
     			set_style(label_1, "color", (ctx.disabled ? '#c6c6c6' : '#393939'));
     			attr_dev(label_1, "class", "svelte-sznk6l");
-    			add_location(label_1, file$8, 259, 4, 5379);
+    			add_location(label_1, file$8, 265, 4, 5477);
     		},
 
     		m: function mount(target, anchor) {
@@ -2437,11 +2409,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2$1.name, type: "if", source: "(258:2) {#if label !== undefined}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2$1.name, type: "if", source: "(264:2) {#if label !== undefined}", ctx });
     	return block;
     }
 
-    // (264:2) {#if helper !== undefined}
+    // (270:2) {#if helper !== undefined}
     function create_if_block_1$1(ctx) {
     	var p, t;
 
@@ -2451,7 +2423,7 @@ var app = (function () {
     			t = text(ctx.helper);
     			set_style(p, "color", (ctx.disabled ? '#c6c6c6' : '#6f6f6f'));
     			attr_dev(p, "class", "svelte-sznk6l");
-    			add_location(p, file$8, 265, 4, 5496);
+    			add_location(p, file$8, 271, 4, 5594);
     		},
 
     		m: function mount(target, anchor) {
@@ -2475,11 +2447,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(264:2) {#if helper !== undefined}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(270:2) {#if helper !== undefined}", ctx });
     	return block;
     }
 
-    // (273:6) <Tag          {disabled}          on:click="{() => doRemove( tag[dataField], t )}">
+    // (279:6) <Tag          {disabled}          on:click="{() => doRemove( tag[dataField], t )}">
     function create_default_slot(ctx) {
     	var t_value = ctx.tag[ctx.labelField] + "", t;
 
@@ -2504,11 +2476,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(273:6) <Tag          {disabled}          on:click=\"{() => doRemove( tag[dataField], t )}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(279:6) <Tag          {disabled}          on:click=\"{() => doRemove( tag[dataField], t )}\">", ctx });
     	return block;
     }
 
-    // (272:4) {#each value as tag, t}
+    // (278:4) {#each value as tag, t}
     function create_each_block$3(ctx) {
     	var current;
 
@@ -2560,11 +2532,11 @@ var app = (function () {
     			destroy_component(tag, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$3.name, type: "each", source: "(272:4) {#each value as tag, t}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$3.name, type: "each", source: "(278:4) {#each value as tag, t}", ctx });
     	return block;
     }
 
-    // (288:2) {#if menu.length > 0}
+    // (294:2) {#if menu.length > 0}
     function create_if_block$2(ctx) {
     	var current;
 
@@ -2612,12 +2584,12 @@ var app = (function () {
     			destroy_component(menu_1, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$2.name, type: "if", source: "(288:2) {#if menu.length > 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$2.name, type: "if", source: "(294:2) {#if menu.length > 0}", ctx });
     	return block;
     }
 
     function create_fragment$8(ctx) {
-    	var div1, t0, t1, div0, t2, input, t3, div1_resize_listener, current, dispose;
+    	var div1, t0, t1, div0, t2, input, t3, current, dispose;
 
     	var if_block0 = (ctx.label !== ctx.undefined) && create_if_block_2$1(ctx);
 
@@ -2658,18 +2630,17 @@ var app = (function () {
     			attr_dev(input, "placeholder", ctx.placeholder);
     			input.disabled = ctx.disabled;
     			attr_dev(input, "class", "svelte-sznk6l");
-    			add_location(input, file$8, 277, 4, 5811);
+    			add_location(input, file$8, 283, 4, 5909);
     			attr_dev(div0, "class", "content svelte-sznk6l");
     			toggle_class(div0, "focus", ctx.focus);
     			toggle_class(div0, "disabled", ctx.disabled);
-    			add_location(div0, file$8, 269, 2, 5574);
-    			add_render_callback(() => ctx.div1_resize_handler.call(div1));
+    			add_location(div0, file$8, 275, 2, 5672);
     			attr_dev(div1, "class", "control svelte-sznk6l");
-    			add_location(div1, file$8, 255, 0, 5294);
+    			add_location(div1, file$8, 261, 0, 5399);
 
     			dispose = [
     				listen_dev(input, "keyup", ctx.doKeyUp),
-    				listen_dev(input, "focus", ctx.focus_handler),
+    				listen_dev(input, "focus", ctx.doFocus),
     				listen_dev(input, "blur", ctx.doBlur)
     			];
     		},
@@ -2694,7 +2665,7 @@ var app = (function () {
     			append_dev(div0, input);
     			append_dev(div1, t3);
     			if (if_block2) if_block2.m(div1, null);
-    			div1_resize_listener = add_resize_listener(div1, ctx.div1_resize_handler.bind(div1));
+    			ctx.div1_binding(div1);
     			current = true;
     		},
 
@@ -2816,7 +2787,7 @@ var app = (function () {
     			destroy_each(each_blocks, detaching);
 
     			if (if_block2) if_block2.d();
-    			div1_resize_listener.cancel();
+    			ctx.div1_binding(null);
     			run_all(dispose);
     		}
     	};
@@ -2829,6 +2800,7 @@ var app = (function () {
 
     let { characters = 3, data = [], dataField = 'data', disabled = false, helper = undefined, label = undefined, labelField = 'label', limit = 4, menu = [], placeholder = '', value = [] } = $$props;
 
+    let control = undefined;
     let focus = false;
     let height = 0;
     let index = -1;
@@ -2836,6 +2808,11 @@ var app = (function () {
     function doBlur() {
       $$invalidate('menu', menu = []);
       $$invalidate('focus', focus = false);
+    }
+
+    function doFocus( evt ) {
+      $$invalidate('focus', focus = true);  
+      $$invalidate('height', height = control.clientHeight);
     }
 
     function doKeyUp( evt ) {
@@ -2993,11 +2970,10 @@ var app = (function () {
 
     	const click_handler = ({ tag, t }) => doRemove( tag[dataField], t );
 
-    	const focus_handler = () => $$invalidate('focus', focus = true);
-
-    	function div1_resize_handler() {
-    		height = this.clientHeight;
-    		$$invalidate('height', height);
+    	function div1_binding($$value) {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+    			$$invalidate('control', control = $$value);
+    		});
     	}
 
     	$$self.$set = $$props => {
@@ -3015,7 +2991,7 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { characters, data, dataField, disabled, helper, label, labelField, limit, menu, placeholder, value, focus, height, index };
+    		return { characters, data, dataField, disabled, helper, label, labelField, limit, menu, placeholder, value, control, focus, height, index };
     	};
 
     	$$self.$inject_state = $$props => {
@@ -3030,6 +3006,7 @@ var app = (function () {
     		if ('menu' in $$props) $$invalidate('menu', menu = $$props.menu);
     		if ('placeholder' in $$props) $$invalidate('placeholder', placeholder = $$props.placeholder);
     		if ('value' in $$props) $$invalidate('value', value = $$props.value);
+    		if ('control' in $$props) $$invalidate('control', control = $$props.control);
     		if ('focus' in $$props) $$invalidate('focus', focus = $$props.focus);
     		if ('height' in $$props) $$invalidate('height', height = $$props.height);
     		if ('index' in $$props) $$invalidate('index', index = $$props.index);
@@ -3047,16 +3024,17 @@ var app = (function () {
     		menu,
     		placeholder,
     		value,
+    		control,
     		focus,
     		height,
     		index,
     		doBlur,
+    		doFocus,
     		doKeyUp,
     		doRemove,
     		undefined,
     		click_handler,
-    		focus_handler,
-    		div1_resize_handler
+    		div1_binding
     	};
     }
 

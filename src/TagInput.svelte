@@ -14,6 +14,7 @@ export let menu = [];
 export let placeholder = '';
 export let value = [];
 
+let control = undefined;
 let focus = false;
 let height = 0;
 let index = -1;
@@ -21,6 +22,11 @@ let index = -1;
 function doBlur() {
   menu = [];
   focus = false;
+}
+
+function doFocus( evt ) {
+  focus = true;  
+  height = control.clientHeight;
 }
 
 function doKeyUp( evt ) {
@@ -253,7 +259,7 @@ p {
 }
 </style>
 
-<div class="control" bind:clientHeight="{height}">
+<div class="control" bind:this="{control}">
 
   {#if label !== undefined}
 
@@ -279,7 +285,7 @@ p {
       type="text"
       placeholder="{placeholder}" 
       on:keyup="{doKeyUp}" 
-      on:focus="{() => focus = true}"
+      on:focus="{doFocus}"
       on:blur="{doBlur}"
       {disabled}>
 
