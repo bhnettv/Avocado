@@ -6,6 +6,7 @@ import Details from './Details.svelte';
 import List from './List.svelte';
 import ListLabelItem from './ListLabelItem.svelte';
 import ListCountItem from './ListCountItem.svelte';
+import ListRemoveItem from './ListRemoveItem.svelte';
 import Profile from './Profile.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
@@ -39,9 +40,6 @@ let index = 0;
 let search = '';
 let tab = 0;
 
-// Changes
-let before_organizations = [];
-
 // Filter developer list on search term
 function filter() {
   let trimmed = search.trim().toLowerCase();
@@ -63,42 +61,29 @@ function filter() {
 
 // Add clicked
 function doAddClick( evt ) {
-  add = true;
-  tab = 0;
-  enabled = 2;
-  summary = false;
-  profile = false;
-  social = false;
-  controls = 1;  
-
-  $developer_id = null;
-  $developer_name = '';
-  $developer_email = '';
-  $developer_image = '';
-  $developer_organizations = [];
-  $developer_location = '';
-  $developer_latitude = null;
-  $developer_longitude = null;
-  $developer_description = '';
-}
-
-function doDelete( evt ) {
-  fetch( `/api/developer/${$developer_id}`, {
-    method: 'DELETE'
+  fetch( '/api/developer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( {
+      id: null,
+      name: 'New Developer',
+      email: null,
+      description: null,
+      image: null,
+      location: null,
+      latitude: null,
+      longitude: null,
+      public: 0
+    } )
   } )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
-    for( let a = 0; a < developers.length; a++ ) {
-      if( developers[a].id === $developer_id ) {
-        developers.splice( a, 1 );
-        break;
-      }
-    }
+    tab = 0;
 
-    filter();
-
-    $developer_id = null;
-    $developer_name = '';
+    $developer_id = data.id;
+    $developer_name = data.name;
     $developer_email = '';
     $developer_image = '';
     $developer_organizations = [];
@@ -106,21 +91,31 @@ function doDelete( evt ) {
     $developer_latitude = null;
     $developer_longitude = null;
     $developer_description = '';
-    $developer_public = 0;
+    $developer_public = data.public;
 
-    add = false;
-    enabled = 0;
-    summary = true;
-    profile = true;
-    social = true;
-    controls = 0;     
-  } ); 
+    developers.push( Object.assign( {}, data ) );
+    developers.sort( ( a, b ) => {
+      if( a.name > b.name ) return 1;
+      if( a.name < b.name ) return -1;
+      return 0;
+    } );
+
+    filter();
+
+    for( let f = 0; f < filtered.length; f++ ) {
+      if( filtered[f].id === $developer_id ) {
+        index = f;
+        break;
+      }
+    }
+  } );
 }
 
 function doDeveloperClick( evt ) {
   fetch( `/api/developer/${evt.detail.item.id}` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
+    console.log( data );
     $developer_id = data.id;
     $developer_name = data.name === null ? '' : data.name;
     $developer_email = data.email === null ? '' : data.email;
@@ -148,12 +143,50 @@ function doDeveloperClick( evt ) {
 function doDeveloperChange( evt ) {
   for( let d = 0; d < developers.length; d++ ) {
     if( developers[d].id === evt.detail.id ) {
-      developers[d] = Object.assign( developers[d], evt.detail );
+      developers[d] = Object.assign( {}, evt.detail );
       break;
     }
   }
 
+  developers.sort( ( a, b ) => {
+    if( a.name > b.name ) return 1;
+    if( a.name < b.name ) return -1;
+    return 0;
+  } );  
+
   filter();
+
+  for( let f = 0; f < filtered.length; f++ ) {
+    if( filtered[f].id === evt.detail.id ) {
+      index = f;
+      break;
+    }
+  }
+}
+
+function doDeveloperRemove( evt ) {
+  let later = index;
+
+  // Remove from database
+  fetch( `/api/developer/${evt.id}`, {
+    method: 'DELETE'
+  } )
+  .then( ( response ) => response.json() )
+  .then( async ( data ) => {
+    // Remove from list of developers
+    for( let a = 0; a < developers.length; a++ ) {
+      if( developers[a].id === data.id ) {
+        developers.splice( a, 1 );
+        break;
+      }
+    }
+
+    // In order to reset list
+    filter();
+
+    // Force reselect
+    // index = later;
+  } ); 
 }
 
 // Load external data
@@ -264,7 +297,9 @@ h4 {
       on:change="{doDeveloperClick}"
       data="{filtered}" 
       let:item="{developer}">
-      <ListLabelItem label="{developer.name}"/>
+      <ListRemoveItem 
+        label="{developer.name}" 
+        on:click="{() => doDeveloperRemove( developer )}"/>
     </List>
 
     <!-- Label list -->
@@ -273,7 +308,9 @@ h4 {
       <List 
         data="{$organizations}" 
         let:item="{organization}">
-        <ListCountItem label="{organization.name}" count="{organization.count}"/>
+        <ListCountItem 
+          label="{organization.name}" 
+          count="{organization.count}"/>
       </List>
     </Details>
 

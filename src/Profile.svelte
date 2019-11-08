@@ -44,8 +44,8 @@ function doDeveloperChange( evt ) {
       description: $developer_description.trim().length === 0 ? null : $developer_description,
       image: $developer_image.trim().length === 0 ? null : $developer_image,
       location: $developer_location.trim().length === 0 ? null : $developer_location,
-      latitude: null,
-      longitude: null,
+      latitude: $developer_latitude,
+      longitude: $developer_longitude,
       public: $developer_public
     } )
   } )

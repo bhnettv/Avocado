@@ -723,7 +723,7 @@ router.delete( '/:id', ( req, res ) => {
   // Website
   info = req.db.prepare( `
     DELETE FROM Website
-    WHERE Developer.id = ?
+    WHERE Website.id = ?
   ` )
   .run(
     developer.id
