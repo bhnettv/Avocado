@@ -138,7 +138,7 @@ function doDeveloperClick( evt ) {
     $developer_organizations = data.slice();
   } );
 
-  fetch( `/api/developer/${evt.detail.item.id}/note` )
+  fetch( `/api/note/developer/${evt.detail.item.id}` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $notes = data.slice();
@@ -172,6 +172,12 @@ onMount( async () => {
     $developer_longitude = data[0].longitude;
     $developer_description = data[0].description === null ? '' : data[0].description;
     $developer_public = data[0].public;
+
+    fetch( `/api/note/developer/${$developer_id}` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      $notes = data.slice();
+    } );
 
     filter();    
   } );

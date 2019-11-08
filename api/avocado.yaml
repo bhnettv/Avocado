@@ -28,10 +28,10 @@ tags:
     description: Skills available to developers (tagging)
   - name: 🖥️ Developer
     description: Individual developers - and advocates
-  - name: ️🖥️ 📝 Developer Note
-    description: Notes associated with developer activities
   - name: 🖼️ Media
     description: Media (image files) associated with content aggregation
+  - name: ️🗒️ Note
+    description: Notes associated with developer activities
   - name: 📓 Blog
     description: Blog feeds to aggregate
   - name: 📓 📝 Blog Post
@@ -62,6 +62,8 @@ tags:
     description: Twitter accounts to aggregate
   - name: 🐦 ✒️ Twitter Status
     description: Status update to a Twitter account
+  - name: 🌐 Website
+    description: Developer website
   - name: 📺 YouTube
     description: YouTube accounts to aggregate
   - name: 📺 📼 YouTube Video
@@ -1322,183 +1324,6 @@ paths:
                     public:
                       type: integer
                       example: 0
-  /developer/note:
-    get:
-      tags:
-        - ️🖥️ 📝 Developer Note
-      summary: Read all available notes
-      operationId: getDeveloperNotes
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  required:
-                    - developer_id
-                    - activity_id
-                    - full_text
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    developer_id:
-                      type: string
-                      format: uuid
-                    activity_id:
-                      type: string
-                      format: uuid
-                    full_text:
-                      type: string
-                      example: Somewhere over the rainbow.
-    post:
-      tags:
-        - ️🖥️ 📝 Developer Note
-      summary: Create a new note for a developer
-      operationId: createDeveloperNote
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                developer_id:
-                  type: string
-                  format: uuid
-                activity_id:
-                  type: string
-                  format: uuid
-                full_text:
-                  type: string
-                  example: Somewhere over the rainbow.
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  developer_id:
-                    type: string
-                    format: uuid
-                  activity_id:
-                    type: string
-                    format: uuid
-                  activity_name:
-                    type: string
-                    example: Conference
-                  full_text:
-                    type: string
-                    example: Somewhere over the rainbow.
-  "/developer/note/{id}":
-    parameters:
-      - name: id
-        in: path
-        description: ID of a specific developer note
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
-      tags:
-        - ️🖥️ 📝 Developer Note
-      summary: Read specific developer note by ID
-      operationId: getDeveloperNoteByID
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                required:
-                  - developer_id
-                  - activity_id
-                  - full_text
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  developer_id:
-                    type: string
-                    format: uuid
-                  activity_id:
-                    type: string
-                    format: uuid
-                  full_text:
-                    type: string
-                    example: Somewhere over the rainbow.
-    put:
-      tags:
-        - ️🖥️ 📝 Developer Note
-      summary: Update specific note by ID
-      operationId: updateDeveloperNote
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                developer_id:
-                  type: string
-                  format: uuid
-                activity_id:
-                  type: string
-                  format: uuid
-                full_text:
-                  type: string
-                  example: Somewhere over the rainbow.
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/paths/~1developer~1note~1%7Bid%7D/get/responses/200/conten\
-                  t/application~1json/schema"
-    delete:
-      tags:
-        - ️🖥️ 📝 Developer Note
-      summary: Delete specific note by ID
-      operationId: deleteDeveloperNoteByID
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
   /developer/role: {}
   "/developer/role/{id}":
     parameters:
@@ -1763,6 +1588,228 @@ paths:
                       - eagle
                       - landed
                       - moon
+  /note:
+    get:
+      tags:
+        - ️🗒️ Note
+      summary: Read all available notes
+      operationId: getNotes
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - activity_id
+                    - full_text
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    activity_id:
+                      type: string
+                      format: uuid
+                    full_text:
+                      type: string
+                      example: Somewhere over the rainbow.
+    post:
+      tags:
+        - ️🗒️ Note
+      summary: Create a new note for a developer
+      operationId: createNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                activity_id:
+                  type: string
+                  format: uuid
+                full_text:
+                  type: string
+                  example: Somewhere over the rainbow.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  activity_id:
+                    type: string
+                    format: uuid
+                  activity_name:
+                    type: string
+                    example: Conference
+                  full_text:
+                    type: string
+                    example: Somewhere over the rainbow.
+  "/note/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID of a specific note
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - ️🗒️ Note
+      summary: Read specific note by ID
+      operationId: getNoteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - activity_id
+                  - full_text
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  activity_id:
+                    type: string
+                    format: uuid
+                  full_text:
+                    type: string
+                    example: Somewhere over the rainbow.
+    put:
+      tags:
+        - ️🗒️ Note
+      summary: Update specific note by ID
+      operationId: updateNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                activity_id:
+                  type: string
+                  format: uuid
+                full_text:
+                  type: string
+                  example: Somewhere over the rainbow.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1note~1%7Bid%7D/get/responses/200/content/applicati\
+                  on~1json/schema"
+    delete:
+      tags:
+        - ️🗒️ Note
+      summary: Delete specific note by ID
+      operationId: deleteNoteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  "/note/developer/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID of a specific developer
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - ️🗒️ Note
+      summary: Read notes for specific developer
+      operationId: getNoteByDeveloperID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    activity_id:
+                      type: string
+                      format: uuid
+                    activity_name:
+                      type: string
+                      example: Theater
+                    full_text:
+                      type: string
+                      example: Somewhere over the rainbow.
   /blog:
     get:
       tags:
@@ -1797,9 +1844,6 @@ paths:
                     url:
                       type: string
                       example: http://something.com
-                    feed:
-                      type: string
-                      example: http://something.com
     post:
       tags:
         - 📓 Blog
@@ -1816,9 +1860,6 @@ paths:
                   type: string
                   format: uuid
                 url:
-                  type: string
-                  example: http://something.com
-                feed:
                   type: string
                   example: http://something.com
       responses:
@@ -1869,9 +1910,6 @@ paths:
                   url:
                     type: string
                     example: http://something.com
-                  feed:
-                    type: string
-                    example: http://something.com
     put:
       tags:
         - 📓 Blog
@@ -1888,9 +1926,6 @@ paths:
                   type: string
                   format: uuid
                 url:
-                  type: string
-                  example: http://something.com
-                feed:
                   type: string
                   example: http://something.com
       responses:
@@ -6291,6 +6326,148 @@ paths:
                   media_id:
                     type: string
                     format: uuid
+  /website:
+    get:
+      tags:
+        - 🌐 Website
+      summary: Read all available websites
+      operationId: getWebsites
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - developer_id
+                    - url
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    url:
+                      type: string
+                      example: http://something.com
+    post:
+      tags:
+        - 🌐 Website
+      summary: Create a new website
+      operationId: createWebsite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                url:
+                  type: string
+                  example: http://something.com
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1website/get/responses/200/content/application~1jso\
+                  n/schema/items"
+  "/website/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired website
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - 🌐 Website
+      summary: Read specific website by ID
+      operationId: getWebsiteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                required:
+                  - developer_id
+                  - url
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  developer_id:
+                    type: string
+                    format: uuid
+                  url:
+                    type: string
+                    example: http://something.com
+    put:
+      tags:
+        - 🌐 Website
+      summary: Update specific website by ID
+      operationId: updateWebsite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developer_id:
+                  type: string
+                  format: uuid
+                url:
+                  type: string
+                  example: http://something.com
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1website~1%7Bid%7D/get/responses/200/content/applic\
+                  ation~1json/schema"
+    delete:
+      tags:
+        - 🌐 Website
+      summary: Delete specific website by ID
+      operationId: deleteWebsiteByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
   /youtube:
     get:
       tags:
@@ -7235,9 +7412,6 @@ components:
         url:
           type: string
           example: http://something.com
-        feed:
-          type: string
-          example: http://something.com
     BlogPost:
       required:
         - blog_id
@@ -7391,31 +7565,6 @@ components:
         public:
           type: integer
           example: 0
-    DeveloperNote:
-      required:
-        - developer_id
-        - activity_id
-        - full_text
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        developer_id:
-          type: string
-          format: uuid
-        activity_id:
-          type: string
-          format: uuid
-        full_text:
-          type: string
-          example: Somewhere over the rainbow.
     DevPost:
       required:
         - dev_id
@@ -7764,6 +7913,31 @@ components:
         media_id:
           type: string
           format: uuid
+    Note:
+      required:
+        - developer_id
+        - activity_id
+        - full_text
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        activity_id:
+          type: string
+          format: uuid
+        full_text:
+          type: string
+          example: Somewhere over the rainbow.
     Organization:
       required:
         - name
@@ -8277,6 +8451,27 @@ components:
         media_id:
           type: string
           format: uuid
+    Website:
+      required:
+        - developer_id
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        developer_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          example: http://something.com
     YouTube:
       required:
         - developer_id

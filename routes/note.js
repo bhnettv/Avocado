@@ -9,24 +9,52 @@ router.get( '/test', ( req, res ) => {
   res.json( {developer_note: 'Test'} );
 } );
 
+// Read all notes for given developer
+router.get( '/developer/:id', ( req, res ) => {
+  let notes = req.db.prepare( `
+    SELECT
+      Note.uuid AS "id",
+      Note.created_at, 
+      Note.updated_at,
+      Developer.uuid AS "developer_id",
+      Activity.uuid AS "activity_id",
+      Activity.name AS "activity_name",
+      Note.full_text
+    FROM 
+      Activity,
+      Developer,
+      Note
+    WHERE 
+      Note.activity_id = Activity.id AND
+      Note.developer_id = Developer.id AND
+      Developer.uuid = ?
+    ORDER BY Note.updated_at DESC
+  ` )
+  .all(
+    req.params.id
+  );
+
+  res.json( notes );
+} );
+
 // Read single notes by ID
 router.get( '/:id', ( req, res ) => {
   let note = req.db.prepare( `
     SELECT
-      DeveloperNote.uuid AS "id",
-      DeveloperNote.created_at, 
-      DeveloperNote.updated_at,
+      Note.uuid AS "id",
+      Note.created_at, 
+      Note.updated_at,
       Developer.uuid AS "developer_id",
       Activity.uuid AS "activity_id",
-      DeveloperNote.full_text
+      Note.full_text
     FROM 
       Activity,
       Developer,
-      DeveloperNote
+      Note
     WHERE 
-      DeveloperNote.activity_id = Activity.id AND
-      DeveloperNote.developer_id = Developer.id AND
-      DeveloperNote.uuid = ?
+      Note.activity_id = Activity.id AND
+      Note.developer_id = Developer.id AND
+      Note.uuid = ?
   ` )
   .get( 
     req.params.id 
@@ -43,20 +71,20 @@ router.get( '/:id', ( req, res ) => {
 router.get( '/', ( req, res ) => {
   let notes = req.db.prepare( `
     SELECT
-      DeveloperNote.uuid AS "id",
-      DeveloperNote.created_at, 
-      DeveloperNote.updated_at,
+      Note.uuid AS "id",
+      Note.created_at, 
+      Note.updated_at,
       Developer.uuid AS "developer_id",
       Activity.uuid AS "activity_id",
-      DeveloperNote.full_text
+      Note.full_text
     FROM 
       Activity,
       Developer,
-      DeveloperNote
+      Note
     WHERE 
-      DeveloperNote.activity_id = Activity.id AND
-      DeveloperNote.developer_id = Developer.id
-    ORDER BY DeveloperNote.updated_at DESC
+      Note.activity_id = Activity.id AND
+      Note.developer_id = Developer.id
+    ORDER BY Note.updated_at DESC
   ` )
   .all();
 
@@ -96,7 +124,7 @@ router.post( '/', ( req, res ) => {
   record.developer_id = ids.developer_id;
 
   let info = req.db.prepare( `
-    INSERT INTO DeveloperNote
+    INSERT INTO Note
     VALUES ( ?, ?, ?, ?, ?, ?, ? )
   ` )
   .run(
@@ -149,7 +177,7 @@ router.put( '/:id', ( req, res ) => {
   record.developer_id = ids.developer_id;
 
   let info = req.db.prepare( `
-    UPDATE DeveloperNote
+    UPDATE Note
     SET 
       updated_at = ?,
       developer_id = ?,
@@ -167,20 +195,20 @@ router.put( '/:id', ( req, res ) => {
 
   record = req.db.prepare( `
     SELECT
-      DeveloperNote.uuid AS "id",
-      DeveloperNote.created_at, 
-      DeveloperNote.updated_at,
+      Note.uuid AS "id",
+      Note.created_at, 
+      Note.updated_at,
       Developer.uuid AS "developer_id",
       Activity.uuid AS "activity_id",
-      DeveloperNote.full_text
+      Note.full_text
     FROM 
       Activity,
       Developer,
-      DeveloperNote
+      Note
     WHERE 
-      DeveloperNote.activity_id = Activity.id AND
-      DeveloperNote.developer_id = Developer.id AND
-      DeveloperNote.uuid = ?
+      Note.activity_id = Activity.id AND
+      Note.developer_id = Developer.id AND
+      Note.uuid = ?
   ` )
   .get( 
     record.uuid
@@ -192,8 +220,8 @@ router.put( '/:id', ( req, res ) => {
 // Delete
 router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
-    DELETE FROM DeveloperNote
-    WHERE DeveloperNote.uuid = ?
+    DELETE FROM Note
+    WHERE Note.uuid = ?
   ` )
   .run(
     req.params.id

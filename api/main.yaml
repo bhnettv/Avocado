@@ -25,10 +25,10 @@ tags:
   description: Skills available to developers (tagging)
 - name: 🖥️ Developer
   description: Individual developers - and advocates
-- name: ️🖥️ 📝 Developer Note
-  description: Notes associated with developer activities
 - name: 🖼️ Media
   description: Media (image files) associated with content aggregation
+- name: ️🗒️ Note
+  description: Notes associated with developer activities  
 - name: 📓 Blog
   description: Blog feeds to aggregate
 - name: 📓 📝 Blog Post
@@ -59,6 +59,8 @@ tags:
   description: Twitter accounts to aggregate
 - name: 🐦 ✒️ Twitter Status
   description: Status update to a Twitter account
+- name: 🌐 Website
+  description: Developer website
 - name: 📺 YouTube
   description: YouTube accounts to aggregate
 - name: 📺 📼 YouTube Video
@@ -106,10 +108,6 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer~1{id}~1organization'
   /developer/organization/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1organization~1{id}'
-  /developer/note:
-    $ref: 'developer-note.yaml#/paths/~1developer~1note'
-  /developer/note/{id}:
-    $ref: 'developer-note.yaml#/paths/~1developer~1note~1{id}'
   /developer/role:
     $ref: 'developer.yaml#/paths/~1developer~1role'
   /developer/role/{id}:
@@ -120,6 +118,12 @@ paths:
     $ref: 'media.yaml#/paths/~1media~1{id}'
   /media/url/{url}:
     $ref: 'media.yaml#/paths/~1media~1url~1{url}'
+  /note:
+    $ref: 'note.yaml#/paths/~1note'
+  /note/{id}:
+    $ref: 'note.yaml#/paths/~1note~1{id}'    
+  /note/developer/{id}:
+    $ref: 'note.yaml#/paths/~1note~1developer~1{id}'        
   /blog:
     $ref: 'blog.yaml#/paths/~1blog'
   /blog/{id}:
@@ -206,6 +210,10 @@ paths:
     $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1id~1{id}'
   /twitter/status/{id}/media:
     $ref: 'twitter-status.yaml#/paths/~1twitter~1status~1{id}~1media'
+  /website:
+    $ref: 'website.yaml#/paths/~1website'
+  /website/{id}:
+    $ref: 'website.yaml#/paths/~1website~1{id}'    
   /youtube:
     $ref: 'youtube.yaml#/paths/~1youtube'
   /youtube/{id}:
@@ -244,8 +252,6 @@ components:
       $ref: 'dev.yaml#/components/schemas/Dev'
     Developer:
       $ref: 'developer.yaml#/components/schemas/Developer'
-    DeveloperNote:
-      $ref: 'developer-note.yaml#/components/schemas/DeveloperNote'
     DevPost:
       $ref: 'dev-post.yaml#/components/schemas/DevPost'
     DevPostMedia:
@@ -264,6 +270,8 @@ components:
       $ref: 'medium-post.yaml#/components/schemas/MediumPost'
     MediumPostMedia:
       $ref: 'medium-post.yaml#/components/schemas/MediumPostMedia'
+    Note:
+      $ref: 'note.yaml#/components/schemas/Note'      
     Organization:
       $ref: 'organization.yaml#/components/schemas/Organization'      
     Reddit:
@@ -288,6 +296,8 @@ components:
       $ref: 'twitter-status.yaml#/components/schemas/TwitterStatus'
     TwitterStatusMedia:
       $ref: 'twitter-status.yaml#/components/schemas/TwitterStatusMedia'
+    Website:
+      $ref: 'website.yaml#/components/schemas/Website'      
     YouTube:
       $ref: 'youtube.yaml#/components/schemas/YouTube'
     YouTubeVideo:

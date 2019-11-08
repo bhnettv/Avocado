@@ -44,6 +44,9 @@ function doInputChange( evt ) {
   } )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
+    $developer_latitude = data.latitude;
+    $developer_longitude = data.longitude;
+
     dispatch( 'change', data );
   } );
 }

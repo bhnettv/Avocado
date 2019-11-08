@@ -6,54 +6,54 @@ let router = express.Router();
 
 // Test
 router.get( '/test', ( req, res ) => {    
-  res.json( {blog: 'Test'} );
+  res.json( {website: 'Test'} );
 } );
 
-// Read single blog by ID
+// Read single website by ID
 router.get( '/:id', ( req, res ) => {
-  let blog = req.db.prepare( `
+  let site = req.db.prepare( `
     SELECT
-      Blog.uuid AS "id",
-      Blog.created_at, 
-      Blog.updated_at,
+      Website.uuid AS "id",
+      Website.created_at, 
+      Website.updated_at,
       Developer.uuid AS "developer_id",
-      Blog.url
+      Website.url
     FROM 
       Developer, 
-      Blog
+      Website
     WHERE 
-      Blog.developer_id = Developer.id AND
-      Blog.uuid = ?
+      Website.developer_id = Developer.id AND
+      Website.uuid = ?
   ` )
   .get( 
     req.params.id 
   );
 
-  if( blog === undefined ) {
-    blog = null;
+  if( site === undefined ) {
+    site = null;
   }
 
-  res.json( blog );
+  res.json( site );
 } );
 
-// Read all blogs
+// Read all websites
 router.get( '/', ( req, res ) => {
-  let blogs = req.db.prepare( `
+  let sites = req.db.prepare( `
     SELECT
-      Blog.uuid AS "id",
-      Blog.created_at, 
-      Blog.updated_at,
+      Website.uuid AS "id",
+      Website.created_at, 
+      Website.updated_at,
       Developer.uuid AS "developer_id",
-      Blog.url
+      Website.url
     FROM 
       Developer,
-      Blog
-    WHERE Blog.developer_id = Developer.id
-    ORDER BY datetime( Blog.updated_at ) DESC
+      Website
+    WHERE Website.developer_id = Developer.id
+    ORDER BY datetime( Website.updated_at ) DESC
   ` )
   .all();
 
-  res.json( blogs );
+  res.json( sites );
 } );
 
 // Create
@@ -69,17 +69,17 @@ router.post( '/', ( req, res ) => {
 
   let existing = req.db.prepare( `
     SELECT
-      Blog.uuid AS "id",
-      Blog.created_at,
-      Blog.updated_at,
+      Website.uuid AS "id",
+      Website.created_at,
+      Website.updated_at,
       Developer.uuid AS "id",
-      Blog.url
+      Website.url
     FROM
-      Blog,
-      Developer
+      Developer,
+      Website
     WHERE 
-      Blog.developer_id = Developer.id AND
-      Blog.url = ?
+      Website.developer_id = Developer.id AND
+      Website.url = ?
   ` ).get( 
     req.body.url
   );
@@ -96,7 +96,7 @@ router.post( '/', ( req, res ) => {
     record.developer_id = developer.id;
 
     let info = req.db.prepare( `
-      INSERT INTO Blog
+      INSERT INTO Website
       VALUES ( ?, ?, ?, ?, ?, ? )
     ` )
     .run(
@@ -142,7 +142,7 @@ router.put( '/:id', ( req, res ) => {
   record.developer_id = developer.id;
 
   let info = req.db.prepare( `
-    UPDATE Blog
+    UPDATE Website
     SET 
       updated_at = ?,
       developer_id = ?,
@@ -158,17 +158,17 @@ router.put( '/:id', ( req, res ) => {
 
   record = req.db.prepare( `
     SELECT
-      Blog.uuid AS "id",
-      Blog.created_at, 
-      Blog.updated_at,
+      Website.uuid AS "id",
+      Website.created_at, 
+      Website.updated_at,
       Developer.uuid AS "developer_id",
-      Blog.url
+      Website.url
     FROM 
       Developer, 
-      Blog
+      Website
     WHERE 
-      Blog.developer_id = Developer.id AND
-      Blog.uuid = ?
+      Website.developer_id = Developer.id AND
+      Website.uuid = ?
   ` )
   .get( 
     record.uuid
@@ -180,8 +180,8 @@ router.put( '/:id', ( req, res ) => {
 // Delete
 router.delete( '/:id', ( req, res ) => {
   let info = req.db.prepare( `
-    DELETE FROM Blog
-    WHERE Blog.uuid = ?
+    DELETE FROM Website
+    WHERE Website.uuid = ?
   ` )
   .run(
     req.params.id

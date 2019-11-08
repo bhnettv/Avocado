@@ -67,7 +67,7 @@ function doPrevious( evt ) {
 }
 
 function doSave( evt ) {
-  fetch( '/api/developer/note', {
+  fetch( '/api/note', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

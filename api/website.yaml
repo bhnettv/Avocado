@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: 📓 Blog
+  title: 🌐 Website
   description: Paths and components
   contact:
     email: parkerkrhoyt@gmail.com  
@@ -13,15 +13,15 @@ externalDocs:
 servers:
 - url: http://localhost:3000/api
 tags:
-- name: 📓 Blog
-  description: Blog feeds to aggregate
+- name: 🌐 Website
+  description: Developer website
 paths:
-  /blog:
+  /website:
     get:
       tags:
-      - 📓 Blog
-      summary: Read all available blog feeds
-      operationId: getBlogs
+      - 🌐 Website
+      summary: Read all available websites
+      operationId: getWebsites
       responses:
         200:
           description: successful operation
@@ -30,12 +30,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Blog'
+                  $ref: '#/components/schemas/Website'
     post:
       tags:
-      - 📓 Blog
-      summary: Create a new blog feed source
-      operationId: createBlog
+      - 🌐 Website
+      summary: Create a new website
+      operationId: createWebsite
       requestBody:
         required: true
         content:
@@ -55,33 +55,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Blog'   
-  /blog/{id}:        
+                $ref: '#/components/schemas/Website'   
+  /website/{id}:        
     parameters:
     - name: id
       in: path
-      description: ID field for desired blog feed
+      description: ID field for desired website
       required: true
       schema:
         type: string
         format: uuid      
     get:
       tags:
-      - 📓 Blog
-      summary: Read specific blog feed by ID
-      operationId: getBlogByID
+      - 🌐 Website
+      summary: Read specific website by ID
+      operationId: getWebsiteByID
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Blog'      
+                $ref: '#/components/schemas/Website'      
     put:
       tags:
-      - 📓 Blog
-      summary: Update specific blog feed by ID
-      operationId: updateBlog
+      - 🌐 Website
+      summary: Update specific website by ID
+      operationId: updateWebsite
       requestBody:
         required: true
         content:
@@ -101,12 +101,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Blog'
+                $ref: '#/components/schemas/Website'
     delete:
       tags:
-      - 📓 Blog
-      summary: Delete specific blog feed by ID
-      operationId: deleteBlogByID
+      - 🌐 Website
+      summary: Delete specific website by ID
+      operationId: deleteWebsiteByID
       responses:
         200:
           description: successful operation
@@ -120,7 +120,7 @@ paths:
                     format: uuid                                                              
 components:
   schemas:
-    Blog:
+    Website:
       required:
       - developer_id
       - url

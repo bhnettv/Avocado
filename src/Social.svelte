@@ -92,7 +92,8 @@ p {
     <Button
       icon="/img/add-white.svg"
       disabledIcon="/img/add.svg"
-      disabled="{endpoint.trim().length > 0 ? false : true}">Add</Button>
+      disabled="{endpoint.trim().length > 0 ? false : true}"
+      size="small">Add</Button>
   </div>
 
   {#if data.length === 0}

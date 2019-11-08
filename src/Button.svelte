@@ -6,6 +6,7 @@ export let icon = null;
 export let disabledIcon = null;
 export let label = '';
 export let kind = 'primary';
+export let size = 'large';
 export let title = '';
 export let visible = true;
 
@@ -67,6 +68,10 @@ button:disabled {
 
 .danger:hover {
   background-color: #ba1b23;
+}
+
+.small {
+  height: 40px;
 }
 
 .primary {
@@ -136,6 +141,7 @@ button:disabled {
   {disabled}
   title="{title}"
   class="{kind}"
+  class:small="{size === 'small' ? true : false}"
   style="display: {visible ? 'block' : 'none'}"  
   on:click="{doClick}">
   <slot></slot>
@@ -148,6 +154,7 @@ button:disabled {
   {disabled}
   title="{title}"
   class="{kind}"
+  class:small="{size === 'small' ? true : false}"  
   style="background-image: url( {disabled ? disabledIcon : icon} ); display: {visible ? 'block' : 'none'}"
   on:click="{doClick}">
   <slot></slot>  
