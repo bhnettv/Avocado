@@ -1,4 +1,6 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 export let collapse = false;
 export let disabled = false;
 export let helper = undefined;
@@ -6,7 +8,18 @@ export let label = undefined;
 export let placeholder = '';
 export let value = '';
 
+const dispatch = createEventDispatcher();
+
+let original = undefined;
+
 function doBlur( evt ) {
+  if( original !== evt.target.value.trim() ) {
+    dispatch( 'change', {
+      original: original,
+      value: evt.target.value.trim()
+    } );    
+  }
+
   if( collapse ) {
     if( value.trim().length === 0 ) {
       evt.target.classList.add( 'collapse' );
@@ -15,6 +28,8 @@ function doBlur( evt ) {
 }
 
 function doFocus( evt ) {
+  original = evt.target.value.trim();
+
   if( collapse ) {
     evt.target.classList.remove( 'collapse' );
   }
@@ -86,15 +101,11 @@ p {
 <div>
 
   {#if label !== undefined}
-
     <label style="color: {disabled ? '#c6c6c6' : '#393939'}">{label}</label>
-
   {/if}
 
   {#if helper !== undefined}
-
     <p style="color: {disabled ? '#c6c6c6' : '#6f6f6f'}">{helper}</p>
-
   {/if}  
 
   <textarea 

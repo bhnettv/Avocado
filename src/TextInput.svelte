@@ -1,9 +1,28 @@
 <script>
+import { createEventDispatcher } from 'svelte';
+
 export let disabled = false;
 export let label = undefined;
 export let helper = undefined;
 export let placeholder = 'Text input';
 export let value = '';
+
+const dispatch = createEventDispatcher();
+
+let original = undefined;
+
+function doBlur( evt ) {
+  if( original !== evt.target.value.trim() ) {
+    dispatch( 'change', {
+      original: original,
+      value: evt.target.value.trim()
+    } );
+  }
+}
+
+function doFocus( evt ) {
+  original = evt.target.value.trim();
+}
 </script>
 
 <style>
@@ -64,20 +83,18 @@ p {
 <div>
 
   {#if label !== undefined}
-
     <label style="color: {disabled ? '#c6c6c6' : '#393939'}">{label}</label>
-
   {/if}
 
-  {#if helper === undefined}
-
-    <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
-
-  {:else}
-
+  {#if helper !== undefined}
     <p style="color: {disabled ? '#c6c6c6' : '#6f6f6f'}">{helper}</p>
-    <input placeholder="{placeholder}" bind:value="{value}" {disabled}>
-
   {/if}
+
+  <input 
+    on:blur="{doBlur}"
+    on:focus="{doFocus}"    
+    placeholder="{placeholder}" 
+    bind:value="{value}" 
+    {disabled}>
 
 </div>

@@ -2,7 +2,6 @@
 import { onMount } from 'svelte';
 
 import Button from './Button.svelte';
-import Controls from './Controls.svelte';
 import Details from './Details.svelte';
 import List from './List.svelte';
 import ListLabelItem from './ListLabelItem.svelte';
@@ -33,18 +32,12 @@ import { notes } from './developers.js';
 
 // View state
 let add = false;
-let controls = 0;
 let developers = [];
 let enabled = 0;
 let filtered = [];
-let index = -1;
+let index = 0;
 let search = '';
 let tab = 0;
-
-// Panels disabled
-let profile = true;
-let social = true;
-let summary = true;
 
 // Changes
 let before_organizations = [];
@@ -68,25 +61,6 @@ function filter() {
   }
 }
 
-function refreshOrganization( create = false ) {
-  fetch( `/api/developer/${$developer_id}/organization`, {
-    method: create === true ? 'POST' : 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( $developer_organizations )
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $developer_organizations = data.slice();
-    return fetch( '/api/organization' );
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $organizations = data.slice();
-  } );
-}
-
 // Add clicked
 function doAddClick( evt ) {
   add = true;
@@ -106,55 +80,6 @@ function doAddClick( evt ) {
   $developer_latitude = null;
   $developer_longitude = null;
   $developer_description = '';
-}
-
-function doCancelExisting( evt ) {
-  fetch( `/api/developer/${$developer_id}` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $developer_id = data.id;
-    $developer_name = data.name;
-    $developer_email = data.email;
-    $developer_image = data.image;
-    $developer_location = data.location;
-    $developer_latitude = data.latitude;
-    $developer_longitude = data.longitude;
-    $developer_public = data.public;
-
-    fetch( `/api/developer/${$developer_id}/organization` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-      $developer_organizations = data.slice();
-    } );
-
-    add = false;
-    enabled = 3;
-    summary = true;
-    profile = true;
-    social = true;
-    controls = 2;    
-  } );
-}
-
-function doCancelNew( evt ) {
-  add = false;
-  tab = 0;
-  enabled = 0;
-  summary = true;
-  profile = true;
-  social = true;
-  controls = 0;  
-
-  $developer_id = null;
-  $developer_name = '';
-  $developer_email = '';
-  $developer_image = '';
-  $developer_organizations = [];
-  $developer_location = '';
-  $developer_latitude = null;
-  $developer_longitude = null;
-  $developer_description = '';
-  $developer_public = 0;
 }
 
 function doDelete( evt ) {
@@ -205,18 +130,12 @@ function doDeveloperClick( evt ) {
     $developer_longitude = data.longitude;
     $developer_description = data.description === null ? '' : data.description;
     $developer_public = data.public;
+  } );
 
-    fetch( `/api/developer/${$developer_id}/organization` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => { 
-      $developer_organizations = data.slice();
-    } );
-
-    enabled = 3;
-    summary = true;
-    profile = true;
-    social = true;
-    controls = 2;
+  fetch( `/api/developer/${evt.detail.item.id}/organization` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    $developer_organizations = data.slice();
   } );
 
   fetch( `/api/developer/${evt.detail.item.id}/note` )
@@ -226,100 +145,15 @@ function doDeveloperClick( evt ) {
   } );
 }
 
-function doEdit( evt ) {
-  add = true;
-  enabled = 3;
-  summary = false;
-  profile = false;
-  social = false;
-  controls = 3;
-}
-
-function doSaveExisting( evt ) {
-  let developer = {
-    id: $developer_id,
-    name: $developer_name.trim().length === 0 ? null : $developer_name.trim(),
-    email: $developer_email.trim().length === 0 ? null : $developer_email.trim(),
-    description: $developer_description.trim().length === 0 ? null : $developer_description.trim(),
-    image: $developer_image.trim().length === 0 ? null : $developer_image.trim(),
-    location: $developer_location.trim().length === 0 ? null : $developer_location.trim(),
-    latitude: $developer_location.trim().length === 0 ? null : $developer_latitude,
-    longitude: $developer_location.trim().length === 0 ? null : $developer_longitude,
-    public: $developer_public
-  };
-
-  fetch( `/api/developer/${$developer_id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( developer )
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    add = false;
-    enabled = 3;
-    summary = true;
-    profile = true;
-    social = true;
-    controls = 2;    
-
-    refreshOrganization( false );
-
-    $developer_latitude = data.latitude === null ? null : data.latitude;
-    $developer_longitude = data.longitude === null ? null : data.longitude;
-
-    for( let a = 0; a < developers.length; a++ ) {
-      if( developers[a].id === developer.id ) {
-        developers[a] = Object.assign( {}, developer );
-        filter();
-        break;
-      }
+function doDeveloperChange( evt ) {
+  for( let d = 0; d < developers.length; d++ ) {
+    if( developers[d].id === evt.detail.id ) {
+      developers[d] = Object.assign( developers[d], evt.detail );
+      break;
     }
-  } );
-}
+  }
 
-// Save new developer
-function doSaveNew( evt ) {
-  fetch( '/api/developer', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( {
-      name: $developer_name.trim().length > 0 ? $developer_name : null,
-      email: $developer_email.trim().length > 0 ? $developer_email : null,      
-      description: $developer_description.trim().length > 0 ? $developer_description : null,      
-      image: $developer_image.trim().length > 0 ? $developer_image : null,
-      location: $developer_location.trim().length > 0 ? $developer_location : null,      
-      latitude: null,      
-      longitude: null,
-      public: $developer_public
-    } )
-  } )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $developer_id = data.id;
-    $developer_latitude = data.latitude === null ? null : data.latitude;
-    $developer_longitude = data.longitude === null ? null : data.longitude;
-    developers.push( Object.assign( {}, data ) );
-    developers.sort( ( a, b ) => {
-      if( a.name > b.name ) return 1;
-      if( a.name < b.name ) return -1;
-      return 0;
-    } );
-    developers = developers.slice();
-    filter();
-
-    refreshOrganization( true );
-
-    add = false;
-    enabled = 3;
-    summary = true;
-    profile = true;
-    social = true;
-    controls = 2;
-  } );
+  filter();
 }
 
 // Load external data
@@ -328,6 +162,17 @@ onMount( async () => {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     developers = data.slice();
+
+    $developer_id = data[0].id;
+    $developer_name = data[0].name === null ? '' : data[0].name;
+    $developer_email = data[0].email === null ? '' : data[0].email;
+    $developer_image = data[0].image === null ? '' : data[0].image;
+    $developer_location = data[0].location === null ? '' : data[0].location;
+    $developer_latitude = data[0].latitude;
+    $developer_longitude = data[0].longitude;
+    $developer_description = data[0].description === null ? '' : data[0].description;
+    $developer_public = data[0].public;
+
     filter();    
   } );
 
@@ -337,7 +182,7 @@ onMount( async () => {
     $organizations = data.slice();
   } );
 
-   fetch( '/api/skill' )
+  fetch( '/api/skill' )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $skills = data.slice();
@@ -432,38 +277,23 @@ h4 {
         selected="{tab === 0 ? true : false}">Summary</Tab>
       <Tab 
         on:click="{() => tab = 1}"      
-        selected="{tab === 1 ? true : false}"
-        disabled="{enabled >= 1 ? false : true}">Profile</Tab>        
+        selected="{tab === 1 ? true : false}">Profile</Tab>        
       <Tab 
         on:click="{() => tab = 2}"      
-        selected="{tab === 2 ? true : false}" 
-        disabled="{enabled >= 2 ? false : true}">Social</Tab>
+        selected="{tab === 2 ? true : false}">Social</Tab>
       <Tab 
         on:click="{() => tab = 3}"      
-        selected="{tab === 3 ? true : false}" 
-        disabled="{enabled >= 3 ? false : true}">Notes</Tab>
+        selected="{tab === 3 ? true : false}">Notes</Tab>
     </TabBar>
 
     <!-- Views -->
     <!-- Work directly with store -->
-    <Summary hidden="{tab === 0 ? false : true}"/>
+    <Summary 
+      hidden="{tab === 0 ? false : true}" 
+      on:change="{doDeveloperChange}"/>
     <Profile hidden="{tab === 1 ? false : true}"/>
     <Social hidden="{tab === 2 ? false : true}"/>
     <Notes hidden="{tab === 3 ? false : true}"/>
-
-    <!-- Controls -->
-    <!-- Cancel, Save, Edit, Delete -->
-    <!--
-    <Controls 
-      hidden="{tab === 3 || tab === 2 ? true : false}"
-      mode="{controls}"
-      on:cancelnew="{doCancelNew}"
-      on:savenew="{doSaveNew}"
-      on:edit="{doEdit}"
-      on:cancelexisting="{doCancelExisting}"
-      on:saveexisting="{doSaveExisting}"
-      on:delete="{doDelete}"/>
-    -->
 
   </article>
 

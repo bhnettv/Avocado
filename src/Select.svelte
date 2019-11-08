@@ -126,6 +126,7 @@ p {
     bind:value="{selected}" 
     class:inline 
     class:outline="{inline === false ? true : false}" 
+    on:change
     {disabled}>
     {#each options as option}
       <option value="{option[dataField]}">{option[labelField]}</option>
