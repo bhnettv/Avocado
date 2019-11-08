@@ -9,11 +9,14 @@ Install
 
 Configure
 
+- ESRI ArcGIS key
 - Google YouTube API key
 - Twitter key
 - Twitter secret
 - Stack Apps application key
 - GitHub access token
+- IBM Watson NLU key (optional)
+- IBM Watson Video key (optional)
 
 Start
 
@@ -51,3 +54,15 @@ Aggregate
     python github.py
     python reddit.py
     python repository.py
+
+Pieces-Parts
+
+- SQLite data storage (file)
+- Node.js/Express API surface
+- Swagger/OAS API documentation
+- Python content aggregators
+- Svelte web application
+- Watson image classification
+- Watson language understanding
+- ArcGIS mapping on the client
+- ArcGIS geocoding on the server
