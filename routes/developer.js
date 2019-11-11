@@ -42,25 +42,30 @@ router.get( '/organization/:id', ( req, res ) => {
 } );
 
 // Read organizations for given developer
-router.get( '/:id/organization', ( req, res ) => {
-  let organizations = req.db.prepare( `
+router.get( '/:id/:model', ( req, res ) => {
+  const field = req.params.model.toLowerCase();
+  const entity = field.replace( /^\w/, c => c.toUpperCase() );
+
+  let listing = req.db.prepare( `
     SELECT 
-      Organization.uuid AS "id",
-      Organization.created_at, 
-      Organization.updated_at, 
-      Organization.name
+      ${entity}.uuid AS "id",
+      ${entity}.created_at, 
+      ${entity}.updated_at, 
+      ${entity}.name
     FROM 
-      Developer, DeveloperOrganization, Organization
+      Developer, 
+      Developer${entity},
+      ${entity}
     WHERE 
-      Organization.id = DeveloperOrganization.organization_id AND
-      DeveloperOrganization.developer_id = Developer.id AND
+      ${entity}.id = Developer${entity}.${field}_id AND
+      Developer${entity}.developer_id = Developer.id AND
       Developer.uuid = ?
   ` )
   .all( 
     req.params.id 
   );
 
-  res.json( organizations );
+  res.json( listing );
 } );
 
 // Read single developer by ID
@@ -229,22 +234,25 @@ router.post( '/:developer/organization', ( req, res ) => {
 } );
 
 // Update developer association to organization(s)
-router.put( '/:developer/organization', ( req, res ) => {
-  let organizations = [];
+router.put( '/:developer/:model', ( req, res ) => {
+  const field = req.params.model.toLowerCase();
+  const entity = field.replace( /^\w/, c => c.toUpperCase() );
+
+  let listing = [];
 
   // Preserve existing relationships
   // Between developer and organization
   let relationships = req.db.prepare( `
     SELECT 
-      DeveloperOrganization.id,
-      Organization.uuid AS "organization_id"
+      Developer${entity}.id,
+      ${entity}.uuid AS "${field}_id"
     FROM 
       Developer,
-      DeveloperOrganization,
-      Organization
+      Developer${entity},
+      ${entity}
     WHERE 
-      Organization.id = DeveloperOrganization.organization_id AND
-      DeveloperOrganization.developer_id = Developer.id AND
+      ${entity}.id = Developer${entity}.${field}_id AND
+      Developer${entity}.developer_id = Developer.id AND
       Developer.uuid = ?
   ` )
   .all(
@@ -255,24 +263,24 @@ router.put( '/:developer/organization', ( req, res ) => {
   for( let a = 0; a < req.body.length; a++ ) {
     let record = {
       id: null,
-      organization_uuid: req.body[a].id,
       developer_uuid: req.params.developer,
       name: req.body[a].name
     }
+    record[`${field}_uuid`] = req.body[a].id;
 
     // Check if organization exists
     // By name
     // Case-insensitive
     let existing = req.db.prepare( `
       SELECT
-        Organization.uuid AS "id",
-        Organization.created_at,
-        Organization.updated_at,
-        Organization.name
+        ${entity}.uuid AS "id",
+        ${entity}.created_at,
+        ${entity}.updated_at,
+        ${entity}.name
       FROM
-        Organization
+        ${entity}
       WHERE
-        LOWER( Organization.name ) = ?
+        LOWER( ${entity}.name ) = ?
     ` )
     .get(
       record.name.trim().toLowerCase()
@@ -282,25 +290,25 @@ router.put( '/:developer/organization', ( req, res ) => {
     if( existing === undefined ) {
       // Assign external UUID
       // Assign created and updated stamps
-      record.organization_uuid = uuidv4();
+      record[`${field}_uuid`] = uuidv4();
       record.created_at = new Date().toISOString();
       record.updated_at = new Date().toISOString();
 
       // Create organization
       let info = req.db.prepare( `
-        INSERT INTO Organization
+        INSERT INTO ${entity}
         VALUES ( ?, ?, ?, ?, ? )
       ` )
       .run(
         record.id,
-        record.organization_uuid,
+        record[`${field}_uuid`],
         record.created_at,
         record.updated_at,
         record.name
       );
     } else {
       // Carry over existing organization data
-      record.organization_uuid = existing.id;
+      record[`${field}_uuid`] = existing.id;
       record.created_at = existing.created_at;
       record.updated_at = existing.updated_at;        
       record.name = existing.name;
@@ -310,25 +318,25 @@ router.put( '/:developer/organization', ( req, res ) => {
     // Check if relationship to developer exists
     let relates = req.db.prepare( `
       SELECT
-        DeveloperOrganization.uuid AS "id",
-        DeveloperOrganization.created_at,
-        DeveloperOrganization.updated_at,
+        Developer${entity}.uuid AS "id",
+        Developer${entity}.created_at,
+        Developer${entity}.updated_at,
         Developer.uuid AS "developer_id",
-        Organization.uuid AS "organization_id",
-        Organization.name
+        ${entity}.uuid AS "${field}_id",
+        ${entity}.name
       FROM
         Developer,
-        DeveloperOrganization,
-        Organization
+        Developer${entity},
+        ${entity}
       WHERE
-        Developer.id = DeveloperOrganization.developer_id AND
-        DeveloperOrganization.organization_id = Organization.id AND
+        Developer.id = Developer${entity}.developer_id AND
+        Developer${entity}.${field}_id = ${entity}.id AND
         Developer.uuid = ? AND
-        Organization.uuid = ?
+        ${entity}.uuid = ?
     ` )
     .get(
       record.developer_uuid,
-      record.organization_uuid
+      record[`${field}_uuid`]
     );
 
     // No existing relationship
@@ -337,27 +345,27 @@ router.put( '/:developer/organization', ( req, res ) => {
       let ids = req.db.prepare( `
         SELECT
           Developer.id AS "developer_id",
-          Organization.id AS "organization_id"
+          ${entity}.id AS "${field}_id"
         FROM
           Developer,
-          Organization
+          ${entity}
         WHERE
           Developer.uuid = ? AND
-          Organization.uuid = ?
+          ${entity}.uuid = ?
       ` )
       .get( 
         record.developer_uuid,
-        record.organization_uuid
+        record[`${field}_uuid`]
       );
 
       // Assign IDs
       record.developer_id = ids.developer_id;
-      record.organization_id = ids.organization_id;
+      record[`${field}_id`] = ids[`${field}_id`];
       record.relation_uuid = uuidv4();
   
       // Create relationship
       let info = req.db.prepare( `
-        INSERT INTO DeveloperOrganization
+        INSERT INTO Developer${entity}
         VALUES ( ?, ?, ?, ?, ?, ? )
       ` )
       .run(
@@ -366,14 +374,14 @@ router.put( '/:developer/organization', ( req, res ) => {
         record.created_at,
         record.updated_at,
         record.developer_id,
-        record.organization_id
+        record[`${field}_id`]
       );
     }
 
     // Mirror organization record
     // Hydrated with complete details
-    organizations.push( {
-      id: record.organization_uuid,
+    listing.push( {
+      id: record[`${field}_uuid`],
       created_at: record.created_at,
       updated_at: record.updated_at,
       developer_id: record.developer_uuid,
@@ -388,8 +396,8 @@ router.put( '/:developer/organization', ( req, res ) => {
     let found = false;
 
     // Name matches
-    for( let b = 0; b < organizations.length; b++ ) {
-      if( relationships[a].organization_id === organizations[b].id ) {
+    for( let b = 0; b < listing.length; b++ ) {
+      if( relationships[a][`${field}_id`] === listing[b].id ) {
         found = true;
         break;
       }
@@ -398,8 +406,8 @@ router.put( '/:developer/organization', ( req, res ) => {
     // Not found in new associations
     if( !found ) {
       let removed = req.db.prepare( `
-        DELETE FROM DeveloperOrganization
-        WHERE DeveloperOrganization.id = ?
+        DELETE FROM Developer${entity}
+        WHERE Developer${entity}.id = ?
       ` )
       .run(
         relationships[a].id
@@ -407,7 +415,7 @@ router.put( '/:developer/organization', ( req, res ) => {
     }
   }
 
-  res.json( organizations );
+  res.json( listing );
 } );
 
 // Create

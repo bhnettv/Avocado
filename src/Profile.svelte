@@ -1,9 +1,13 @@
 <script>
+import { onMount } from 'svelte';
+
 import Select from './Select.svelte';
 import TagInput from './TagInput.svelte';
 import TextArea from './TextArea.svelte';
 import TextInput from './TextInput.svelte';
 
+import { roles } from './developers.js';
+import { languages } from './developers.js';
 import { skills } from './developers.js';
 
 import { developer_id } from './developers.js';
@@ -17,6 +21,8 @@ import { developer_latitude } from './developers.js';
 import { developer_longitude } from './developers.js';
 import { developer_public } from './developers.js';
 
+import { developer_roles } from './developers.js';
+import { developer_languages } from './developers.js';
 import { developer_skills } from './developers.js';
 
 export let hidden = false;
@@ -55,9 +61,67 @@ function doDeveloperChange( evt ) {
   } );
 }
 
+function doLanguageAdd( evt ) {
+  doTagChange( $developer_languages, 'language' );
+}
+
+function doLanguageRemove( evt ) {
+  doTagChange( $developer_languages, 'language' );
+}
+
+function doRoleAdd( evt ) {
+  doTagChange( $developer_roles, 'role' );
+}
+
+function doRoleRemove( evt ) {
+  doTagChange( $developer_roles, 'role' );
+}
+
 function doSelectChange( evt ) {
   doDeveloperChange( evt );
 }
+
+function doSkillAdd( evt ) {
+  doTagChange( $developer_skills, 'skill' );
+}
+
+function doSkillRemove( evt ) {
+  doTagChange( $developer_skills, 'skill' );
+}
+
+function doTagChange( items, field ) {
+  fetch( `/api/developer/${$developer_id}/${field}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( items )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    items = data.slice();
+  } );
+}
+
+onMount( async () => {
+  fetch( '/api/role' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $roles = data.slice();
+  } );  
+
+  fetch( '/api/language' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $languages = data.slice();
+  } );    
+
+  fetch( '/api/skill' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    $skills = data.slice();
+  } );
+} );
 </script>
 
 <style>
@@ -87,18 +151,30 @@ form > div:last-of-type {
 <form class:hidden>
 
   <div>
-    <TagInput 
-      label="Roles" 
+    <TagInput
+      data="{$roles}"
+      dataField="id"
+      labelField="name"
+      label="Roles"
       placeholder="Roles"
       helper="Job functions regularly performed"
+      bind:value="{$developer_roles}"
+      on:add="{doRoleAdd}"
+      on:remove="{doRoleRemove}"
       {disabled}/>
   </div>
 
   <div>
-    <TagInput 
-      label="Languages" 
+    <TagInput
+      data="{$languages}"
+      dataField="id"
+      labelField="name"
+      label="Languages"
       placeholder="Languages"
-      helper="Fluency for a technical presentation"
+      helper="Spoken fluency for a technical presentation"
+      bind:value="{$developer_languages}"
+      on:add="{doLanguageAdd}"
+      on:remove="{doLanguageRemove}"
       {disabled}/>
   </div>
 
@@ -111,6 +187,8 @@ form > div:last-of-type {
       placeholder="Skills"
       helper="Capable of delivering hands-on training with zero preparation"
       bind:value="{$developer_skills}"
+      on:add="{doSkillAdd}"
+      on:remove="{doSkillRemove}"      
       {disabled}/> 
   </div>
 

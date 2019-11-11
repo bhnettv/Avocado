@@ -3855,6 +3855,8 @@ var app = (function () {
     }
 
     const organizations = writable( [] );
+    const roles = writable( [] );
+    const languages = writable( [] );
     const skills = writable( [] );
 
     // Summary
@@ -3866,6 +3868,10 @@ var app = (function () {
     const developer_location = writable( '' );
     const developer_latitude = writable( null );
     const developer_longitude = writable( null );
+
+    // Profile
+    const developer_roles = writable( [] );
+    const developer_languages = writable( [] );
     const developer_skills = writable( [] );
     const developer_public = writable( false );
     const developer_description = writable( '' );
@@ -3879,32 +3885,60 @@ var app = (function () {
     const file$b = "src/Profile.svelte";
 
     function create_fragment$b(ctx) {
-    	var form, div0, t0, div1, t1, div2, updating_value, t2, div3, updating_value_1, t3, div4, updating_selected, current;
+    	var form, div0, updating_value, t0, div1, updating_value_1, t1, div2, updating_value_2, t2, div3, updating_value_3, t3, div4, updating_selected, current;
 
-    	var taginput0 = new TagInput({
-    		props: {
+    	function taginput0_value_binding(value) {
+    		ctx.taginput0_value_binding.call(null, value);
+    		updating_value = true;
+    		add_flush_callback(() => updating_value = false);
+    	}
+
+    	let taginput0_props = {
+    		data: ctx.$roles,
+    		dataField: "id",
+    		labelField: "name",
     		label: "Roles",
     		placeholder: "Roles",
     		helper: "Job functions regularly performed",
     		disabled: ctx.disabled
-    	},
-    		$$inline: true
-    	});
+    	};
+    	if (ctx.$developer_roles !== void 0) {
+    		taginput0_props.value = ctx.$developer_roles;
+    	}
+    	var taginput0 = new TagInput({ props: taginput0_props, $$inline: true });
 
-    	var taginput1 = new TagInput({
-    		props: {
+    	binding_callbacks.push(() => bind(taginput0, 'value', taginput0_value_binding));
+    	taginput0.$on("add", ctx.doRoleAdd);
+    	taginput0.$on("remove", ctx.doRoleRemove);
+
+    	function taginput1_value_binding(value_1) {
+    		ctx.taginput1_value_binding.call(null, value_1);
+    		updating_value_1 = true;
+    		add_flush_callback(() => updating_value_1 = false);
+    	}
+
+    	let taginput1_props = {
+    		data: ctx.$languages,
+    		dataField: "id",
+    		labelField: "name",
     		label: "Languages",
     		placeholder: "Languages",
-    		helper: "Fluency for a technical presentation",
+    		helper: "Spoken fluency for a technical presentation",
     		disabled: ctx.disabled
-    	},
-    		$$inline: true
-    	});
+    	};
+    	if (ctx.$developer_languages !== void 0) {
+    		taginput1_props.value = ctx.$developer_languages;
+    	}
+    	var taginput1 = new TagInput({ props: taginput1_props, $$inline: true });
 
-    	function taginput2_value_binding(value) {
-    		ctx.taginput2_value_binding.call(null, value);
-    		updating_value = true;
-    		add_flush_callback(() => updating_value = false);
+    	binding_callbacks.push(() => bind(taginput1, 'value', taginput1_value_binding));
+    	taginput1.$on("add", ctx.doLanguageAdd);
+    	taginput1.$on("remove", ctx.doLanguageRemove);
+
+    	function taginput2_value_binding(value_2) {
+    		ctx.taginput2_value_binding.call(null, value_2);
+    		updating_value_2 = true;
+    		add_flush_callback(() => updating_value_2 = false);
     	}
 
     	let taginput2_props = {
@@ -3922,11 +3956,13 @@ var app = (function () {
     	var taginput2 = new TagInput({ props: taginput2_props, $$inline: true });
 
     	binding_callbacks.push(() => bind(taginput2, 'value', taginput2_value_binding));
+    	taginput2.$on("add", ctx.doSkillAdd);
+    	taginput2.$on("remove", ctx.doSkillRemove);
 
-    	function textarea_value_binding(value_1) {
-    		ctx.textarea_value_binding.call(null, value_1);
-    		updating_value_1 = true;
-    		add_flush_callback(() => updating_value_1 = false);
+    	function textarea_value_binding(value_3) {
+    		ctx.textarea_value_binding.call(null, value_3);
+    		updating_value_3 = true;
+    		add_flush_callback(() => updating_value_3 = false);
     	}
 
     	let textarea_props = {
@@ -3942,8 +3978,8 @@ var app = (function () {
     	binding_callbacks.push(() => bind(textarea, 'value', textarea_value_binding));
     	textarea.$on("change", ctx.doAreaChange);
 
-    	function select_selected_binding(value_2) {
-    		ctx.select_selected_binding.call(null, value_2);
+    	function select_selected_binding(value_4) {
+    		ctx.select_selected_binding.call(null, value_4);
     		updating_selected = true;
     		add_flush_callback(() => updating_selected = false);
     	}
@@ -3982,19 +4018,19 @@ var app = (function () {
     			div4 = element("div");
     			select.$$.fragment.c();
     			attr_dev(div0, "class", "svelte-jesd26");
-    			add_location(div0, file$b, 88, 2, 2235);
+    			add_location(div0, file$b, 152, 2, 3679);
     			attr_dev(div1, "class", "svelte-jesd26");
-    			add_location(div1, file$b, 96, 2, 2383);
+    			add_location(div1, file$b, 166, 2, 3990);
     			attr_dev(div2, "class", "svelte-jesd26");
-    			add_location(div2, file$b, 104, 2, 2542);
+    			add_location(div2, file$b, 180, 2, 4335);
     			set_style(div3, "flex-grow", "1");
     			attr_dev(div3, "class", "svelte-jesd26");
-    			add_location(div3, file$b, 116, 2, 2826);
+    			add_location(div3, file$b, 194, 2, 4687);
     			attr_dev(div4, "class", "svelte-jesd26");
-    			add_location(div4, file$b, 125, 2, 3038);
+    			add_location(div4, file$b, 203, 2, 4899);
     			attr_dev(form, "class", "svelte-jesd26");
     			toggle_class(form, "hidden", ctx.hidden);
-    			add_location(form, file$b, 86, 0, 2212);
+    			add_location(form, file$b, 150, 0, 3656);
     		},
 
     		l: function claim(nodes) {
@@ -4022,24 +4058,32 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var taginput0_changes = {};
+    			if (changed.$roles) taginput0_changes.data = ctx.$roles;
     			if (changed.disabled) taginput0_changes.disabled = ctx.disabled;
+    			if (!updating_value && changed.$developer_roles) {
+    				taginput0_changes.value = ctx.$developer_roles;
+    			}
     			taginput0.$set(taginput0_changes);
 
     			var taginput1_changes = {};
+    			if (changed.$languages) taginput1_changes.data = ctx.$languages;
     			if (changed.disabled) taginput1_changes.disabled = ctx.disabled;
+    			if (!updating_value_1 && changed.$developer_languages) {
+    				taginput1_changes.value = ctx.$developer_languages;
+    			}
     			taginput1.$set(taginput1_changes);
 
     			var taginput2_changes = {};
     			if (changed.$skills) taginput2_changes.data = ctx.$skills;
     			if (changed.disabled) taginput2_changes.disabled = ctx.disabled;
-    			if (!updating_value && changed.$developer_skills) {
+    			if (!updating_value_2 && changed.$developer_skills) {
     				taginput2_changes.value = ctx.$developer_skills;
     			}
     			taginput2.$set(taginput2_changes);
 
     			var textarea_changes = {};
     			if (changed.disabled) textarea_changes.disabled = ctx.disabled;
-    			if (!updating_value_1 && changed.$developer_description) {
+    			if (!updating_value_3 && changed.$developer_description) {
     				textarea_changes.value = ctx.$developer_description;
     			}
     			textarea.$set(textarea_changes);
@@ -4101,7 +4145,7 @@ var app = (function () {
     }
 
     function instance$b($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $developer_location, $developer_latitude, $developer_longitude, $developer_public, $skills, $developer_skills;
+    	let $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $developer_location, $developer_latitude, $developer_longitude, $developer_public, $developer_languages, $developer_roles, $developer_skills, $roles, $languages, $skills;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
@@ -4121,10 +4165,18 @@ var app = (function () {
     	component_subscribe($$self, developer_longitude, $$value => { $developer_longitude = $$value; $$invalidate('$developer_longitude', $developer_longitude); });
     	validate_store(developer_public, 'developer_public');
     	component_subscribe($$self, developer_public, $$value => { $developer_public = $$value; $$invalidate('$developer_public', $developer_public); });
-    	validate_store(skills, 'skills');
-    	component_subscribe($$self, skills, $$value => { $skills = $$value; $$invalidate('$skills', $skills); });
+    	validate_store(developer_languages, 'developer_languages');
+    	component_subscribe($$self, developer_languages, $$value => { $developer_languages = $$value; $$invalidate('$developer_languages', $developer_languages); });
+    	validate_store(developer_roles, 'developer_roles');
+    	component_subscribe($$self, developer_roles, $$value => { $developer_roles = $$value; $$invalidate('$developer_roles', $developer_roles); });
     	validate_store(developer_skills, 'developer_skills');
     	component_subscribe($$self, developer_skills, $$value => { $developer_skills = $$value; $$invalidate('$developer_skills', $developer_skills); });
+    	validate_store(roles, 'roles');
+    	component_subscribe($$self, roles, $$value => { $roles = $$value; $$invalidate('$roles', $roles); });
+    	validate_store(languages, 'languages');
+    	component_subscribe($$self, languages, $$value => { $languages = $$value; $$invalidate('$languages', $languages); });
+    	validate_store(skills, 'skills');
+    	component_subscribe($$self, skills, $$value => { $skills = $$value; $$invalidate('$skills', $skills); });
 
     	
 
@@ -4163,27 +4215,95 @@ var app = (function () {
       } );
     }
 
+    function doLanguageAdd( evt ) {
+      doTagChange( $developer_languages, 'language' );
+    }
+
+    function doLanguageRemove( evt ) {
+      doTagChange( $developer_languages, 'language' );
+    }
+
+    function doRoleAdd( evt ) {
+      doTagChange( $developer_roles, 'role' );
+    }
+
+    function doRoleRemove( evt ) {
+      doTagChange( $developer_roles, 'role' );
+    }
+
     function doSelectChange( evt ) {
       doDeveloperChange();
     }
+
+    function doSkillAdd( evt ) {
+      doTagChange( $developer_skills, 'skill' );
+    }
+
+    function doSkillRemove( evt ) {
+      doTagChange( $developer_skills, 'skill' );
+    }
+
+    function doTagChange( items, field ) {
+      fetch( `/api/developer/${$developer_id}/${field}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( items )
+      } )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        items = data.slice();
+      } );
+    }
+
+    onMount( async () => {
+      fetch( '/api/role' )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(roles, $roles = data.slice());
+      } );  
+
+      fetch( '/api/language' )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(languages, $languages = data.slice());
+      } );    
+
+      fetch( '/api/skill' )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        set_store_value(skills, $skills = data.slice());
+      } );
+    } );
 
     	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console_1$1.warn(`<Profile> was created with unknown prop '${key}'`);
     	});
 
-    	function taginput2_value_binding(value) {
-    		$developer_skills = value;
+    	function taginput0_value_binding(value) {
+    		$developer_roles = value;
+    		developer_roles.set($developer_roles);
+    	}
+
+    	function taginput1_value_binding(value_1) {
+    		$developer_languages = value_1;
+    		developer_languages.set($developer_languages);
+    	}
+
+    	function taginput2_value_binding(value_2) {
+    		$developer_skills = value_2;
     		developer_skills.set($developer_skills);
     	}
 
-    	function textarea_value_binding(value_1) {
-    		$developer_description = value_1;
+    	function textarea_value_binding(value_3) {
+    		$developer_description = value_3;
     		developer_description.set($developer_description);
     	}
 
-    	function select_selected_binding(value_2) {
-    		$developer_public = value_2;
+    	function select_selected_binding(value_4) {
+    		$developer_public = value_4;
     		developer_public.set($developer_public);
     	}
 
@@ -4193,7 +4313,7 @@ var app = (function () {
     	};
 
     	$$self.$capture_state = () => {
-    		return { hidden, disabled, publish, $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $developer_location, $developer_latitude, $developer_longitude, $developer_public, $skills, $developer_skills };
+    		return { hidden, disabled, publish, $developer_id, $developer_name, $developer_email, $developer_description, $developer_image, $developer_location, $developer_latitude, $developer_longitude, $developer_public, $developer_languages, $developer_roles, $developer_skills, $roles, $languages, $skills };
     	};
 
     	$$self.$inject_state = $$props => {
@@ -4209,8 +4329,12 @@ var app = (function () {
     		if ('$developer_latitude' in $$props) developer_latitude.set($developer_latitude);
     		if ('$developer_longitude' in $$props) developer_longitude.set($developer_longitude);
     		if ('$developer_public' in $$props) developer_public.set($developer_public);
-    		if ('$skills' in $$props) skills.set($skills);
+    		if ('$developer_languages' in $$props) developer_languages.set($developer_languages);
+    		if ('$developer_roles' in $$props) developer_roles.set($developer_roles);
     		if ('$developer_skills' in $$props) developer_skills.set($developer_skills);
+    		if ('$roles' in $$props) roles.set($roles);
+    		if ('$languages' in $$props) languages.set($languages);
+    		if ('$skills' in $$props) skills.set($skills);
     	};
 
     	return {
@@ -4218,11 +4342,23 @@ var app = (function () {
     		disabled,
     		publish,
     		doAreaChange,
+    		doLanguageAdd,
+    		doLanguageRemove,
+    		doRoleAdd,
+    		doRoleRemove,
     		doSelectChange,
+    		doSkillAdd,
+    		doSkillRemove,
     		$developer_description,
     		$developer_public,
-    		$skills,
+    		$developer_languages,
+    		$developer_roles,
     		$developer_skills,
+    		$roles,
+    		$languages,
+    		$skills,
+    		taginput0_value_binding,
+    		taginput1_value_binding,
     		taginput2_value_binding,
     		textarea_value_binding,
     		select_selected_binding
@@ -6341,7 +6477,7 @@ var app = (function () {
 
     const file$k = "src/Developers.svelte";
 
-    // (286:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
+    // (318:6) <Button         on:click="{doAddClick}"         icon="/img/add-white.svg"         disabledIcon="/img/add.svg"         disabled="{add}">
     function create_default_slot_8(ctx) {
     	var t;
 
@@ -6360,11 +6496,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(286:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_8.name, type: "slot", source: "(318:6) <Button         on:click=\"{doAddClick}\"         icon=\"/img/add-white.svg\"         disabledIcon=\"/img/add.svg\"         disabled=\"{add}\">", ctx });
     	return block;
     }
 
-    // (295:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
+    // (327:4) <List        bind:selectedIndex="{index}"       on:change="{doDeveloperClick}"       data="{filtered}"        let:item="{developer}">
     function create_default_slot_7(ctx) {
     	var current;
 
@@ -6411,11 +6547,11 @@ var app = (function () {
     			destroy_component(listremoveitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(295:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_7.name, type: "slot", source: "(327:4) <List        bind:selectedIndex=\"{index}\"       on:change=\"{doDeveloperClick}\"       data=\"{filtered}\"        let:item=\"{developer}\">", ctx });
     	return block;
     }
 
-    // (308:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (340:6) <List          data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6460,11 +6596,11 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(308:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(340:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
-    // (307:4) <Details summary="Organizations">
+    // (339:4) <Details summary="Organizations">
     function create_default_slot_5(ctx) {
     	var current;
 
@@ -6512,11 +6648,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(307:4) <Details summary=\"Organizations\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_5.name, type: "slot", source: "(339:4) <Details summary=\"Organizations\">", ctx });
     	return block;
     }
 
-    // (324:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (356:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4(ctx) {
     	var t;
 
@@ -6535,11 +6671,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(324:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(356:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (327:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}">
+    // (359:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}">
     function create_default_slot_3(ctx) {
     	var t;
 
@@ -6558,11 +6694,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(327:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(359:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (330:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}">
+    // (362:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}">
     function create_default_slot_2(ctx) {
     	var t;
 
@@ -6581,11 +6717,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(330:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(362:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (333:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}">
+    // (365:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}">
     function create_default_slot_1$1(ctx) {
     	var t;
 
@@ -6604,11 +6740,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(333:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(365:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (323:4) <TabBar>
+    // (355:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -6739,7 +6875,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(323:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(355:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -6861,17 +6997,17 @@ var app = (function () {
     			t10 = space();
     			aside1 = element("aside");
     			attr_dev(div0, "class", "search svelte-3i9eli");
-    			add_location(div0, file$k, 283, 4, 6981);
+    			add_location(div0, file$k, 315, 4, 8040);
     			attr_dev(h4, "class", "svelte-3i9eli");
-    			add_location(h4, file$k, 293, 4, 7258);
+    			add_location(h4, file$k, 325, 4, 8317);
     			attr_dev(aside0, "class", "svelte-3i9eli");
-    			add_location(aside0, file$k, 280, 2, 6948);
+    			add_location(aside0, file$k, 312, 2, 8007);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$k, 319, 2, 7886);
+    			add_location(article, file$k, 351, 2, 8945);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$k, 350, 2, 8760);
+    			add_location(aside1, file$k, 382, 2, 9819);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
-    			add_location(div1, file$k, 277, 0, 6903);
+    			add_location(div1, file$k, 309, 0, 7962);
     		},
 
     		l: function claim(nodes) {
@@ -7020,7 +7156,7 @@ var app = (function () {
     let enabled = 0;
 
     function instance$k($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $developer_description, $developer_public, $notes, $organizations, $skills;
+    	let $developer_id, $developer_name, $developer_email, $developer_image, $developer_organizations, $developer_location, $developer_latitude, $developer_longitude, $developer_description, $developer_public, $developer_roles, $developer_languages, $developer_skills, $notes, $organizations;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
@@ -7042,12 +7178,16 @@ var app = (function () {
     	component_subscribe($$self, developer_description, $$value => { $developer_description = $$value; $$invalidate('$developer_description', $developer_description); });
     	validate_store(developer_public, 'developer_public');
     	component_subscribe($$self, developer_public, $$value => { $developer_public = $$value; $$invalidate('$developer_public', $developer_public); });
+    	validate_store(developer_roles, 'developer_roles');
+    	component_subscribe($$self, developer_roles, $$value => { $developer_roles = $$value; $$invalidate('$developer_roles', $developer_roles); });
+    	validate_store(developer_languages, 'developer_languages');
+    	component_subscribe($$self, developer_languages, $$value => { $developer_languages = $$value; $$invalidate('$developer_languages', $developer_languages); });
+    	validate_store(developer_skills, 'developer_skills');
+    	component_subscribe($$self, developer_skills, $$value => { $developer_skills = $$value; $$invalidate('$developer_skills', $developer_skills); });
     	validate_store(notes, 'notes');
     	component_subscribe($$self, notes, $$value => { $notes = $$value; $$invalidate('$notes', $notes); });
     	validate_store(organizations, 'organizations');
     	component_subscribe($$self, organizations, $$value => { $organizations = $$value; $$invalidate('$organizations', $organizations); });
-    	validate_store(skills, 'skills');
-    	component_subscribe($$self, skills, $$value => { $skills = $$value; $$invalidate('$skills', $skills); });
 
     	
     let developers = [];
@@ -7149,6 +7289,24 @@ var app = (function () {
         set_store_value(developer_organizations, $developer_organizations = data.slice());
       } );
 
+      fetch( `/api/developer/${evt.detail.item.id}/role` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => { 
+        set_store_value(developer_roles, $developer_roles = data.slice());
+      } );  
+
+      fetch( `/api/developer/${evt.detail.item.id}/language` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => { 
+        set_store_value(developer_languages, $developer_languages = data.slice());
+      } );    
+
+      fetch( `/api/developer/${evt.detail.item.id}/skill` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => { 
+        set_store_value(developer_skills, $developer_skills = data.slice());
+      } );      
+
       fetch( `/api/note/developer/${evt.detail.item.id}` )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
@@ -7234,18 +7392,30 @@ var app = (function () {
         .then( ( data ) => { 
           set_store_value(developer_organizations, $developer_organizations = data.slice());
         } );
+        
+        fetch( `/api/developer/${$developer_id}/role` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => { 
+          set_store_value(developer_roles, $developer_roles = data.slice());
+        } );    
+
+        fetch( `/api/developer/${$developer_id}/language` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => { 
+          set_store_value(developer_languages, $developer_languages = data.slice());
+        } );    
+
+        fetch( `/api/developer/${$developer_id}/skill` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => { 
+          set_store_value(developer_skills, $developer_skills = data.slice());
+        } );        
       } );
 
       fetch( '/api/organization' )
       .then( ( response ) => response.json() )
       .then( ( data ) => {
         set_store_value(organizations, $organizations = data.slice());
-      } );
-
-      fetch( '/api/skill' )
-      .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        set_store_value(skills, $skills = data.slice());
       } ); 
     } );
 
@@ -7291,9 +7461,11 @@ var app = (function () {
     		if ('$developer_longitude' in $$props) developer_longitude.set($developer_longitude);
     		if ('$developer_description' in $$props) developer_description.set($developer_description);
     		if ('$developer_public' in $$props) developer_public.set($developer_public);
+    		if ('$developer_roles' in $$props) developer_roles.set($developer_roles);
+    		if ('$developer_languages' in $$props) developer_languages.set($developer_languages);
+    		if ('$developer_skills' in $$props) developer_skills.set($developer_skills);
     		if ('$notes' in $$props) notes.set($notes);
     		if ('$organizations' in $$props) organizations.set($organizations);
-    		if ('$skills' in $$props) skills.set($skills);
     	};
 
     	return {

@@ -17,7 +17,6 @@ import TabBar from './TabBar.svelte';
 
 // Store
 import { organizations } from './developers.js';
-import { skills } from './developers.js';
 
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
@@ -29,6 +28,9 @@ import { developer_latitude } from './developers.js';
 import { developer_longitude } from './developers.js';
 import { developer_description } from './developers.js';
 import { developer_public } from './developers.js';
+import { developer_roles } from './developers.js';
+import { developer_languages } from './developers.js';
+import { developer_skills } from './developers.js';
 import { notes } from './developers.js';
 
 // View state
@@ -133,6 +135,24 @@ function doDeveloperClick( evt ) {
     $developer_organizations = data.slice();
   } );
 
+  fetch( `/api/developer/${evt.detail.item.id}/role` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    $developer_roles = data.slice();
+  } );  
+
+  fetch( `/api/developer/${evt.detail.item.id}/language` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    $developer_languages = data.slice();
+  } );    
+
+  fetch( `/api/developer/${evt.detail.item.id}/skill` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    $developer_skills = data.slice();
+  } );      
+
   fetch( `/api/note/developer/${evt.detail.item.id}` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
@@ -219,18 +239,30 @@ onMount( async () => {
     .then( ( data ) => { 
       $developer_organizations = data.slice();
     } );
+    
+    fetch( `/api/developer/${$developer_id}/role` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_roles = data.slice();
+    } );    
+
+    fetch( `/api/developer/${$developer_id}/language` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_languages = data.slice();
+    } );    
+
+    fetch( `/api/developer/${$developer_id}/skill` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_skills = data.slice();
+    } );        
   } );
 
   fetch( '/api/organization' )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     $organizations = data.slice();
-  } );
-
-  fetch( '/api/skill' )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $skills = data.slice();
   } ); 
 } );
 </script>
