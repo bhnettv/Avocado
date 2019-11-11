@@ -3,6 +3,7 @@ import Button from './Button.svelte';
 import Select from './Select.svelte';
 import TextInput from './TextInput.svelte';
 
+import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
 import { endpoint_website } from './developers.js';
 import { endpoint_rss } from './developers.js';
@@ -20,18 +21,45 @@ export let disabled = false;
 
 let endpoint = '';
 let endpoints = [
-  {label: 'Website', value: 'Including HTTP/S'},
-  {label: 'Feed', value: 'RSS or ATOM, including HTTP/S'},
-  {label: 'Dev.to', value: 'User name, after trailing slash of profile'},
-  {label: 'Medium', value: 'User name, after the "@" symbol'},
-  {label: 'YouTube', value: 'Channel ID, not user name'},
-  {label: 'Twitter', value: 'User name, no "@" symbol'},
-  {label: 'Stack Overflow', value: 'User ID, not user name'},
-  {label: 'GitHub', value: 'User name, after trailing slash'},
-  {label: 'Reddit', value: 'User name, as shown in posts'},
+  {label: 'Website', value: 'Including HTTP/S', entity: 'website', field: 'url'},
+  {label: 'Feed', value: 'RSS or ATOM, including HTTP/S', entity: 'blog', field: 'url'},
+  {label: 'Dev.to', value: 'User name, after trailing slash of profile', entity: 'dev', field: 'user_name'},
+  {label: 'Medium', value: 'User name, after the "@" symbol', entity: 'medium', field: 'user_name'},
+  {label: 'YouTube', value: 'Channel ID, not user name', entity: 'youtube', field: 'channel'},
+  {label: 'Twitter', value: 'User name, no "@" symbol', entity: 'twitter', field: 'screen_name'},
+  {label: 'Stack Overflow', value: 'User ID, not user name', entity: 'so', field: 'user'},
+  {label: 'GitHub', value: 'User name, after trailing slash', entity: 'github', field: 'login'},
+  {label: 'Reddit', value: 'User name, as shown in posts', entity: 'reddit', field: 'name'},
   {label: 'Instagram', value: 'Not yet implemented'}
 ];
 let source = 'Including HTTP/S';
+
+function doChannelAdd( evt ) {
+  let index = -1;
+
+  for( let e = 0; e < endpoints.length; e++ ) {
+    if( endpoints[e].value === source ) {
+      index = e;
+      break;
+    }
+  }
+
+  let body = {developer_id: $developer_id};
+  body[endpoints[index].field] = endpoint;
+
+  fetch( `/api/${endpoints[index].entity}`, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( body )
+  } )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    endpoint = '';
+    console.log( data );
+  } );
+}
 </script>
 
 <style>
@@ -93,7 +121,8 @@ p {
       icon="/img/add-white.svg"
       disabledIcon="/img/add.svg"
       disabled="{endpoint.trim().length > 0 ? false : true}"
-      size="small">Add</Button>
+      size="small"
+      on:click="{doChannelAdd}">Add</Button>
   </div>
 
   {#if data.length === 0}

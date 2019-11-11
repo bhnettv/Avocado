@@ -20,7 +20,7 @@ Configure
 
 Start
 
-    npm run dev
+    npm run start
 
 Manage
 

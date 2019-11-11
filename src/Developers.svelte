@@ -95,6 +95,10 @@ function doAddClick( evt ) {
     $developer_description = '';
     $developer_public = data.public;
 
+    $developer_roles = [];
+    $developer_languages = [];
+    $developer_skills = [];
+
     developers.push( Object.assign( {}, data ) );
     developers.sort( ( a, b ) => {
       if( a.name > b.name ) return 1;
