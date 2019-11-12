@@ -5,15 +5,6 @@ import TextInput from './TextInput.svelte';
 
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
-import { endpoint_website } from './developers.js';
-import { endpoint_rss } from './developers.js';
-import { endpoint_devto } from './developers.js';
-import { endpoint_medium } from './developers.js';
-import { endpoint_youtube } from './developers.js';
-import { endpoint_twitter } from './developers.js';
-import { endpoint_so } from './developers.js';
-import { endpoint_github } from './developers.js';
-import { endpoint_reddit } from './developers.js';
 
 export let data = [];
 export let hidden = false;
@@ -57,6 +48,7 @@ function doChannelAdd( evt ) {
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     endpoint = '';
+
     console.log( data );
   } );
 }

@@ -31,6 +31,7 @@ import { developer_public } from './developers.js';
 import { developer_roles } from './developers.js';
 import { developer_languages } from './developers.js';
 import { developer_skills } from './developers.js';
+import { social } from './developers.js';
 import { notes } from './developers.js';
 
 // View state
@@ -157,6 +158,13 @@ function doDeveloperClick( evt ) {
     $developer_skills = data.slice();
   } );      
 
+  fetch( `/api/developer/${evt.detail.item.id}/social` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    $social = data.slice();
+    console.log( data );
+  } );        
+
   fetch( `/api/note/developer/${evt.detail.item.id}` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
@@ -261,6 +269,12 @@ onMount( async () => {
     .then( ( data ) => { 
       $developer_skills = data.slice();
     } );        
+
+    fetch( `/api/developer/${$developer_id}/social` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      console.log( data );
+    } );
   } );
 
   fetch( '/api/organization' )

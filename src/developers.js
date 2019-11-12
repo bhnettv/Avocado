@@ -23,16 +23,7 @@ export const developer_public = writable( false );
 export const developer_description = writable( '' );
 
 // Social
-export const endpoint_website = writable( '' );
-export const endpoint_rss = writable( '' );
-export const endpoint_devto = writable( '' );
-export const endpoint_medium = writable( '' );
-export const endpoint_youtube = writable( '' );
-export const endpoint_twitter = writable( '' );
-export const endpoint_so = writable( '' );
-export const endpoint_github = writable( '' );
-export const endpoint_reddit = writable( '' );
-export const endpoint_instagram = writable( '' );
+export const social = writable( [] );
 
 // Notes
 export const notes = writable( [] );

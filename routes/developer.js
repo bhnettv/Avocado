@@ -41,6 +41,51 @@ router.get( '/organization/:id', ( req, res ) => {
   res.json( developers );
 } );
 
+router.get( '/:id/social', ( req, res ) => {
+  let developer = req.db.prepare( `
+    SELECT
+      Developer.id
+    FROM 
+      Developer
+    WHERE
+      Developer.uuid = ?
+  ` )
+  .get( 
+    req.params.id
+  );
+
+  let endpoints = [
+    'Blog',    'Dev',     'GitHub', 
+    'Medium',  'Reddit',  'StackOverflow', 
+    'Twitter', 'Website', 'YouTube'
+  ];
+  let results = [];
+
+  for( let e = 0; e < endpoints.length; e++ ) {
+    let social = req.db.prepare( `
+      SELECT *
+      FROM ${endpoints[e]}
+      WHERE ${endpoints[e]}.developer_id = ?
+    ` )
+    .all( 
+      developer.id
+    );
+
+    for( let s = 0; s < social.length; s++ ) {
+      social[s].entity = endpoints[e].toLowerCase();
+
+      social[s].id = social[s].uuid;
+      delete social[s].uuid;
+
+      social[s].developer_id = req.params.id;
+
+      results.push( social[s] );      
+    }
+  }
+
+  res.json( results );
+} );
+
 // Read organizations for given developer
 router.get( '/:id/:model', ( req, res ) => {
   const field = req.params.model.toLowerCase();
