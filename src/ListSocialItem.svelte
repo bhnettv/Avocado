@@ -1,21 +1,25 @@
 <script>
+export let id = undefined;
 export let channel = undefined;
 export let endpoint = undefined;
 
-let mapping = {
-  'blog': 'Blog',
-  'dev': 'Dev.to',
-  'github': 'GitHub',
-  'medium': 'Medium',
-  'reddit': 'Reddit',
-  'stackoverflow': 'Stack Overflow',
-  'twitter': 'Twitter',
-  'website': 'Website',
-  'youtube': 'YouTube'
-};
+let deletable = false;
 </script>
 
 <style>
+button {
+  background: none;
+  border: none;
+  background-image: url( /img/delete.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  cursor: pointer;
+  height: 46px;
+  outline: none;
+  width: 46px;
+}
+
 div {
   display: flex;
   flex-direction: row;
@@ -42,7 +46,10 @@ p.endpoint {
 }
 </style>
 
-<div>
-  <p class="channel">{mapping[channel]}</p>
+<div
+  on:mouseover="{() => deletable = true}"
+  on:mouseout="{() => deletable = false}">
+  <p class="channel">{channel}</p>
   <p class="endpoint">{endpoint}</p>
+  <button style="display: {deletable ? 'initial' : 'none'}" on:click></button>  
 </div>

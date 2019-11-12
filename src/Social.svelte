@@ -7,13 +7,12 @@ import TextInput from './TextInput.svelte';
 
 import { developer_id } from './developers.js';
 import { developer_name } from './developers.js';
+import { social } from './developers.js';
 
-export let data = [];
 export let hidden = false;
 export let disabled = false;
 
-let endpoint = '';
-let endpoints = [
+let channels = [
   {label: 'Website', value: 'Including HTTP/S', entity: 'website', field: 'url'},
   {label: 'Blog', value: 'RSS or ATOM, including HTTP/S', entity: 'blog', field: 'url'},
   {label: 'Dev.to', value: 'User name, after trailing slash of profile', entity: 'dev', field: 'user_name'},
@@ -25,7 +24,8 @@ let endpoints = [
   {label: 'Reddit', value: 'User name, as shown in posts', entity: 'reddit', field: 'name'},
   {label: 'Instagram', value: 'Not yet implemented'}
 ];
-let source = 'Including HTTP/S';
+let endpoint = '';
+let helper = 'Including HTTP/S';
 
 function doChannelAdd( evt ) {
   let index = -1;
@@ -69,6 +69,15 @@ function doEndpoint( item ) {
   if( item.entity === 'youtube' ) result = item.channel;    
 
   return result;
+}
+
+function doRemoveSocial( entity, id ) {
+  for( let e = 0; e < endpoints.length; e++ ) {
+    if( endpoints[e].label === entity ) {
+      console.log( `/api/${endpoints[e].entity}/${id}` );
+      break;
+    }
+  }
 }
 </script>
 
@@ -121,11 +130,11 @@ p {
     <Select 
       label="Channel" 
       labelField="label"
-      options="{endpoints}" 
-      bind:selected="{source}"
+      options="{channels}" 
+      bind:selected="{helper}"
       dataField="value"/>
     <div class="gap"></div>
-    <TextInput label="Endpoint" placeholder="{source}" bind:value="{endpoint}"/>
+    <TextInput label="Endpoint" placeholder="{helper}" bind:value="{endpoint}"/>
     <div class="gap"></div>
     <Button
       icon="/img/add-white.svg"
@@ -135,7 +144,7 @@ p {
       on:click="{doChannelAdd}">Add</Button>
   </div>
 
-  {#if data.length === 0}
+  {#if $social.length === 0}
 
     <div class="none">
       <p>No social endpoints available for {$developer_name}.</p>
@@ -144,9 +153,13 @@ p {
   {:else}
 
     <List 
-      data="{data}" 
+      data="{$social}" 
       let:item="{channel}">
-      <ListSocialItem channel="{channel.entity}" endpoint="{doEndpoint( channel )}"/>
+      <ListSocialItem 
+        id="{channel.id}"
+        channel="{channel.label}" 
+        endpoint="{channel.data}"
+        on:click="{() => doRemoveSocial( channel.label, channel.id )}"/>
     </List>
 
   {/if}

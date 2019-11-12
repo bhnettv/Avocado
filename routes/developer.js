@@ -59,6 +59,17 @@ router.get( '/:id/social', ( req, res ) => {
     'Medium',  'Reddit',  'StackOverflow', 
     'Twitter', 'Website', 'YouTube'
   ];
+  let mapping = {
+    'Blog': 'url',
+    'Dev': 'user_name',
+    'GitHub': 'login',
+    'Medium': 'user_name',
+    'Reddit': 'name',
+    'StackOverflow': 'user',
+    'Twitter': 'screen_name',
+    'Website': 'url',
+    'YouTube': 'channel'
+  };
   let results = [];
 
   for( let e = 0; e < endpoints.length; e++ ) {
@@ -72,14 +83,13 @@ router.get( '/:id/social', ( req, res ) => {
     );
 
     for( let s = 0; s < social.length; s++ ) {
-      social[s].entity = endpoints[e].toLowerCase();
-
-      social[s].id = social[s].uuid;
-      delete social[s].uuid;
-
-      social[s].developer_id = req.params.id;
-
-      results.push( social[s] );      
+      results.push( {
+        id: social[s].uuid,
+        developer_id: req.params.id,
+        entity: endpoints[e].toLowerCase(),
+        data: social[s][mapping[endpoints[e]]],
+        label: endpoints[e] 
+      } );
     }
   }
 

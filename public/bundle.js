@@ -5268,22 +5268,33 @@ var app = (function () {
     const file$f = "src/ListSocialItem.svelte";
 
     function create_fragment$f(ctx) {
-    	var div, p0, t0_value = ctx.mapping[ctx.channel] + "", t0, t1, p1, t2;
+    	var div, p0, t0, t1, p1, t2, t3, button, dispose;
 
     	const block = {
     		c: function create() {
     			div = element("div");
     			p0 = element("p");
-    			t0 = text(t0_value);
+    			t0 = text(ctx.channel);
     			t1 = space();
     			p1 = element("p");
     			t2 = text(ctx.endpoint);
-    			attr_dev(p0, "class", "channel svelte-1qwfxjl");
-    			add_location(p0, file$f, 45, 2, 664);
-    			attr_dev(p1, "class", "endpoint svelte-1qwfxjl");
-    			add_location(p1, file$f, 46, 2, 708);
-    			attr_dev(div, "class", "svelte-1qwfxjl");
-    			add_location(div, file$f, 44, 0, 656);
+    			t3 = space();
+    			button = element("button");
+    			attr_dev(p0, "class", "channel svelte-1iu1q5r");
+    			add_location(p0, file$f, 51, 2, 815);
+    			attr_dev(p1, "class", "endpoint svelte-1iu1q5r");
+    			add_location(p1, file$f, 52, 2, 850);
+    			set_style(button, "display", (ctx.deletable ? 'initial' : 'none'));
+    			attr_dev(button, "class", "svelte-1iu1q5r");
+    			add_location(button, file$f, 53, 2, 887);
+    			attr_dev(div, "class", "svelte-1iu1q5r");
+    			add_location(div, file$f, 48, 0, 723);
+
+    			dispose = [
+    				listen_dev(button, "click", ctx.click_handler),
+    				listen_dev(div, "mouseover", ctx.mouseover_handler),
+    				listen_dev(div, "mouseout", ctx.mouseout_handler)
+    			];
     		},
 
     		l: function claim(nodes) {
@@ -5297,15 +5308,21 @@ var app = (function () {
     			append_dev(div, t1);
     			append_dev(div, p1);
     			append_dev(p1, t2);
+    			append_dev(div, t3);
+    			append_dev(div, button);
     		},
 
     		p: function update(changed, ctx) {
-    			if ((changed.channel) && t0_value !== (t0_value = ctx.mapping[ctx.channel] + "")) {
-    				set_data_dev(t0, t0_value);
+    			if (changed.channel) {
+    				set_data_dev(t0, ctx.channel);
     			}
 
     			if (changed.endpoint) {
     				set_data_dev(t2, ctx.endpoint);
+    			}
+
+    			if (changed.deletable) {
+    				set_style(button, "display", (ctx.deletable ? 'initial' : 'none'));
     			}
     		},
 
@@ -5316,6 +5333,8 @@ var app = (function () {
     			if (detaching) {
     				detach_dev(div);
     			}
+
+    			run_all(dispose);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$f.name, type: "component", source: "", ctx });
@@ -5323,48 +5342,64 @@ var app = (function () {
     }
 
     function instance$f($$self, $$props, $$invalidate) {
-    	let { channel = undefined, endpoint = undefined } = $$props;
+    	let { id = undefined, channel = undefined, endpoint = undefined } = $$props;
 
-    let mapping = {
-      'blog': 'Blog',
-      'dev': 'Dev.to',
-      'github': 'GitHub',
-      'medium': 'Medium',
-      'reddit': 'Reddit',
-      'stackoverflow': 'Stack Overflow',
-      'twitter': 'Twitter',
-      'website': 'Website',
-      'youtube': 'YouTube'
-    };
+    let deletable = false;
 
-    	const writable_props = ['channel', 'endpoint'];
+    	const writable_props = ['id', 'channel', 'endpoint'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<ListSocialItem> was created with unknown prop '${key}'`);
     	});
 
+    	function click_handler(event) {
+    		bubble($$self, event);
+    	}
+
+    	const mouseover_handler = () => $$invalidate('deletable', deletable = true);
+
+    	const mouseout_handler = () => $$invalidate('deletable', deletable = false);
+
     	$$self.$set = $$props => {
+    		if ('id' in $$props) $$invalidate('id', id = $$props.id);
     		if ('channel' in $$props) $$invalidate('channel', channel = $$props.channel);
     		if ('endpoint' in $$props) $$invalidate('endpoint', endpoint = $$props.endpoint);
     	};
 
     	$$self.$capture_state = () => {
-    		return { channel, endpoint, mapping };
+    		return { id, channel, endpoint, deletable };
     	};
 
     	$$self.$inject_state = $$props => {
+    		if ('id' in $$props) $$invalidate('id', id = $$props.id);
     		if ('channel' in $$props) $$invalidate('channel', channel = $$props.channel);
     		if ('endpoint' in $$props) $$invalidate('endpoint', endpoint = $$props.endpoint);
-    		if ('mapping' in $$props) $$invalidate('mapping', mapping = $$props.mapping);
+    		if ('deletable' in $$props) $$invalidate('deletable', deletable = $$props.deletable);
     	};
 
-    	return { channel, endpoint, mapping };
+    	return {
+    		id,
+    		channel,
+    		endpoint,
+    		deletable,
+    		click_handler,
+    		mouseover_handler,
+    		mouseout_handler
+    	};
     }
 
     class ListSocialItem extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$f, create_fragment$f, safe_not_equal, ["channel", "endpoint"]);
+    		init(this, options, instance$f, create_fragment$f, safe_not_equal, ["id", "channel", "endpoint"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "ListSocialItem", options, id: create_fragment$f.name });
+    	}
+
+    	get id() {
+    		throw new Error("<ListSocialItem>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set id(value) {
+    		throw new Error("<ListSocialItem>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get channel() {
@@ -5389,7 +5424,7 @@ var app = (function () {
 
     const file$g = "src/Social.svelte";
 
-    // (130:4) <Button       icon="/img/add-white.svg"       disabledIcon="/img/add.svg"       disabled="{endpoint.trim().length > 0 ? false : true}"       size="small"       on:click="{doChannelAdd}">
+    // (139:4) <Button       icon="/img/add-white.svg"       disabledIcon="/img/add.svg"       disabled="{endpoint.trim().length > 0 ? false : true}"       size="small"       on:click="{doChannelAdd}">
     function create_default_slot_1$1(ctx) {
     	var t;
 
@@ -5408,17 +5443,17 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(130:4) <Button       icon=\"/img/add-white.svg\"       disabledIcon=\"/img/add.svg\"       disabled=\"{endpoint.trim().length > 0 ? false : true}\"       size=\"small\"       on:click=\"{doChannelAdd}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$1.name, type: "slot", source: "(139:4) <Button       icon=\"/img/add-white.svg\"       disabledIcon=\"/img/add.svg\"       disabled=\"{endpoint.trim().length > 0 ? false : true}\"       size=\"small\"       on:click=\"{doChannelAdd}\">", ctx });
     	return block;
     }
 
-    // (144:2) {:else}
+    // (153:2) {:else}
     function create_else_block$2(ctx) {
     	var current;
 
     	var list = new List({
     		props: {
-    		data: ctx.data,
+    		data: ctx.$social,
     		$$slots: {
     		default: [create_default_slot$2, ({ item: channel }) => ({ channel })]
     	},
@@ -5439,7 +5474,7 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var list_changes = {};
-    			if (changed.data) list_changes.data = ctx.data;
+    			if (changed.$social) list_changes.data = ctx.$social;
     			if (changed.$$scope) list_changes.$$scope = { changed, ctx };
     			list.$set(list_changes);
     		},
@@ -5460,11 +5495,11 @@ var app = (function () {
     			destroy_component(list, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block$2.name, type: "else", source: "(144:2) {:else}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_else_block$2.name, type: "else", source: "(153:2) {:else}", ctx });
     	return block;
     }
 
-    // (138:2) {#if data.length === 0}
+    // (147:2) {#if $social.length === 0}
     function create_if_block$6(ctx) {
     	var div, p, t0, t1, t2;
 
@@ -5476,9 +5511,9 @@ var app = (function () {
     			t1 = text(ctx.$developer_name);
     			t2 = text(".");
     			attr_dev(p, "class", "svelte-p888y0");
-    			add_location(p, file$g, 140, 6, 3753);
+    			add_location(p, file$g, 149, 6, 3988);
     			attr_dev(div, "class", "none svelte-p888y0");
-    			add_location(div, file$g, 139, 4, 3728);
+    			add_location(div, file$g, 148, 4, 3963);
     		},
 
     		m: function mount(target, anchor) {
@@ -5504,21 +5539,27 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(138:2) {#if data.length === 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$6.name, type: "if", source: "(147:2) {#if $social.length === 0}", ctx });
     	return block;
     }
 
-    // (146:4) <List        data="{data}"        let:item="{channel}">
+    // (155:4) <List        data="{$social}"        let:item="{channel}">
     function create_default_slot$2(ctx) {
     	var current;
 
+    	function click_handler() {
+    		return ctx.click_handler(ctx);
+    	}
+
     	var listsocialitem = new ListSocialItem({
     		props: {
-    		channel: ctx.channel.entity,
-    		endpoint: doEndpoint( ctx.channel )
+    		id: ctx.channel.id,
+    		channel: ctx.channel.label,
+    		endpoint: ctx.channel.data
     	},
     		$$inline: true
     	});
+    	listsocialitem.$on("click", click_handler);
 
     	const block = {
     		c: function create() {
@@ -5530,10 +5571,12 @@ var app = (function () {
     			current = true;
     		},
 
-    		p: function update(changed, ctx) {
+    		p: function update(changed, new_ctx) {
+    			ctx = new_ctx;
     			var listsocialitem_changes = {};
-    			if (changed.channel) listsocialitem_changes.channel = ctx.channel.entity;
-    			if (changed.channel) listsocialitem_changes.endpoint = doEndpoint( ctx.channel );
+    			if (changed.channel) listsocialitem_changes.id = ctx.channel.id;
+    			if (changed.channel) listsocialitem_changes.channel = ctx.channel.label;
+    			if (changed.channel) listsocialitem_changes.endpoint = ctx.channel.data;
     			listsocialitem.$set(listsocialitem_changes);
     		},
 
@@ -5553,7 +5596,7 @@ var app = (function () {
     			destroy_component(listsocialitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(146:4) <List        data=\"{data}\"        let:item=\"{channel}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$2.name, type: "slot", source: "(155:4) <List        data=\"{$social}\"        let:item=\"{channel}\">", ctx });
     	return block;
     }
 
@@ -5569,11 +5612,11 @@ var app = (function () {
     	let select_props = {
     		label: "Channel",
     		labelField: "label",
-    		options: ctx.endpoints,
+    		options: ctx.channels,
     		dataField: "value"
     	};
-    	if (ctx.source !== void 0) {
-    		select_props.selected = ctx.source;
+    	if (ctx.helper !== void 0) {
+    		select_props.selected = ctx.helper;
     	}
     	var select = new Select({ props: select_props, $$inline: true });
 
@@ -5587,7 +5630,7 @@ var app = (function () {
 
     	let textinput_props = {
     		label: "Endpoint",
-    		placeholder: ctx.source
+    		placeholder: ctx.helper
     	};
     	if (ctx.endpoint !== void 0) {
     		textinput_props.value = ctx.endpoint;
@@ -5617,7 +5660,7 @@ var app = (function () {
     	var if_blocks = [];
 
     	function select_block_type(changed, ctx) {
-    		if (ctx.data.length === 0) return 0;
+    		if (ctx.$social.length === 0) return 0;
     		return 1;
     	}
 
@@ -5640,14 +5683,14 @@ var app = (function () {
     			t4 = space();
     			if_block.c();
     			attr_dev(div0, "class", "gap svelte-p888y0");
-    			add_location(div0, file$g, 126, 4, 3351);
+    			add_location(div0, file$g, 135, 4, 3583);
     			attr_dev(div1, "class", "gap svelte-p888y0");
-    			add_location(div1, file$g, 128, 4, 3460);
+    			add_location(div1, file$g, 137, 4, 3692);
     			attr_dev(div2, "class", "input svelte-p888y0");
-    			add_location(div2, file$g, 119, 2, 3180);
+    			add_location(div2, file$g, 128, 2, 3413);
     			attr_dev(div3, "class", "social svelte-p888y0");
     			toggle_class(div3, "hidden", ctx.hidden);
-    			add_location(div3, file$g, 117, 0, 3143);
+    			add_location(div3, file$g, 126, 0, 3376);
     		},
 
     		l: function claim(nodes) {
@@ -5673,13 +5716,13 @@ var app = (function () {
 
     		p: function update(changed, ctx) {
     			var select_changes = {};
-    			if (!updating_selected && changed.source) {
-    				select_changes.selected = ctx.source;
+    			if (!updating_selected && changed.helper) {
+    				select_changes.selected = ctx.helper;
     			}
     			select.$set(select_changes);
 
     			var textinput_changes = {};
-    			if (changed.source) textinput_changes.placeholder = ctx.source;
+    			if (changed.helper) textinput_changes.placeholder = ctx.helper;
     			if (!updating_value && changed.endpoint) {
     				textinput_changes.value = ctx.endpoint;
     			}
@@ -5753,36 +5796,30 @@ var app = (function () {
     	return block;
     }
 
-    function doEndpoint( item ) {
-    let result = null;
-
-    if( item.entity === 'blog' ) result = item.url;
-    if( item.entity === 'dev' ) result = item.user_name;  
-    if( item.entity === 'github' ) result = item.login;  
-    if( item.entity === 'medium' ) result = item.user_name;  
-    if( item.entity === 'reddit' ) result = item.name;  
-    if( item.entity === 'stackoverflow' ) result = item.user;  
-    if( item.entity === 'twitter' ) result = item.screen_name;
-    if( item.entity === 'website' ) result = item.url;
-    if( item.entity === 'youtube' ) result = item.channel;    
-
-    return result;
+    function doRemoveSocial( entity, id ) {
+    for( let e = 0; e < endpoints.length; e++ ) {
+      if( endpoints[e].label === entity ) {
+        console.log( `/api/${endpoints[e].entity}/${id}` );
+        break;
+      }
+    }
     }
 
     function instance$g($$self, $$props, $$invalidate) {
-    	let $developer_id, $developer_name;
+    	let $developer_id, $social, $developer_name;
 
     	validate_store(developer_id, 'developer_id');
     	component_subscribe($$self, developer_id, $$value => { $developer_id = $$value; $$invalidate('$developer_id', $developer_id); });
+    	validate_store(social, 'social');
+    	component_subscribe($$self, social, $$value => { $social = $$value; $$invalidate('$social', $social); });
     	validate_store(developer_name, 'developer_name');
     	component_subscribe($$self, developer_name, $$value => { $developer_name = $$value; $$invalidate('$developer_name', $developer_name); });
 
     	
 
-    let { data = [], hidden = false, disabled = false } = $$props;
+    let { hidden = false, disabled = false } = $$props;
 
-    let endpoint = '';
-    let endpoints = [
+    let channels = [
       {label: 'Website', value: 'Including HTTP/S', entity: 'website', field: 'url'},
       {label: 'Blog', value: 'RSS or ATOM, including HTTP/S', entity: 'blog', field: 'url'},
       {label: 'Dev.to', value: 'User name, after trailing slash of profile', entity: 'dev', field: 'user_name'},
@@ -5794,7 +5831,8 @@ var app = (function () {
       {label: 'Reddit', value: 'User name, as shown in posts', entity: 'reddit', field: 'name'},
       {label: 'Instagram', value: 'Not yet implemented'}
     ];
-    let source = 'Including HTTP/S';
+    let endpoint = '';
+    let helper = 'Including HTTP/S';
 
     function doChannelAdd( evt ) {
       let index = -1;
@@ -5824,14 +5862,14 @@ var app = (function () {
       } );
     }
 
-    	const writable_props = ['data', 'hidden', 'disabled'];
+    	const writable_props = ['hidden', 'disabled'];
     	Object.keys($$props).forEach(key => {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console_1$2.warn(`<Social> was created with unknown prop '${key}'`);
     	});
 
     	function select_selected_binding(value) {
-    		source = value;
-    		$$invalidate('source', source);
+    		helper = value;
+    		$$invalidate('helper', helper);
     	}
 
     	function textinput_value_binding(value_1) {
@@ -5839,54 +5877,48 @@ var app = (function () {
     		$$invalidate('endpoint', endpoint);
     	}
 
+    	const click_handler = ({ channel }) => doRemoveSocial( channel.label, channel.id );
+
     	$$self.$set = $$props => {
-    		if ('data' in $$props) $$invalidate('data', data = $$props.data);
     		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
     	};
 
     	$$self.$capture_state = () => {
-    		return { data, hidden, disabled, endpoint, endpoints, source, $developer_id, $developer_name };
+    		return { hidden, disabled, channels, endpoint, helper, $developer_id, $social, $developer_name };
     	};
 
     	$$self.$inject_state = $$props => {
-    		if ('data' in $$props) $$invalidate('data', data = $$props.data);
     		if ('hidden' in $$props) $$invalidate('hidden', hidden = $$props.hidden);
     		if ('disabled' in $$props) $$invalidate('disabled', disabled = $$props.disabled);
+    		if ('channels' in $$props) $$invalidate('channels', channels = $$props.channels);
     		if ('endpoint' in $$props) $$invalidate('endpoint', endpoint = $$props.endpoint);
-    		if ('endpoints' in $$props) $$invalidate('endpoints', endpoints = $$props.endpoints);
-    		if ('source' in $$props) $$invalidate('source', source = $$props.source);
+    		if ('helper' in $$props) $$invalidate('helper', helper = $$props.helper);
     		if ('$developer_id' in $$props) developer_id.set($developer_id);
+    		if ('$social' in $$props) social.set($social);
     		if ('$developer_name' in $$props) developer_name.set($developer_name);
     	};
 
     	return {
-    		data,
     		hidden,
     		disabled,
+    		channels,
     		endpoint,
-    		endpoints,
-    		source,
+    		helper,
     		doChannelAdd,
+    		$social,
     		$developer_name,
     		select_selected_binding,
-    		textinput_value_binding
+    		textinput_value_binding,
+    		click_handler
     	};
     }
 
     class Social extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$g, create_fragment$g, safe_not_equal, ["data", "hidden", "disabled"]);
+    		init(this, options, instance$g, create_fragment$g, safe_not_equal, ["hidden", "disabled"]);
     		dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "Social", options, id: create_fragment$g.name });
-    	}
-
-    	get data() {
-    		throw new Error("<Social>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set data(value) {
-    		throw new Error("<Social>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get hidden() {
@@ -7227,10 +7259,7 @@ var app = (function () {
     	});
 
     	var social_1 = new Social({
-    		props: {
-    		hidden: ctx.tab === 2 ? false : true,
-    		data: ctx.$social
-    	},
+    		props: { hidden: ctx.tab === 2 ? false : true },
     		$$inline: true
     	});
 
@@ -7276,7 +7305,7 @@ var app = (function () {
     			attr_dev(article, "class", "svelte-3i9eli");
     			add_location(article, file$l, 368, 2, 9403);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$l, 399, 2, 10294);
+    			add_location(aside1, file$l, 399, 2, 10277);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
     			add_location(div1, file$l, 326, 0, 8420);
     		},
@@ -7351,7 +7380,6 @@ var app = (function () {
 
     			var social_1_changes = {};
     			if (changed.tab) social_1_changes.hidden = ctx.tab === 2 ? false : true;
-    			if (changed.$social) social_1_changes.data = ctx.$social;
     			social_1.$set(social_1_changes);
 
     			var notes_1_changes = {};
@@ -7769,7 +7797,6 @@ var app = (function () {
     		doDeveloperClick,
     		doDeveloperChange,
     		doDeveloperRemove,
-    		$social,
     		$organizations,
     		search_1_value_binding,
     		click_handler,

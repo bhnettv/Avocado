@@ -390,7 +390,7 @@ h4 {
       hidden="{tab === 0 ? false : true}" 
       on:change="{doDeveloperChange}"/>
     <Profile hidden="{tab === 1 ? false : true}"/>
-    <Social hidden="{tab === 2 ? false : true}" data="{$social}"/>
+    <Social hidden="{tab === 2 ? false : true}"/>
     <Notes hidden="{tab === 3 ? false : true}"/>
 
   </article>
