@@ -1,5 +1,7 @@
 <script>
 import Button from './Button.svelte';
+import List from './List.svelte';
+import ListSocialItem from './ListSocialItem.svelte';
 import Select from './Select.svelte';
 import TextInput from './TextInput.svelte';
 
@@ -13,7 +15,7 @@ export let disabled = false;
 let endpoint = '';
 let endpoints = [
   {label: 'Website', value: 'Including HTTP/S', entity: 'website', field: 'url'},
-  {label: 'Feed', value: 'RSS or ATOM, including HTTP/S', entity: 'blog', field: 'url'},
+  {label: 'Blog', value: 'RSS or ATOM, including HTTP/S', entity: 'blog', field: 'url'},
   {label: 'Dev.to', value: 'User name, after trailing slash of profile', entity: 'dev', field: 'user_name'},
   {label: 'Medium', value: 'User name, after the "@" symbol', entity: 'medium', field: 'user_name'},
   {label: 'YouTube', value: 'Channel ID, not user name', entity: 'youtube', field: 'channel'},
@@ -51,6 +53,22 @@ function doChannelAdd( evt ) {
 
     console.log( data );
   } );
+}
+
+function doEndpoint( item ) {
+  let result = null;
+
+  if( item.entity === 'blog' ) result = item.url;
+  if( item.entity === 'dev' ) result = item.user_name;  
+  if( item.entity === 'github' ) result = item.login;  
+  if( item.entity === 'medium' ) result = item.user_name;  
+  if( item.entity === 'reddit' ) result = item.name;  
+  if( item.entity === 'stackoverflow' ) result = item.user;  
+  if( item.entity === 'twitter' ) result = item.screen_name;
+  if( item.entity === 'website' ) result = item.url;
+  if( item.entity === 'youtube' ) result = item.channel;    
+
+  return result;
 }
 </script>
 
@@ -125,7 +143,11 @@ p {
 
   {:else}
 
-    <p>List here.</p>
+    <List 
+      data="{data}" 
+      let:item="{channel}">
+      <ListSocialItem channel="{channel.entity}" endpoint="{doEndpoint( channel )}"/>
+    </List>
 
   {/if}
 
