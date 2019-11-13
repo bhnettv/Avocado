@@ -2,12 +2,17 @@
 import { createEventDispatcher } from 'svelte';
 
 export let data = [];
+export let selectable = true;
 export let selectedIndex = undefined;
 export let selectedItem = undefined;
 
 const dispatch = createEventDispatcher();
 
 function doSelect( item, index ) { 
+  if( !selectable ) {
+    return;
+  }
+
   selectedItem = item;
   selectedIndex = index;
 

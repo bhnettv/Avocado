@@ -55,28 +55,24 @@ router.get( '/:id/social', ( req, res ) => {
   );
 
   let endpoints = [
-    'Blog',    'Dev',     'GitHub', 
-    'Medium',  'Reddit',  'StackOverflow', 
-    'Twitter', 'Website', 'YouTube'
+    {table: 'Blog', field: 'url', label: 'Blog', path: 'blog'},
+    {table: 'Dev', field: 'user_name', label: 'Dev.to', path: 'dev'},
+    {table: 'GitHub', field: 'login', label: 'GitHub', path: 'github'},
+    {table: 'Medium', field: 'user_name', label: 'Medium', path: 'medium'},
+    {table: 'Reddit', field: 'name', label: 'Reddit', path: 'reddit'},
+    {table: 'StackOverflow', field: 'user', label: 'StackOverflow', path: 'so'},
+    {table: 'Twitter', field: 'screen_name', label: 'Twitter', path: 'twitter'},
+    {table: 'Website', field: 'url', label: 'Website', path: 'website'},
+    {table: 'YouTube', field: 'channel', label: 'YouTube', path: 'youtube'} 
   ];
-  let mapping = {
-    'Blog': 'url',
-    'Dev': 'user_name',
-    'GitHub': 'login',
-    'Medium': 'user_name',
-    'Reddit': 'name',
-    'StackOverflow': 'user',
-    'Twitter': 'screen_name',
-    'Website': 'url',
-    'YouTube': 'channel'
-  };
+
   let results = [];
 
   for( let e = 0; e < endpoints.length; e++ ) {
     let social = req.db.prepare( `
       SELECT *
-      FROM ${endpoints[e]}
-      WHERE ${endpoints[e]}.developer_id = ?
+      FROM ${endpoints[e].table}
+      WHERE ${endpoints[e].table}.developer_id = ?
     ` )
     .all( 
       developer.id
@@ -85,10 +81,10 @@ router.get( '/:id/social', ( req, res ) => {
     for( let s = 0; s < social.length; s++ ) {
       results.push( {
         id: social[s].uuid,
+        channel: endpoints[e].label,
+        endpoint: social[s][endpoints[e].field],
         developer_id: req.params.id,
-        entity: endpoints[e].toLowerCase(),
-        data: social[s][mapping[endpoints[e]]],
-        label: endpoints[e] 
+        entity: endpoints[e].path
       } );
     }
   }

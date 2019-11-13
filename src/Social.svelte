@@ -30,17 +30,17 @@ let helper = 'Including HTTP/S';
 function doChannelAdd( evt ) {
   let index = -1;
 
-  for( let e = 0; e < endpoints.length; e++ ) {
-    if( endpoints[e].value === source ) {
-      index = e;
+  for( let c = 0; c < channels.length; c++ ) {
+    if( channels[c].value === helper ) {
+      index = c;
       break;
     }
   }
 
   let body = {developer_id: $developer_id};
-  body[endpoints[index].field] = endpoint;
+  body[channels[index].field] = endpoint;
 
-  fetch( `/api/${endpoints[index].entity}`, {
+  fetch( `/api/${channels[index].entity}`, {
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json'
@@ -51,7 +51,19 @@ function doChannelAdd( evt ) {
   .then( ( data ) => {
     endpoint = '';
 
-    console.log( data );
+    $social.push( {
+      id: data.id,
+      channel: channels[index].label,
+      endpoint: data[channels[index].field],
+      developer_id: data.developer_id,
+      entity: channels[index].entity
+    } );
+    $social.sort( ( a, b ) => {
+      if( a.channel > b.channel ) return 1;
+      if( a.channel < b.channel ) return -1;
+      return 0;
+    } );
+    $social = $social.slice();
   } );
 }
 
@@ -72,12 +84,18 @@ function doEndpoint( item ) {
 }
 
 function doRemoveSocial( entity, id ) {
-  for( let e = 0; e < endpoints.length; e++ ) {
-    if( endpoints[e].label === entity ) {
-      console.log( `/api/${endpoints[e].entity}/${id}` );
+  fetch( `/api/${entity}/${id}`, {
+    method: 'DELETE'
+  } );
+
+  for( let s = 0; s < $social.length; s++ ) { 
+    if( $social[s].id === id ) {
+      $social.splice( s, 1 );
       break;
     }
   }
+
+  $social = $social.slice();  
 }
 </script>
 
@@ -153,13 +171,14 @@ p {
   {:else}
 
     <List 
+      selectable="{false}"    
       data="{$social}" 
-      let:item="{channel}">
+      let:item="{item}">
       <ListSocialItem 
-        id="{channel.id}"
-        channel="{channel.label}" 
-        endpoint="{channel.data}"
-        on:click="{() => doRemoveSocial( channel.label, channel.id )}"/>
+        id="{item.id}"
+        channel="{item.channel}" 
+        endpoint="{item.endpoint}"
+        on:click="{() => doRemoveSocial( item.entity, item.id )}"/>
     </List>
 
   {/if}
