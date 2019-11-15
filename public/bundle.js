@@ -6885,7 +6885,7 @@ var app = (function () {
     	return block;
     }
 
-    // (357:6) <List          data="{$organizations}"          let:item="{organization}">
+    // (357:6) <List          selectable="{false}"         data="{$organizations}"          let:item="{organization}">
     function create_default_slot_6(ctx) {
     	var current;
 
@@ -6930,7 +6930,7 @@ var app = (function () {
     			destroy_component(listcountitem, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(357:6) <List          data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_6.name, type: "slot", source: "(357:6) <List          selectable=\"{false}\"         data=\"{$organizations}\"          let:item=\"{organization}\">", ctx });
     	return block;
     }
 
@@ -6940,6 +6940,7 @@ var app = (function () {
 
     	var list = new List({
     		props: {
+    		selectable: false,
     		data: ctx.$organizations,
     		$$slots: {
     		default: [create_default_slot_6, ({ item: organization }) => ({ organization })]
@@ -6986,7 +6987,7 @@ var app = (function () {
     	return block;
     }
 
-    // (373:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
+    // (374:6) <Tab          on:click="{() => tab = 0}"         selected="{tab === 0 ? true : false}">
     function create_default_slot_4(ctx) {
     	var t;
 
@@ -7005,11 +7006,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(373:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_4.name, type: "slot", source: "(374:6) <Tab          on:click=\"{() => tab = 0}\"         selected=\"{tab === 0 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (376:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}">
+    // (377:6) <Tab          on:click="{() => tab = 1}"               selected="{tab === 1 ? true : false}">
     function create_default_slot_3(ctx) {
     	var t;
 
@@ -7028,11 +7029,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(376:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(377:6) <Tab          on:click=\"{() => tab = 1}\"               selected=\"{tab === 1 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (379:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}">
+    // (380:6) <Tab          on:click="{() => tab = 2}"               selected="{tab === 2 ? true : false}">
     function create_default_slot_2(ctx) {
     	var t;
 
@@ -7051,11 +7052,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(379:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(380:6) <Tab          on:click=\"{() => tab = 2}\"               selected=\"{tab === 2 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (382:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}">
+    // (383:6) <Tab          on:click="{() => tab = 3}"               selected="{tab === 3 ? true : false}">
     function create_default_slot_1$2(ctx) {
     	var t;
 
@@ -7074,11 +7075,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(382:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1$2.name, type: "slot", source: "(383:6) <Tab          on:click=\"{() => tab = 3}\"               selected=\"{tab === 3 ? true : false}\">", ctx });
     	return block;
     }
 
-    // (372:4) <TabBar>
+    // (373:4) <TabBar>
     function create_default_slot$3(ctx) {
     	var t0, t1, t2, current;
 
@@ -7209,7 +7210,7 @@ var app = (function () {
     			destroy_component(tab3, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(372:4) <TabBar>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$3.name, type: "slot", source: "(373:4) <TabBar>", ctx });
     	return block;
     }
 
@@ -7337,9 +7338,9 @@ var app = (function () {
     			attr_dev(aside0, "class", "svelte-3i9eli");
     			add_location(aside0, file$l, 329, 2, 8465);
     			attr_dev(article, "class", "svelte-3i9eli");
-    			add_location(article, file$l, 368, 2, 9403);
+    			add_location(article, file$l, 369, 2, 9432);
     			attr_dev(aside1, "class", "svelte-3i9eli");
-    			add_location(aside1, file$l, 399, 2, 10277);
+    			add_location(aside1, file$l, 400, 2, 10306);
     			attr_dev(div1, "class", "panel svelte-3i9eli");
     			add_location(div1, file$l, 326, 0, 8420);
     		},
@@ -7959,7 +7960,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (246:4) <Button icon="/img/add-white.svg">
+    // (248:4) <Button icon="/img/add-white.svg">
     function create_default_slot$4(ctx) {
     	var t;
 
@@ -7978,11 +7979,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$4.name, type: "slot", source: "(246:4) <Button icon=\"/img/add-white.svg\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$4.name, type: "slot", source: "(248:4) <Button icon=\"/img/add-white.svg\">", ctx });
     	return block;
     }
 
-    // (261:4) {#each repositories as repo}
+    // (263:4) {#each repositories as repo}
     function create_each_block$4(ctx) {
     	var div, p0, t0_value = ctx.repo.name + "", t0, t1, p1, t2_value = format$1( ctx.repo.started_at ) + "", t2, t3, p2, t4_value = format$1( ctx.repo.pushed_at ) + "", t4, t5, p3, t6_value = ctx.repo.subscribers + "", t6, t7, p4, t8_value = ctx.repo.stargazers + "", t8, t9, p5, t10_value = ctx.repo.forks + "", t10, t11, p6, t12_value = ctx.repo.issues + "", t12, t13;
 
@@ -8011,27 +8012,27 @@ var app = (function () {
     			t12 = text(t12_value);
     			t13 = space();
     			attr_dev(p0, "class", "svelte-6djnri");
-    			add_location(p0, file$n, 263, 8, 5417);
+    			add_location(p0, file$n, 265, 8, 5461);
     			attr_dev(p1, "class", "medium svelte-6djnri");
-    			add_location(p1, file$n, 264, 8, 5444);
+    			add_location(p1, file$n, 266, 8, 5488);
     			attr_dev(p2, "class", "medium svelte-6djnri");
-    			add_location(p2, file$n, 265, 8, 5508);
+    			add_location(p2, file$n, 267, 8, 5552);
     			attr_dev(p3, "class", "small svelte-6djnri");
     			toggle_class(p3, "average", ctx.repo.subscribers < ctx.average_watchers ? true : false);
     			toggle_class(p3, "median", ctx.repo.subscribers < ctx.median_watchers ? true : false);
-    			add_location(p3, file$n, 266, 8, 5577);
+    			add_location(p3, file$n, 268, 8, 5621);
     			attr_dev(p4, "class", "small svelte-6djnri");
     			toggle_class(p4, "average", ctx.repo.stargazers < ctx.average_stars ? true : false);
     			toggle_class(p4, "median", ctx.repo.stargazers < ctx.median_stars ? true : false);
-    			add_location(p4, file$n, 270, 8, 5793);
+    			add_location(p4, file$n, 272, 8, 5837);
     			attr_dev(p5, "class", "small svelte-6djnri");
     			toggle_class(p5, "average", ctx.repo.forks < ctx.average_forks ? true : false);
     			toggle_class(p5, "median", ctx.repo.forks < ctx.median_forks ? true : false);
-    			add_location(p5, file$n, 274, 8, 6000);
+    			add_location(p5, file$n, 276, 8, 6044);
     			attr_dev(p6, "class", "small svelte-6djnri");
-    			add_location(p6, file$n, 278, 8, 6192);
+    			add_location(p6, file$n, 280, 8, 6236);
     			attr_dev(div, "class", "row svelte-6djnri");
-    			add_location(div, file$n, 262, 6, 5391);
+    			add_location(div, file$n, 264, 6, 5435);
     		},
 
     		m: function mount(target, anchor) {
@@ -8119,7 +8120,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$4.name, type: "each", source: "(261:4) {#each repositories as repo}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$4.name, type: "each", source: "(263:4) {#each repositories as repo}", ctx });
     	return block;
     }
 
@@ -8235,57 +8236,57 @@ var app = (function () {
     			p18 = element("p");
     			t41 = text(ctx.average_issues);
     			attr_dev(div0, "class", "search svelte-6djnri");
-    			add_location(div0, file$n, 243, 2, 4972);
+    			add_location(div0, file$n, 245, 2, 5016);
     			attr_dev(p0, "class", "svelte-6djnri");
-    			add_location(p0, file$n, 249, 4, 5105);
+    			add_location(p0, file$n, 251, 4, 5149);
     			attr_dev(p1, "class", "medium svelte-6djnri");
-    			add_location(p1, file$n, 250, 4, 5121);
+    			add_location(p1, file$n, 252, 4, 5165);
     			attr_dev(p2, "class", "medium svelte-6djnri");
-    			add_location(p2, file$n, 251, 4, 5155);
+    			add_location(p2, file$n, 253, 4, 5199);
     			attr_dev(p3, "class", "small svelte-6djnri");
-    			add_location(p3, file$n, 252, 4, 5188);
+    			add_location(p3, file$n, 254, 4, 5232);
     			attr_dev(p4, "class", "small svelte-6djnri");
-    			add_location(p4, file$n, 253, 4, 5222);
+    			add_location(p4, file$n, 255, 4, 5266);
     			attr_dev(p5, "class", "small svelte-6djnri");
-    			add_location(p5, file$n, 254, 4, 5253);
+    			add_location(p5, file$n, 256, 4, 5297);
     			attr_dev(p6, "class", "small svelte-6djnri");
-    			add_location(p6, file$n, 255, 4, 5284);
+    			add_location(p6, file$n, 257, 4, 5328);
     			attr_dev(header, "class", "svelte-6djnri");
-    			add_location(header, file$n, 248, 2, 5092);
+    			add_location(header, file$n, 250, 2, 5136);
     			attr_dev(div1, "class", "list svelte-6djnri");
-    			add_location(div1, file$n, 258, 2, 5327);
+    			add_location(div1, file$n, 260, 2, 5371);
     			attr_dev(p7, "class", "svelte-6djnri");
-    			add_location(p7, file$n, 287, 6, 6306);
+    			add_location(p7, file$n, 289, 6, 6350);
     			attr_dev(p8, "class", "medium svelte-6djnri");
-    			add_location(p8, file$n, 288, 6, 6362);
+    			add_location(p8, file$n, 290, 6, 6406);
     			attr_dev(p9, "class", "small svelte-6djnri");
-    			add_location(p9, file$n, 289, 6, 6397);
+    			add_location(p9, file$n, 291, 6, 6441);
     			attr_dev(p10, "class", "small svelte-6djnri");
-    			add_location(p10, file$n, 290, 6, 6442);
+    			add_location(p10, file$n, 292, 6, 6486);
     			attr_dev(p11, "class", "small svelte-6djnri");
-    			add_location(p11, file$n, 291, 6, 6484);
+    			add_location(p11, file$n, 293, 6, 6528);
     			attr_dev(p12, "class", "small svelte-6djnri");
-    			add_location(p12, file$n, 292, 6, 6526);
+    			add_location(p12, file$n, 294, 6, 6570);
     			attr_dev(div2, "class", "median svelte-6djnri");
-    			add_location(div2, file$n, 286, 4, 6279);
+    			add_location(div2, file$n, 288, 4, 6323);
     			attr_dev(p13, "class", "svelte-6djnri");
-    			add_location(p13, file$n, 295, 6, 6606);
+    			add_location(p13, file$n, 297, 6, 6650);
     			attr_dev(p14, "class", "medium svelte-6djnri");
-    			add_location(p14, file$n, 296, 6, 6632);
+    			add_location(p14, file$n, 298, 6, 6676);
     			attr_dev(p15, "class", "small svelte-6djnri");
-    			add_location(p15, file$n, 297, 6, 6668);
+    			add_location(p15, file$n, 299, 6, 6712);
     			attr_dev(p16, "class", "small svelte-6djnri");
-    			add_location(p16, file$n, 298, 6, 6714);
+    			add_location(p16, file$n, 300, 6, 6758);
     			attr_dev(p17, "class", "small svelte-6djnri");
-    			add_location(p17, file$n, 299, 6, 6757);
+    			add_location(p17, file$n, 301, 6, 6801);
     			attr_dev(p18, "class", "small svelte-6djnri");
-    			add_location(p18, file$n, 300, 6, 6800);
+    			add_location(p18, file$n, 302, 6, 6844);
     			attr_dev(div3, "class", "average svelte-6djnri");
-    			add_location(div3, file$n, 294, 4, 6578);
+    			add_location(div3, file$n, 296, 4, 6622);
     			attr_dev(footer, "class", "svelte-6djnri");
-    			add_location(footer, file$n, 285, 2, 6266);
+    			add_location(footer, file$n, 287, 2, 6310);
     			attr_dev(div4, "class", "panel svelte-6djnri");
-    			add_location(div4, file$n, 241, 0, 4949);
+    			add_location(div4, file$n, 243, 0, 4993);
     		},
 
     		l: function claim(nodes) {
@@ -8576,7 +8577,9 @@ var app = (function () {
 
         $$invalidate('repositories', repositories = data.slice( 0 ));
 
-        $$invalidate('updated_at', updated_at = formatLong( repositories[0].updated_at ));
+        if( repositories.length > 0 ) {
+          $$invalidate('updated_at', updated_at = formatLong( repositories[0].updated_at ));
+        }
       } );
     } );
 

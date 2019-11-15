@@ -1139,7 +1139,7 @@ paths:
                   id:
                     type: string
                     format: uuid
-  "/developer/{id}/organization":
+  "/developer/{id}/social":
     parameters:
       - name: id
         in: path
@@ -1151,8 +1151,60 @@ paths:
     get:
       tags:
         - 🖥️ Developer
-      summary: Get organizations associated with a developer by their ID
-      operationId: getDeveloperOrganizationsByID
+      summary: Get social channels associated with a developer by their ID
+      operationId: getDeveloperSocialByID
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    developer_id:
+                      type: string
+                      format: uuid
+                    activity_id:
+                      type: string
+                      format: uuid
+                    activity_name:
+                      type: string
+                      example: Conference
+                    full_text:
+                      type: string
+                      example: IBM was here.
+  "/developer/{id}/{model}":
+    parameters:
+      - name: id
+        in: path
+        description: ID field for desired developer
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: model
+        in: path
+        description: Name of desired model (Language, Organization, Language, Skill, Role)
+        required: true
+        schema:
+          type: string
+          example: skill
+    get:
+      tags:
+        - 🖥️ Developer
+      summary: Get model items associated with a developer by their ID
+      operationId: getDeveloperItemsByID
       responses:
         "200":
           description: successful operation
@@ -1178,23 +1230,21 @@ paths:
     post:
       tags:
         - 🖥️ Developer
-      summary: Associate a specific developer with an organization
-      operationId: createDeveloperOrganization
+      summary: Associate a specific developer with the given model
+      operationId: createDeveloperItem
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  name:
-                    type: string
-                    example: IBM
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+                  example: IBM
       responses:
         "200":
           description: successful operation
@@ -1223,8 +1273,8 @@ paths:
     put:
       tags:
         - 🖥️ Developer
-      summary: Update developer association with an organization(s)
-      operationId: updateDeveloperOrganization
+      summary: Update developer association with a given model
+      operationId: updateDeveloperItem
       requestBody:
         required: true
         content:
@@ -1265,20 +1315,11 @@ paths:
                     name:
                       type: string
                       example: IBM
-  "/developer/organization/{id}":
-    parameters:
-      - name: id
-        in: path
-        description: ID field for desired organization
-        required: true
-        schema:
-          type: string
-          format: uuid
-    get:
+    delete:
       tags:
         - 🖥️ Developer
-      summary: Get developers associated with a specific organization
-      operationId: getDeveloperOrganization
+      summary: Remove developer association with a given model
+      operationId: removeDeveloperItem
       responses:
         "200":
           description: successful operation
@@ -1292,53 +1333,37 @@ paths:
                     id:
                       type: string
                       format: uuid
-                    created_at:
+                    model:
                       type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: Kevin Hoyt
-                    email:
-                      type: string
-                      example: krhoyt@us.ibm.com
-                    description:
-                      type: string
-                      example: Some dude at IBM.
-                    image:
-                      type: string
-                      example: http://something.com
-                    location:
-                      type: string
-                      example: Armonk, NY
-                    latitude:
-                      type: number
-                      format: float
-                      example: 41.1328412
-                    longitude:
-                      type: number
-                      format: float
-                      example: -73.7492039
-                    public:
-                      type: integer
-                      example: 0
-  /developer/role: {}
-  "/developer/role/{id}":
+                      example: skill
+  "/developer/{developer_id}/{model}/{model_id}":
     parameters:
-      - name: id
+      - name: developer_id
         in: path
-        description: ID field for desired role
+        description: ID field for desired developer
         required: true
         schema:
           type: string
           format: uuid
-    get:
+      - name: model
+        in: path
+        description: Name of desired model (Language, Organization, Language, Skill, Role)
+        required: true
+        schema:
+          type: string
+          example: skill
+      - name: model_id
+        in: path
+        description: ID field for the desired skill
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
       tags:
         - 🖥️ Developer
-      summary: Get developers associated with a specific role
-      operationId: getDeveloperRole
+      summary: Remove a specific model relation for a specific developer
+      operationId: removeDeveloperItemsByModelID
       responses:
         "200":
           description: successful operation
@@ -1349,41 +1374,15 @@ paths:
                 items:
                   type: object
                   properties:
-                    id:
+                    developer_id:
                       type: string
                       format: uuid
-                    created_at:
+                    model:
                       type: string
-                      format: date-time
-                    updated_at:
+                      example: skill
+                    model_id:
                       type: string
-                      format: date-time
-                    name:
-                      type: string
-                      example: Kevin Hoyt
-                    email:
-                      type: string
-                      example: krhoyt@us.ibm.com
-                    description:
-                      type: string
-                      example: Some dude at IBM.
-                    image:
-                      type: string
-                      example: http://something.com
-                    location:
-                      type: string
-                      example: Armonk, NY
-                    latitude:
-                      type: number
-                      format: float
-                      example: 41.1328412
-                    longitude:
-                      type: number
-                      format: float
-                      example: -73.7492039
-                    public:
-                      type: integer
-                      example: 0
+                      format: uuid
   /media:
     get:
       tags:

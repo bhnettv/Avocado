@@ -355,6 +355,7 @@ h4 {
     <!-- Collapsable -->
     <Details summary="Organizations">
       <List 
+        selectable="{false}"
         data="{$organizations}" 
         let:item="{organization}">
         <ListCountItem 

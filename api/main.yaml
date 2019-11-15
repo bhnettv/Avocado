@@ -104,14 +104,12 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1{id}'
-  /developer/{id}/organization:
-    $ref: 'developer.yaml#/paths/~1developer~1{id}~1organization'
-  /developer/organization/{id}:
-    $ref: 'developer.yaml#/paths/~1developer~1organization~1{id}'
-  /developer/role:
-    $ref: 'developer.yaml#/paths/~1developer~1role'
-  /developer/role/{id}:
-    $ref: 'developer.yaml#/paths/~1developer~1role~1{id}'    
+  /developer/{id}/social:
+    $ref: 'developer.yaml#/paths/~1developer~1{id}~1social'    
+  /developer/{id}/{model}:
+    $ref: 'developer.yaml#/paths/~1developer~1{id}~1{model}'
+  /developer/{developer_id}/{model}/{model_id}:
+    $ref: 'developer.yaml#/paths/~1developer~1{developer_id}~1{model}~1{model_id}'
   /media:
     $ref: 'media.yaml#/paths/~1media'
   /media/{id}:

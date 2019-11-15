@@ -10,37 +10,8 @@ router.get( '/test', ( req, res ) => {
   res.json( {developer: 'Test'} );
 } );
 
-// Read all developers for given organization
-router.get( '/organization/:id', ( req, res ) => {
-  let developers = req.db.prepare( `
-    SELECT
-      Developer.uuid AS "id",
-      Developer.created_at, 
-      Developer.updated_at,
-      Developer.name,
-      Developer.email,
-      Developer.description,
-      Developer.image,
-      Developer.location,
-      Developer.latitude,
-      Developer.longitude,
-      Developer.public
-    FROM 
-      Developer,
-      DeveloperOrganization,
-      Organization
-    WHERE 
-      Developer.id = DeveloperOrganization.developer_id AND
-      DeveloperOrganization.organization_id = Organization.id AND
-      Organization.uuid = ?
-  ` )
-  .all( 
-    req.params.id 
-  );
-
-  res.json( developers );
-} );
-
+// Social channels for given developer
+// Requires manual update for new channels
 router.get( '/:id/social', ( req, res ) => {
   let developer = req.db.prepare( `
     SELECT
@@ -54,7 +25,7 @@ router.get( '/:id/social', ( req, res ) => {
     req.params.id
   );
 
-  let endpoints = [
+  let channels = [
     {table: 'Blog', field: 'url', label: 'Blog', path: 'blog'},
     {table: 'Dev', field: 'user_name', label: 'Dev.to', path: 'dev'},
     {table: 'GitHub', field: 'login', label: 'GitHub', path: 'github'},
@@ -68,11 +39,11 @@ router.get( '/:id/social', ( req, res ) => {
 
   let results = [];
 
-  for( let e = 0; e < endpoints.length; e++ ) {
+  for( let c = 0; c < channels.length; c++ ) {
     let social = req.db.prepare( `
       SELECT *
-      FROM ${endpoints[e].table}
-      WHERE ${endpoints[e].table}.developer_id = ?
+      FROM ${channels[c].table}
+      WHERE ${channels[c].table}.developer_id = ?
     ` )
     .all( 
       developer.id
@@ -81,10 +52,10 @@ router.get( '/:id/social', ( req, res ) => {
     for( let s = 0; s < social.length; s++ ) {
       results.push( {
         id: social[s].uuid,
-        channel: endpoints[e].label,
-        endpoint: social[s][endpoints[e].field],
+        channel: channels[c].label,
+        endpoint: social[s][channels[c].field],
         developer_id: req.params.id,
-        entity: endpoints[e].path
+        entity: channels[c].path
       } );
     }
   }
@@ -92,7 +63,11 @@ router.get( '/:id/social', ( req, res ) => {
   res.json( results );
 } );
 
-// Read organizations for given developer
+// Read relations for given developer
+// Language
+// Organization
+// Role
+// Skill
 router.get( '/:id/:model', ( req, res ) => {
   const field = req.params.model.toLowerCase();
   const entity = field.replace( /^\w/, c => c.toUpperCase() );
@@ -121,6 +96,14 @@ router.get( '/:id/:model', ( req, res ) => {
 
 // Read single developer by ID
 router.get( '/:id', ( req, res ) => {
+  let deep = false;
+
+  if( req.query.deep ) {
+    if( req.query.deep === 'true' ) {
+      deep = true;
+    }
+  }
+
   let developer = req.db.prepare( `
     SELECT
       Developer.uuid AS "id",
@@ -152,6 +135,14 @@ router.get( '/:id', ( req, res ) => {
 
 // Read all developers
 router.get( '/', ( req, res ) => {
+  let deep = false;
+
+  if( req.query.deep ) {
+    if( req.query.deep === 'true' ) {
+      deep = true;
+    }
+  }
+
   let developers = req.db.prepare( `
     SELECT
       Developer.uuid AS "id",
@@ -174,302 +165,139 @@ router.get( '/', ( req, res ) => {
   res.json( developers );
 } );
 
-// Associate developer with organization(s)
-router.post( '/:developer/organization', ( req, res ) => {
-  let organizations = [];
-
-  // Loop through organizations provided as array
-  for( let a = 0; a < req.body.length; a++ ) {
-    let record = {
-      id: null,
-      organization_uuid: req.body[a].id,
-      developer_uuid: req.params.developer,
-      name: req.body[a].name
-    }
-
-    // Check if organization exists
-    // By name
-    // Case-insensitive
-    let existing = req.db.prepare( `
-      SELECT
-        Organization.uuid AS "id",
-        Organization.created_at,
-        Organization.updated_at,
-        Organization.name
-      FROM
-        Organization
-      WHERE
-        LOWER( Organization.name ) = ?
-    ` )
-    .get(
-      record.name.trim().toLowerCase()
-    );
-
-    // Organization does not exist
-    if( existing === undefined ) {
-      // Assign external UUID
-      // Assign created and updated stamps
-      record.organization_uuid = uuidv4();
-      record.created_at = new Date().toISOString();
-      record.updated_at = new Date().toISOString();
-
-      // Create organization
-      let info = req.db.prepare( `
-        INSERT INTO Organization
-        VALUES ( ?, ?, ?, ?, ? )
-      ` )
-      .run(
-        record.id,
-        record.organization_uuid,
-        record.created_at,
-        record.updated_at,
-        record.name
-      );
-    } else {
-      // Carry over existing organization data
-      record.organization_uuid = existing.id;
-      record.created_at = existing.created_at;
-      record.updated_at = existing.updated_at;        
-      record.name = existing.name;
-    }
-
-    // Organization now exists
-    // Get internal IDs
-    let ids = req.db.prepare( `
-      SELECT
-        Developer.id AS "developer_id",
-        Organization.id AS "organization_id"
-      FROM
-        Developer,
-        Organization
-      WHERE
-        Developer.uuid = ? AND
-        Organization.uuid = ?
-    ` )
-    .get( 
-      record.developer_uuid,
-      record.organization_uuid
-    );
-
-    // Assign IDs
-    record.developer_id = ids.developer_id;
-    record.organization_id = ids.organization_id;
-    record.relation_uuid = uuidv4();
-
-    // Create relationship
-    let info = req.db.prepare( `
-      INSERT INTO DeveloperOrganization
-      VALUES ( ?, ?, ?, ?, ?, ? )
-    ` )
-    .run(
-      record.id,
-      record.relation_uuid,
-      record.created_at,
-      record.updated_at,
-      record.developer_id,
-      record.organization_id
-    );
-
-    // Mirror organization record
-    // Hydrated with complete details
-    organizations.push( {
-      id: record.organization_uuid,
-      created_at: record.created_at,
-      updated_at: record.updated_at,
-      developer_id: record.developer_uuid,
-      name: record.name
-    } );
-  }
-
-  res.json( organizations );
-} );
-
-// Update developer association to organization(s)
-router.put( '/:developer/:model', ( req, res ) => {
+// Associate developer with model
+// Single association per invocation
+// Language
+// Organization
+// Role
+// Skill
+router.post( '/:id/:model', ( req, res ) => {
   const field = req.params.model.toLowerCase();
   const entity = field.replace( /^\w/, c => c.toUpperCase() );
 
-  let listing = [];
+  let record = {
+    id: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    developer_uuid: req.params.id,
+    name: req.body.name.trim()
+  };
+  record[`${field}_uuid`] = req.body.id;
 
-  // Preserve existing relationships
-  // Between developer and organization
-  let relationships = req.db.prepare( `
-    SELECT 
-      Developer${entity}.id,
-      ${entity}.uuid AS "${field}_id"
-    FROM 
-      Developer,
-      Developer${entity},
-      ${entity}
-    WHERE 
-      ${entity}.id = Developer${entity}.${field}_id AND
-      Developer${entity}.developer_id = Developer.id AND
-      Developer.uuid = ?
-  ` )
-  .all(
-    req.params.developer
-  );
-
-  // Loop through organizations provided as array
-  for( let a = 0; a < req.body.length; a++ ) {
-    let record = {
-      id: null,
-      developer_uuid: req.params.developer,
-      name: req.body[a].name
-    }
-    record[`${field}_uuid`] = req.body[a].id;
-
-    // Check if organization exists
-    // By name
-    // Case-insensitive
-    let existing = req.db.prepare( `
+  // Skill reference not defined
+  // Check and see if it exists by name
+  if( record.skill_uuid === null ) {
+    let match = req.db.prepare( `
       SELECT
-        ${entity}.uuid AS "id",
-        ${entity}.created_at,
-        ${entity}.updated_at,
-        ${entity}.name
+        ${entity}.id,
+        ${entity}.uuid
       FROM
         ${entity}
-      WHERE
+      WHERE 
         LOWER( ${entity}.name ) = ?
     ` )
     .get(
-      record.name.trim().toLowerCase()
+      record.name.toLowerCase()
     );
 
-    // Organization does not exist
-    if( existing === undefined ) {
-      // Assign external UUID
-      // Assign created and updated stamps
+    // Nope
+    if( match === undefined ) {
+      // Establish UUID
       record[`${field}_uuid`] = uuidv4();
-      record.created_at = new Date().toISOString();
-      record.updated_at = new Date().toISOString();
 
-      // Create organization
+      // Created, updated
+      let stamp = new Date().toISOString();
+
+      // Insert
       let info = req.db.prepare( `
         INSERT INTO ${entity}
         VALUES ( ?, ?, ?, ?, ? )
       ` )
       .run(
-        record.id,
+        null,
         record[`${field}_uuid`],
-        record.created_at,
-        record.updated_at,
-        record.name
+        stamp,
+        stamp,
+        req.body.name.trim()
       );
-    } else {
-      // Carry over existing organization data
-      record[`${field}_uuid`] = existing.id;
-      record.created_at = existing.created_at;
-      record.updated_at = existing.updated_at;        
-      record.name = existing.name;
-    }
 
-    // Organization exists
-    // Check if relationship to developer exists
-    let relates = req.db.prepare( `
-      SELECT
-        Developer${entity}.uuid AS "id",
-        Developer${entity}.created_at,
-        Developer${entity}.updated_at,
-        Developer.uuid AS "developer_id",
-        ${entity}.uuid AS "${field}_id",
-        ${entity}.name
-      FROM
-        Developer,
-        Developer${entity},
-        ${entity}
-      WHERE
-        Developer.id = Developer${entity}.developer_id AND
-        Developer${entity}.${field}_id = ${entity}.id AND
-        Developer.uuid = ? AND
-        ${entity}.uuid = ?
+      // Row ID
+      record[`${field}_id`] = info.lastInsertRowid;
+    } else {
+      // Yes
+      // Use that existing skill
+      record[`${field}_uuid`] = match.uuid;
+      record[`${field}_id`] = match.id;
+    }
+  }
+
+  // Does the model relationship exist
+  let existing = req.db.prepare( `
+    SELECT
+      ${entity}.uuid AS "${field}_id",    
+      ${entity}.name
+    FROM
+      Developer, 
+      Developer${entity},
+      ${entity}
+    WHERE
+      Developer.id = Developer${entity}.developer_id AND
+      Developer${entity}.${field}_id = ${entity}.id AND
+      Developer.uuid = ? AND
+      ${entity}.uuid = ?
+  ` )
+  .get( 
+    record.developer_uuid,
+    record[`${field}_uuid`].skill_uuid
+  );
+
+  // Nope
+  if( existing === undefined ) {
+    // Lookup developer ID
+    let developer = req.db.prepare( `
+      SELECT Developer.id
+      FROM Developer
+      WHERE Developer.uuid = ?
     ` )
-    .get(
-      record.developer_uuid,
-      record[`${field}_uuid`]
+    .get( 
+      record.developer_uuid
     );
 
-    // No existing relationship
-    if( relates === undefined ) {
-      // Get internal IDs
-      let ids = req.db.prepare( `
-        SELECT
-          Developer.id AS "developer_id",
-          ${entity}.id AS "${field}_id"
-        FROM
-          Developer,
-          ${entity}
-        WHERE
-          Developer.uuid = ? AND
-          ${entity}.uuid = ?
-      ` )
-      .get( 
-        record.developer_uuid,
-        record[`${field}_uuid`]
-      );
+    // Form record to insert
+    let stamp = new Date().toISOString();
+    let relationship = uuidv4();
 
-      // Assign IDs
-      record.developer_id = ids.developer_id;
-      record[`${field}_id`] = ids[`${field}_id`];
-      record.relation_uuid = uuidv4();
-  
-      // Create relationship
-      let info = req.db.prepare( `
-        INSERT INTO Developer${entity}
-        VALUES ( ?, ?, ?, ?, ?, ? )
-      ` )
-      .run(
-        record.id,
-        record.relation_uuid,
-        record.created_at,
-        record.updated_at,
-        record.developer_id,
-        record[`${field}_id`]
-      );
-    }
+    // Insert relation
+    let info = req.db.prepare( `
+      INSERT INTO Developer${entity}
+      VALUES ( ?, ?, ?, ?, ?, ? )
+    ` )
+    .run(
+      null,
+      relationship,
+      stamp,
+      stamp,
+      developer.id,
+      record[`${field}_id`]
+    );
 
-    // Mirror organization record
-    // Hydrated with complete details
-    listing.push( {
+    // Resulting skill
+    // Not relationship
+    record = {
       id: record[`${field}_uuid`],
-      created_at: record.created_at,
-      updated_at: record.updated_at,
-      developer_id: record.developer_uuid,
       name: record.name
-    } );
+    };
+  } else {
+    record = {
+      id: record[`${field}_uuid`],
+      name: record.name
+    };
   }
 
-  // Now check for orphans
-  // Organizations that used to have an association
-  // That are no longer desired to have an association
-  for( let a = 0; a < relationships.length; a++ ) {
-    let found = false;
-
-    // Name matches
-    for( let b = 0; b < listing.length; b++ ) {
-      if( relationships[a][`${field}_id`] === listing[b].id ) {
-        found = true;
-        break;
-      }
-    }
-
-    // Not found in new associations
-    if( !found ) {
-      let removed = req.db.prepare( `
-        DELETE FROM Developer${entity}
-        WHERE Developer${entity}.id = ?
-      ` )
-      .run(
-        relationships[a].id
-      );
-    }
-  }
-
-  res.json( listing );
+  res.json( record );
 } );
 
-// Create
+// Create developer
 router.post( '/', async ( req, res ) => {
   let record = {
     id: null,
@@ -554,7 +382,196 @@ router.post( '/', async ( req, res ) => {
   } );
 } );
 
-// Update
+// Update developer relations
+// Language
+// Organization
+// Role
+// Skill
+router.put( '/:id/:model', ( req, res ) => {
+  const field = req.params.model.toLowerCase();
+  const entity = field.replace( /^\w/, c => c.toUpperCase() );
+
+  let listing = [];
+
+  // Preserve existing relationships
+  // Between developer and model
+  let relationships = req.db.prepare( `
+    SELECT 
+      Developer${entity}.id,
+      ${entity}.uuid AS "${field}_id"
+    FROM 
+      Developer,
+      Developer${entity},
+      ${entity}
+    WHERE 
+      ${entity}.id = Developer${entity}.${field}_id AND
+      Developer${entity}.developer_id = Developer.id AND
+      Developer.uuid = ?
+  ` )
+  .all(
+    req.params.id
+  );
+
+  // Loop through model items provided as array
+  for( let a = 0; a < req.body.length; a++ ) {
+    let record = {
+      id: null,
+      developer_uuid: req.params.id,
+      name: req.body[a].name
+    }
+    record[`${field}_uuid`] = req.body[a].id;
+
+    // Check if model item exists
+    // By name
+    // Case-insensitive
+    let existing = req.db.prepare( `
+      SELECT
+        ${entity}.uuid AS "id",
+        ${entity}.created_at,
+        ${entity}.updated_at,
+        ${entity}.name
+      FROM
+        ${entity}
+      WHERE
+        LOWER( ${entity}.name ) = ?
+    ` )
+    .get(
+      record.name.trim().toLowerCase()
+    );
+
+    // Model item does not exist
+    if( existing === undefined ) {
+      // Assign external UUID
+      // Assign created and updated stamps
+      record[`${field}_uuid`] = uuidv4();
+      record.created_at = new Date().toISOString();
+      record.updated_at = new Date().toISOString();
+
+      // Create model item
+      let info = req.db.prepare( `
+        INSERT INTO ${entity}
+        VALUES ( ?, ?, ?, ?, ? )
+      ` )
+      .run(
+        record.id,
+        record[`${field}_uuid`],
+        record.created_at,
+        record.updated_at,
+        record.name
+      );
+    } else {
+      // Carry over existing model item data
+      record[`${field}_uuid`] = existing.id;
+      record.created_at = existing.created_at;
+      record.updated_at = existing.updated_at;        
+      record.name = existing.name;
+    }
+
+    // Model item exists
+    // Check if relationship to developer exists
+    let relates = req.db.prepare( `
+      SELECT
+        Developer${entity}.uuid AS "id",
+        Developer${entity}.created_at,
+        Developer${entity}.updated_at,
+        Developer.uuid AS "developer_id",
+        ${entity}.uuid AS "${field}_id",
+        ${entity}.name
+      FROM
+        Developer,
+        Developer${entity},
+        ${entity}
+      WHERE
+        Developer.id = Developer${entity}.developer_id AND
+        Developer${entity}.${field}_id = ${entity}.id AND
+        Developer.uuid = ? AND
+        ${entity}.uuid = ?
+    ` )
+    .get(
+      record.developer_uuid,
+      record[`${field}_uuid`]
+    );
+
+    // No existing relationship
+    if( relates === undefined ) {
+      // Get internal IDs
+      let ids = req.db.prepare( `
+        SELECT
+          Developer.id AS "developer_id",
+          ${entity}.id AS "${field}_id"
+        FROM
+          Developer,
+          ${entity}
+        WHERE
+          Developer.uuid = ? AND
+          ${entity}.uuid = ?
+      ` )
+      .get( 
+        record.developer_uuid,
+        record[`${field}_uuid`]
+      );
+
+      // Assign IDs
+      record.developer_id = ids.developer_id;
+      record[`${field}_id`] = ids[`${field}_id`];
+      record.relation_uuid = uuidv4();
+  
+      // Create relationship
+      let info = req.db.prepare( `
+        INSERT INTO Developer${entity}
+        VALUES ( ?, ?, ?, ?, ?, ? )
+      ` )
+      .run(
+        record.id,
+        record.relation_uuid,
+        record.created_at,
+        record.updated_at,
+        record.developer_id,
+        record[`${field}_id`]
+      );
+    }
+
+    // Mirror model item
+    // Hydrated with complete details
+    listing.push( {
+      id: record[`${field}_uuid`],
+      created_at: record.created_at,
+      updated_at: record.updated_at,
+      developer_id: record.developer_uuid,
+      name: record.name
+    } );
+  }
+
+  // Now check for orphans
+  // Model items that used to have an association
+  // That are no longer desired to have an association
+  for( let a = 0; a < relationships.length; a++ ) {
+    let found = false;
+
+    // Name matches
+    for( let b = 0; b < listing.length; b++ ) {
+      if( relationships[a][`${field}_id`] === listing[b].id ) {
+        found = true;
+        break;
+      }
+    }
+
+    // Not found in new associations
+    if( !found ) {
+      let removed = req.db.prepare( `
+        DELETE FROM Developer${entity}
+        WHERE Developer${entity}.id = ?
+      ` )
+      .run(
+        relationships[a].id
+      );
+    }
+  }
+
+  res.json( listing );
+} );
+
+// Update developer
 router.put( '/:id', async ( req, res ) => {
   let record = {
     uuid: req.params.id,
@@ -670,42 +687,91 @@ router.put( '/:id', async ( req, res ) => {
   res.json( record );  
 } );
 
-// Remove developer from organization
-router.delete( '/:developer/organization/:organization', ( req, res ) => {
+// Remove developer relation
+// Single relation
+// Language
+// Organization
+// Role
+// Skill
+router.delete( '/:developer_id/:model/:model_id', ( req, res ) => {
+  const field = req.params.model.toLowerCase();
+  const entity = field.replace( /^\w/, c => c.toUpperCase() );
+
   let ids = req.db.prepare( `
     SELECT
       Developer.id AS "developer_id",
-      Organization.id AS "organization_id"
+      ${entity}.id AS "${field}_id"
     FROM
       Developer,
-      Organization
+      ${entity}
     WHERE
       Developer.uuid = ? AND
-      Organization.uuid = ?    
+      ${entity}.uuid = ?    
   ` )
   .get( 
-    req.params.developer,
-    req.params.organization
-  );
+    req.params.developer_id,
+    req.params.model_id  );
 
   let info = req.db.prepare( `
-    DELETE FROM DeveloperOrganization
+    DELETE FROM Developer${entity}
     WHERE 
-      DeveloperOrganization.developer_id = ? AND
-      DeveloperOrganization.organization_id = ?
+      Developer${entity}.developer_id = ? AND
+      Developer${entity}.${field}_id = ?
   ` )
   .run(
     ids.developer_id,
-    ids.organization_id
+    ids[`${field}_id`]
   );  
 
-  res.json( {
-    developer_id: req.params.developer,
-    organization_id: req.params.organization
-  } );
+  let result = {
+    developer_id: req.params.id,
+    model: req.params.model
+  };
+  result[`${field}_id`] = req.params.model_id;
+
+  res.json( result );
 } );
 
-// Delete
+// Remove developer relation
+// All relations from given model
+// Language
+// Organization
+// Role
+// Skill
+router.delete( '/:id/:model', ( req, res ) => {
+  const field = req.params.model.toLowerCase();
+  const entity = field.replace( /^\w/, c => c.toUpperCase() );
+
+  let developer = req.db.prepare( `
+    SELECT
+      Developer.id 
+    FROM
+      Developer
+    WHERE
+      Developer.uuid = ?    
+  ` )
+  .get( 
+    req.params.id
+  );
+
+  let info = req.db.prepare( `
+    DELETE FROM Developer${entity}
+    WHERE 
+      Developer${entity}.developer_id = ?
+  ` )
+  .run(
+    developer.id,
+  );  
+
+  let result = {
+    id: req.params.id,
+    model: req.params.model
+  };
+
+  res.json( result );
+} );
+
+// Delete developer
 router.delete( '/:id', ( req, res ) => {
   let deep = true;
 

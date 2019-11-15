@@ -114,7 +114,9 @@ onMount( async () => {
 
     repositories = data.slice( 0 );
 
-    updated_at = formatLong( repositories[0].updated_at );
+    if( repositories.length > 0 ) {
+      updated_at = formatLong( repositories[0].updated_at );
+    }
   } );
 } );
 </script>
