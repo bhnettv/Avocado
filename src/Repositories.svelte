@@ -4,10 +4,13 @@ import { onMount } from 'svelte';
 import Button from './Button.svelte';
 import Search from './Search.svelte';
 
+export let hidden = true;
+
 let average_watchers = 0;
 let average_stars = 0;
 let average_forks = 0;
 let average_issues = 0;
+let filtered = [];
 let median_watchers = 0;
 let median_stars = 0;
 let median_forks = 0;
@@ -15,6 +18,24 @@ let median_issues = 0;
 let repositories = [];
 let search = '';
 let updated_at = undefined;
+
+function filter() {
+ let trimmed = search.trim().toLowerCase();
+
+  if( trimmed.length === 0 ) {
+    filtered = repositories.slice();
+  } else {
+    let matches = [];
+
+    for( let a = 0; a < repositories.length; a++ ) {
+      if( repositories[a].name.toLowerCase().indexOf( trimmed ) >= 0 ) {
+        matches.push( repositories[a] );
+      }
+    }
+
+    filtered = matches.slice();
+  }  
+}
 
 function format( stamp ) {
   stamp = new Date( stamp );
@@ -116,6 +137,7 @@ onMount( async () => {
 
     if( repositories.length > 0 ) {
       updated_at = formatLong( repositories[0].updated_at );
+      filter();      
     }
   } );
 } );
@@ -134,9 +156,13 @@ div.list {
 }
 
 div.panel {
-  display: none;
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+div.panel.hidden {
+  display: none;
 }
 
 div.row {
@@ -241,11 +267,14 @@ p.small {
 }
 </style>
 
-<div class="panel">
+<div class="panel" class:hidden>
 
   <div class="search">
-    <Search bind:value="{search}"/>
-    <Button icon="/img/add-white.svg">Add</Button>
+    <Search bind:value="{search}" on:keyup="{filter}"/>
+    <Button 
+      icon="/img/add-white.svg" 
+      disabledIcon="/img/add.svg" 
+      disabled>Add</Button>
   </div>
 
   <header>
@@ -260,25 +289,25 @@ p.small {
 
   <div class="list">
 
-    {#each repositories as repo}
+    {#each filtered as repository}
     
       <div class="row">
-        <p>{repo.name}</p>
-        <p class="medium">{format( repo.started_at )}</p>      
-        <p class="medium">{format( repo.pushed_at )}</p>            
+        <p>{repository.name}</p>
+        <p class="medium">{format( repository.started_at )}</p>      
+        <p class="medium">{format( repository.pushed_at )}</p>            
         <p 
           class="small" 
-          class:average="{repo.subscribers < average_watchers ? true : false}"
-          class:median="{repo.subscribers < median_watchers ? true : false}">{repo.subscribers}</p>
+          class:average="{repository.subscribers < average_watchers ? true : false}"
+          class:median="{repository.subscribers < median_watchers ? true : false}">{repository.subscribers}</p>
         <p 
           class="small" 
-          class:average="{repo.stargazers < average_stars ? true : false}"
-          class:median="{repo.stargazers < median_stars ? true : false}">{repo.stargazers}</p>
+          class:average="{repository.stargazers < average_stars ? true : false}"
+          class:median="{repository.stargazers < median_stars ? true : false}">{repository.stargazers}</p>
         <p 
           class="small" 
-          class:average="{repo.forks < average_forks ? true : false}"
-          class:median="{repo.forks < median_forks ? true : false}">{repo.forks}</p>
-        <p class="small">{repo.issues}</p>
+          class:average="{repository.forks < average_forks ? true : false}"
+          class:median="{repository.forks < median_forks ? true : false}">{repository.forks}</p>
+        <p class="small">{repository.issues}</p>
       </div>
 
     {/each}

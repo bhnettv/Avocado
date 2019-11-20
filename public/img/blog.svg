@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <style>.cls-1{fill:#393939;}.cls-2{fill:#ffffff;}</style>
+  </defs>
+  <title>Asset 1</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <rect class="cls-1" width="300" height="300"/>
+      <circle class="cls-2" cx="91.95" cy="208.05" r="23.22"/>
+      <path class="cls-2" d="M146.13,231.27h31A108.49,108.49,0,0,0,68.73,122.91v31a77.49,77.49,0,0,1,77.4,77.4Z"/>
+      <path class="cls-2" d="M231.27,231.27c0-89.63-72.91-162.54-162.54-162.54v31c72.56,0,131.59,59,131.59,131.58Z"/>
+    </g>
+  </g>
+</svg>

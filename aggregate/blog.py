@@ -17,14 +17,9 @@ req = requests.get( api + '/blog' )
 blogs = req.json()
 
 for blog in blogs:
-  # No feed URL
-  # No problem
-  if blog['feed'] == None:
-    continue
-
   # Parse feed (RSS/ATOM)
   print( 'Load: ' + blog['id'] )
-  feed = feedparser.parse( blog['feed'] )
+  feed = feedparser.parse( blog['url'] )
 
   # Look at each entry
   for entry in feed['entries']:

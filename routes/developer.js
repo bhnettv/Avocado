@@ -10,6 +10,43 @@ router.get( '/test', ( req, res ) => {
   res.json( {developer: 'Test'} );
 } );
 
+// Developers for a given organization
+router.get( '/organization/:id', ( req, res ) => {
+  let developers = req.db.prepare( `
+    SELECT 
+      Developer.uuid AS "id",
+      Developer.created_at, 
+      Developer.updated_at,
+      Developer.name,
+      Developer.email,
+      Developer.description,
+      Developer.image,
+      Developer.location,
+      Developer.latitude,
+      Developer.longitude,
+      Developer.public
+    FROM
+      Developer,
+      DeveloperOrganization,
+      Organization
+    WHERE
+      Developer.id = DeveloperOrganization.developer_id AND
+      DeveloperOrganization.organization_id = Organization.id AND
+      Organization.uuid = ?
+    ORDER BY
+      Developer.name ASC
+  ` )
+  .all( 
+    req.params.id
+  );
+
+  if( developers === undefined ) {
+    developers = [];
+  }
+
+  res.json( developers );
+} );
+
 // Social channels for given developer
 // Requires manual update for new channels
 router.get( '/:id/social', ( req, res ) => {
@@ -63,6 +100,49 @@ router.get( '/:id/social', ( req, res ) => {
   res.json( results );
 } );
 
+router.get( '/:id/stream', ( req, res ) => {
+  let now = new Date();
+  now.setDate( now.getDate() - 5 );
+
+  let results = [];
+
+  let channel = req.db.prepare( `
+    SELECT 
+      TwitterStatus.uuid AS "id",
+      TwitterStatus.created_at,
+      TwitterStatus.updated_at,
+      TwitterStatus.published_at,
+      TwitterStatus.status,
+      TwitterStatus.link,
+      TwitterStatus.full_text,
+      TwitterStatus.favorite,
+      TwitterStatus.retweet,
+      TwitterStatus.hashtags,
+      TwitterStatus.mentions,
+      TwitterStatus.urls,
+      "twitter" AS "type"
+    FROM
+      Twitter,
+      TwitterStatus,
+      Developer
+    WHERE
+      Developer.id = Twitter.developer_id AND
+      Twitter.id = TwitterStatus.twitter_id AND
+      Developer.uuid = ? AND
+      TwitterStatus.published_at >= ?
+    ORDER BY
+      TwitterStatus.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  results = channel.slice();
+
+  res.json( results );
+} );
+
 // Read relations for given developer
 // Language
 // Organization
@@ -104,27 +184,151 @@ router.get( '/:id', ( req, res ) => {
     }
   }
 
-  let developer = req.db.prepare( `
-    SELECT
-      Developer.uuid AS "id",
-      Developer.created_at, 
-      Developer.updated_at,
-      Developer.name,
-      Developer.email,
-      Developer.description,
-      Developer.image,
-      Developer.location,
-      Developer.latitude,
-      Developer.longitude,
-      Developer.public      
-    FROM 
-      Developer
-    WHERE 
-      Developer.uuid = ?
-  ` )
-  .get( 
-    req.params.id 
-  );
+  let developer = undefined;
+
+  if( deep ) {
+    developer = req.db.prepare( `
+      SELECT
+        Developer.uuid AS "id",
+        Developer.created_at, 
+        Developer.updated_at,
+        Developer.name,
+        Developer.email,
+        Developer.description,
+        Developer.image,
+        Developer.location,
+        Developer.latitude,
+        Developer.longitude,
+        Developer.public
+      FROM 
+        Developer
+      WHERE 
+        Developer.uuid = ?
+    ` )
+    .get( 
+      req.params.id 
+    );
+
+    developer.organizations = req.db.prepare( `
+      SELECT
+        Organization.uuid AS "id",
+        Organization.created_at,
+        Organization.updated_at,
+        Organization.name
+      FROM 
+        Developer,
+        DeveloperOrganization,
+        Organization
+      WHERE
+        Developer.id = DeveloperOrganization.developer_id AND
+        DeveloperOrganization.organization_id = Organization.id AND
+        Developer.uuid = ?
+    ` )
+    .all( 
+      req.params.id
+    );
+
+    developer.roles = req.db.prepare( `
+      SELECT
+        Role.uuid AS "id",
+        Role.created_at,
+        Role.updated_at,        
+        Role.name
+      FROM 
+        Developer,
+        DeveloperRole,
+        Role
+      WHERE
+        Developer.id = DeveloperRole.developer_id AND
+        DeveloperRole.role_id = Role.id AND
+        Developer.uuid = ?
+    ` )
+    .all( 
+      req.params.id
+    );
+
+    developer.languages = req.db.prepare( `
+      SELECT
+        Language.uuid AS "id",
+        Language.created_at,
+        Language.updated_at,        
+        Language.name
+      FROM 
+        Developer,
+        DeveloperLanguage,
+        Language
+      WHERE
+        Developer.id = DeveloperLanguage.developer_id AND
+        DeveloperLanguage.language_id = Language.id AND
+        Developer.uuid = ?
+    ` )
+    .all( 
+      req.params.id
+    );  
+    
+    developer.skills = req.db.prepare( `
+      SELECT
+        Skill.uuid AS "id",
+        Skill.created_at,
+        Skill.updated_at,        
+        Skill.name
+      FROM 
+        Developer,
+        DeveloperSkill,
+        Skill
+      WHERE
+        Developer.id = DeveloperSkill.developer_id AND
+        DeveloperSkill.skill_id = Skill.id AND
+        Developer.uuid = ?
+    ` )
+    .all( 
+      req.params.id
+    );    
+
+    developer.notes = req.db.prepare( `
+      SELECT
+        Note.uuid AS "id",
+        Note.created_at,
+        Note.updated_at,
+        Developer.uuid AS "developer_id",
+        Activity.uuid AS "activity_id",
+        Activity.name AS "activity_name",
+        Note.full_text
+      FROM
+        Activity,
+        Developer,
+        Note
+      WHERE
+        Developer.id = Note.developer_id AND
+        Note.activity_id = Activity.id AND
+        Developer.uuid = ?
+    ` )
+    .all(
+      req.params.id
+    );
+  } else {
+    developer = req.db.prepare( `
+      SELECT
+        Developer.uuid AS "id",
+        Developer.created_at, 
+        Developer.updated_at,
+        Developer.name,
+        Developer.email,
+        Developer.description,
+        Developer.image,
+        Developer.location,
+        Developer.latitude,
+        Developer.longitude,
+        Developer.public      
+      FROM 
+        Developer
+      WHERE 
+        Developer.uuid = ?
+    ` )
+    .get( 
+      req.params.id 
+    );
+  }
 
   if( developer === undefined ) {
     developer = null;
@@ -248,7 +452,7 @@ router.post( '/:id/:model', ( req, res ) => {
   ` )
   .get( 
     record.developer_uuid,
-    record[`${field}_uuid`].skill_uuid
+    record[`${field}_uuid`]
   );
 
   // Nope

@@ -104,6 +104,8 @@ paths:
     $ref: 'developer.yaml#/paths/~1developer'
   /developer/{id}:
     $ref: 'developer.yaml#/paths/~1developer~1{id}'
+  /developer/organization/{id}:
+    $ref: 'developer.yaml#/paths/~1developer~1organization~1{id}'        
   /developer/{id}/social:
     $ref: 'developer.yaml#/paths/~1developer~1{id}~1social'    
   /developer/{id}/{model}:

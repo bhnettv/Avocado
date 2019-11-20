@@ -7,6 +7,7 @@ import List from './List.svelte';
 import ListLabelItem from './ListLabelItem.svelte';
 import ListCountItem from './ListCountItem.svelte';
 import ListRemoveItem from './ListRemoveItem.svelte';
+import ListStreamItem from './ListStreamItem.svelte';
 import Profile from './Profile.svelte';
 import Notes from './Notes.svelte';
 import Search from './Search.svelte';
@@ -34,14 +35,19 @@ import { developer_skills } from './developers.js';
 import { social } from './developers.js';
 import { notes } from './developers.js';
 
+export let hidden = true;
+
 // View state
 let add = false;
+let developer = 0;
 let developers = [];
 let enabled = 0;
 let filtered = [];
-let index = 0;
+let organization = undefined;
 let search = '';
 let tab = 0;
+
+let stream = ['Test', 'One', 'Two'];
 
 // Filter developer list on search term
 function filter() {
@@ -60,6 +66,62 @@ function filter() {
 
     filtered = matches.slice();
   }
+}
+
+function load() {
+  fetch( '/api/developer' )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => {
+    developers = data.slice();
+
+    $developer_id = data[0].id;
+    $developer_name = data[0].name === null ? '' : data[0].name;
+    $developer_email = data[0].email === null ? '' : data[0].email;
+    $developer_image = data[0].image === null ? '' : data[0].image;
+    $developer_location = data[0].location === null ? '' : data[0].location;
+    $developer_latitude = data[0].latitude;
+    $developer_longitude = data[0].longitude;
+    $developer_description = data[0].description === null ? '' : data[0].description;
+    $developer_public = data[0].public;
+
+    filter();    
+
+    fetch( `/api/note/developer/${$developer_id}` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      $notes = data.slice();
+    } );
+
+    fetch( `/api/developer/${$developer_id}/organization` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_organizations = data.slice();
+    } );
+    
+    fetch( `/api/developer/${$developer_id}/role` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_roles = data.slice();
+    } );    
+
+    fetch( `/api/developer/${$developer_id}/language` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_languages = data.slice();
+    } );    
+
+    fetch( `/api/developer/${$developer_id}/skill` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => { 
+      $developer_skills = data.slice();
+    } );        
+
+    fetch( `/api/developer/${$developer_id}/social` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      $social = data.slice();
+    } );
+  } );  
 }
 
 // Add clicked
@@ -111,7 +173,7 @@ function doAddClick( evt ) {
 
     for( let f = 0; f < filtered.length; f++ ) {
       if( filtered[f].id === $developer_id ) {
-        index = f;
+        developer = f;
         break;
       }
     }
@@ -119,7 +181,7 @@ function doAddClick( evt ) {
 }
 
 function doDeveloperClick( evt ) {
-  fetch( `/api/developer/${evt.detail.item.id}` )
+  fetch( `/api/developer/${evt.detail.item.id}?deep=true` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
     console.log( data );
@@ -132,43 +194,19 @@ function doDeveloperClick( evt ) {
     $developer_longitude = data.longitude;
     $developer_description = data.description === null ? '' : data.description;
     $developer_public = data.public;
+    $developer_organizations = data.organizations.slice();
+    $developer_roles = data.roles.slice();
+    $developer_languages = data.languages.slice();
+    $developer_skills = data.skills.slice();
+    // TODO: Social
+    $notes = data.notes.slice();
   } );
-
-  fetch( `/api/developer/${evt.detail.item.id}/organization` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => { 
-    $developer_organizations = data.slice();
-  } );
-
-  fetch( `/api/developer/${evt.detail.item.id}/role` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => { 
-    $developer_roles = data.slice();
-  } );  
-
-  fetch( `/api/developer/${evt.detail.item.id}/language` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => { 
-    $developer_languages = data.slice();
-  } );    
-
-  fetch( `/api/developer/${evt.detail.item.id}/skill` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => { 
-    $developer_skills = data.slice();
-  } );      
 
   fetch( `/api/developer/${evt.detail.item.id}/social` )
   .then( ( response ) => response.json() )
   .then( ( data ) => { 
     $social = data.slice();
   } );        
-
-  fetch( `/api/note/developer/${evt.detail.item.id}` )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    $notes = data.slice();
-  } );
 }
 
 function doDeveloperChange( evt ) {
@@ -189,14 +227,14 @@ function doDeveloperChange( evt ) {
 
   for( let f = 0; f < filtered.length; f++ ) {
     if( filtered[f].id === evt.detail.id ) {
-      index = f;
+      developer = f;
       break;
     }
   }
 }
 
 function doDeveloperRemove( evt ) {
-  let later = index;
+  let later = develop_index;
 
   // Remove from database
   fetch( `/api/developer/${evt.id}`, {
@@ -220,61 +258,25 @@ function doDeveloperRemove( evt ) {
   } ); 
 }
 
+function doOrganizationClick( evt ) {
+  /*
+  if( organization === undefined ) {
+    load();
+  } else {
+      fetch( `/api/developer/organization/${$organizations[organization].id}` )
+      .then( ( response ) => response.json() )
+      .then( ( data ) => {
+        developers = data.slice();
+        filter();
+      } );
+    }
+  }
+  */
+}
+
 // Load external data
 onMount( async () => {
-  fetch( '/api/developer' )
-  .then( ( response ) => response.json() )
-  .then( ( data ) => {
-    developers = data.slice();
-
-    $developer_id = data[0].id;
-    $developer_name = data[0].name === null ? '' : data[0].name;
-    $developer_email = data[0].email === null ? '' : data[0].email;
-    $developer_image = data[0].image === null ? '' : data[0].image;
-    $developer_location = data[0].location === null ? '' : data[0].location;
-    $developer_latitude = data[0].latitude;
-    $developer_longitude = data[0].longitude;
-    $developer_description = data[0].description === null ? '' : data[0].description;
-    $developer_public = data[0].public;
-
-    filter();    
-
-    fetch( `/api/note/developer/${$developer_id}` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-      $notes = data.slice();
-    } );
-
-    fetch( `/api/developer/${$developer_id}/organization` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => { 
-      $developer_organizations = data.slice();
-    } );
-    
-    fetch( `/api/developer/${$developer_id}/role` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => { 
-      $developer_roles = data.slice();
-    } );    
-
-    fetch( `/api/developer/${$developer_id}/language` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => { 
-      $developer_languages = data.slice();
-    } );    
-
-    fetch( `/api/developer/${$developer_id}/skill` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => { 
-      $developer_skills = data.slice();
-    } );        
-
-    fetch( `/api/developer/${$developer_id}/social` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-      console.log( data );
-    } );
-  } );
+  load();
 
   fetch( '/api/organization' )
   .then( ( response ) => response.json() )
@@ -307,6 +309,10 @@ div.panel {
   flex-grow: 1;
 }
 
+div.panel.hidden {
+  display: none;
+}
+
 div.search {
   display: flex;
   flex-direction: row;
@@ -324,10 +330,10 @@ h4 {
 }
 </style>
 
-<div class="panel">
+<div class="panel" class:hidden>
 
   <!-- Left panel -->
-  <aside>
+  <aside style="border-right: solid 1px #dcdcdc;">
 
     <!-- Search -->
     <div class="search">
@@ -342,7 +348,7 @@ h4 {
     <!-- Developer list -->
     <h4>Developers</h4>
     <List 
-      bind:selectedIndex="{index}"
+      bind:selectedIndex="{developer}"
       on:change="{doDeveloperClick}"
       data="{filtered}" 
       let:item="{developer}">
@@ -355,7 +361,7 @@ h4 {
     <!-- Collapsable -->
     <Details summary="Organizations">
       <List 
-        selectable="{false}"
+        on:change="{doOrganizationClick}"
         data="{$organizations}" 
         let:item="{organization}">
         <ListCountItem 
@@ -398,6 +404,17 @@ h4 {
 
   <!-- Right panel -->
   <!-- Statistics -->
-  <aside></aside>
+  <aside style="border-left: solid 1px #dcdcdc;">
+
+    <h4>Stream</h4>      
+    <List data="{stream}" let:item="{status}">
+      <ListStreamItem/>
+    </List>
+
+    <!-- Reach: Followers -->
+    <!-- Impressions: Followers x Messages -->
+    <!-- Engagement: Like, Comment -->
+
+  </aside>
 
 </div>
