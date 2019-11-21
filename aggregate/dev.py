@@ -38,7 +38,7 @@ for dev in devs:
       'article': 0,
       'link': entry['link'],
       'title': entry['title'],
-      'summary': entry['summary'],
+      'summary': utility.remove_html_tags( entry['summary'] ),
       'likes': 0,
       'reading': 0,
       'unicorn': 0,
@@ -130,7 +130,7 @@ for dev in devs:
       if days < 7:
         # Update reaction counts
         req = requests.get( 'https://dev.to/reactions', params = {
-          'article': matches['article']
+          'article_id': matches['article']
         } )
         reactions = req.json()
 

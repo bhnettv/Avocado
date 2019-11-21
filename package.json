@@ -35,6 +35,7 @@
     "image-size": "^0.7.4",
     "jsonfile": "^5.0.0",
     "moment": "^2.24.0",
+    "moment-twitter": "^0.2.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "sirv-cli": "^0.4.4",

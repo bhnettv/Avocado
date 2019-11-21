@@ -1,7 +1,13 @@
 import base64
+import re
 import requests
 
 api = 'http://localhost:3000/api'
+
+# Remove HTML tags from content
+def remove_html_tags( text ):
+  clean = re.compile( '<.*?>' )
+  return re.sub( clean, '', text ).strip()
 
 # Extract unique images
 # Once per presence in content

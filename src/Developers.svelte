@@ -45,9 +45,8 @@ let enabled = 0;
 let filtered = [];
 let organization = undefined;
 let search = '';
+let stream = [];
 let tab = 0;
-
-let stream = ['Test', 'One', 'Two'];
 
 // Filter developer list on search term
 function filter() {
@@ -114,13 +113,19 @@ function load() {
     .then( ( response ) => response.json() )
     .then( ( data ) => { 
       $developer_skills = data.slice();
-    } );        
+    } );            
 
     fetch( `/api/developer/${$developer_id}/social` )
     .then( ( response ) => response.json() )
     .then( ( data ) => {
       $social = data.slice();
     } );
+
+    fetch( `/api/developer/${$developer_id}/stream` )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+      stream = data.slice();
+    } );    
   } );  
 }
 
@@ -184,7 +189,6 @@ function doDeveloperClick( evt ) {
   fetch( `/api/developer/${evt.detail.item.id}?deep=true` )
   .then( ( response ) => response.json() )
   .then( ( data ) => {
-    console.log( data );
     $developer_id = data.id;
     $developer_name = data.name === null ? '' : data.name;
     $developer_email = data.email === null ? '' : data.email;
@@ -198,9 +202,14 @@ function doDeveloperClick( evt ) {
     $developer_roles = data.roles.slice();
     $developer_languages = data.languages.slice();
     $developer_skills = data.skills.slice();
-    // TODO: Social
     $notes = data.notes.slice();
   } );
+
+  fetch( `/api/developer/${evt.detail.item.id}/stream` )
+  .then( ( response ) => response.json() )
+  .then( ( data ) => { 
+    stream = data.slice();
+  } );        
 
   fetch( `/api/developer/${evt.detail.item.id}/social` )
   .then( ( response ) => response.json() )
@@ -407,8 +416,15 @@ h4 {
   <aside style="border-left: solid 1px #dcdcdc;">
 
     <h4>Stream</h4>      
-    <List data="{stream}" let:item="{status}">
-      <ListStreamItem/>
+    <List data="{stream}" let:item="{status}" selectable="{false}">
+      <ListStreamItem 
+        title="{status.title}" 
+        body="{status.body}"
+        published="{status.published_at}"
+        forward="{status.forward}"
+        mark="{status.mark}"
+        other="{status.other}"
+        type="{status.type}"/>
     </List>
 
     <!-- Reach: Followers -->

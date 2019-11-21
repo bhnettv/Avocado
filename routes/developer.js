@@ -106,20 +106,176 @@ router.get( '/:id/stream', ( req, res ) => {
 
   let results = [];
 
+  // Blog
   let channel = req.db.prepare( `
-    SELECT 
-      TwitterStatus.uuid AS "id",
-      TwitterStatus.created_at,
-      TwitterStatus.updated_at,
-      TwitterStatus.published_at,
-      TwitterStatus.status,
+    SELECT
+      BlogPost.title AS "title",
+      BlogPost.published_at AS "published",
+      BlogPost.link,
+      BlogPost.summary AS "body",
+      "blog" AS "type"
+    FROM
+      Blog,
+      BlogPost,
+      Developer
+    WHERE
+      Developer.id = Blog.developer_id AND
+      Blog.id = BlogPost.blog_id AND
+      Developer.uuid = ? AND
+      BlogPost.published_at >= ?
+    ORDER BY
+      BlogPost.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].mark = null;
+    channel[c].favorite = null;
+    channel[c].other = null;
+  }  
+
+  results = results.concat( channel );
+
+  // Dev.to
+  channel = req.db.prepare( `
+    SELECT
+      DevPost.title AS "title",
+      DevPost.published_at AS "published",
+      DevPost.link,
+      DevPost.summary AS "body",
+      DevPost.likes AS "mark",
+      DevPost.reading AS "forward",
+      DevPost.unicorn AS "other",
+      "dev" AS "type"
+    FROM
+      Dev,
+      DevPost,
+      Developer
+    WHERE
+      Developer.id = Dev.developer_id AND
+      Dev.id = DevPost.dev_id AND
+      Developer.uuid = ? AND
+      DevPost.published_at >= ?
+    ORDER BY
+      DevPost.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  results = results.concat( channel );  
+
+  // GitHub
+  channel = req.db.prepare( `
+    SELECT
+      GitHubEvent.event_name AS "title",
+      GitHubEvent.repository_name AS "body",
+      GitHubEvent.published_at AS "published",
+      "github" AS "type"
+    FROM
+      GitHub,
+      GitHubEvent,
+      Developer
+    WHERE
+      Developer.id = GitHub.developer_id AND
+      GitHub.id = GitHubEvent.github_id AND
+      Developer.uuid = ? AND
+      GitHubEvent.published_at >= ?
+    ORDER BY
+      GitHubEvent.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].mark = null;
+    channel[c].forward = null;
+    channel[c].other = null;
+  }  
+
+  results = results.concat( channel );
+
+  // Medium
+  channel = req.db.prepare( `
+    SELECT
+      MediumPost.title,
+      MediumPost.published_at AS "published",
+      MediumPost.link,
+      MediumPost.summary AS "body",
+      MediumPost.claps AS "mark",
+      "medium" AS "type"
+    FROM
+      Medium,
+      MediumPost,
+      Developer
+    WHERE
+      Developer.id = Medium.developer_id AND
+      Medium.id = MediumPost.medium_id AND
+      Developer.uuid = ? AND
+      MediumPost.published_at >= ?
+    ORDER BY
+      MediumPost.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].forward = null;
+    channel[c].other = null;
+  }  
+
+  results = results.concat( channel );
+
+  // Stack Overflow
+  channel = req.db.prepare( `
+    SELECT
+      StackOverflowAnswer.active_at AS "published",
+      StackOverflowAnswer.link,
+      StackOverflowAnswer.title,
+      StackOverflowAnswer.accepted AS "forward",
+      StackOverflowAnswer.score AS "mark",
+      StackOverflowAnswer.views AS "other",
+      "so" AS "type"
+    FROM
+      StackOverflow,
+      StackOverFlowAnswer,
+      Developer
+    WHERE
+      Developer.id = StackOverflow.developer_id AND
+      StackOverflow.id = StackOverflowAnswer.so_id AND
+      Developer.uuid = ? AND
+      StackOverflowAnswer.active_at >= ?
+    ORDER BY
+      StackOverflowAnswer.active_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].body = null;
+  }
+
+  results = results.concat( channel );
+
+  // Twitter
+  channel = req.db.prepare( `
+    SELECT
+      Twitter.screen_name AS "title",
+      TwitterStatus.published_at AS "published",
       TwitterStatus.link,
-      TwitterStatus.full_text,
-      TwitterStatus.favorite,
-      TwitterStatus.retweet,
-      TwitterStatus.hashtags,
-      TwitterStatus.mentions,
-      TwitterStatus.urls,
+      TwitterStatus.full_text AS "body",
+      TwitterStatus.favorite AS "mark",
+      TwitterStatus.retweet AS "forward",
       "twitter" AS "type"
     FROM
       Twitter,
@@ -138,7 +294,54 @@ router.get( '/:id/stream', ( req, res ) => {
     now.toISOString()
   );
 
-  results = channel.slice();
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].title = '@' + channel[c].title;
+    channel[c].other = null;
+  }
+
+  results = results.concat( channel );
+
+  // YouTube
+  channel = req.db.prepare( `
+    SELECT
+      YouTubeVideo.title,
+      YouTubeVideo.published_at AS "published",
+      YouTubeVideo.link,
+      YouTubeVideo.summary AS "body",
+      YouTubeVideo.views AS "forward",
+      YouTubeVideo.stars AS "mark",
+      "youtube" AS "type"
+    FROM
+      YouTube,
+      YouTubeVideo,
+      Developer
+    WHERE
+      Developer.id = YouTube.developer_id AND
+      YouTube.id = YouTubeVideo.youtube_id AND
+      Developer.uuid = ? AND
+      YouTubeVideo.published_at >= ?
+    ORDER BY
+      YouTubeVideo.published_at DESC
+  ` )
+  .all(
+    req.params.id,
+    now.toISOString()
+  );
+
+  for( let c = 0; c < channel.length; c++ ) {
+    channel[c].other = null;
+  }
+
+  results = results.concat( channel );  
+
+  results.sort( ( a, b ) => {
+    let one = Date.parse( a.published );
+    let two = Date.parse( b.published );
+
+    if( one > two ) return -1;
+    if( one < two ) return 1;
+    return 0;
+  } );
 
   res.json( results );
 } );

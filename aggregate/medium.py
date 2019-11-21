@@ -60,7 +60,7 @@ for medium in mediums:
       'guid': entry['id'],
       'link': entry['link'],
       'title': entry['title'],
-      'summary': entry['summary'],
+      'summary': utility.remove_html_tags( entry['summary'] ),
       'claps': 0,
       'category': [],
       'keywords': [],
